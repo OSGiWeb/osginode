@@ -1,12 +1,12 @@
 import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { RouterContext, match, createMemoryHistory } from 'react-router'
+// import { renderToString } from 'react-dom/server';
+// import { RouterContext, match, createMemoryHistory } from 'react-router'
 import axios from 'axios';
-import { Provider } from 'react-redux';
-import createRoutes from './routesORG.jsx';
-import configureStore from 'store/configureStore';
-import headconfig from 'components/Meta';
-import { fetchComponentDataBeforeRender } from 'api/fetchComponentDataBeforeRender';
+// import { Provider } from 'react-redux';
+// import createRoutes from './routesORG.jsx';
+// import configureStore from 'store/configureStore';
+// import headconfig from 'components/Meta';
+// import { fetchComponentDataBeforeRender } from 'api/fetchComponentDataBeforeRender';
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
