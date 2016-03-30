@@ -11,7 +11,7 @@ let Login = React.createClass({
             <span id="logo"> <img src="styles/img/logo.png" alt="SmartAdmin"/> </span>
           </div>
 
-          <span id="extr-page-header-space"> <span className="hidden-mobile hiddex-xs">Need an account?</span>&nbsp;<a href="#/register" className="btn btn-danger">Create account</a> </span>
+          <span id="extr-page-header-space">&nbsp;<a href="#/register" className="btn btn-danger">用户注册</a> </span>
 
         </header>
         <div id="main" role="main" className="animated fadeInDown">
