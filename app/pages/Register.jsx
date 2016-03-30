@@ -1,7 +1,33 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import classNames from 'classnames/bind';
+import { connect } from 'react-redux';
+import { signUp } from '../actions/users';
+// import React from 'react'
 
-let Register = React.createClass({
-  render: function () {
+class Register extends Component {
+
+  /*
+   * This replaces getInitialState. Likewise getDefaultProps and propTypes are just
+   * properties on the constructor
+   * Read more here: https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#es6-classes
+   */
+  constructor(props) {
+    super(props);
+    this.onRegisterSubmit = this.onRegisterSubmit.bind(this);
+  }
+
+  onRegisterSubmit() {
+    const { dispatch } = this.props;
+    const username = ReactDOM.findDOMNode(this.refs.username).value;
+    const password = ReactDOM.findDOMNode(this.refs.password).value;
+    dispatch(signUp({
+      username: username,
+      password: password
+    }));
+  }
+
+  render() {
     return (
       <div id="extr-page" >
         <header id="header" className="animated fadeInDown">
@@ -52,19 +78,19 @@ let Register = React.createClass({
                 <div className="well no-padding">
                   <form action="#/dashboard" id="smart-form-register" className="smart-form client-form">
                     <header>
-                     新用户注册
+                      新用户注册
                     </header>
 
                     <fieldset>
                       <section>
                         <label className="input"> <i className="icon-append fa fa-user"/>
-                          <input type="text" name="username" placeholder="用户名"/>
+                          <input type="text" name="username" ref="username" placeholder="用户名"/>
                           <b className="tooltip tooltip-bottom-right">请输入用户名</b> </label>
                       </section>
 
                       <section>
                         <label className="input"> <i className="icon-append fa fa-lock"/>
-                          <input type="password" name="password" placeholder="密码" id="password"/>
+                          <input type="password" name="password" ref="password" placeholder="密码" id="password"/>
                           <b className="tooltip tooltip-bottom-right">请输入密码</b> </label>
                       </section>
 
@@ -110,7 +136,7 @@ let Register = React.createClass({
                       </div>
                     </fieldset>
                     <footer>
-                      <button type="submit" className="btn btn-primary">
+                      <button type="submit" onClick={this.onRegisterSubmit} className="btn btn-primary">
                         注册
                       </button>
                     </footer>
@@ -159,6 +185,29 @@ let Register = React.createClass({
       </div>
     )
   }
-});
+}
 
-export default Register
+// let Register = React.createClass({
+//   render: function () {
+//
+//   }
+// });
+// export default Register
+
+Register.propTypes = {
+  user: PropTypes.object,
+  dispatch: PropTypes.func
+};
+
+// Function passed in to `connect` to subscribe to Redux store updates.
+// Any time it updates, mapStateToProps is called.
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(Register);

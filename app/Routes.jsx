@@ -5,13 +5,12 @@ import React from 'react'
 import {Route, Redirect, IndexRoute} from 'react-router'
 
 import Layout from './pages/layout/Layout.jsx'
-
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 // import LockedScreen from './pages/LockedScreen.jsx'
 
-const Routes = (
+const routes = (
   <Route>
     {/* First show the login page */}
     <Route path="/">
@@ -26,6 +25,52 @@ const Routes = (
     {/*<Route path="lock" component={LockedScreen} />*/}
     <Route path="login" component={Login}/>
     <Route path="register" component={Register}/>
-  </Route>);
+  </Route>
+);
 
-export default Routes
+export default routes;
+
+/*
+ * @param {Redux Store}
+ * We require store as an argument here because we wish to get
+ * state from the store after it has been authenticated.
+ */
+// export default (store) => {
+//   const requireAuth = (nextState, replace, callback) => {
+//     const { user: { authenticated }} = store.getState();
+//     if (!authenticated) {
+//       replace({
+//         pathname: '/login',
+//         state: { nextPathname: nextState.location.pathname }
+//       });
+//     }
+//     callback();
+//   };
+//
+//   const redirectAuth = (nextState, replace, callback) => {
+//     const { user: { authenticated }} = store.getState();
+//     if (authenticated) {
+//       replace({
+//         pathname: '/'
+//       });
+//     }
+//     callback();
+//   };
+//   return (
+//     <Route>
+//       {/* First show the login page */}
+//       <Route path="/">
+//         <Redirect from="/" to="/login"/>
+//         <IndexRoute component={Login}/>
+//       </Route>
+//
+//       {/* Home page with layout */}
+//       <Route component={Layout}>
+//         <Route path="home" component={Home}/>
+//       </Route>
+//       {/*<Route path="lock" component={LockedScreen} />*/}
+//       <Route path="login" component={Login} onEnter={redirectAuth}/>
+//       <Route path="register" component={Register}/>
+//     </Route>
+//   );
+// };

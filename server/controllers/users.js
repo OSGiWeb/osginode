@@ -6,7 +6,7 @@ var passport = require('passport');
  * POST /login
  */
 exports.postLogin = function(req, res, next) {
-  // Do email and password validation for the server
+  // Do username and password validation for the server
   passport.authenticate('local', function(err, user, info) {
     if(err) return next(err);
     if(!user) {
@@ -29,7 +29,7 @@ exports.postLogin = function(req, res, next) {
  * POST /logout
  */
 exports.postLogout = function(req, res) {
-  // Do email and password validation for the server
+  // Do username and password validation for the server
   req.logout();
   res.redirect('/');
 };
@@ -40,13 +40,13 @@ exports.postLogout = function(req, res) {
  */
 exports.postSignUp = function(req, res, next) {
   var user =  new User({
-    email: req.body.email,
+    username: req.body.username,
     password: req.body.password
   });
 
-  User.findOne({email: req.body.email}, function(err, existingUser) {
+  User.findOne({username: req.body.username}, function(err, existingUser) {
     if(existingUser) {
-      return res.status(409).json({ message: 'Account with this email address already exists!'});
+      return res.status(409).json({ message: 'Account with this username address already exists!'});
     }
     user.save(function(err) {
       if(err) return next(err);
