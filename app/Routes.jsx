@@ -21,7 +21,7 @@ const Routes = (
 
     {/* Home page with layout */}
     <Route component={Layout}>
-       <Route path="home" component={Home}/>
+      <Route path="home" component={Home}/>
     </Route>
     {/*<Route path="lock" component={LockedScreen} />*/}
     <Route path="login" component={Login}/>
