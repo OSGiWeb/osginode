@@ -13,9 +13,9 @@ var App = require(compiled_app_module_path);
 
 module.exports = function(app, passport) {
   // user routes
-  app.post('/login', users.postLogin);
+  // app.post('/login', users.postLogin);
   app.post('/signup', users.postSignUp);
-  app.post('/logout', users.postLogout);
+  // app.post('/logout', users.postLogout);
 
   // // google auth
   // // Redirect the user to Google for authentication. When complete, Google
@@ -38,25 +38,25 @@ module.exports = function(app, passport) {
   //   }));
 
   // topic routes
-  app.get('/topic', topics.all);
-
-  app.post('/topic/:id', function(req, res) {
-    topics.add(req, res);
-  });
-
-  app.put('/topic/:id', function(req, res) {
-    topics.update(req, res);
-  });
-
-  app.delete('/topic/:id', function(req, res) {
-    topics.remove(req, res);
-  });
+  // app.get('/topic', topics.all);
+  //
+  // app.post('/topic/:id', function(req, res) {
+  //   topics.add(req, res);
+  // });
+  //
+  // app.put('/topic/:id', function(req, res) {
+  //   topics.update(req, res);
+  // });
+  //
+  // app.delete('/topic/:id', function(req, res) {
+  //   topics.remove(req, res);
+  // });
 
   // This is where the magic happens. We take the locals data we have already
   // fetched and seed our stores with data.
   // App is a function that requires store data and url to initialize and return the React-rendered html string
-  app.get('*', function (req, res, next) {
-    App.default(req, res);
-  });
+  // app.get('*', function (req, res, next) {
+  //   App.default(req, res);
+  // });
 
 };
