@@ -18,6 +18,11 @@ import Register from './pages/Register.jsx'
 export default (store) => {
   const requireAuth = (nextState, replace, callback) => {
     const { user: { authenticated }} = store.getState();
+    // if (authenticated) {
+    //   replace({
+    //     pathname: '/home'
+    //   });
+    // } else 
     if (!authenticated) {
       replace({
         pathname: '/login',
@@ -36,6 +41,8 @@ export default (store) => {
     }
     callback();
   };
+
+  /* Router strategy */
   return (
     <Route>
       {/* First show the login page */}
@@ -46,7 +53,7 @@ export default (store) => {
 
       {/* Home page with layout */}
       <Route component={Layout}>
-        <Route path="home" component={Home}/>
+        <Route path="home" component={Home} onEnter={requireAuth}/>
       </Route>
       {/*<Route path="lock" component={LockedScreen} />*/}
       <Route path="login" component={Login}/>

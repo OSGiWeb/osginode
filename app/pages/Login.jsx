@@ -1,8 +1,26 @@
-import React from 'react'
-
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { manualLogin } from '../actions/users';
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
-let Login = React.createClass({
-  render: function () {
+
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.onLoginSubmit = this.onLoginSubmit.bind(this);
+  }
+
+  onLoginSubmit() {
+    const { dispatch } = this.props;
+    const username = ReactDOM.findDOMNode(this.refs.username).value;
+    const password = ReactDOM.findDOMNode(this.refs.password).value;
+    dispatch(manualLogin({
+      username: username,
+      password: password
+    }));
+  }
+
+  render() {
     return (
       <div id="extr-page" >
         <header id="header" className="animated fadeInDown">
@@ -56,32 +74,31 @@ let Login = React.createClass({
                       </header>
                       <fieldset>
                         <section>
-                          <label className="label">E-mail</label>
+                          <label className="label">用户名</label>
                           <label className="input"> <i className="icon-append fa fa-user"/>
-                            <input type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address"/>
+                            <input type="email" name="username" ref="username" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address"/>
                             <b className="tooltip tooltip-top-right"><i className="fa fa-user txt-color-teal"/>
-                              Please enter email address/username</b></label>
+                              请输入用户名</b></label>
                         </section>
                         <section>
-                          <label className="label">Password</label>
+                          <label className="label">密码</label>
                           <label className="input"> <i className="icon-append fa fa-lock"/>
-                            <input type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"/>
-                            <b className="tooltip tooltip-top-right"><i className="fa fa-lock txt-color-teal"/> Enter
-                              your password</b> </label>
+                            <input type="password" name="password" ref="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"/>
+                            <b className="tooltip tooltip-top-right"><i className="fa fa-lock txt-color-teal"/> 请输入密码</b> </label>
 
                           <div className="note">
-                            <a ui-sref="forgotPassword">Forgot password?</a>
+                            <a ui-sref="forgotPassword">忘记密码？</a>
                           </div>
                         </section>
                         <section>
                           <label className="checkbox">
                             <input type="checkbox" name="remember" defaultChecked={true}/>
-                            <i/>Stay signed in</label>
+                            <i/>保持登陆状态</label>
                         </section>
                       </fieldset>
                       <footer>
-                        <button type="submit" className="btn btn-primary">
-                          Sign in
+                        <button type="submit" onClick={this.onLoginSubmit}　className="btn btn-primary">
+                          登陆
                         </button>
                       </footer>
                     </form></UiValidate>
@@ -105,6 +122,31 @@ let Login = React.createClass({
       </div>
     )
   }
-});
 
-export default Login
+}
+
+Login.propTypes = {
+  user: PropTypes.object,
+  dispatch: PropTypes.func
+};
+
+// Function passed in to `connect` to subscribe to Redux store updates.
+// Any time it updates, mapStateToProps is called.
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(Login);
+
+// let Login = React.createClass({
+//   render: function () {
+//
+//   }
+// });
+//
+// export default Login

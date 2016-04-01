@@ -2,7 +2,7 @@ import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
 
-import * as types from 'constants';
+import * as types from '../constants';
 
 polyfill();
 
@@ -88,7 +88,7 @@ export function manualLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message));
-          dispatch(push('/'));
+          dispatch(push('/home')); // When login successfully, redirect to '/home' URL
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
         }

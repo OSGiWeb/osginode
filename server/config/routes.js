@@ -13,7 +13,7 @@ var App = require(compiled_app_module_path);
 
 module.exports = function(app, passport) {
   // user routes
-  // app.post('/login', users.postLogin);
+  app.post('/login', users.postLogin);
   app.post('/signup', users.postSignUp);
   // app.post('/logout', users.postLogout);
 

@@ -46,7 +46,7 @@ import History from './components/smartAdmin/layout/navigation/classes/History.j
 // const initialState = window.__INITIAL_STATE__;
 
 // const store = configureStore(initialState, History);
-const authenticated = true;
+const authenticated = false;
 const store = configureStore({
   user: {
     authenticated: authenticated,

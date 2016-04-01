@@ -76,7 +76,7 @@ class Register extends Component {
 
               <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                 <div className="well no-padding">
-                  <form action="#/dashboard" id="smart-form-register" className="smart-form client-form">
+                  <form action="#/home" id="smart-form-register" className="smart-form client-form">
                     <header>
                       新用户注册
                     </header>
