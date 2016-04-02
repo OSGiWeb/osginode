@@ -36,7 +36,7 @@ export default function user(state={
       return Object.assign({}, state, {
         isWaiting: false,
         authenticated: false,
-        message: action.message
+        message: action.message // 'message' routes from user action from '/login --> users.postLogin()' from server
       });
     case SIGNUP_USER:
       return Object.assign({}, state, {

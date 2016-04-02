@@ -7,21 +7,25 @@ var passport = require('passport');
  */
 exports.postLogin = function(req, res, next) {
   // Do username and password validation for the server
-  passport.authenticate('local', function(err, user, info) {
-    if(err) return next(err);
-    if(!user) {
-     return res.status(401).json({ message: info.message});
-    }
-    // Passport exposes a login() function on req (also aliased as
-    // logIn()) that can be used to establish a login session
-    req.logIn(user, function(err) {
-      if(err) return res.status(401).json({message: err});
-      return res.status(200).json(
-        {
-          message: 'You have been successfully logged in.'
-        });
-    });
-  })(req, res, next);
+  // 'function(err, user, info)' ==> 'LocalStrategy(...return done(err, user, info))'
+  passport.authenticate('local',
+    {badRequestMessage: '请输入用户名和密码'}, // options for 'authenticate()' in 'strategy.js'
+    function(err, user, info) {
+      if(err) return next(err);
+      if(!user) {
+        // param 'message' passed from 'LocalStrategy()->message:xxx' in '/config/passport/local.js'
+        return res.status(401).json({ message: info.message});
+      }
+      // Passport exposes a login() function on req (also aliased as
+      // logIn()) that can be used to establish a login session
+      req.logIn(user, function(err) {
+        if(err) return res.status(401).json({message: err});
+        return res.status(200).json(
+          {
+            message: '您已成功登录.'
+          });
+      });
+    })(req, res, next);
 };
 
 

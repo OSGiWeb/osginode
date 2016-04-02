@@ -43,18 +43,18 @@ import History from './components/smartAdmin/layout/navigation/classes/History.j
 
 // Grab the state from a global injected into
 // server-generated HTML
-// const initialState = window.__INITIAL_STATE__;
+const initialState = window.__INITIAL_STATE__;
+const store = configureStore(initialState, History);
 
-// const store = configureStore(initialState, History);
-const authenticated = false;
-const store = configureStore({
-  user: {
-    authenticated: authenticated,
-    isWaiting: false,
-    message: '',
-    isLogin: true
-  }
-}, History);
+// const authenticated = false;
+// const store = configureStore({
+//   user: {
+//     authenticated: authenticated,
+//     isWaiting: false,
+//     message: '',
+//     isLogin: true
+//   }
+// }, History);
 const history = syncHistoryWithStore(History, store);
 const routes = createRoutes(store);
 

@@ -12,15 +12,16 @@ var User = require('../../models/user');
  If your site prefers to name these fields differently, options are available to change the defaults.
  */
 module.exports = new LocalStrategy({
-  usernameField : 'username'
+  usernameField : 'username',
 }, function(username, password, done) {
   User.findOne({ username: username}, function(err, user) {
-    if(!user) return done(null, false, { message: 'There is no record of the username ' + username + '.'});
+    if(!user)
+      return done(null, false, { message: '用户名不存在 ' + username + '.'});
     user.comparePassword(password, function(err, isMatch) {
       if(isMatch) {
         return done(null, user);
       } else {
-        return done(null, false, { message: 'Your username or password combination is not correct.'});
+        return done(null, false, { message: '用户名或密码不正确'});
       }
     });
   });

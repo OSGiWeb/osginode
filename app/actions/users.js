@@ -40,7 +40,7 @@ function loginSuccess(message) {
 function loginError(message) {
   return {
     type: types.LOGIN_ERROR_USER,
-    message: message
+    message: message  // 'message' routes from '/login --> users.postLogin()' from server
   };
 }
 

@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { manualLogin } from '../actions/users';
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
+import styles from 'css/components/login';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 class Login extends Component {
   constructor(props) {
@@ -21,6 +24,8 @@ class Login extends Component {
   }
 
   render() {
+    const { isWaiting, message } = this.props.user;
+
     return (
       <div id="extr-page" >
         <header id="header" className="animated fadeInDown">
@@ -68,9 +73,9 @@ class Login extends Component {
               <div className="col-xs-12 col-sm-12 col-md-5 col-lg-4">
                 <div className="well no-padding">
                   <UiValidate>
-                    <form action="#/home" id="login-form" className="smart-form client-form">
+                    <div id="login-div" className="smart-form client-form">
                       <header>
-                        Sign In
+                        用户登录
                       </header>
                       <fieldset>
                         <section>
@@ -90,6 +95,7 @@ class Login extends Component {
                             <a ui-sref="forgotPassword">忘记密码？</a>
                           </div>
                         </section>
+                        <p className={cx('message', { 'message-show': message && message.length > 0 })}>{message}</p>
                         <section>
                           <label className="checkbox">
                             <input type="checkbox" name="remember" defaultChecked={true}/>
@@ -97,11 +103,11 @@ class Login extends Component {
                         </section>
                       </fieldset>
                       <footer>
-                        <button type="submit" onClick={this.onLoginSubmit}　className="btn btn-primary">
+                        <button onClick={this.onLoginSubmit}　className="btn btn-primary">
                           登陆
                         </button>
                       </footer>
-                    </form></UiValidate>
+                    </div></UiValidate>
                 </div>
                 <h5 className="text-center"> - Or sign in using -</h5>
                 <ul className="list-inline text-center">
