@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames/bind';
+// import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { signUp } from '../actions/users';
+import { signUp, signUpError } from '../actions/users';
 // import React from 'react'
 
 class Register extends Component {
@@ -21,9 +21,23 @@ class Register extends Component {
     const { dispatch } = this.props;
     const username = ReactDOM.findDOMNode(this.refs.username).value;
     const password = ReactDOM.findDOMNode(this.refs.password).value;
+    const passwordConfirm = ReactDOM.findDOMNode(this.refs.passwordConfirm).value;
+
+    const firstname = ReactDOM.findDOMNode(this.refs.firstname).value;
+    const lastname = ReactDOM.findDOMNode(this.refs.lastname).value;
+    const gender = ReactDOM.findDOMNode(this.refs.gender).value;
+    const specialty = ReactDOM.findDOMNode(this.refs.specialty).value;
+
+    if (passwordConfirm !== password)
+      dispatch(signUpError('请确定密码一致性！'));
+
     dispatch(signUp({
       username: username,
-      password: password
+      password: password,
+      firstname: firstname,
+      lastname: lastname,
+      gender: gender,
+      specialty: specialty
     }));
   }
 
@@ -96,7 +110,7 @@ class Register extends Component {
 
                       <section>
                         <label className="input"> <i className="icon-append fa fa-lock"/>
-                          <input type="password" name="passwordConfirm" placeholder="密码确认"/>
+                          <input type="password" name="passwordConfirm" ref="passwordConfirm" placeholder="密码确认"/>
                           <b className="tooltip tooltip-bottom-right">请确认密码</b> </label>
                       </section>
                     </fieldset>
@@ -105,12 +119,12 @@ class Register extends Component {
                       <div className="row">
                         <section className="col col-6">
                           <label className="input">
-                            <input type="text" name="firstname" placeholder="姓"/>
+                            <input type="text" name="lastname" ref="lastname" placeholder="姓"/>
                           </label>
                         </section>
                         <section className="col col-6">
                           <label className="input">
-                            <input type="text" name="lastname" placeholder="名"/>
+                            <input type="text" name="firstname" ref="firstname" placeholder="名"/>
                           </label>
                         </section>
                       </div>
@@ -118,7 +132,7 @@ class Register extends Component {
                       <div className="row">
                         <section className="col col-6">
                           <label className="select">
-                            <select name="gender" defaultValue={"0"}>
+                            <select name="gender" ref="gender" defaultValue={"0"}>
                               <option value="0" disabled={true}>性别</option>
                               <option value="1">男</option>
                               <option value="2">女</option>
@@ -126,7 +140,7 @@ class Register extends Component {
                         </section>
                         <section className="col col-6">
                           <label className="select">
-                            <select name="gender" defaultValue={"0"}>
+                            <select name="specialty" ref="specialty" defaultValue={"0"}>
                               <option value="0" disabled={true}>专业方向</option>
                               <option value="1">数据处理</option>
                               <option value="2">显示控制</option>

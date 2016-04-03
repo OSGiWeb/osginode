@@ -34,10 +34,10 @@ var UserSchema = new mongoose.Schema({
   password: String,
   tokens: Array,
   profile: {
-    familyName: { type: String, default: ''},
-    name: { type: String, default: ''},
+    firstname: { type: String, default: ''},
+    lastname: { type: String, default: ''},
     gender: { type: String, default: ''},
-    specialization: { type: String, default: ''}
+    specialty: { type: String, default: ''}
   },
   resetPasswordToken: String,
   resetPasswordExpires: Date

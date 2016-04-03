@@ -45,13 +45,22 @@ exports.postLogout = function(req, res) {
 exports.postSignUp = function(req, res, next) {
   var user =  new User({
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    profile: {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      gender: req.body.gender,
+      specialty: req.body.specialty
+    }
   });
 
   User.findOne({username: req.body.username}, function(err, existingUser) {
+    // Username already existed
     if(existingUser) {
       return res.status(409).json({ message: 'Account with this username address already exists!'});
     }
+    
+    // Username is available 
     user.save(function(err) {
       if(err) return next(err);
       req.logIn(user, function(err) {
@@ -63,4 +72,21 @@ exports.postSignUp = function(req, res, next) {
       });
     });
   });
+
+  // Update user profile
+  // var query = { id: req.body.username };
+  // data = {
+  //   profile: {
+  //     firstname: req.body.firstname,
+  //     lastname: req.body.lastname,
+  //     gender: req.body.gender,
+  //     specialty: req.body.specialty
+  //   }};
+  // User.findOneAndUpdate(query, data, function(err, data) {
+  //   if(err) {
+  //     console.log('Error on save!');
+  //     res.status(500).send('We failed to save to due some reason');
+  //   }
+  //   res.status(200).send('Updated successfully');
+  // });
 };
