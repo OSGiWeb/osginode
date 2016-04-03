@@ -3,8 +3,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
 var webpack = require("webpack");
 
-var assetsPath = path.join(__dirname, "..", "public", "assets");
-var publicPath = "/assets/";
+var buildPath = path.join(__dirname, "..", "public", "build");
 
 var commonLoaders = [
   {
@@ -18,6 +17,7 @@ var commonLoaders = [
     // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
     query: {
       "presets": ["es2015", "react", "stage-0"],
+      "passPerPreset": true,
       "plugins": [
         "transform-react-remove-prop-types",
         "transform-react-constant-elements",
@@ -88,20 +88,26 @@ module.exports = [
     devtool: "source-map",
     context: path.join(__dirname, "..", "app"),
     entry: {
-      app: "./client"
+      app: './index'
     },
     output: {
       // The output directory as absolute path
-      path: assetsPath,
+      path: buildPath,
       // The filename of the entry chunk as relative path inside the output.path directory
-      filename: "[name].js",
+      filename: "bundle.js",
       // The output path from the view of the Javascript
-      publicPath: publicPath
+      publicPath: "/build/"
 
     },
-
     module: {
-      loaders: commonLoaders
+      loaders: commonLoaders.concat([
+        {
+          test: /\.less$/,
+          exclude: [/node_modules/],
+          loader: 'style!css!less!autoprefixer-loader?browsers=last 10 versions'
+
+        }
+      ])
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],
@@ -134,15 +140,20 @@ module.exports = [
     target: "node",
     output: {
       // The output directory as absolute path
-      path: assetsPath,
+      path: buildPath,
       // The filename of the entry chunk as relative path inside the output.path directory
       filename: "server.js",
       // The output path from the view of the Javascript
-      publicPath: publicPath,
+      publicPath: "/build/",
       libraryTarget: "commonjs2"
     },
     module: {
-      loaders: commonLoaders
+      loaders: commonLoaders.concat([
+        {
+          test: /\.css$/,
+          loader: 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]'
+        }
+      ])
     },
     resolve: {
       extensions: ['', '.js', '.jsx', '.css'],

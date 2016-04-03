@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-// import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { signUp, signUpError } from '../actions/users';
-// import React from 'react'
+import { signUp } from '../actions/users';
+import styles from 'css/components/login';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
 
 class Register extends Component {
 
@@ -18,6 +19,7 @@ class Register extends Component {
   }
 
   onRegisterSubmit() {
+    var errMsg = '';
     const { dispatch } = this.props;
     const username = ReactDOM.findDOMNode(this.refs.username).value;
     const password = ReactDOM.findDOMNode(this.refs.password).value;
@@ -28,8 +30,10 @@ class Register extends Component {
     const gender = ReactDOM.findDOMNode(this.refs.gender).value;
     const specialty = ReactDOM.findDOMNode(this.refs.specialty).value;
 
-    if (passwordConfirm !== password)
-      dispatch(signUpError('请确定密码一致性！'));
+    // Send message to user controller and show the no validation error
+    if (passwordConfirm !== password) {
+      errMsg = '请确定密码一致性!'
+    }
 
     dispatch(signUp({
       username: username,
@@ -38,10 +42,12 @@ class Register extends Component {
       lastname: lastname,
       gender: gender,
       specialty: specialty
-    }));
+    }, errMsg));
   }
 
   render() {
+    const { message } = this.props.user;
+
     return (
       <div id="extr-page" >
         <header id="header" className="animated fadeInDown">
@@ -90,7 +96,7 @@ class Register extends Component {
 
               <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                 <div className="well no-padding">
-                  <form action="#/home" id="smart-form-register" className="smart-form client-form">
+                  <div id="smart-form-register" className="smart-form client-form">
                     <header>
                       新用户注册
                     </header>
@@ -113,6 +119,7 @@ class Register extends Component {
                           <input type="password" name="passwordConfirm" ref="passwordConfirm" placeholder="密码确认"/>
                           <b className="tooltip tooltip-bottom-right">请确认密码</b> </label>
                       </section>
+                      <p className={cx('message', { 'message-show': message && message.length > 0 })}>{message}</p>
                     </fieldset>
 
                     <fieldset>
@@ -161,7 +168,7 @@ class Register extends Component {
                         Thank you for your registration!
                       </p>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>

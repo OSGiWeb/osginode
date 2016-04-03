@@ -99,23 +99,30 @@ export function manualLogin(data) {
   };
 }
 
-export function signUp(data) {
-  return dispatch => {
-    dispatch(beginSignUp());
+export function signUp(data, errMsg) {
+  // Without same password and confirm password, show the error
+  if (errMsg && errMsg.length > 0) {
+    return dispatch => {
+      dispatch(signUpError(errMsg));
+    }
+  } else { // With same password and confirm password, do signup process
+    return dispatch => {
+      dispatch(beginSignUp());
 
-    return makeUserRequest('post', data, '/signup')
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message));
-          dispatch(push('/'));
-        } else {
-          dispatch(signUpError('Oops! Something went wrong'));
-        }
-      })
-      .catch(err => {
-        dispatch(signUpError(err.data.message));
-      });
-  };
+      return makeUserRequest('post', data, '/signup')
+        .then(response => {
+          if (response.status === 200) {
+            dispatch(signUpSuccess(response.data.message));
+            dispatch(push('/home'));
+          } else {
+            dispatch(signUpError('Oops! Something went wrong'));
+          }
+        })
+        .catch(err => {
+          dispatch(signUpError(err.data.message));
+        });
+    };
+  }
 }
 
 export function logOut() {

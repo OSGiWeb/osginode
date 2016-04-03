@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-// var assetsPath = path.join(__dirname, '..', 'public', 'assets');
-var publicPath = path.join(__dirname, '..', 'public', 'build');
+var buildPath = path.join(__dirname, '..', 'public', 'build');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 var commonLoaders = [
@@ -86,7 +85,7 @@ module.exports = {
     output: {
       // The output directory as absolute path
       // path: assetsPath,
-      path: publicPath,
+      path: buildPath,
       // The filename of the entry chunk as relative path inside the output.path directory
       // filename: '[name].js',
       filename: 'bundle.js',
@@ -102,7 +101,6 @@ module.exports = {
           test: /\.less$/,
           exclude: [/node_modules/],
           loader: 'style!css!less!autoprefixer-loader?browsers=last 10 versions'
-
         }
       ])
     },

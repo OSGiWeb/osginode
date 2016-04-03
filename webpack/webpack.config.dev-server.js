@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-// var assetsPath = path.join(__dirname, '..', 'public', 'assets');
-var publicPath = path.join(__dirname, '..', 'public', 'build');
+var buildPath = path.join(__dirname, '..', 'public', 'build');
 
 var commonLoaders = [
   {
@@ -41,7 +40,7 @@ module.exports = {
     target: "node",
     output: {
       // The output directory as absolute path
-      path: publicPath,
+      path: buildPath,
       // The filename of the entry chunk as relative path inside the output.path directory
       filename: "server.js",
       // The output path from the view of the Javascript

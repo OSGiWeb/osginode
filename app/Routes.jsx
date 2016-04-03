@@ -2,7 +2,7 @@
  * Created by pc on 2016/3/28.
  */
 import React from 'react'
-import {Route, Redirect, IndexRoute} from 'react-router'
+import {Route, IndexRoute} from 'react-router'
 
 import Layout from './pages/layout/Layout.jsx'
 import Home from './pages/Home.jsx'

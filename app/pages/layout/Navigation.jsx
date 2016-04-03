@@ -10,7 +10,17 @@ import MinifyMenu from '../../components/smartAdmin/layout/actions/MinifyMenu.js
 
 import LoginInfo from '../../components/smartAdmin/user/components/LoginInfo.jsx'
 
-let rawItems = require('json!../../config/menu-items.json').items;
+// let rawItems = require('../../config/menu-items.json').items;
+
+const rawItems = {
+  "items": [
+  {
+    "title": "Blank",
+    "icon": "fa fa-lg fa-fw fa-home",
+    "route": "/home"
+  }
+]
+};
 
 let Navigation = React.createClass({
     render: function () {
@@ -18,7 +28,7 @@ let Navigation = React.createClass({
             <aside id="left-panel">
                 <LoginInfo />
                 <nav>
-                    <SmartMenu rawItems={rawItems} />
+                    <SmartMenu rawItems={rawItems.items} />
                 </nav>
                 <MinifyMenu />
             </aside>

@@ -24,7 +24,7 @@ class Login extends Component {
   }
 
   render() {
-    const { isWaiting, message } = this.props.user;
+    const { message } = this.props.user;
 
     return (
       <div id="extr-page" >
