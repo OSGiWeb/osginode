@@ -25,6 +25,9 @@
     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
     <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
 
+    <!-- Add webpack compiled css file which defined css styles in '/app' -->
+    <link rel="stylesheet" type="text/css" media="screen" href="build/styles/main.css">
+
     <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
     <link rel="stylesheet" type="text/css" media="screen" href="styles/css/demo.min.css">
 
@@ -56,10 +59,7 @@
         <div id="app">
 
         </div>
-        <!--<script src="javascripts/react.min.js"></script>-->
-        <script src="javascripts/react-with-addons.js"></script>
-        <script src="javascripts/react.js"></script>
-        <script src="javascripts/react-dom.js"></script>
+        <script src="javascripts/react.min.js"></script>
         <script src="javascripts/jquery.min.js"></script>
         <script src="javascripts/bootstrap.min.js"></script>
         <script src="build/vendor.bundle.js"></script>

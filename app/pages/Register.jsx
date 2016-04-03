@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { signUp } from '../actions/users';
-import styles from 'css/components/login';
+import styles from '../css/components/login';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 

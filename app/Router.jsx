@@ -64,8 +64,6 @@ render(
   document.getElementById('app')
 );
 
-
-
 // if (module.hot) {
 //   require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
 //     getRootInstances: function () {

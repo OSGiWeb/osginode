@@ -17,11 +17,9 @@ var commonLoaders = [
     // https://github.com/gaearon/react-transform-hmr/issues/5#issuecomment-142313637
     query: {
       "presets": ["es2015", "react", "stage-0"],
-      "passPerPreset": true,
       "plugins": [
         "transform-react-remove-prop-types",
-        "transform-react-constant-elements",
-        "transform-react-inline-elements"
+        "transform-react-constant-elements"
       ]
     },
     include: path.join(__dirname, '..', 'app'),

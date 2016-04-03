@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { manualLogin } from '../actions/users';
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
-import styles from 'css/components/login';
+import styles from '../css/components/login';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
