@@ -30,10 +30,11 @@ function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
 }
 
-function loginSuccess(message) {
+function loginSuccess(username, message) {
   return {
     type: types.LOGIN_SUCCESS_USER,
-    message: message
+    message: message,
+    username: username
   };
 }
 
@@ -81,13 +82,15 @@ export function toggleLoginMode() {
 }
 
 export function manualLogin(data) {
+  let username = data.username;
+
   return dispatch => {
     dispatch(beginLogin());
 
     return makeUserRequest('post', data, '/login')
       .then(response => {
         if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message));
+          dispatch(loginSuccess(username, response.data.message));
           dispatch(push('/home')); // When login successfully, redirect to '/home' URL
         } else {
           dispatch(loginError('Oops! Something went wrong!'));

@@ -51,7 +51,7 @@ let Header = React.createClass({
                             <li>
                                 <a href="#/views/profile"
                                    className="padding-10 padding-top-0 padding-bottom-0"> <i className="fa fa-user"/>
-                                    <u>P</u>rofile</a>
+                                    <u>P</u>profile</a>
                             </li>
                             <li className="divider"/>
                             <li>

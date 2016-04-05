@@ -60,7 +60,8 @@ class Login extends Component {
 
 
   toggleMode() {
-    this.props.dispatch(toggleLoginMode());
+    const { dispatch } = this.props;
+    dispatch(toggleLoginMode());
   }
 
   renderHeader() {
