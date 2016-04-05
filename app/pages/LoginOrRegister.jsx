@@ -39,15 +39,19 @@ class Login extends Component {
 
     // Send message to user controller and show the no validation error
     if (!(username || username.length > 0) ||
-        !(password || password.length > 0) ||
-        !(passwordConfirm || passwordConfirm.length > 0)) {
-      errMsg = '请输入用户名和密码'
+      !(password || password.length > 0) ||
+      !(passwordConfirm || passwordConfirm.length > 0)) {
+      errMsg = '请输入用户名和密码';
+
+    } else if (!(firstname || firstname.length > 0) ||
+      !(lastname || lastname.length > 0)) {
+      errMsg = '请输入用户姓名'
     }
 
     if (passwordConfirm !== password) {
       errMsg = '请确定密码一致性'
     }
-
+    
     dispatch(signUp({
       username: username,
       password: password,
@@ -180,7 +184,6 @@ class Login extends Component {
                   <input type="password" name="passwordConfirm" ref="passwordConfirm" placeholder="密码确认"/>
                   <b className="tooltip tooltip-bottom-right">请确认密码</b> </label>
               </section>
-              <p className={cx('message', { 'message-show': message && message.length > 0 })}>{message}</p>
             </fieldset>
 
             <fieldset>
@@ -216,6 +219,7 @@ class Login extends Component {
                     </select> <i/> </label>
                 </section>
               </div>
+              <p className={cx('message', { 'message-show': message && message.length > 0 })}>{message}</p>
             </fieldset>
             {this.renderButton()}
           </div>
