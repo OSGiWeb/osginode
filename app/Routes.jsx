@@ -6,8 +6,8 @@ import {Route, IndexRoute} from 'react-router'
 
 import Layout from './pages/layout/Layout.jsx'
 import Home from './pages/Home.jsx'
-import Login from './pages/Login.jsx'
-import Register from './pages/Register.jsx'
+import LoginOrRegister from './pages/LoginOrRegister.jsx'
+// import Register from './pages/Register.jsx'
 // import LockedScreen from './pages/LockedScreen.jsx'
 
 /*
@@ -58,13 +58,14 @@ export default (store) => {
   return (
     <Route>
       <Route path="/">
-        <IndexRoute component={Login} />
-        <Route path="login" component={Login} onEnter={redirectAuth} />
+        <IndexRoute component={LoginOrRegister} />
+        <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
         <Route component={Layout}>
           <Route path="home" component={Home} onEnter={requireAuth}/>
         </Route>
-        <Route path="register" component={Register}/>
       </Route>
     </Route>
   );
 };
+
+// <Route path="register" component={Register}/>
