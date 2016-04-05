@@ -30,11 +30,11 @@ function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
 }
 
-function loginSuccess(username, message) {
+function loginSuccess(userFullname, message) {
   return {
     type: types.LOGIN_SUCCESS_USER,
     message: message,
-    username: username
+    userFullname: userFullname
   };
 }
 
@@ -82,7 +82,6 @@ export function toggleLoginMode() {
 }
 
 export function manualLogin(data) {
-  let username = data.username;
 
   return dispatch => {
     dispatch(beginLogin());
@@ -90,7 +89,8 @@ export function manualLogin(data) {
     return makeUserRequest('post', data, '/login')
       .then(response => {
         if (response.status === 200) {
-          dispatch(loginSuccess(username, response.data.message));
+          let userFullname = response.data.lastname + response.data.firstname;
+          dispatch(loginSuccess(userFullname, response.data.message));
           dispatch(push('/home')); // When login successfully, redirect to '/home' URL
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
@@ -116,7 +116,7 @@ export function signUp(data, errMsg) {
         .then(response => {
           if (response.status === 200) {
             dispatch(signUpSuccess(response.data.message));
-            dispatch(push('/home'));
+            dispatch(push('/login'));
           } else {
             dispatch(signUpError('Oops! Something went wrong'));
           }

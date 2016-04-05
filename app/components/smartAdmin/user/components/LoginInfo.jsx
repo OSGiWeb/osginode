@@ -34,14 +34,14 @@ class LoginInfo extends Component {
   }
 
   render() {
-    const { username } = this.props.user;
+    const { userFullname } = this.props.user;
 
     return (
       <div className="login-info">
 			    <span>
 			        <ToggleShortcut>
                 <img src="styles/img/avatars/3.png" alt="me"
-                     className="online" /><span>{username}</span><i className="fa fa-angle-down" />
+                     className="online" /><span>{userFullname}</span><i className="fa fa-angle-down" />
               </ToggleShortcut>
 			     </span>
       </div>

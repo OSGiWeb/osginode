@@ -22,6 +22,8 @@ exports.postLogin = function(req, res, next) {
         if(err) return res.status(401).json({message: err});
         return res.status(200).json(
           {
+            firstname: user.profile.firstname,
+            lastname: user.profile.lastname,
             message: '您已成功登录.'
           });
       });
