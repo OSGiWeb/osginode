@@ -37,24 +37,6 @@ export default (store) => {
     callback();
   };
 
-  /* Router strategy */
-  // return (
-  //   <Route>
-  //     {/* First show the login page */}
-  //     <Route path="/">
-  //       {/*<Redirect from="/" to="/login"/>*/}
-  //       <IndexRoute component={Login}/>
-  //     </Route>
-  //
-  //     {/* Home page with layout */}
-  //     <Route component={Layout}>
-  //       <Route path="home" component={Home} onEnter={requireAuth}/>
-  //     </Route>
-  //     {/*<Route path="lock" component={LockedScreen} />*/}
-  //     <Route path="login" component={Login}/>
-  //     <Route path="register" component={Register}/>
-  //   </Route>
-  // );
   return (
     <Route>
       <Route path="/">
@@ -69,3 +51,22 @@ export default (store) => {
 };
 
 // <Route path="register" component={Register}/>
+
+/* Router strategy */
+// return (
+//   <Route>
+//     {/* First show the login page */}
+//     <Route path="/">
+//       {/*<Redirect from="/" to="/login"/>*/}
+//       <IndexRoute component={Login}/>
+//     </Route>
+//
+//     {/* Home page with layout */}
+//     <Route component={Layout}>
+//       <Route path="home" component={Home} onEnter={requireAuth}/>
+//     </Route>
+//     {/*<Route path="lock" component={LockedScreen} />*/}
+//     <Route path="login" component={Login}/>
+//     <Route path="register" component={Register}/>
+//   </Route>
+// );

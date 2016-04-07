@@ -21,4 +21,9 @@
 - 下载 google 字体： import url(https://fonts.googleapis.com/css?family=Montserrat:400,700)
 - UI 选型和适配
 - ~~登陆的不同用户在 home 页面对应的用户名 / 中文用户名（添加中文姓名validation check on sign up）~~
+- 使用高级的互动的 form validation check 方式/控件，e.g. SmartAdmin - Form Validation
+- 创建导航栏树结构： Smart Menu from 'menu-items.json' / Six level menu from UI elements,
+  使用 Redux + Fetch 换掉 SmartMenu 组建中的 reflux store + jquery
+- 创建类 Profile 和 Projects 主界面结构 from App-Views
+- 参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构
 

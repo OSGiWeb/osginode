@@ -7,7 +7,7 @@ import styles from '../css/components/login';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-class Login extends Component {
+class LoginOrRegister extends Component {
   constructor(props) {
     super(props);
     this.toggleMode = this.toggleMode.bind(this);
@@ -280,7 +280,7 @@ class Login extends Component {
 
 }
 
-Login.propTypes = {
+LoginOrRegister.propTypes = {
   user: PropTypes.object,
   dispatch: PropTypes.func
 };
@@ -296,12 +296,4 @@ function mapStateToProps(state) {
 // Connects React component to the redux store
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps)(Login);
-
-// let Login = React.createClass({
-//   render: function () {
-//
-//   }
-// });
-//
-// export default Login
+export default connect(mapStateToProps)(LoginOrRegister);

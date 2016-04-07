@@ -12,12 +12,25 @@ import LoginInfo from '../../components/smartAdmin/user/components/LoginInfo.jsx
 
 // let rawItems = require('../../config/menu-items.json').items;
 
+// Must add parameter "route" otherwise not works for SmartMenu
 const rawItems = {
   "items": [
   {
     "title": "Blank",
     "icon": "fa fa-lg fa-fw fa-home",
-    "route": "/home"
+    "route": "/home",
+    "items": [
+      {
+        "icon": "fa fa-gear",
+        "title": "App Layouts",
+        "route": "/"
+      },
+      {
+        "icon": "fa fa-picture-o",
+        "title": "Prebuilt Skins",
+        "route": "/home"
+      }
+    ]
   }
 ]
 };

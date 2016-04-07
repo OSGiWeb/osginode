@@ -1,9 +1,19 @@
 {
   "items": [
     {
-      "title": "Blank",
+      "title": "Dashboard",
+
       "icon": "fa fa-lg fa-fw fa-home",
-      "route": "/home"
+      "items": [
+        {
+          "route": "/dashboard",
+          "title": "Analytics Dashboard"
+        },
+        {
+          "route": "/dashboard/social-wall.html",
+          "title": "Social Wall"
+        }
+      ]
     }
   ]
 }
