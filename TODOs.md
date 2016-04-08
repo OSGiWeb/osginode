@@ -23,7 +23,22 @@
 - ~~登陆的不同用户在 home 页面对应的用户名 / 中文用户名（添加中文姓名validation check on sign up）~~
 - 使用高级的互动的 form validation check 方式/控件，e.g. SmartAdmin - Form Validation
 - 创建导航栏树结构： Smart Menu from 'menu-items.json' / Six level menu from UI elements,
-  使用 Redux + Fetch 换掉 SmartMenu 组建中的 reflux store + jquery
+  使用 Redux + Fetch 换掉 SmartMenu 组建中的 reflux store + jquery，实际就是改写整个'/layout/navigation'
+  component 集合
+  #### 导航栏树结构改造
+  ```
+  Navigation Tree:
+  -> Navigation [page]
+  -> SmartMenu [component|json(rawItems.item)]
+  -> SmartMenuList [component|NavigationStore.initRawItems()->.normalize()->return new MenuItem(item)->._setInitialItem/.getData()]
+  -> SmartMenuItem [component|item={item} key={item._id}]
+  -> SmartMenuItem->render() [component]
+  ->
+  ->
+  ->
+  ->
+  ```
+
 - 创建类 Profile 和 Projects 主界面结构 from App-Views
 - 参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构
 
