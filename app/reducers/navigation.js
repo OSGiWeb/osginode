@@ -1,15 +1,27 @@
 /**
  * Created by Information on 2016/4/8.
  */
+
 import {
   SET_NAVIGATION_ACTIVE,
   GET_NAVIGATION_CONTENT
 } from '../constants/index';
 
+var defaultItems = {
+  "items": [
+    {
+      "_id": "123456",
+      "title": "Blank",
+      "icon": "fa fa-lg fa-fw fa-home",
+      "route": "/home"
+    }
+  ]
+};
+
 export default function navigation(
   state={
     isActive: false,
-    data: ''
+    data: defaultItems
   }, action={}) {
   switch (action.type) {
     case SET_NAVIGATION_ACTIVE:

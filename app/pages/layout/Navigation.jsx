@@ -34,25 +34,6 @@ const rawItems = {
   ]
 };
 
-// let Navigation = React.createClass({
-//  
-//  
-//  
-//   render: function () {
-//     const { data } = this.props.navigation;
-//
-//     return (
-//       <aside id="left-panel">
-//         <LoginInfo />
-//         <nav>
-//           <SmartMenu rawItems={rawItems.items} />
-//         </nav>
-//         <MinifyMenu />
-//       </aside>
-//     )
-//   }
-// });
-// export default Navigation
 
 class Navigation extends Component {
   constructor(props) {
@@ -100,3 +81,24 @@ function mapStateToProps(state) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps)(Navigation);
+
+
+// let Navigation = React.createClass({
+//
+//
+//
+//   render: function () {
+//     const { data } = this.props.navigation;
+//
+//     return (
+//       <aside id="left-panel">
+//         <LoginInfo />
+//         <nav>
+//           <SmartMenu rawItems={rawItems.items} />
+//         </nav>
+//         <MinifyMenu />
+//       </aside>
+//     )
+//   }
+// });
+// export default Navigation
