@@ -32,55 +32,28 @@
 //     )
 //   }
 // });
+//
+// export default SmartMenu
+
+
 
 /**
  * NEW IMPLEMENTATION
  */
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
-import { getNavigationItems } from '../../../../../actions/navigations'; // TODO: change path
 import SmartMenuList from './SmartMenuList.jsx'
 
 class SmartMenu extends Component {
   constructor(props) {
     super(props);
-    // getNavigationItems();
-    if(this.props.rawItems){
-      // NavigationStore.initRawItems(this.props.rawItems)
-    }
   }
 
   render() {
-    const {items} = this.props.navigation;
-
     return(
-      <SmartMenuList items={items} />
+      <SmartMenuList items={this.props.data.items} />
     );
   }
 
 }
-
-
-SmartMenu.propTypes = {
-  navigation: PropTypes.object,
-  dispatch: PropTypes.func
-};
-
-// Function passed in to `connect` to subscribe to Redux store updates.
-// Any time it updates, mapStateToProps is called.
-function mapStateToProps(state) {
-  return {
-    navigation: state.navigation
-  };
-}
-
-// Connects React component to the redux store
-// It does not modify the component class passed to it
-// Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps)(SmartMenu);
-
-
-
 
 export default SmartMenu

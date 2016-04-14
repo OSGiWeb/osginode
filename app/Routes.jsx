@@ -37,13 +37,15 @@ export default (store) => {
     callback();
   };
 
+  // Application routes: Redux store connection should be placed in bellowing components (container component / pages),
+  // e.g. 'LoginOrRegister', 'layout'
   return (
     <Route>
       <Route path="/">
         <IndexRoute component={LoginOrRegister} />
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
         <Route component={Layout}>
-          <Route path="home" component={Home} onEnter={requireAuth}/>
+          <Route path="home" component={Home} onEnter={requireAuth} />
         </Route>
       </Route>
     </Route>

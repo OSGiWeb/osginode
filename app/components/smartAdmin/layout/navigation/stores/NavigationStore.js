@@ -34,7 +34,7 @@ let NavigationStore = Reflux.createStore({
     this.trigger(data)
   },
 
-  onActivate: function (item) {
+  onActivate: function (item) { // TODO
     data.item = item;
     if(item.route)
       History.pushState(null, item.route)

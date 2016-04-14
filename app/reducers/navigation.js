@@ -2,23 +2,23 @@
  * Created by Information on 2016/4/8.
  */
 import {
-  TOGGLE_NAVIGATION_ACTIVE,
-  GET_NAVIGATION_ITEMS
+  SET_NAVIGATION_ACTIVE,
+  GET_NAVIGATION_CONTENT
 } from '../constants/index';
 
-export default function user(
+export default function navigation(
   state={
     isActive: false,
-    items: ''
+    data: ''
   }, action={}) {
   switch (action.type) {
-    case TOGGLE_NAVIGATION_ACTIVE:
+    case SET_NAVIGATION_ACTIVE:
       return Object.assign({}, state, {
         isActive: action.isActive
       });
-    case GET_NAVIGATION_ITEMS:
+    case GET_NAVIGATION_CONTENT:
       return Object.assign({}, state, {
-        items: action.items
+        data: action.data
       });
     default:
       return state;
