@@ -6,7 +6,7 @@ import _ from 'lodash'
 import request from 'axios'
 import { push } from 'react-router-redux'
 
-import MenuItem from '../components/smartAdmin/layout/navigation/stores/MenuItem.js' // TODO: change path
+import MenuItem from '../components/smartAdmin/layout/navigation/components/MenuItem.js' // TODO: change path
 import * as types from '../constants'
 
 polyfill();

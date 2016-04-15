@@ -4,8 +4,8 @@
 
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
-import { initRawItems } from '../../actions/navigations'; // TODO: change path
-import SmartMenu from '../../components/smartAdmin/layout/navigation/components/SmartMenu.jsx'
+import { initRawItems, setActiveNavigationItem, toggleMenuItemOpenClose } from '../../actions/navigations'; // TODO: change path
+import SmartMenuList from '../../components/smartAdmin/layout/navigation/components/SmartMenuList.jsx'
 import MinifyMenu from '../../components/smartAdmin/layout/actions/MinifyMenu.jsx'
 import LoginInfo from '../../components/smartAdmin/user/components/LoginInfo.jsx'
 
@@ -36,6 +36,12 @@ const rawItems = {
 class Navigation extends Component {
   constructor(props) {
     super(props);
+    // Event handlers for SmartMenu component
+    this.onMenuItemClick = this.onMenuItemClick.bind(this);
+    this.onMenuItemOpen = this.onMenuItemOpen.bind(this);
+    this.onMenuItemClose = this.onMenuItemClose.bind(this);
+    
+    // Initialize raw item to MenuItem structure format
     this.initialize();
   }
 
@@ -46,14 +52,37 @@ class Navigation extends Component {
     }
   }
 
+  /*
+   Event handlers for SmartMenu component
+   */
+  onMenuItemClick(item) {
+    const { dispatch } = this.props;
+    dispatch(setActiveNavigationItem(item));
+  }
+
+  onMenuItemOpen(item) {
+    const { dispatch } = this.props;
+    dispatch(toggleMenuItemOpenClose(item, true));
+  }
+
+  onMenuItemClose(item) {
+    const { dispatch } = this.props;
+    dispatch(toggleMenuItemOpenClose(item, false));
+  }
+
   render() {
     const { data } = this.props.navigation;
-
+    const { userFullname } = this.props.user;
+    
     return (
       <aside id="left-panel">
-        <LoginInfo />
+        <LoginInfo userFullname={userFullname}/>
         <nav>
-          <SmartMenu data={data} />
+          <SmartMenuList data={data} items={data.items}
+                     onMenuItemClick={this.onMenuItemClick}
+                     onMenuItemOpen={this.onMenuItemOpen}
+                     onMenuItemClose={this.onMenuItemClose}
+          />
         </nav>
         <MinifyMenu />
       </aside>
@@ -62,6 +91,7 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
+  user: PropTypes.object,
   navigation: PropTypes.object,
   dispatch: PropTypes.func
 };
@@ -70,6 +100,7 @@ Navigation.propTypes = {
 // Any time it updates, mapStateToProps is called.
 function mapStateToProps(state) {
   return {
+    user: state.user,
     navigation: state.navigation
   };
 }
@@ -78,24 +109,3 @@ function mapStateToProps(state) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps)(Navigation);
-
-// let rawItems = require('../../config/menu-items.json').items;
-// let Navigation = React.createClass({
-//
-//
-//
-//   render: function () {
-//     const { data } = this.props.navigation;
-//
-//     return (
-//       <aside id="left-panel">
-//         <LoginInfo />
-//         <nav>
-//           <SmartMenu rawItems={rawItems.items} />
-//         </nav>
-//         <MinifyMenu />
-//       </aside>
-//     )
-//   }
-// });
-// export default Navigation

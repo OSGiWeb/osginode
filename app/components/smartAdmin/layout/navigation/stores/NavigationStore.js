@@ -1,7 +1,7 @@
 import Reflux from 'reflux'
 import NavigationActions from './../actions/NavigationActions.js'
 
-import MenuItem from './MenuItem.js'
+import MenuItem from './../components/MenuItem.js'
 
 import History from '../classes/History.js'
 

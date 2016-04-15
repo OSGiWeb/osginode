@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux';
-import UserStore from '../stores/UserStore'
 import ToggleShortcut from './ToggleShortcut.jsx'
 
 
@@ -28,41 +26,41 @@ import ToggleShortcut from './ToggleShortcut.jsx'
 //   }
 // });
 
-class LoginInfo extends Component {
-  constructor(props) {
-    super(props);
-  }
+// export default class LoginInfo extends Component {
+//   constructor(props) {
+//     super(props);
+//   }
+//
+//   render() {
+//     const { userFullname } = this.props;
+//     return (
+//       <div className="login-info">
+// 			    <span>
+// 			        <ToggleShortcut>
+//                 <img src="styles/img/avatars/3.png" alt="me"
+//                      className="online" /><span>{userFullname}</span><i className="fa fa-angle-down" />
+//               </ToggleShortcut>
+// 			     </span>
+//       </div>
+//     )
+//   }
+// }
 
-  render() {
-    const { userFullname } = this.props.user;
-
-    return (
-      <div className="login-info">
+const LoginInfo = ({ userFullname }) => {
+  return (
+    <div className="login-info">
 			    <span>
 			        <ToggleShortcut>
                 <img src="styles/img/avatars/3.png" alt="me"
                      className="online" /><span>{userFullname}</span><i className="fa fa-angle-down" />
               </ToggleShortcut>
 			     </span>
-      </div>
-    )
-  }
-}
-
-LoginInfo.propTypes = {
-  user: PropTypes.object,
-  dispatch: PropTypes.func
+    </div>
+  )
 };
 
-// Function passed in to `connect` to subscribe to Redux store updates.
-// Any time it updates, mapStateToProps is called.
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
+LoginInfo.propTypes = {
+  userFullname: PropTypes.string
+};
 
-// Connects React component to the redux store
-// It does not modify the component class passed to it
-// Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps)(LoginInfo);
+export default LoginInfo;
