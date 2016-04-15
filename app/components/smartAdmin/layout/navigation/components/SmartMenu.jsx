@@ -40,14 +40,14 @@
 /**
  * NEW IMPLEMENTATION
  */
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import SmartMenuList from './SmartMenuList.jsx'
 
 class SmartMenu extends Component {
   constructor(props) {
     super(props);
   }
-
+  
   render() {
     return(
       <SmartMenuList items={this.props.data.items} />
@@ -57,3 +57,5 @@ class SmartMenu extends Component {
 }
 
 export default SmartMenu
+
+// Also send parameter 'data' with 'data={this.props.data}' to sub components to avoid store data access,  data={this.props.data}

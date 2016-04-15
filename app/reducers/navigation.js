@@ -3,17 +3,37 @@
  */
 
 import {
-  SET_NAVIGATION_ACTIVE,
-  GET_NAVIGATION_CONTENT
+  SET_NAVIGATION_ITEM_ACTIVE,
+  SET_NAVIGATION_CONTENT,
+  SET_MENUITEM_OPEN_CLOSE
 } from '../constants/index';
 
+// Dummy menu item structure, s.a. 'MenuItem' component for detail
 var defaultItems = {
+  "item": [
+    {
+      "_id": "root-1",
+      "title": "Blank",
+      "route": "/home",
+      "icon": "fa fa-lg fa-fw fa-home",
+      "badge": "",
+      "counter": "",
+      "parent": "",
+      "isOpen": "true",
+      "isActive": "true"
+    }
+  ],
   "items": [
     {
-      "_id": "123456",
+      "_id": "default-1",
       "title": "Blank",
+      "route": "/home",
       "icon": "fa fa-lg fa-fw fa-home",
-      "route": "/home"
+      "badge": "",
+      "counter": "",
+      "parent": "",
+      "isOpen": "true",
+      "isActive": "true"
     }
   ]
 };
@@ -24,11 +44,15 @@ export default function navigation(
     data: defaultItems
   }, action={}) {
   switch (action.type) {
-    case SET_NAVIGATION_ACTIVE:
+    case SET_NAVIGATION_ITEM_ACTIVE:
       return Object.assign({}, state, {
         isActive: action.isActive
       });
-    case GET_NAVIGATION_CONTENT:
+    case SET_NAVIGATION_CONTENT:
+      return Object.assign({}, state, {
+        data: action.data
+      });
+    case SET_MENUITEM_OPEN_CLOSE:
       return Object.assign({}, state, {
         data: action.data
       });

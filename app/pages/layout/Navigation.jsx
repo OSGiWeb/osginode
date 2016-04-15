@@ -9,8 +9,6 @@ import SmartMenu from '../../components/smartAdmin/layout/navigation/components/
 import MinifyMenu from '../../components/smartAdmin/layout/actions/MinifyMenu.jsx'
 import LoginInfo from '../../components/smartAdmin/user/components/LoginInfo.jsx'
 
-// let rawItems = require('../../config/menu-items.json').items;
-
 // Must add parameter "route" otherwise not works for SmartMenu
 const rawItems = {
   "items": [
@@ -61,7 +59,6 @@ class Navigation extends Component {
       </aside>
     )
   }
-
 }
 
 Navigation.propTypes = {
@@ -82,7 +79,7 @@ function mapStateToProps(state) {
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps)(Navigation);
 
-
+// let rawItems = require('../../config/menu-items.json').items;
 // let Navigation = React.createClass({
 //
 //

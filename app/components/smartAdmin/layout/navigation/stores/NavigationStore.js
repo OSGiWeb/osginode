@@ -37,7 +37,7 @@ let NavigationStore = Reflux.createStore({
   onActivate: function (item) { // TODO
     data.item = item;
     if(item.route)
-      History.pushState(null, item.route)
+      History.pushState(null, item.route) // redirect to route URL
     this.trigger({
       item: item
     })

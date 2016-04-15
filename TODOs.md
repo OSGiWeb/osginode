@@ -33,12 +33,14 @@
   -> SmartMenuList [component|NavigationStore.initRawItems()->.normalize()->return new MenuItem(item)->._setInitialItem/.getData()]
   -> SmartMenuItem [component|item={item} key={item._id}]
   -> SmartMenuItem->render() [component]
-  ->
-  ->
-  ->
-  ->
   ```
 
+  ```
+    Data flow and Component render:
+    -> dispatch() redux store data change action in 'SmartMenuItem' component
+    -> trigger data reload in render() function in 'Navigation' component
+    -> render 'Navigation' container component and subcomponents, i.e.: 'SmartMenu', 'SmartMenuList', 'SmartMenuItem'
+  ```
 - 创建类 Profile 和 Projects 主界面结构 from App-Views
 - 参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构
-
+- 修改action, reducer名称，带上action, reducer前缀or后缀

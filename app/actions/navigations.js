@@ -12,19 +12,12 @@ import * as types from '../constants'
 polyfill();
 
 let data = {
-  item: undefined,
-  items: []
+  item: undefined, // Current selected(activated) navigation item
+  items: []        // Items tree including ALL items property
 };
 
 
-function onNaviItemActive(item) {
 
-
-  return {
-    type: types.SET_NAVIGATION_ACTIVE,
-
-  };
-}
 
 function setInitialItem(items) {
   items.forEach(function(item){
@@ -45,7 +38,14 @@ function normalize(items) {
 
 function setNavigationContent(data) {
   return {
-    type: types.GET_NAVIGATION_CONTENT,
+    type: types.SET_NAVIGATION_CONTENT,
+    data: data
+  };
+}
+
+function setMenuItemOpenClose(data) {
+  return {
+    type: types.SET_MENUITEM_OPEN_CLOSE,
     data: data
   };
 }
@@ -55,6 +55,26 @@ export function initRawItems(rawItems) {
   setInitialItem(data.items);
   return dispatch => {
     dispatch(setNavigationContent(data));
+  }
+}
+
+export function setActiveNavigationItem(item) {
+  data.item = item;
+
+  return dispatch => {
+    if (item.route)
+      dispatch(push(item.route)); // redirect to route URL
+
+    dispatch(setNavigationContent(data));
+  }
+}
+
+export function toggleMenuItemOpenClose(item, isOpen) {
+  item.isOpen = isOpen;
+  data.item = item;
+
+  return dispatch => {
+    dispatch(setMenuItemOpenClose(data));
   }
 }
 
