@@ -10,7 +10,7 @@ export default class MenuItem {
         this._id = _.uniqueId('nav-store-');
 
         this.title = data.title;
-        this.route = data.route;
+        this.route = (data.route == undefined?'/home':data.route);
         this.icon = data.icon;
         this.badge = data.badge;
         this.counter = data.counter;
