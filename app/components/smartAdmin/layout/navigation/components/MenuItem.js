@@ -33,7 +33,7 @@ export default class MenuItem {
     }
 
     _hasOpenChildren(){
-        return _.any(this.items, function(item){
+        return _.some(this.items, function(item){ // Yun: Change '_.any' to '_.some' while lodash version updated
             return item._isOpen()
         })
     }
@@ -47,13 +47,13 @@ export default class MenuItem {
     }
 
     isSibling(item){
-        return this._id != item._id && this.parent && _.any(this.parent.items, function(child){
+        return this._id != item._id && this.parent && _.some(this.parent.items, function(child){
                 return child._id == item._id && child._id != this._id
             })
     }
 
     isParentOf(item){
-        return this.items && _.any(this.items, function(_item){
+        return this.items && _.some(this.items, function(_item){
                 return _item._id == item._id || _item.isParentOf(item)
              })
     }

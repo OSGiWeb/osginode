@@ -30,7 +30,19 @@ const rawItems = {
         {
           "icon": "fa fa-gear",
           "title": "配置管理",
-          "route": "/home"
+          "route": "/home",
+          "items": [
+            {
+              "icon": "fa fa-lg fa-fw fa-cloud",
+              "title": "基本配置",
+              "route": "/home"
+            },
+            {
+              "icon": "fa fa-suitcase",
+              "title": "插件配置",
+              "route": "/home"
+            }
+          ]
         }
       ]
     },
@@ -46,20 +58,25 @@ const rawItems = {
         {
           "icon": "fa fa-suitcase",
           "title": "私有仓库",
+          "route": "/datatables"
+        },
+        {
+          "icon": "fa fa-group",
+          "title": "应用配置向导",
           "route": "/home"
         },
         {
           "icon": "fa fa-comments",
-          "title": "Forum Layout",
+          "title": "开发文档",
           "items": [
             {
               "icon": "fa fa-picture-o",
-              "title": "General View",
+              "title": "开发流程",
               "route": "/home"
             },
             {
               "icon": "fa fa-picture-o",
-              "title": "Topic View",
+              "title": "代码规范",
               "route": "/home"
             },
             {
@@ -70,13 +87,29 @@ const rawItems = {
           ]
         },
         {
-          "icon": "fa fa-group",
-          "title": "Profile",
+          "icon": "fa fa-clock-o",
+          "title": "插件代码生成工具",
+          "route": "/home"
+        }
+      ]
+    },
+    {
+      "title": "管理工具",
+      "icon": "fa fa-lg fa-fw fa-home",
+      "items": [
+        {
+          "icon": "fa fa-user",
+          "title": "插件审核",
           "route": "/home"
         },
         {
-          "icon": "fa fa-clock-o",
-          "title": "Timeline",
+          "icon": "fa fa-file-text-o",
+          "title": "项目管理",
+          "route": "/home"
+        },
+        {
+          "icon": "fa fa-gear",
+          "title": "配置管理",
           "route": "/home"
         }
       ]
@@ -92,7 +125,7 @@ class Navigation extends Component {
     this.onMenuItemClick = this.onMenuItemClick.bind(this);
     this.onMenuItemOpen = this.onMenuItemOpen.bind(this);
     this.onMenuItemClose = this.onMenuItemClose.bind(this);
-    
+
     // Initialize raw item to MenuItem structure format
     this.initialize();
   }
@@ -125,15 +158,15 @@ class Navigation extends Component {
   render() {
     const { data } = this.props.navigation;
     const { userFullname } = this.props.user;
-    
+
     return (
       <aside id="left-panel">
         <LoginInfo userFullname={userFullname}/>
         <nav>
           <SmartMenuList data={data} items={data.items}
-                     onMenuItemClick={this.onMenuItemClick}
-                     onMenuItemOpen={this.onMenuItemOpen}
-                     onMenuItemClose={this.onMenuItemClose}
+                         onMenuItemClick={this.onMenuItemClick}
+                         onMenuItemOpen={this.onMenuItemOpen}
+                         onMenuItemClose={this.onMenuItemClose}
           />
         </nav>
         <MinifyMenu />

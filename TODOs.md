@@ -18,6 +18,7 @@
 
 ## Features
 - 每次大改动之后，执行一遍 npm run build，生成 production 环境下的代码并运行，观察是否有错误
+- 更换首页图片，改为插件平台相关
 - 下载 google 字体： import url(https://fonts.googleapis.com/css?family=Montserrat:400,700)
 - UI 选型和适配
 - ~~登陆的不同用户在 home 页面对应的用户名 / 中文用户名（添加中文姓名validation check on sign up）~~
@@ -44,3 +45,6 @@
 - 创建类 Profile 和 Projects 主界面结构 from App-Views
 - 参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构
 - 修改action, reducer名称，带上action, reducer前缀or后缀
+- 生成插件框架代码或在已有项目中添加新的插件后，通过 Web端 / Nodejs 直接调用Cmake并配置
+  参数生成QT项目树，并打开QT->加载该项目
+- 主页添加新闻和推送等功能
