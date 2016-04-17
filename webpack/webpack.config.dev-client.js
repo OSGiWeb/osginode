@@ -1,7 +1,19 @@
+var _ = require('lodash');
 var path = require('path');
 var webpack = require('webpack');
 var buildPath = path.join(__dirname, '..', 'public', 'build');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+var scripts = require('./scripts');
+
+// Configuration for pack all third party js files
+// if (argv.inline && argv.hot) {
+//   scripts.aliases.react = "/node_modules/react/react.js" // for better debug
+// }
+var rootDir = path.resolve(__dirname, '../');
+var node_modules = path.resolve(rootDir, 'node_modules');
+var aliases = _.mapValues(scripts.aliases, function (scriptPath) {
+  return path.resolve(rootDir + scriptPath)
+});
 
 var commonLoaders = [
   {
@@ -23,8 +35,8 @@ var commonLoaders = [
     test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
     loader: 'url',
     query: {
-        name: '[hash].[ext]',
-        limit: 10000,
+      name: '[hash].[ext]',
+      limit: 10000,
     }
   },
   { test: /\.html$/, loader: 'html-loader' }
@@ -53,70 +65,86 @@ var postCSSConfig = function() {
 };
 
 module.exports = {
-    // eval - Each module is executed with eval and //@ sourceURL.
-    devtool: 'eval',
-    // The configuration for the client
-    name: 'browser',
-    /* The entry point of the bundle
-     * Entry points for multi page app could be more complex
-     * A good example of entry points would be:
-     * entry: {
-     *   pageA: "./pageA",
-     *   pageB: "./pageB",
-     *   pageC: "./pageC",
-     *   adminPageA: "./adminPageA",
-     *   adminPageB: "./adminPageB",
-     *   adminPageC: "./adminPageC"
-     * }
-     *
-     * We can then proceed to optimize what are the common chunks
-     * plugins: [
-     *  new CommonsChunkPlugin("admin-commons.js", ["adminPageA", "adminPageB"]),
-     *  new CommonsChunkPlugin("common.js", ["pageA", "pageB", "admin-commons.js"], 2),
-     *  new CommonsChunkPlugin("c-commons.js", ["pageC", "adminPageC"]);
-     * ]
-     */
-    context: path.join(__dirname, '..', 'app'),
-    // Multiple entry with hot loader
-    // https://github.com/glenjamin/webpack-hot-middleware/blob/master/example/webpack.config.multientry.js
-    entry: {
-      app: ['./index', hotMiddlewareScript] // ./client
+  // eval - Each module is executed with eval and //@ sourceURL.
+  devtool: 'eval',
+  // The configuration for the client
+  name: 'browser',
+  /* The entry point of the bundle
+   * Entry points for multi page app could be more complex
+   * A good example of entry points would be:
+   * entry: {
+   *   pageA: "./pageA",
+   *   pageB: "./pageB",
+   *   pageC: "./pageC",
+   *   adminPageA: "./adminPageA",
+   *   adminPageB: "./adminPageB",
+   *   adminPageC: "./adminPageC"
+   * }
+   *
+   * We can then proceed to optimize what are the common chunks
+   * plugins: [
+   *  new CommonsChunkPlugin("admin-commons.js", ["adminPageA", "adminPageB"]),
+   *  new CommonsChunkPlugin("common.js", ["pageA", "pageB", "admin-commons.js"], 2),
+   *  new CommonsChunkPlugin("c-commons.js", ["pageC", "adminPageC"]);
+   * ]
+   */
+  context: rootDir, //path.join(__dirname, '..', 'app')
+  resolve: {
+    alias: aliases,
+    extensions: ['', '.js', '.jsx', '.css'],
+    modulesDirectories: [
+      'app', 'node_modules'
+    ]
+  },
+
+  // Multiple entry with hot loader
+  // https://github.com/glenjamin/webpack-hot-middleware/blob/master/example/webpack.config.multientry.js
+  // entry: {
+  //   app: ['./app/index', hotMiddlewareScript]
+  // },
+
+  // entry: _.merge({
+  //     app: ['./app/index', hotMiddlewareScript]
+  //   },
+  //   scripts.chunks),
+  entry: _.merge({
+      bundle: ['./app/index', hotMiddlewareScript]
     },
-    output: {
-      // The output directory as absolute path
-      // path: assetsPath,
-      path: buildPath,
-      // The filename of the entry chunk as relative path inside the output.path directory
-      // filename: '[name].js',
-      filename: 'bundle.js',
-      // The output path from the view of the Javascript
-      publicPath: '/build/'
-    },
-    module: {
-      loaders: commonLoaders.concat([
-        { test: /\.css$/,
-          loader: 'style!css?module&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
-        },
-        {
-          test: /\.less$/,
-          exclude: [/node_modules/],
-          loader: 'style!css!less!autoprefixer-loader?browsers=last 10 versions'
-        }
-      ])
-    },
-    resolve: {
-      extensions: ['', '.js', '.jsx', '.css'],
-      modulesDirectories: [
-        'app', 'node_modules'
-      ]
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
-        new webpack.DefinePlugin({
-          __DEVCLIENT__: true,
-          __DEVSERVER__: false
-        })
-    ],
-    postcss: postCSSConfig
+    scripts.chunks),
+
+  output: {
+    // The output directory as absolute path
+    path: buildPath,
+    //path: path.resolve(__dirname, '../public/build'),
+    // The filename of the entry chunk as relative path inside the output.path directory
+    // filename: '[name].js',
+    filename: '[name].js',
+    chunkFilename: 'chunk.[id].js',
+    // The output path from the view of the Javascript, must with '/build/' (/b..)
+    publicPath: '/build/'
+    // pathinfo: true,
+  },
+  module: {
+    loaders: commonLoaders.concat([
+      { test: /\.css$/,
+        loader: 'style!css?module&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
+      },
+      {
+        test: /\.less$/,
+        exclude: [/node_modules/],
+        loader: 'style!css!less!autoprefixer-loader?browsers=last 10 versions'
+      }
+    ]),
+    noParse: _.values(_.pick(aliases, scripts.noParse))
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      __DEVCLIENT__: true,
+      __DEVSERVER__: false
+    }),
+    // new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js", Infinity),
+  ],
+  postcss: postCSSConfig
 };

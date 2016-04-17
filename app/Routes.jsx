@@ -45,9 +45,9 @@ export default (store) => {
       <Route path="/">
         <IndexRoute component={LoginOrRegister} />
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
-        <Route path="datatables" component={Datatables} />
         <Route component={Layout}>
           <Route path="home" component={Home} onEnter={requireAuth} />
+          <Route path="datatables" component={Datatables} />
         </Route>
       </Route>
     </Route>

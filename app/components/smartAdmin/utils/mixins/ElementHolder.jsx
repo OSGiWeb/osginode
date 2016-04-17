@@ -1,7 +1,7 @@
 /**
  * Created by griga on 12/9/15.
  */
-    import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 
 let counter = 0;
 let instances = {};

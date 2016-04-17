@@ -19,6 +19,8 @@
 ## Features
 - 每次大改动之后，执行一遍 npm run build，生成 production 环境下的代码并运行，观察是否有错误
 - 更换首页图片，改为插件平台相关
+- 参考 SmartAdmin Theme 中如何将所有需要的js库文件打包到一起，并统一定义reference的文件名
+  s.a.:'/webpack/scripts'，打包后即可使用 ScriptLoader.jsx 中的 'loadScript()' 函数
 - 下载 google 字体： import url(https://fonts.googleapis.com/css?family=Montserrat:400,700)
 - UI 选型和适配
 - ~~登陆的不同用户在 home 页面对应的用户名 / 中文用户名（添加中文姓名validation check on sign up）~~

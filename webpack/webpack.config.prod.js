@@ -1,9 +1,11 @@
+var _ = require('lodash');
 var path = require("path");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
 var webpack = require("webpack");
 
 var buildPath = path.join(__dirname, "..", "public", "build");
+var scripts = require('./scripts');
 
 var commonLoaders = [
   {
@@ -30,8 +32,8 @@ var commonLoaders = [
     test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
     loader: 'url',
     query: {
-        name: '[hash].[ext]',
-        limit: 10000,
+      name: '[hash].[ext]',
+      limit: 10000,
     }
   },
   { test: /\.css$/,
@@ -85,9 +87,13 @@ module.exports = [
     // A SourceMap is emitted.
     devtool: "source-map",
     context: path.join(__dirname, "..", "app"),
-    entry: {
-      app: './index'
-    },
+    // entry: {
+    //   app: './index'
+    // },
+    entry: _.merge({
+        app: ['./index', hotMiddlewareScript]
+      },
+      scripts.chunks),
     output: {
       // The output directory as absolute path
       path: buildPath,
@@ -114,18 +120,18 @@ module.exports = [
       ]
     },
     plugins: [
-        // extract inline css from modules into separate files
-        new ExtractTextPlugin("styles/main.css"),
-        new webpack.optimize.UglifyJsPlugin({
-          compressor: {
-            warnings: false
-          }
-        }),
-        new webpack.DefinePlugin({
-          __DEVCLIENT__: false,
-          __DEVSERVER__: false
-        }),
-        new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
+      // extract inline css from modules into separate files
+      new ExtractTextPlugin("styles/main.css"),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+          warnings: false
+        }
+      }),
+      new webpack.DefinePlugin({
+        __DEVCLIENT__: false,
+        __DEVSERVER__: false
+      }),
+      new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
     ],
     postcss: postCSSConfig
   }, {
@@ -160,21 +166,21 @@ module.exports = [
       ]
     },
     plugins: [
-        // Order the modules and chunks by occurrence.
-        // This saves space, because often referenced modules
-        // and chunks get smaller ids.
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new ExtractTextPlugin("styles/main.css"),
-        new webpack.optimize.UglifyJsPlugin({
-          compressor: {
-            warnings: false
-          }
-        }),
-        new webpack.DefinePlugin({
-          __DEVCLIENT__: false,
-          __DEVSERVER__: false
-        }),
-        new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
+      // Order the modules and chunks by occurrence.
+      // This saves space, because often referenced modules
+      // and chunks get smaller ids.
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new ExtractTextPlugin("styles/main.css"),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+          warnings: false
+        }
+      }),
+      new webpack.DefinePlugin({
+        __DEVCLIENT__: false,
+        __DEVSERVER__: false
+      }),
+      new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
     ],
     postcss: postCSSConfig
   }
