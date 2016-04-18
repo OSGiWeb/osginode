@@ -103,10 +103,6 @@ module.exports = {
   //   app: ['./app/index', hotMiddlewareScript]
   // },
 
-  // entry: _.merge({
-  //     app: ['./app/index', hotMiddlewareScript]
-  //   },
-  //   scripts.chunks),
   entry: _.merge({
       bundle: ['./app/index', hotMiddlewareScript]
     },

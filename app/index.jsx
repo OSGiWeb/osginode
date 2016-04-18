@@ -8,14 +8,15 @@
  */
 window.jQuery = window.$ =  require('jquery');
 window.SMARTADMIN_GLOBALS = require('./config/config');
+window._ =  require("lodash");
 require("jquery-ui");
 require("bootstrap");
-require("fastclick");
+// require("fastclick");
 require("moment");
 // require("moment-timezone");
-require("fullcalendar");
-require("jquery-sparkline");
-require("jquery-validation");
+// require("fullcalendar");
+require("sparkline");
+// require("jquery-validation");
 require("smartwidgets"); // jarvis widgets, defined in '/webpack/scripts.js'
 // require("notification");
 // require("easy-pie");
