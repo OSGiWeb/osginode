@@ -30,7 +30,6 @@ const rawItems = {
         {
           "icon": "fa fa-gear",
           "title": "配置管理",
-          "route": "/home",
           "items": [
             {
               "icon": "fa fa-lg fa-fw fa-cloud",
