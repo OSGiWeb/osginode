@@ -3,12 +3,12 @@ var path = require('path');
 var webpack = require('webpack');
 var buildPath = path.join(__dirname, '..', 'public', 'build');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
-var scripts = require('./scripts');
 
 // Configuration for pack all third party js files
 // if (argv.inline && argv.hot) {
 //   scripts.aliases.react = "/node_modules/react/react.js" // for better debug
 // }
+var scripts = require('./scripts');
 var rootDir = path.resolve(__dirname, '../');
 var node_modules = path.resolve(rootDir, 'node_modules');
 var aliases = _.mapValues(scripts.aliases, function (scriptPath) {
@@ -144,12 +144,7 @@ module.exports = {
       __DEVCLIENT__: true,
       __DEVSERVER__: false
     }),
-    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js", Infinity),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    })
+    new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js", Infinity)
   ],
   postcss: postCSSConfig
 };

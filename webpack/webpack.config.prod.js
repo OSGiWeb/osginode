@@ -5,7 +5,17 @@ var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webp
 var webpack = require("webpack");
 
 var buildPath = path.join(__dirname, "..", "public", "build");
+
+// Configuration for pack all third party js files
+// if (argv.inline && argv.hot) {
+//   scripts.aliases.react = "/node_modules/react/react.js" // for better debug
+// }
 var scripts = require('./scripts');
+var rootDir = path.resolve(__dirname, '../');
+var node_modules = path.resolve(rootDir, 'node_modules');
+var aliases = _.mapValues(scripts.aliases, function (scriptPath) {
+  return path.resolve(rootDir + scriptPath)
+});
 
 var commonLoaders = [
   {
@@ -86,22 +96,33 @@ module.exports = [
      */
     // A SourceMap is emitted.
     devtool: "source-map",
-    context: path.join(__dirname, "..", "app"),
-    // entry: {
-    //   app: './index'
-    // },
+    context: rootDir, //path.join(__dirname, "..", "app"),
+    resolve: {
+      alias: aliases,
+      extensions: ['', '.js', '.jsx', '.css'],
+      modulesDirectories: [
+        'app', 'node_modules'
+      ]
+    },
+    // entry: _.merge({
+    //     app: ['./index', hotMiddlewareScript]
+    //   },
+    //   scripts.chunks),
     entry: _.merge({
-        app: ['./index', hotMiddlewareScript]
+        bundle: './app/index'
       },
       scripts.chunks),
     output: {
       // The output directory as absolute path
       path: buildPath,
+      //path: path.resolve(__dirname, '../public/build'),
       // The filename of the entry chunk as relative path inside the output.path directory
-      filename: "bundle.js",
-      // The output path from the view of the Javascript
-      publicPath: "/build/"
-
+      // filename: '[name].js',
+      filename: '[name].js',
+      chunkFilename: 'chunk.[id].js',
+      // The output path from the view of the Javascript, must with '/build/' (/b..)
+      publicPath: '/build/'
+      // pathinfo: true,
     },
     module: {
       loaders: commonLoaders.concat([
@@ -111,13 +132,8 @@ module.exports = [
           loader: 'style!css!less!autoprefixer-loader?browsers=last 10 versions'
 
         }
-      ])
-    },
-    resolve: {
-      extensions: ['', '.js', '.jsx', '.css'],
-      modulesDirectories: [
-        "app", "node_modules"
-      ]
+      ]),
+      noParse: _.values(_.pick(aliases, scripts.noParse))
     },
     plugins: [
       // extract inline css from modules into separate files
@@ -131,7 +147,8 @@ module.exports = [
         __DEVCLIENT__: false,
         __DEVSERVER__: false
       }),
-      new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' })
+      new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' }),
+      new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js", Infinity)
     ],
     postcss: postCSSConfig
   }, {
