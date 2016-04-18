@@ -55,7 +55,7 @@ const routes = createRoutes(store);
 
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
-render(
+var rootInstance = render(
   <Provider store={store}>
     <Router history={history}>
       {routes}
@@ -64,11 +64,11 @@ render(
   document.getElementById('app')
 );
 
-// if (module.hot) {
-//   require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
-//     getRootInstances: function () {
-//       // Help React Hot Loader figure out the root component instances on the page:
-//       return [rootInstance];
-//     }
-//   });
-// }
+if (module.hot) {
+  require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
+    getRootInstances: function () {
+      // Help React Hot Loader figure out the root component instances on the page:
+      return [rootInstance];
+    }
+  });
+}

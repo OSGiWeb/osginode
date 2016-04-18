@@ -102,7 +102,7 @@ var scripts = {
         // "magnific-popup": "/bower_components/magnific-popup/dist/jquery.magnific-popup.js",
         //
         // "fullcalendar": "/web/smartadmin-plugin/fullcalendar/jquery.fullcalendar.min.js",
-        // "smartwidgets": "/web/smartadmin-plugin/smartwidgets/jarvis.widget.js",
+        "smartwidgets": "/public/smartadmin-plugin/smartwidgets/jarvis.widget.js",
         //
         // "notification": "/web/smartadmin-plugin/notification/SmartNotification.min.js",
         // "chatbox": "/web/smartadmin-plugin/chat/chat.box.js"
