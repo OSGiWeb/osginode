@@ -46,18 +46,13 @@ const rawItems = {
       ]
     },
     {
-      "title": "插件仓库",
+      "title": "插件开发",
       "icon": "fa fa-lg fa-fw fa-puzzle-piece",
       "items": [
         {
           "icon": "fa fa-lg fa-fw fa-cloud",
-          "title": "公有仓库",
-          "route": "/home"
-        },
-        {
-          "icon": "fa fa-suitcase",
-          "title": "私有仓库",
-          "route": "/datatables"
+          "title": "插件仓库",
+          "route": "/pluginsRepository"
         },
         {
           "icon": "fa fa-group",

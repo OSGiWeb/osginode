@@ -7,7 +7,8 @@ import {Route, IndexRoute} from 'react-router'
 import Layout from './pages/layout/Layout.jsx'
 import Home from './pages/Home.jsx'
 import LoginOrRegister from './pages/LoginOrRegister.jsx'
-import Datatables from './pages/Datatables.jsx'
+import PluginsRepository from './pages/PluginsRepository.jsx'
+
 // import Register from './pages/Register.jsx'
 // import LockedScreen from './pages/LockedScreen.jsx'
 
@@ -47,7 +48,7 @@ export default (store) => {
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
         <Route component={Layout}>
           <Route path="home" component={Home} onEnter={requireAuth} />
-          <Route path="datatables" component={Datatables} />
+          <Route path="pluginsRepository" component={PluginsRepository} />
         </Route>
       </Route>
     </Route>

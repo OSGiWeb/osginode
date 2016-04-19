@@ -4,9 +4,9 @@ import LanguageActions from './LanguageActions'
 
 let data = {
     language: {
-        key: "us",
-        alt: "United States",
-        title: "English (US)"
+        "key": "cn",
+        "alt": "China",
+        "title": "中文"
     },
     languages: [],
     phrases: {}

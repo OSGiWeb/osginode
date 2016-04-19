@@ -23,10 +23,6 @@ require("smartwidgets"); // jarvis widgets, defined in '/webpack/scripts.js'
 // require('jvectormap');
 // require('jvectormap-world-mill-en');
 
-// TODO: pack all (these bellowing) used js files in chunk to use 'loadScript()' function in ScriptLoader.jsx
-// require("../public/smartadmin-plugin/smartwidgets/jarvis.widget.min.js");
-// require("../public/build/vendor.datatables.js");
-
 /*
  User modules
  */
