@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import user from '../reducers/user';
 import navigation from '../reducers/navigation'
+import plugin from '../reducers/plugin'
 import { routerReducer as routing } from 'react-router-redux';
 
 // Combine reducers with routeReducer which keeps track of
@@ -8,6 +9,7 @@ import { routerReducer as routing } from 'react-router-redux';
 const rootReducer = combineReducers({
   user,
   navigation,
+  plugin,
   routing
 });
 
