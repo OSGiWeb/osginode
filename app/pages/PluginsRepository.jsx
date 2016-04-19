@@ -23,69 +23,87 @@ class PluginsRepository extends Component {
     dispatch(togglePrivateRepositoryMode());
   }
 
-  renderDataTable() {
-    const { isPrivate } = this.props.plugin;
+  renderDataTableHeader(_isPrivate) {
+    return(
+      <header>
+        <span className="widget-icon"> <i className="fa fa-table"/> </span>
+        <h2>{classnames({ '私有插件列表': _isPrivate, '公共插件列表': !_isPrivate })}</h2>
+        <div className="widget-toolbar">
+          <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.toggleMode}>
+            <i className={classnames({ 'fa fa-archive': _isPrivate, 'fa fa-cloud': !_isPrivate })}/>
+            &nbsp;&nbsp; 切换仓库
+          </button>
+        </div>
+      </header>
+    )
+  }
 
-    if (isPrivate) {
+  renderDataTable(_isPrivate) {
+
+    if (_isPrivate) {
       return (
-            <Datatable
-              options={{
-                      ajax: 'api/tables/datatables.standard.json',
+        <JarvisWidget editbutton={false} color="blueDark">
+          {this.renderDataTableHeader(_isPrivate)}
+          <div>
+            <div className="widget-body no-padding">
+              <Datatable
+                options={{
+                      ajax: 'api/tables/datatables.filters.json',
                       columns: [
-                        {data: "id"},
-                        {data: "name"},
-                        {data: "phone"},
-                        {data: "company"},
-                        {data: "zip"},
-                        {data: "city"},
-                        {data: "date"}],
-                      buttons: ['copy', 'excel', 'pdf']
+                        {data: "name"}, {data: "position"}, {data: "office"},
+                        {data: "age"}, {data: "date"}, {data: "salary"} ],
+                      buttons: ['excel', 'pdf']
                       }}
-              className="table table-striped table-bordered table-hover"
-              width="100%">
-              <thead>
-              <tr>
-                <th data-class="expand">ID</th>
-                <th data-class="expand">名称</th>
-                <th data-class="expand">类别</th>
-                <th data-class="expand">版本</th>
-                <th data-class="expand">Zip</th>
-                <th data-class="expand">City</th>
-                <th data-class="expand">Date</th>
-              </tr>
-              </thead>
-            </Datatable>
+                className="table table-striped table-bordered table-hover"
+                width="100%">
+                <thead>
+                <tr>
+                  <th data-class="expand">ID</th>
+                  <th data-class="expand">名称</th>
+                  <th data-class="expand">类别</th>
+                  <th data-class="expand">版本</th>
+                  <th data-class="expand"><i className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                    &nbsp;&nbsp; 发布时间</th>
+                  <th data-class="expand">描述</th>
+                </tr>
+                </thead>
+              </Datatable>
+            </div>
+          </div>
+        </JarvisWidget>
       )
     }
 
     return (
-          <Datatable
-            options={{
+      <JarvisWidget editbutton={false} color="blueDark">
+        {this.renderDataTableHeader(_isPrivate)}
+        <Datatable
+          options={{
                       ajax: 'api/tables/datatables.standard.json',
                       columns: [
-                        {data: "id"},
-                        {data: "name"},
-                        {data: "phone"},
-                        {data: "company"},
-                        {data: "zip"},
-                        {data: "city"},
+                        {data: "id"}, {data: "name"},
+                        {data: "phone"}, {data: "company"},
+                        {data: "zip"}, {data: "city"},
                         {data: "date"}],
-                      buttons: ['copy', 'excel', 'pdf']
+                      buttons: ['excel', 'pdf']
                       }}
-            className="table table-striped table-bordered table-hover"
-            width="100%">
-            <thead>
-            <tr>
-              <th data-hide="mobile-p">ID</th>
-              <th data-class="expand">公共插件名称</th>
-              <th>Phone</th>
-              <th data-hide="mobile-p">Company</th>
-              <th data-hide="mobile-p,tablet-p">Zip</th>
-              <th data-hide="mobile-p,tablet-p">City</th>
-              <th data-hide="mobile-p,tablet-p">Date</th>
-            </tr>
-            </thead>
-          </Datatable>
+          className="table table-striped table-bordered table-hover"
+          width="100%">
+          <thead>
+          <tr>
+            <th data-class="expand">ID</th>
+            <th data-class="expand">名称</th>
+            <th data-class="expand">类别</th>
+            <th data-class="expand">版本</th>
+            <th data-class="expand"><i
+              className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+              &nbsp;&nbsp; 发布时间</th>
+            <th data-class="expand">发布人</th>
+            <th data-class="expand">描述</th>
+          </tr>
+          </thead>
+        </Datatable>
+      </JarvisWidget>
     )
   }
 
@@ -104,23 +122,7 @@ class PluginsRepository extends Component {
 
           <div className="row">
             <article className="col-sm-12">
-              <JarvisWidget editbutton={false} color="blueDark">
-                <header>
-                  <span className="widget-icon"> <i className="fa fa-table"/> </span>
-                  <h2>{classnames({ '私有插件列表': isPrivate, '公共插件列表': !isPrivate })}</h2>
-                  <div className="widget-toolbar">
-                    <button className={classnames(["btn btn-xs btn-default"])} onClick={this.toggleMode}>
-                      <i className={classnames({ 'fa fa-archive': isPrivate, 'fa fa-cloud': !isPrivate })}/>
-                      &nbsp;&nbsp; 切换仓库
-                    </button>
-                  </div>
-                </header>
-                <div>
-                  <div className="widget-body no-padding">
-                    {this.renderDataTable()}
-                  </div>
-                </div>
-              </JarvisWidget>
+              {this.renderDataTable(isPrivate)}
             </article>
           </div>
 
