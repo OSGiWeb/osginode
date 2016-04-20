@@ -12,7 +12,7 @@ var User = require('../../models/user');
  If your site prefers to name these fields differently, options are available to change the defaults.
  */
 module.exports = new LocalStrategy({
-  usernameField : 'username',
+  usernameField : 'username'
 }, function(username, password, done) {
   User.findOne({ username: username}, function(err, user) {
     if(!user)

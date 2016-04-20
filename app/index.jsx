@@ -18,7 +18,7 @@ require("moment");
 require("sparkline");
 // require("jquery-validation");
 require("smartwidgets"); // jarvis widgets, defined in '/webpack/scripts.js'
-// require("notification");
+require("notification"); // enable smart notifications
 // require("easy-pie");
 // require('jvectormap');
 // require('jvectormap-world-mill-en');

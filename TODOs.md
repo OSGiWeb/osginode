@@ -7,6 +7,7 @@
 - 已经登陆的用户使用 F5 更新 /home 页面时，必须重新登陆，考虑使用 session 记录已登陆的用户信息。
 - 在 sign up 成功后，提示“用户已经注册”信息。
 - 切换成中文后，在切入到别的主页，如‘私有仓库’，'Recent projects' 没有自动翻译。
+- 下载 jquery-maskedinput，打包到scripts.js中，并激活uivalidation功能。
 
 
 

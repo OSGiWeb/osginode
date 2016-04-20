@@ -101,8 +101,7 @@ var scripts = {
     //
     // "fullcalendar": "/web/smartadmin-plugin/fullcalendar/jquery.fullcalendar.min.js",
     "smartwidgets": "/public/smartadmin-plugin/smartwidgets/jarvis.widget.js",
-    //
-    // "notification": "/web/smartadmin-plugin/notification/SmartNotification.min.js",
+    "notification": "/public/smartadmin-plugin/notification/SmartNotification.min.js",
     // "chatbox": "/web/smartadmin-plugin/chat/chat.box.js"
 
 
@@ -122,8 +121,7 @@ var scripts = {
       "bootstrap",
       // //"fastclick",
       // //"fullcalendar",
-      // //"notification",
-      // //"smartwidgets",
+      //"smartwidgets",
       // //"jvectormap"
     ] ,
     "vendor.ui": [
