@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
-import MaskedInput from '../components/smartAdmin/forms/inputs/MaskedInput.jsx'
 import UiDatepicker from '../components/smartAdmin/forms/inputs/UiDatepicker.jsx'
 import SubHeader from './layout/SubHeader.jsx'
 import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
@@ -13,7 +12,7 @@ import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 
-import { togglePrivateRepositoryMode } from '../actions/plugins';
+import { togglePrivateRepositoryMode, createPlugin } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -99,6 +98,20 @@ class PluginsRepository extends Component {
 
   onAddNewPluginSubmit() {
 
+    // TODO: send data to server
+
+    const { dispatch } = this.props;
+    const pluginname = ReactDOM.findDOMNode(this.refs.pluginname).value;
+    const category = ReactDOM.findDOMNode(this.refs.category).value;
+    const version = ReactDOM.findDOMNode(this.refs.version).value;
+    const description = ReactDOM.findDOMNode(this.refs.description).value;
+
+    // dispatch(createPlugin({
+    //   pluginname: pluginname,
+    //   category: category,
+    //   version: version,
+    //   description: description
+    // }));
 
     // If success
     this.showSmartNotification();
@@ -127,11 +140,6 @@ class PluginsRepository extends Component {
 
   renderAddPluginForm() {
     return (
-      <JarvisWidget editbutton={false} custombutton={false}>
-        <header>
-          <span className="widget-icon"> <i className="fa fa-edit"/> </span>
-          <h2>插件信息 </h2>
-        </header>
         <div>
           <div className="widget-body no-padding">
             <UiValidate options={validationOptions}>
@@ -140,12 +148,12 @@ class PluginsRepository extends Component {
                   <div className="row">
                     <section className="col col-6">
                       <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-                        <input type="text" name="pluginname" placeholder="名称"/>
+                        <input type="text" name="pluginname" ref="pluginname" placeholder="名称"/>
                       </label>
                     </section>
                     <section className="col col-6">
                       <label className="select">
-                        <select name="category" defaultValue={"0"}>
+                        <select name="category" ref="category" defaultValue={"0"}>
                           <option value="0" disabled={true}>类别</option>
                           <option value="1">核心插件</option>
                           <option value="2">显示插件</option>
@@ -158,12 +166,12 @@ class PluginsRepository extends Component {
                   <div className="row">
                     <section className="col col-6">
                       <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                        <input type="text" name="version" placeholder="版本号"/>
+                        <input type="text" name="version" ref="version" placeholder="版本号"/>
                       </label>
                     </section>
                     <section className="col col-6">
                       <label className="input"> <i className="icon-append fa fa-user"/>
-                        <input type="email" name="author" placeholder="作者"/>
+                        <input type="text" name="author" ref="author" placeholder="作者"/>
                       </label>
                     </section>
                   </div>
@@ -171,12 +179,7 @@ class PluginsRepository extends Component {
                   <div className="row">
                     <section className="col col-6">
                       <label className="input"> <i className="icon-append fa fa-calendar"/>
-                        <UiDatepicker type="text" name="releasedate" id="releasedate" placeholder="发布时间"/>
-                      </label>
-                    </section>
-                    <section className="col col-6">
-                      <label className="input"> <i className="icon-append fa fa-phone"/>
-                        <MaskedInput type="tel" name="reserved_1" placeholder="reserved_1" mask="(999) 999-9999" />
+                        <UiDatepicker type="text" name="releasedate" ref="releasedate" id="releasedate" placeholder="发布时间"/>
                       </label>
                     </section>
                   </div>
@@ -193,7 +196,7 @@ class PluginsRepository extends Component {
 
                   <section>
                     <label className="textarea"> <i className="icon-append fa fa-comment"/>
-                      <textarea rows="5" name="description" placeholder="插件描述"/>
+                      <textarea rows="5" name="description" ref="description"  placeholder="插件描述"/>
                     </label>
                   </section>
                 </fieldset>
@@ -201,7 +204,6 @@ class PluginsRepository extends Component {
             </UiValidate>
           </div>
         </div>
-      </JarvisWidget>
     )
   }
 
@@ -216,7 +218,8 @@ class PluginsRepository extends Component {
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h4 className="modal-title" id="repoControlModalLabel">添加插件</h4>
+                <h2 className="row-seperator-header" id="repoControlModalLabel" >
+                  <i className="fa fa-reorder"/> 添加插件 </h2>
               </div>
               <div className="modal-body">
 
