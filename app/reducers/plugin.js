@@ -6,7 +6,9 @@ import {
   CREATE_PLUGIN_REQUEST,
   CREATE_PLUGIN_SUCCESS,
   CREATE_PLUGIN_FAILURE,
-
+  GET_PLUGINS_REQUEST,
+  GET_PLUGINS_SUCCESS,
+  GET_PLUGINS_FAILURE
 } from '../constants/index';
 
 export default function plugin(
@@ -21,16 +23,29 @@ export default function plugin(
         isPrivate: !state.isPrivate
       });
     case CREATE_PLUGIN_REQUEST:
-      return {
-        plugins: [...state.plugins, { id: action.id, count: action.count, text: action.text } ],
+      return Object.assign({}, state, {
+        plugins: [...state.plugins, action.data], //id: action.id, count: action.count, text: action.text
         newPlugin: ''
-      };
+      });
     case CREATE_PLUGIN_FAILURE:
-      return {
+      return Object.assign({}, state, {
         plugins: [...state.plugins.filter((tp) => tp.id !== action.id)],
         newPlugin: state.newPlugin
-      };
+      });
 
+    case GET_PLUGINS_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case GET_PLUGINS_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        plugins: action.data
+      });
+    case GET_PLUGINS_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false
+      });
     default:
       return state;
   }

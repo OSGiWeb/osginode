@@ -20,12 +20,11 @@ exports.postLogin = function(req, res, next) {
       // logIn()) that can be used to establish a login session
       req.logIn(user, function(err) {
         if(err) return res.status(401).json({message: err});
-        return res.status(200).json(
-          {
-            firstname: user.profile.firstname,
-            lastname: user.profile.lastname,
-            message: '您已成功登录.'
-          });
+        return res.status(200).json({
+          firstname: user.profile.firstname,
+          lastname: user.profile.lastname,
+          message: '您已成功登录.'
+        });
       });
     })(req, res, next);
 };
@@ -61,7 +60,7 @@ exports.postSignUp = function(req, res, next) {
     if(existingUser) {
       return res.status(409).json({ message: '用户名已存在'});
     }
-    
+
     // Username is available 
     user.save(function(err) {
       if(err) return next(err);

@@ -21,6 +21,9 @@ module.exports = function(app, passport) {
 
 // topic routes
   app.get('/pluginsRepository', plugins.all);
+  app.post('/pluginsRepository/:id', function(req, res) {
+    plugins.add(req, res);
+  });
 
   // app.post('/topic/:id', function(req, res) {
   //   topics.add(req, res);

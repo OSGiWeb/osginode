@@ -12,7 +12,7 @@ import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 
-import { togglePrivateRepositoryMode, createPlugin } from '../actions/plugins';
+import { togglePrivateRepositoryMode, createPlugin, fetchPlugins } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -60,6 +60,13 @@ let validationOptions = {
 
 
 class PluginsRepository extends Component {
+
+  //TODO: Data that needs to be called before rendering the component This is used for server-side rending
+  // via the fetchComponentDataBeforeRender() method
+  // static need = [
+  //   fetchPlugins
+  // ]
+
   constructor(props) {
     super(props);
 
@@ -67,6 +74,10 @@ class PluginsRepository extends Component {
     this.toggleMode = this.toggleMode.bind(this);
     this.onAddNewPluginSubmit = this.onAddNewPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
+
+    // no server-side rendering, just get plugins info here
+    const { dispatch } = this.props;
+    dispatch(fetchPlugins());
   }
 
   toggleMode() {
@@ -101,17 +112,23 @@ class PluginsRepository extends Component {
     // TODO: send data to server
 
     const { dispatch } = this.props;
+    const id = 'NOT_DEFINED'; // Used to add md5 identifier later
     const pluginname = ReactDOM.findDOMNode(this.refs.pluginname).value;
     const category = ReactDOM.findDOMNode(this.refs.category).value;
     const version = ReactDOM.findDOMNode(this.refs.version).value;
+    const author = '许昀'; // TODO: get authore name from user
+    const releasedate = ReactDOM.findDOMNode(this.refs.releasedate).value;
     const description = ReactDOM.findDOMNode(this.refs.description).value;
 
-    // dispatch(createPlugin({
-    //   pluginname: pluginname,
-    //   category: category,
-    //   version: version,
-    //   description: description
-    // }));
+    dispatch(createPlugin({
+      id: id,
+      pluginname: pluginname,
+      category: category,
+      version: version,
+      author: author,
+      releasedate: releasedate,
+      description: description
+    }));
 
     // If success
     this.showSmartNotification();
@@ -393,7 +410,7 @@ class PluginsRepository extends Component {
   }
 
   render() {
-    const { isPrivate } = this.props.plugin;
+    const { isPrivate, plugins } = this.props.plugin;
 
     return (
       <div id="content">

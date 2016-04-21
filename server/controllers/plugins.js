@@ -17,3 +17,15 @@ exports.all = function(req, res) {
     }
   });
 };
+/**
+ * Add a plugin
+ */
+exports.add = function(req, res) {
+  Plugin.create(req.body, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+    res.status(200).send('OK');
+  });
+};

@@ -3,16 +3,15 @@
  */
 import { polyfill } from 'es6-promise';
 import request from 'axios';
-import { push } from 'react-router-redux';
 import md5 from 'spark-md5';
-
+import _ from 'lodash'
 
 import * as types from '../constants';
 
 polyfill();
 
 /*
-  Plugin repository control functions
+ Plugin repository control functions
  */
 export function togglePrivateRepositoryMode() {
   return { type: types.TOGGLE_PRIVATE_REPOSITORY_MODE };
@@ -35,17 +34,40 @@ function makePluginRequest(method, id, data, api='/pluginsRepository') {
 }
 
 /*
-  Create plugin functions
+ Get plugin functions
+ */
+function getPluginsRequest() {
+  return {
+    type: types.GET_PLUGINS_REQUEST
+  }
+}
+function getPluginsSuccess(data) {
+  return {
+    type: types.GET_PLUGINS_SUCCESS,
+    data:data
+  }
+}
+
+function getPluginsFailure() {
+  return {
+    type: types.GET_PLUGINS_FAILURE
+  }
+}
+
+/*
+ Create plugin functions
  */
 function createPluginRequest(data) {
   return {
     type: types.CREATE_PLUGIN_REQUEST,
-    id: data.id,
-    pluginname: data.pluginname,
-    category: data.category,
-    version: data.version,
-    author: data.author,
-    description: data.description
+    data:data
+    // id: data.id,
+    // pluginname: data.pluginname,
+    // category: data.category,
+    // version: data.version,
+    // author: data.author,
+    // releasedate: data.releasedate,
+    // description: data.description
   };
 }
 
@@ -67,17 +89,13 @@ function createPluginFailure(data) {
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
-export function createPlugin(data) {
+export function createPlugin(pluginInfo) {
   return (dispatch, getState) => {
     // If the text box is empty
-    if (data.trim().length <= 0) return;
+    if (_.trim(pluginInfo.pluginname).length <= 0) return;
 
-    const id = md5.hash(data);
-
-    const data = {
-      id: id,
-      data
-    };
+    const identifier = md5.hash(pluginInfo.pluginname);
+    pluginInfo.id = identifier;
 
     // // Redux thunk's middleware receives the store methods `dispatch`
     // // and `getState` as parameters
@@ -92,9 +110,9 @@ export function createPlugin(data) {
     // }
 
     // First dispatch an optimistic update
-    dispatch(createPluginRequest(data));
+    dispatch(createPluginRequest(pluginInfo));
 
-    return makePluginRequest('post', id, data)
+    return makePluginRequest('post', pluginInfo.id, pluginInfo)
       .then(res => {
         if (res.status === 200) {
           // We can actually dispatch a CREATE_TOPIC_SUCCESS
@@ -105,15 +123,48 @@ export function createPlugin(data) {
         }
       })
       .catch(ex => {
-        return dispatch(createPluginFailure({ id, error: 'Oops! Something went wrong and we couldn\'t create your topic'}));
+        return dispatch(createPluginFailure({identifier, error: 'Oops! Something went wrong and we couldn\'t create your topic'}));
       });
   };
 }
 
 // Fetch posts logic
 export function fetchPlugins() {
-  return {
-    type: types.GET_PLUGINS_REQUEST,
-    promise: makePluginRequest('get')
+
+  return dispatch => {
+    dispatch(getPluginsRequest());
+
+    return makePluginRequest('get').then(res => {
+        if (res.status === 200) {
+          // We can actually dispatch a CREATE_TOPIC_SUCCESS
+          // on success, but I've opted to leave that out
+          // since we already did an optimistic update
+          // We could return res.json();
+          return dispatch(getPluginsSuccess(res.data));
+        }
+      })
+      .catch(ex => {
+        return dispatch(getPluginsFailure());
+      });
   };
+
+
+
+  // return dispatch => {
+  //   dispatch(beginLogout());
+  //
+  //   return makeUserRequest('post', null, '/logout')
+  //     .then( response => {
+  //       if (response.status === 200) {
+  //         dispatch(logoutSuccess());
+  //       } else {
+  //         dispatch(logoutError());
+  //       }
+  //     });
+  // };
+
+  // return {
+  //   type: types.GET_PLUGINS_REQUEST,
+  //   promise: makePluginRequest('get')
+  // };
 }
