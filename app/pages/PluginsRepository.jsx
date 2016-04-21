@@ -76,12 +76,12 @@ class PluginsRepository extends Component {
     this.showSmartNotification = this.showSmartNotification.bind(this);
 
     // no server-side rendering, just get plugins info here
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     dispatch(fetchPlugins());
   }
 
   toggleMode() {
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     dispatch(togglePrivateRepositoryMode());
   }
 
@@ -111,7 +111,7 @@ class PluginsRepository extends Component {
 
     // TODO: send data to server
 
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     const id = 'NOT_DEFINED'; // Used to add md5 identifier later
     const pluginname = ReactDOM.findDOMNode(this.refs.pluginname).value;
     const category = ReactDOM.findDOMNode(this.refs.category).value;
@@ -135,20 +135,20 @@ class PluginsRepository extends Component {
   }
 
   renderDataTableHeader(_isPrivate) {
-    return(
+    return (
       <header>
         <span className="widget-icon"> <i className="fa fa-table"/> </span>
-        <h2>{classnames({ '私有插件列表': _isPrivate, '公共插件列表': !_isPrivate })}</h2>
-        <div className="widget-toolbar" >
+        <h2>{classnames({'私有插件列表': _isPrivate, '公共插件列表': !_isPrivate})}</h2>
+        <div className="widget-toolbar">
           <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.toggleMode}>
             <i className={classnames({ 'fa fa-archive': _isPrivate, 'fa fa-cloud': !_isPrivate })}/>
             &nbsp;&nbsp; 切换仓库
           </button>
           &nbsp;&nbsp;
           <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.addNewPlugin} data-toggle="modal"
-                  data-target="#repoControlModal" >
+                  data-target="#repoControlModal">
             <i className={classnames({ 'fa fa-plus': _isPrivate, 'fa  fa-upload': !_isPrivate })}/>
-            &nbsp;&nbsp; {classnames({ '添加新插件': _isPrivate, '提交插件': !_isPrivate })}
+            &nbsp;&nbsp; {classnames({'添加新插件': _isPrivate, '提交插件': !_isPrivate})}
           </button>
         </div>
       </header>
@@ -157,85 +157,88 @@ class PluginsRepository extends Component {
 
   renderAddPluginForm() {
     return (
-        <div>
-          <div className="widget-body no-padding">
-            <UiValidate options={validationOptions}>
-              <form id="addplugin-form" className="smart-form" noValidate="novalidate">
-                <fieldset>
-                  <div className="row">
-                    <section className="col col-6">
-                      <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-                        <input type="text" name="pluginname" ref="pluginname" placeholder="名称"/>
-                      </label>
-                    </section>
-                    <section className="col col-6">
-                      <label className="select">
-                        <select name="category" ref="category" defaultValue={"0"}>
-                          <option value="0" disabled={true}>类别</option>
-                          <option value="1">核心插件</option>
-                          <option value="2">显示插件</option>
-                          <option value="3">通信插件</option>
-                          <option value="4">辅助插件</option>
-                        </select> <i/> </label>
-                    </section>
-                  </div>
-
-                  <div className="row">
-                    <section className="col col-6">
-                      <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                        <input type="text" name="version" ref="version" placeholder="版本号"/>
-                      </label>
-                    </section>
-                    <section className="col col-6">
-                      <label className="input"> <i className="icon-append fa fa-user"/>
-                        <input type="text" name="author" ref="author" placeholder="作者"/>
-                      </label>
-                    </section>
-                  </div>
-
-                  <div className="row">
-                    <section className="col col-6">
-                      <label className="input"> <i className="icon-append fa fa-calendar"/>
-                        <UiDatepicker type="text" name="releasedate" ref="releasedate" id="releasedate" placeholder="发布时间"/>
-                      </label>
-                    </section>
-                  </div>
-                </fieldset>
-
-                <fieldset>
-                  <section>
-                    <div className="input input-file">
-                      <span className="button"><input id="file2" type="file" name="pluginfile" onchange="this.parentNode.nextSibling.value = this.value"/>
-                        上传插件</span>
-                      <input type="text" placeholder="上传插件包" readOnly={true}/>
-                    </div>
-                  </section>
-
-                  <section>
-                    <label className="textarea"> <i className="icon-append fa fa-comment"/>
-                      <textarea rows="5" name="description" ref="description"  placeholder="插件描述"/>
+      <div>
+        <div className="widget-body no-padding">
+          <UiValidate options={validationOptions}>
+            <form id="addplugin-form" className="smart-form" noValidate="novalidate">
+              <fieldset>
+                <div className="row">
+                  <section className="col col-6">
+                    <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
+                      <input type="text" name="pluginname" ref="pluginname" placeholder="名称"/>
                     </label>
                   </section>
-                </fieldset>
-              </form>
-            </UiValidate>
-          </div>
+                  <section className="col col-6">
+                    <label className="select">
+                      <select name="category" ref="category" defaultValue={"0"}>
+                        <option value="0" disabled={true}>类别</option>
+                        <option value="1">核心插件</option>
+                        <option value="2">显示插件</option>
+                        <option value="3">通信插件</option>
+                        <option value="4">辅助插件</option>
+                      </select> <i/> </label>
+                  </section>
+                </div>
+
+                <div className="row">
+                  <section className="col col-6">
+                    <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
+                      <input type="text" name="version" ref="version" placeholder="版本号"/>
+                    </label>
+                  </section>
+                  <section className="col col-6">
+                    <label className="input"> <i className="icon-append fa fa-user"/>
+                      <input type="text" name="author" ref="author" placeholder="作者"/>
+                    </label>
+                  </section>
+                </div>
+
+                <div className="row">
+                  <section className="col col-6">
+                    <label className="input"> <i className="icon-append fa fa-calendar"/>
+                      <UiDatepicker type="text" name="releasedate" ref="releasedate" id="releasedate"
+                                    placeholder="发布时间"/>
+                    </label>
+                  </section>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <section>
+                  <div className="input input-file">
+                      <span className="button"><input id="file2" type="file" name="pluginfile"
+                                                      onchange="this.parentNode.nextSibling.value = this.value"/>
+                        上传插件</span>
+                    <input type="text" placeholder="上传插件包" readOnly={true}/>
+                  </div>
+                </section>
+
+                <section>
+                  <label className="textarea"> <i className="icon-append fa fa-comment"/>
+                    <textarea rows="5" name="description" ref="description" placeholder="插件描述"/>
+                  </label>
+                </section>
+              </fieldset>
+            </form>
+          </UiValidate>
         </div>
+      </div>
     )
   }
 
   renderModalTable(_isPrivate) {
 
-    if(_isPrivate) {
+    if (_isPrivate) {
       return (
-        <div className="modal fade" id="repoControlModal" tabIndex="-1" role="dialog" aria-labelledby="repoControlModalLabel" aria-hidden="true">
+        <div className="modal fade" id="repoControlModal" tabIndex="-1" role="dialog"
+             aria-labelledby="repoControlModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
                   &times;
                 </button>
-                <h2 className="row-seperator-header" id="repoControlModalLabel" >
+                <h2 className="row-seperator-header" id="repoControlModalLabel">
                   <i className="fa fa-reorder"/> 添加插件 </h2>
               </div>
               <div className="modal-body">
@@ -247,7 +250,8 @@ class PluginsRepository extends Component {
                 <button type="button" className="btn btn-default" data-dismiss="modal">
                   取消
                 </button>
-                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.onAddNewPluginSubmit}>
+                <button type="button" className="btn btn-primary" data-dismiss="modal"
+                        onClick={this.onAddNewPluginSubmit}>
                   添加插件
                 </button>
               </div>
@@ -258,7 +262,8 @@ class PluginsRepository extends Component {
     }
 
     return (
-      <div className="modal fade" id="repoControlModal" tabIndex="-1" role="dialog" aria-labelledby="repoControlModalLabel" aria-hidden="true">
+      <div className="modal fade" id="repoControlModal" tabIndex="-1" role="dialog"
+           aria-labelledby="repoControlModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -338,9 +343,50 @@ class PluginsRepository extends Component {
     )
   }
 
-  renderDataTable(_isPrivate) {
+  renderDataTable(_isPrivate, _isFetched, _plugins) {
+    // TODO: workaround for data not realtime arriving! Use server-side rendering instead!
+    // TODO: considering when first use database and the plugin data is null!
+    if (_isFetched) {
 
-    if (_isPrivate) {
+      // TODO: can't reload data and rerender table when added new plugin, JarvisWidget or Header problem?
+      if (_isPrivate) {
+        return (
+          <JarvisWidget editbutton={false} color="blueDark">
+            {this.renderDataTableHeader(_isPrivate)}
+            <div>
+              <div className="widget-body no-padding">
+                <Datatable
+                  options={{
+                      data: _plugins,
+                      columns: [
+                        {data: "_id"}, {data: "id"}, {data: "pluginname"}, {data: "category"},
+                        {data: "version"}, {data: "author"}, {data: "__v"}, {data: "releasedate"}, {data: "description"} ],
+                }}
+                  paginationLength={true} className="table table-striped table-bordered table-hover"
+                  width="100%">
+                  <thead>
+                  <tr>
+                    <th data-class="expand">_ID</th>
+                    <th data-class="expand">ID</th>
+                    <th data-class="expand">名称</th>
+                    <th data-class="expand">类别</th>
+                    <th data-class="expand">版本</th>
+                    <th data-class="expand">作者</th>
+                    <th data-class="expand">未知</th>
+                    <th data-class="expand"><i
+                      className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                      &nbsp;&nbsp; 发布时间
+                    </th>
+                    <th data-class="expand">描述</th>
+                  </tr>
+                  </thead>
+                </Datatable>
+              </div>
+            </div>
+          </JarvisWidget>
+        )
+      }
+
       return (
         <JarvisWidget editbutton={false} color="blueDark">
           {this.renderDataTableHeader(_isPrivate)}
@@ -348,11 +394,13 @@ class PluginsRepository extends Component {
             <div className="widget-body no-padding">
               <Datatable
                 options={{
-                      ajax: 'api/tables/datatables.filters.json',
-                      columns: [
-                        {data: "name"}, {data: "position"}, {data: "office"},
-                        {data: "age"}, {data: "date"}, {data: "salary"} ]
-                }}
+              ajax: 'api/tables/datatables.standard.json',
+              columns: [
+                {data: "id"}, {data: "name"},
+                {data: "phone"}, {data: "company"},
+                {data: "zip"}, {data: "city"},
+                {data: "date"}]
+              }}
                 paginationLength={true} className="table table-striped table-bordered table-hover"
                 width="100%">
                 <thead>
@@ -361,8 +409,11 @@ class PluginsRepository extends Component {
                   <th data-class="expand">名称</th>
                   <th data-class="expand">类别</th>
                   <th data-class="expand">版本</th>
-                  <th data-class="expand"><i className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
-                    &nbsp;&nbsp; 发布时间</th>
+                  <th data-class="expand"><i
+                    className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                    &nbsp;&nbsp; 发布时间
+                  </th>
+                  <th data-class="expand">发布人</th>
                   <th data-class="expand">描述</th>
                 </tr>
                 </thead>
@@ -372,45 +423,11 @@ class PluginsRepository extends Component {
         </JarvisWidget>
       )
     }
-
-    return (
-      <JarvisWidget editbutton={false} color="blueDark">
-        {this.renderDataTableHeader(_isPrivate)}
-        <div>
-          <div className="widget-body no-padding">
-            <Datatable
-              options={{
-              ajax: 'api/tables/datatables.standard.json',
-              columns: [
-                {data: "id"}, {data: "name"},
-                {data: "phone"}, {data: "company"},
-                {data: "zip"}, {data: "city"},
-                {data: "date"}]
-              }}
-              paginationLength={true} className="table table-striped table-bordered table-hover"
-              width="100%">
-              <thead>
-              <tr>
-                <th data-class="expand">ID</th>
-                <th data-class="expand">名称</th>
-                <th data-class="expand">类别</th>
-                <th data-class="expand">版本</th>
-                <th data-class="expand"><i
-                  className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
-                  &nbsp;&nbsp; 发布时间</th>
-                <th data-class="expand">发布人</th>
-                <th data-class="expand">描述</th>
-              </tr>
-              </thead>
-            </Datatable>
-          </div>
-        </div>
-      </JarvisWidget>
-    )
   }
 
   render() {
-    const { isPrivate, plugins } = this.props.plugin;
+    const { isPrivate, isFetched, plugins } = this.props.plugin;
+
 
     return (
       <div id="content">
@@ -424,7 +441,7 @@ class PluginsRepository extends Component {
 
           <div className="row">
             <article className="col-sm-12">
-              {this.renderDataTable(isPrivate)}
+              {this.renderDataTable(isPrivate, isFetched, plugins)}
             </article>
           </div>
 
@@ -434,6 +451,7 @@ class PluginsRepository extends Component {
       </div>
     )
   }
+
 }
 
 PluginsRepository.propTypes = {

@@ -14,6 +14,7 @@ import {
 export default function plugin(
   state={
     isPrivate: true, // Is private plugins repository
+    isFetched: false,
     plugins: [],
     newPlugin:''
   }, action={}) {
@@ -35,16 +36,16 @@ export default function plugin(
 
     case GET_PLUGINS_REQUEST:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetched: false
       });
     case GET_PLUGINS_SUCCESS:
       return Object.assign({}, state, {
-        isFetching: false,
-        plugins: action.data
+        plugins: action.data,
+        isFetched: true
       });
     case GET_PLUGINS_FAILURE:
       return Object.assign({}, state, {
-        isFetching: false
+        isFetched: false
       });
     default:
       return state;
