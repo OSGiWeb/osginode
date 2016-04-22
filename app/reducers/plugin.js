@@ -23,10 +23,14 @@ export default function plugin(
       return Object.assign({}, state, {
         isPrivate: !state.isPrivate
       });
-    case CREATE_PLUGIN_REQUEST:
+    // case CREATE_PLUGIN_REQUEST:
+    //   return Object.assign({}, state, {
+    //     newPlugin: ''
+    //   });
+    case CREATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
-        plugins: [...state.plugins, action.data], //id: action.id, count: action.count, text: action.text
-        newPlugin: ''
+        plugins: [...state.plugins, action.data],
+        isFetched: true
       });
     case CREATE_PLUGIN_FAILURE:
       return Object.assign({}, state, {

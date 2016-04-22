@@ -57,23 +57,16 @@ function getPluginsFailure() {
 /*
  Create plugin functions
  */
-function createPluginRequest(data) {
+function createPluginRequest() {
   return {
-    type: types.CREATE_PLUGIN_REQUEST,
-    data:data
-    // id: data.id,
-    // pluginname: data.pluginname,
-    // category: data.category,
-    // version: data.version,
-    // author: data.author,
-    // releasedate: data.releasedate,
-    // description: data.description
+    type: types.CREATE_PLUGIN_REQUEST
   };
 }
 
-function createPluginSuccess() {
+function createPluginSuccess(data) {
   return {
-    type: types.CREATE_PLUGIN_SUCCESS
+    type: types.CREATE_PLUGIN_SUCCESS,
+    data:data
   };
 }
 
@@ -110,16 +103,17 @@ export function createPlugin(pluginInfo) {
     // }
 
     // First dispatch an optimistic update
-    dispatch(createPluginRequest(pluginInfo));
+    dispatch(createPluginRequest());
 
     return makePluginRequest('post', pluginInfo.id, pluginInfo)
       .then(res => {
         if (res.status === 200) {
+
           // We can actually dispatch a CREATE_TOPIC_SUCCESS
           // on success, but I've opted to leave that out
           // since we already did an optimistic update
           // We could return res.json();
-          return dispatch(createPluginSuccess());
+          return dispatch(createPluginSuccess(pluginInfo));
         }
       })
       .catch(ex => {

@@ -132,6 +132,9 @@ class PluginsRepository extends Component {
 
     // If success
     this.showSmartNotification();
+
+    // no server-side rendering, just get plugins info here
+    // dispatch(fetchPlugins()); // Force update whole table(not recommended)
   }
 
   renderDataTableHeader(_isPrivate) {
@@ -346,10 +349,18 @@ class PluginsRepository extends Component {
   renderDataTable(_isPrivate, _isFetched, _plugins) {
     // TODO: workaround for data not realtime arriving! Use server-side rendering instead!
     // TODO: considering when first use database and the plugin data is null!
+
+    // _isPrivate =false;
     if (_isFetched) {
 
       // TODO: can't reload data and rerender table when added new plugin, JarvisWidget or Header problem?
       if (_isPrivate) {
+
+
+        for (let i = 0; i < _plugins.length; i++) {
+          _plugins[i] = _.omit(_plugins[i], '_id', '__v')
+        }
+
         return (
           <JarvisWidget editbutton={false} color="blueDark">
             {this.renderDataTableHeader(_isPrivate)}
@@ -359,24 +370,21 @@ class PluginsRepository extends Component {
                   options={{
                       data: _plugins,
                       columns: [
-                        {data: "_id"}, {data: "id"}, {data: "pluginname"}, {data: "category"},
-                        {data: "version"}, {data: "author"}, {data: "__v"}, {data: "releasedate"}, {data: "description"} ],
-                }}
+                        {data: "id"}, {data: "pluginname"}, {data: "category"},
+                        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"} ],
+                  }}
                   paginationLength={true} className="table table-striped table-bordered table-hover"
                   width="100%">
                   <thead>
                   <tr>
-                    <th data-class="expand">_ID</th>
                     <th data-class="expand">ID</th>
                     <th data-class="expand">名称</th>
                     <th data-class="expand">类别</th>
                     <th data-class="expand">版本</th>
                     <th data-class="expand">作者</th>
-                    <th data-class="expand">未知</th>
                     <th data-class="expand"><i
                       className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
-                      &nbsp;&nbsp; 发布时间
-                    </th>
+                      &nbsp;&nbsp; 发布时间</th>
                     <th data-class="expand">描述</th>
                   </tr>
                   </thead>
@@ -427,7 +435,6 @@ class PluginsRepository extends Component {
 
   render() {
     const { isPrivate, isFetched, plugins } = this.props.plugin;
-
 
     return (
       <div id="content">
