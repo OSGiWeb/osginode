@@ -65,6 +65,7 @@
     "datatables": "^1.10.11",
     "datatables-buttons": "^1.0.3",
     "datatables-responsive": "^1.0.7",
+    "datatables-select": "^1.1.0",
     "datatables.net": "^1.10.11",
     "deep-equal": "^1.0.1",
     "es6-promise": "^3.1.2",

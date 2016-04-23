@@ -175,6 +175,7 @@ class PluginsRepository extends Component {
     )
   }
 
+
   renderAddPluginForm() {
     return (
       <div>
@@ -367,14 +368,22 @@ class PluginsRepository extends Component {
 
     if (_isFetched) { // Only render the plugin datatable when the data is arrived in store
 
+      // _isPrivate = false;
+
       if (_isPrivate) { // Check repository type
 
         // Datatable options
         let options = {
           data: _plugins,
           columns: [
+            // {
+            //   "class": 'details-control',
+            //   "orderable": false,
+            //   "data": null,
+            //   "defaultContent": ''
+            // },
             {data: "index"}, {data: "pluginname"}, {data: "category"},
-            {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}],
+            {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
         }
 
         return (
@@ -384,6 +393,7 @@ class PluginsRepository extends Component {
               <div className="widget-body no-padding">
                 <Datatable
                   options={ options }
+                  // detailsFormat={this.detailsFormat}
                   newPlugin={ _newPlugin }
                   paginationLength={true} className="table table-striped table-bordered table-hover"
                   width="100%">
@@ -408,39 +418,78 @@ class PluginsRepository extends Component {
         )
       }
 
+      // TEST TABLE
+      let options = {
+        "ajax": 'api/projects/project-list.json',
+        "iDisplayLength": 15,
+        "columns": [
+          {
+            "class": 'details-control',
+            "orderable": false,
+            "data": null,
+            "defaultContent": ''
+          },
+          {"data": "name"},
+          {"data": "est"},
+          {"data": "contacts"},
+          {"data": "status"},
+          {"data": "target-actual"},
+          {"data": "starts"},
+          {"data": "ends"},
+          {"data": "tracker"}
+        ],
+        "order": [[1, 'asc']]
+      }
+
       return (
-        <JarvisWidget editbutton={false} color="blueDark">
-          {this.renderDataTableHeader(_isPrivate)}
+        <JarvisWidget className="well">
+
+          <header>
+            <span className="widget-icon"> <i className="fa fa-comments"/> </span>
+
+            <h2>Widget Title </h2>
+          </header>
+          {/* widget div*/}
           <div>
+            {/* widget content */}
             <div className="widget-body no-padding">
-              <Datatable
-                options={{
-              ajax: 'api/tables/datatables.standard.json',
-              columns: [
-                {data: "id"}, {data: "name"},
-                {data: "phone"}, {data: "company"},
-                {data: "zip"}, {data: "city"},
-                {data: "date"}]
-              }}
-                paginationLength={true} className="table table-striped table-bordered table-hover"
-                width="100%">
+
+              <Datatable options={options}
+                         detailsFormat={this.detailsFormat}
+                         className="display projects-table table table-striped table-bordered table-hover"
+                         cellSpacing="0" width="100%">
                 <thead>
                 <tr>
-                  <th data-class="expand">ID</th>
-                  <th data-class="expand">名称</th>
-                  <th data-class="expand">类别</th>
-                  <th data-class="expand">版本</th>
-                  <th data-class="expand"><i
-                    className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
-                    &nbsp;&nbsp; 发布时间
+                  <th/>
+                  <th>Projects</th>
+                  <th><i
+                    className="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"/>
+                    EST
                   </th>
-                  <th data-class="expand">发布人</th>
-                  <th data-class="expand">描述</th>
+                  <th>Contacts</th>
+                  <th>Status</th>
+                  <th><i className="fa fa-circle txt-color-darken font-xs"/> Target/
+                    <i className="fa fa-circle text-danger font-xs"/> Actual
+                  </th>
+                  <th><i
+                    className="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"/>
+                    Starts
+                  </th>
+                  <th><i
+                    className="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"/>
+                    Ends
+                  </th>
+                  <th>Tracker</th>
                 </tr>
                 </thead>
+                {/*
+
+                 */}
               </Datatable>
             </div>
+            {/* end widget content */}
           </div>
+          {/* end widget div */}
         </JarvisWidget>
       )
     }
@@ -471,6 +520,51 @@ class PluginsRepository extends Component {
 
       </div>
     )
+  }
+
+  detailsFormat(d){
+
+    return `<table cellPadding="5" cellSpacing="0" border="0" class="table table-hover table-condensed">
+            <tbody>
+            <tr>
+                <td style="width:100px">名称：</td>
+                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.pluginname}"></td>
+            </tr>
+            <tr>
+                <td>类别：</td>
+                <td><select name="category" ref="category" defaultValue={"类别"}>
+                        <option value="类别" disabled={true}>类别</option>
+                        <option value="核心插件">核心插件</option>
+                        <option value="显示插件">显示插件</option>
+                        <option value="通信插件">通信插件</option>
+                        <option value="辅助插件">辅助插件</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>版本：</td>
+                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.version}"></td>
+            </tr>
+            <tr>
+                <td>作者：</td>
+                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.author}"></td>
+            </tr>
+            <tr>
+                <td>发布时间：</td>
+                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.releasedate}"></td>
+            </tr>
+            <tr>
+                <td>描述：</td>
+                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.description}"></td>
+            </tr>
+            <tr>
+                <td>操作:</td>
+                <td>
+                  <button class='btn btn-xs btn-success'>保存修改</button> 
+                  <button class='btn btn-xs btn-danger' style='margin-left:5px'>删除插件</button> 
+                </td>
+            </tr>
+            </tbody>
+        </table>`
   }
 
 }

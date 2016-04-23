@@ -80,6 +80,7 @@ function createPluginFailure(data) {
 
 function formatPluginData(pluginData) {
   let formatData = [];
+  // TODO: Maybe we need to keep the md5 id field which will be used to update plugin info!
 
   // Format data which will be saved in store
   for (let i = 0; i < pluginData.length; i++) {

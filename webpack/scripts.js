@@ -47,6 +47,7 @@ var scripts = {
     // "highchartTable": "/bower_components/highchartTable/jquery.highchartTable.js",
 
     "datatables.net" : "/node_modules/datatables/media/js/jquery.dataTables.min.js",
+    "datatables.net-select" : "/node_modules/datatables-select/dist/js/dataTables.select.min.js",
     "datatables.net-bs" : "/node_modules/datatables/media/js/dataTables.bootstrap.min.js",
     "datatables.net-buttons" : "/node_modules/datatables-buttons/js/dataTables.buttons.js",
     "datatables.net-buttons.bootstrap" : "/node_modules/datatables-buttons/js/buttons.bootstrap.js",
@@ -55,6 +56,7 @@ var scripts = {
     "datatables.net-buttons.colVis" : "/node_modules/datatables-buttons/js/buttons.colVis.js",
     "datatables.net-responsive" : "/node_modules/datatables-responsive/js/dataTables.responsive.js",
     "datatables.net-responsive.bootstrap" : "/node_modules/datatables-responsive/js/responsive.bootstrap.js",
+
 
     // "jqgrid": "/bower_components/jqgrid/js/minified/jquery.jqGrid.min.js",
     // "jqgrid-locale-en": "/bower_components/jqgrid/js/i18n/grid.locale-en.js",
@@ -153,13 +155,14 @@ var scripts = {
     "vendor.datatables": [
       "datatables.net",
       "datatables.net-bs",
+      // "datatables.net-select",
       "datatables.net-buttons",
       "datatables.net-buttons.bootstrap",
       "datatables.net-buttons.print",
       "datatables.net-buttons.flash",
       "datatables.net-buttons.colVis",
       "datatables.net-responsive",
-      "datatables.net-responsive.bootstrap"
+      "datatables.net-responsive.bootstrap",
     ],
     "vendor.graphs": [
       // 'script!raphael',
