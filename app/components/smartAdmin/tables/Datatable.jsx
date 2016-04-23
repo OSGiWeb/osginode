@@ -17,11 +17,12 @@ let Datatable = React.createClass({
 
   componentDidUpdate: function(){
 
-    const { data } = this.props.options;
-    var addData = data[0];
+    // Add new row when react UI component updated
+    const { newPlugin } = this.props;
     var element = $(this.getHold());
     var _dataTable = element.DataTable();
-    _dataTable.row.add(addData).draw();
+    _dataTable.row.add(newPlugin).draw();
+    
     // _dataTable
     //   .clear()
     //   .draw();

@@ -78,46 +78,46 @@ function createPluginFailure(data) {
   };
 }
 
+function formatPluginData(pluginData) {
+  let formatData = [];
+
+  // Format data which will be saved in store
+  for (let i = 0; i < pluginData.length; i++) {
+    formatData[i] = _.omit(pluginData[i], '_id', '__v'); // Delete unused plugin info
+    formatData[i].index = i+1; // Add plugin numeric index
+  }
+
+  return formatData;
+}
+
 // This action creator returns a function,
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed
 // to have side effects, including executing asynchronous API calls.
 export function createPlugin(pluginInfo) {
   return (dispatch, getState) => {
-    // If the text box is empty
+    // If the creating plugin name is empty
     if (_.trim(pluginInfo.pluginname).length <= 0) return;
 
+    // Calculate md5 identifier
     const identifier = md5.hash(pluginInfo.pluginname);
-    pluginInfo.id = identifier;
-
-    // // Redux thunk's middleware receives the store methods `dispatch`
-    // // and `getState` as parameters
-    // const { plugin } = getState();
-    // // Conditional dispatch
-    // // If the topic already exists, make sure we emit a dispatch event
-    // if (topic.topics.filter(topicItem => topicItem.id === id).length > 0) {
-    //   // Currently there is no reducer that changes state for this
-    //   // For production you would ideally have a message reducer that
-    //   // notifies the user of a duplicate topic
-    //   return dispatch(createTopicDuplicate());
-    // }
 
     // First dispatch an optimistic update
     dispatch(createPluginRequest());
 
-    return makePluginRequest('post', pluginInfo.id, pluginInfo)
+    return makePluginRequest('post', identifier, pluginInfo)
       .then(res => {
         if (res.status === 200) {
+          // Add plugin numeric index
+          const { plugins } = getState().plugin;
+          pluginInfo.index = plugins.length + 1;
 
-          // We can actually dispatch a CREATE_TOPIC_SUCCESS
-          // on success, but I've opted to leave that out
-          // since we already did an optimistic update
-          // We could return res.json();
+          // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
           return dispatch(createPluginSuccess(pluginInfo));
         }
       })
       .catch(ex => {
-        return dispatch(createPluginFailure({identifier, error: 'Oops! Something went wrong and we couldn\'t create your topic'}));
+        return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
       });
   };
 }
@@ -130,11 +130,11 @@ export function fetchPlugins() {
 
     return makePluginRequest('get').then(res => {
         if (res.status === 200) {
-          // We can actually dispatch a CREATE_TOPIC_SUCCESS
-          // on success, but I've opted to leave that out
-          // since we already did an optimistic update
-          // We could return res.json();
-          return dispatch(getPluginsSuccess(res.data));
+          // Format plugin data structure which will be saved in store
+          const pluginData = formatPluginData(res.data);
+
+          // Dispatch a GET_PLUGIN_SUCCESS action and (in reducer) save all plugins to store
+          return dispatch(getPluginsSuccess(pluginData));
         }
       })
       .catch(ex => {

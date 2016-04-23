@@ -16,27 +16,32 @@ export default function plugin(
     isPrivate: true, // Is private plugins repository
     isFetched: false,
     plugins: [],
-    newPlugin:''
+    newPlugin: []
   }, action={}) {
   switch (action.type) {
     case TOGGLE_PRIVATE_REPOSITORY_MODE:
       return Object.assign({}, state, {
         isPrivate: !state.isPrivate
       });
+
+    case CREATE_PLUGIN_SUCCESS:
+      return Object.assign({}, state, {
+        newPlugin: action.data,
+        isFetched: true
+      });
+    /*
+     YunXu: comment out because we have already save the data in CREATE_PLUGIN_SUCCESS
+     action when status code '200' returned from server. So we just dispatch actions no process in reducer.
+     */
     // case CREATE_PLUGIN_REQUEST:
     //   return Object.assign({}, state, {
     //     newPlugin: ''
     //   });
-    case CREATE_PLUGIN_SUCCESS:
-      return Object.assign({}, state, {
-        plugins: [...state.plugins, action.data],
-        isFetched: true
-      });
-    case CREATE_PLUGIN_FAILURE:
-      return Object.assign({}, state, {
-        plugins: [...state.plugins.filter((tp) => tp.id !== action.id)],
-        newPlugin: state.newPlugin
-      });
+    // case CREATE_PLUGIN_FAILURE:
+    //   return Object.assign({}, state, {
+    //     plugins: [...state.plugins.filter((tp) => tp.id !== action.id)],
+    //     newPlugin: state.newPlugin
+    //   });
 
     case GET_PLUGINS_REQUEST:
       return Object.assign({}, state, {

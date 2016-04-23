@@ -109,10 +109,8 @@ class PluginsRepository extends Component {
 
   onAddNewPluginSubmit() {
 
-    // TODO: send data to server
-
+    // Sending plugin data to node and saving to database
     const {dispatch} = this.props;
-    const id = 'NOT_DEFINED'; // Used to add md5 identifier later
     const pluginname = ReactDOM.findDOMNode(this.refs.pluginname).value;
     const category = ReactDOM.findDOMNode(this.refs.category).value;
     const version = ReactDOM.findDOMNode(this.refs.version).value;
@@ -121,7 +119,6 @@ class PluginsRepository extends Component {
     const description = ReactDOM.findDOMNode(this.refs.description).value;
 
     dispatch(createPlugin({
-      id: id,
       pluginname: pluginname,
       category: category,
       version: version,
@@ -130,11 +127,8 @@ class PluginsRepository extends Component {
       description: description
     }));
 
-    // If success
+    // TODO: validation check --> If success
     this.showSmartNotification();
-
-    // no server-side rendering, just get plugins info here
-    // dispatch(fetchPlugins()); // Force update whole table(not recommended)
   }
 
   renderDataTableHeader(_isPrivate) {
@@ -346,21 +340,11 @@ class PluginsRepository extends Component {
     )
   }
 
-  renderDataTable(_isPrivate, _isFetched, _plugins) {
-    // TODO: workaround for data not realtime arriving! Use server-side rendering instead!
-    // TODO: considering when first use database and the plugin data is null!
-
-    // _isPrivate =false;
+  renderDataTable(_isPrivate, _isFetched, _plugins, _newPlugin) {
+    // Only render the plugin datatable when the data is arrived in store
     if (_isFetched) {
-
-      // TODO: can't reload data and rerender table when added new plugin, JarvisWidget or Header problem?
+      // Check repository type
       if (_isPrivate) {
-
-
-        for (let i = 0; i < _plugins.length; i++) {
-          _plugins[i] = _.omit(_plugins[i], '_id', '__v')
-        }
-
         return (
           <JarvisWidget editbutton={false} color="blueDark">
             {this.renderDataTableHeader(_isPrivate)}
@@ -370,9 +354,10 @@ class PluginsRepository extends Component {
                   options={{
                       data: _plugins,
                       columns: [
-                        {data: "id"}, {data: "pluginname"}, {data: "category"},
-                        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"} ],
+                        {data: "index"}, {data: "pluginname"}, {data: "category"},
+                        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
                   }}
+                  newPlugin={_newPlugin}
                   paginationLength={true} className="table table-striped table-bordered table-hover"
                   width="100%">
                   <thead>
@@ -434,7 +419,7 @@ class PluginsRepository extends Component {
   }
 
   render() {
-    const { isPrivate, isFetched, plugins } = this.props.plugin;
+    const { isPrivate, isFetched, plugins, newPlugin } = this.props.plugin;
 
     return (
       <div id="content">
@@ -448,7 +433,7 @@ class PluginsRepository extends Component {
 
           <div className="row">
             <article className="col-sm-12">
-              {this.renderDataTable(isPrivate, isFetched, plugins)}
+              {this.renderDataTable(isPrivate, isFetched, plugins, newPlugin)}
             </article>
           </div>
 
