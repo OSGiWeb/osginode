@@ -203,19 +203,19 @@ class LoginOrRegister extends Component {
               <div className="row">
                 <section className="col col-6">
                   <label className="select">
-                    <select name="gender" ref="gender" defaultValue={"0"}>
-                      <option value="0" disabled={true}>性别</option>
-                      <option value="1">男</option>
-                      <option value="2">女</option>
+                    <select name="gender" ref="gender" defaultValue={"性别"}>
+                      <option value="性别" disabled={true}>性别</option>
+                      <option value="男">男</option>
+                      <option value="女">女</option>
                     </select> <i/> </label>
                 </section>
                 <section className="col col-6">
                   <label className="select">
-                    <select name="specialty" ref="specialty" defaultValue={"0"}>
-                      <option value="0" disabled={true}>专业方向</option>
-                      <option value="1">数据处理</option>
-                      <option value="2">显示控制</option>
-                      <option value="3">信号软件</option>
+                    <select name="specialty" ref="specialty" defaultValue={"专业方向"}>
+                      <option value="专业方向" disabled={true}>专业方向</option>
+                      <option value="数据处理">数据处理</option>
+                      <option value="显示控制">显示控制</option>
+                      <option value="信号软件">信号软件</option>
                     </select> <i/> </label>
                 </section>
               </div>

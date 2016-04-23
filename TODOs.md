@@ -55,3 +55,4 @@
 - 测试应用程序在各个浏览器和平台的效果
 - PluginRepository 组件和数据库实现部分添加异常处理机制
 - 所有Form控件添加 validation
+- Datatables 的中文化问题

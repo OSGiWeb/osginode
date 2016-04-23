@@ -90,6 +90,32 @@ class PluginsRepository extends Component {
   }
 
   showSmartNotification() {
+    const { isCreated } = this.props.plugin;
+
+    // TODO: Add waiting icon to show the plugin adding process
+    // TODO: Show valid plugin infomation on message boxes
+    if (isCreated !== undefined) {
+      if (isCreated) {
+        $.bigBox({
+          title: "插件添加成功！",
+          content: "插件名：高度窗；提交人：许昀",
+          color: "#739E73",
+          timeout: 2000,
+          icon: "fa fa-check",
+          // number: "4"
+        });
+      } else {
+        $.bigBox({
+          title: "插件添加失败！",
+          content: "插件名：高度窗；提交人：许昀",
+          color: "#296191",
+          timeout: 2000,
+          icon: "fa fa-check",
+          // number: "4"
+        });
+      }
+    }
+
     // $.smallBox({
     //   title: "插件添加成功！",
     //   content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
@@ -97,14 +123,6 @@ class PluginsRepository extends Component {
     //   iconSmall: "fa fa-thumbs-up bounce animated",
     //   timeout: 4000
     // });
-    $.bigBox({
-      title: "插件添加成功！",
-      content: "插件名：高度窗；提交人：许昀",
-      color: "#739E73",
-      timeout: 2000,
-      icon: "fa fa-check",
-      // number: "4"
-    });
   }
 
   onAddNewPluginSubmit() {
@@ -114,7 +132,7 @@ class PluginsRepository extends Component {
     const pluginname = ReactDOM.findDOMNode(this.refs.pluginname).value;
     const category = ReactDOM.findDOMNode(this.refs.category).value;
     const version = ReactDOM.findDOMNode(this.refs.version).value;
-    const author = '许昀'; // TODO: get authore name from user
+    const author = '许昀'; // TODO: get author name from user
     const releasedate = ReactDOM.findDOMNode(this.refs.releasedate).value;
     const description = ReactDOM.findDOMNode(this.refs.description).value;
 
@@ -126,9 +144,6 @@ class PluginsRepository extends Component {
       releasedate: releasedate,
       description: description
     }));
-
-    // TODO: validation check --> If success
-    this.showSmartNotification();
   }
 
   renderDataTableHeader(_isPrivate) {
@@ -147,6 +162,14 @@ class PluginsRepository extends Component {
             <i className={classnames({ 'fa fa-plus': _isPrivate, 'fa  fa-upload': !_isPrivate })}/>
             &nbsp;&nbsp; {classnames({'添加新插件': _isPrivate, '提交插件': !_isPrivate})}
           </button>
+        </div>
+        <div className="widget-toolbar">
+          <div className="progress progress-striped active" data-tooltip="55%"
+               data-tooltip-placement="bottom">
+            <div className="progress-bar progress-bar-success" role="progressbar"
+                 style={{width: '55%'}}>55 %
+            </div>
+          </div>
         </div>
       </header>
     )
@@ -167,12 +190,12 @@ class PluginsRepository extends Component {
                   </section>
                   <section className="col col-6">
                     <label className="select">
-                      <select name="category" ref="category" defaultValue={"0"}>
-                        <option value="0" disabled={true}>类别</option>
-                        <option value="1">核心插件</option>
-                        <option value="2">显示插件</option>
-                        <option value="3">通信插件</option>
-                        <option value="4">辅助插件</option>
+                      <select name="category" ref="category" defaultValue={"类别"}>
+                        <option value="类别" disabled={true}>类别</option>
+                        <option value="核心插件">核心插件</option>
+                        <option value="显示插件">显示插件</option>
+                        <option value="通信插件">通信插件</option>
+                        <option value="辅助插件">辅助插件</option>
                       </select> <i/> </label>
                   </section>
                 </div>
@@ -341,23 +364,27 @@ class PluginsRepository extends Component {
   }
 
   renderDataTable(_isPrivate, _isFetched, _plugins, _newPlugin) {
-    // Only render the plugin datatable when the data is arrived in store
-    if (_isFetched) {
-      // Check repository type
-      if (_isPrivate) {
+
+    if (_isFetched) { // Only render the plugin datatable when the data is arrived in store
+
+      if (_isPrivate) { // Check repository type
+
+        // Datatable options
+        let options = {
+          data: _plugins,
+          columns: [
+            {data: "index"}, {data: "pluginname"}, {data: "category"},
+            {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}],
+        }
+
         return (
           <JarvisWidget editbutton={false} color="blueDark">
             {this.renderDataTableHeader(_isPrivate)}
             <div>
               <div className="widget-body no-padding">
                 <Datatable
-                  options={{
-                      data: _plugins,
-                      columns: [
-                        {data: "index"}, {data: "pluginname"}, {data: "category"},
-                        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
-                  }}
-                  newPlugin={_newPlugin}
+                  options={ options }
+                  newPlugin={ _newPlugin }
                   paginationLength={true} className="table table-striped table-bordered table-hover"
                   width="100%">
                   <thead>
@@ -376,6 +403,7 @@ class PluginsRepository extends Component {
                 </Datatable>
               </div>
             </div>
+            { this.showSmartNotification() }
           </JarvisWidget>
         )
       }
@@ -439,7 +467,8 @@ class PluginsRepository extends Component {
 
         </WidgetGrid>
 
-        {this.renderModalTable(isPrivate)}
+        { this.renderModalTable(isPrivate) }
+
       </div>
     )
   }

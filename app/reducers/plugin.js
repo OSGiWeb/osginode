@@ -15,6 +15,7 @@ export default function plugin(
   state={
     isPrivate: true, // Is private plugins repository
     isFetched: false,
+    isCreated: undefined,
     plugins: [],
     newPlugin: []
   }, action={}) {
@@ -27,7 +28,14 @@ export default function plugin(
     case CREATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
         newPlugin: action.data,
-        isFetched: true
+        isFetched: true,
+        isCreated: true
+      });
+    case CREATE_PLUGIN_FAILURE:
+      return Object.assign({}, state, {
+        newPlugin: [],
+        isFetched: true,
+        isCreated: false
       });
     /*
      YunXu: comment out because we have already save the data in CREATE_PLUGIN_SUCCESS
@@ -50,11 +58,13 @@ export default function plugin(
     case GET_PLUGINS_SUCCESS:
       return Object.assign({}, state, {
         plugins: action.data,
-        isFetched: true
+        isFetched: true,
+        isCreated: undefined
       });
     case GET_PLUGINS_FAILURE:
       return Object.assign({}, state, {
-        isFetched: false
+        isFetched: false,
+        isCreated: undefined
       });
     default:
       return state;

@@ -63,13 +63,10 @@ let Datatable = React.createClass({
       },
       "autoWidth": false,
       retrieve: true,
-      responsive: true
+      responsive: true,
     });
 
     var _dataTable;
-    //
-
-
     _dataTable = element.DataTable(options);
 
     if (this.props.filter) {
@@ -88,7 +85,7 @@ let Datatable = React.createClass({
     }
 
     if(this.props.detailsFormat){
-      let format = this.props.detailsFormat
+      let format = this.props.detailsFormat;
       element.on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = _dataTable.row( tr );
@@ -103,8 +100,8 @@ let Datatable = React.createClass({
       })
     }
 
-  }
-  ,
+  },
+
   render: function () {
     let {children, ...props} = this.props;
 
