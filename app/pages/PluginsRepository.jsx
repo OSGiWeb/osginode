@@ -11,8 +11,9 @@ import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/component
 import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
+import {Dropdown, MenuItem} from 'react-bootstrap'
 
-import { togglePrivateRepositoryMode, createPlugin, fetchPlugins } from '../actions/plugins';
+import { togglePrivateRepositoryMode, createPlugin, fetchPlugins, showNotificationDone } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -76,8 +77,8 @@ class PluginsRepository extends Component {
     this.showSmartNotification = this.showSmartNotification.bind(this);
 
     // no server-side rendering, just get plugins info here
-    const {dispatch} = this.props;
-    dispatch(fetchPlugins());
+    // const {dispatch} = this.props;
+    // dispatch(fetchPlugins());
   }
 
   toggleMode() {
@@ -90,6 +91,7 @@ class PluginsRepository extends Component {
   }
 
   showSmartNotification() {
+    const {dispatch} = this.props;
     const { isCreated } = this.props.plugin;
 
     // TODO: Add waiting icon to show the plugin adding process
@@ -114,6 +116,8 @@ class PluginsRepository extends Component {
           // number: "4"
         });
       }
+      // Notification is shown, set related state to default value to avoid render notification again
+      dispatch(showNotificationDone());
     }
 
     // $.smallBox({
@@ -146,35 +150,17 @@ class PluginsRepository extends Component {
     }));
   }
 
-  renderDataTableHeader(_isPrivate) {
-    return (
-      <header>
-        <span className="widget-icon"> <i className="fa fa-table"/> </span>
-        <h2>{classnames({'私有插件列表': _isPrivate, '公共插件列表': !_isPrivate})}</h2>
-        <div className="widget-toolbar">
-          <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.toggleMode}>
-            <i className={classnames({ 'fa fa-archive': _isPrivate, 'fa fa-cloud': !_isPrivate })}/>
-            &nbsp;&nbsp; 切换仓库
-          </button>
-          &nbsp;&nbsp;
-          <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.addNewPlugin} data-toggle="modal"
-                  data-target="#repoControlModal">
-            <i className={classnames({ 'fa fa-plus': _isPrivate, 'fa  fa-upload': !_isPrivate })}/>
-            &nbsp;&nbsp; {classnames({'添加新插件': _isPrivate, '提交插件': !_isPrivate})}
-          </button>
-        </div>
-        <div className="widget-toolbar">
-          <div className="progress progress-striped active" data-tooltip="55%"
-               data-tooltip-placement="bottom">
-            <div className="progress-bar progress-bar-success" role="progressbar"
-                 style={{width: '55%'}}>55 %
-            </div>
-          </div>
-        </div>
-      </header>
-    )
+  onEditSelectedPlugin() {
+
   }
 
+  onDeleteSelectedPlugin() {
+
+  }
+
+  onAddPublicPlugin() {
+
+  }
 
   renderAddPluginForm() {
     return (
@@ -364,6 +350,151 @@ class PluginsRepository extends Component {
     )
   }
 
+  renderPrivateRepository(_isFetched, _plugins, _newPlugin) {
+    return (
+      <div className="row">
+        <article className="col-sm-12">
+          <JarvisWidget editbutton={false} color="blueDark">
+            <header>
+              <span className="widget-icon"> <i className="fa fa-table"/> </span>
+              <h2>私有插件列表</h2>
+              <div className="widget-toolbar">
+                <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.addNewPlugin} data-toggle="modal"
+                        data-target="#repoControlModal">
+                  <i className="fa fa-plus-square"/>
+                  &nbsp;&nbsp; 添加新插件
+                </button>
+                &nbsp;&nbsp;
+                <Dropdown className="btn-group" id="widget-demo-dropdown">
+                  <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary">
+                    <i className="fa fa-wrench"/>&nbsp;&nbsp; 插件操作
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="dropdown-menu pull-right">
+                    <MenuItem data-toggle="modal" data-target="#repoControlModal" >
+                      <i className="fa fa-edit"/>&nbsp;编辑
+                    </MenuItem>
+                    <MenuItem>
+                      <i className="fa fa-cloud-upload"/>&nbsp;提交
+                    </MenuItem>
+                    <MenuItem>
+                      <i className="fa fa-minus-square"/>&nbsp;删除
+                    </MenuItem>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+
+              <div className="widget-toolbar">
+                <div className="progress progress-striped active" data-tooltip="55%"
+                     data-tooltip-placement="bottom">
+                  <div className="progress-bar progress-bar-success" role="progressbar"
+                       style={{width: '55%'}}>55 %
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            { this.renderPrivateDataTable(_isFetched, _plugins, _newPlugin) }
+
+          </JarvisWidget>
+          { this.showSmartNotification() }
+        </article>
+      </div>
+    )
+  }
+
+  renderPrivateDataTable(_isFetched, _plugins, _newPlugin) {
+    // TODO: Only render the plugin datatable when the data is arrived in store (temp. solution for debugging this page)
+    // if (_isFetched) {
+
+      // Datatable options
+      let options = {
+        data: _plugins,
+        select: {
+          style: 'single',
+          info: false
+        },
+        columns: [
+          {data: "index"}, {data: "pluginname"}, {data: "category"},
+          {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
+      }
+
+      return (
+        <div>
+          <div className="widget-body no-padding">
+            <Datatable
+              options={ options }
+              newPlugin={ _newPlugin }
+              paginationLength={true} className="table table-striped table-bordered table-hover"
+              width="100%">
+              <thead>
+              <tr>
+                <th data-class="expand">ID</th>
+                <th data-class="expand">名称</th>
+                <th data-class="expand">类别</th>
+                <th data-class="expand">版本</th>
+                <th data-class="expand">作者</th>
+                <th data-class="expand"><i
+                  className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                  &nbsp;&nbsp; 发布时间
+                </th>
+                <th data-class="expand">描述</th>
+              </tr>
+              </thead>
+            </Datatable>
+          </div>
+        </div>
+      )
+    }
+  // }
+
+
+  renderDataTableHeader(_isPrivate) {
+    return (
+      <header>
+        <span className="widget-icon"> <i className="fa fa-table"/> </span>
+        <h2>{classnames({'私有插件列表': _isPrivate, '公共插件列表': !_isPrivate})}</h2>
+        <div className="widget-toolbar">
+          <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.toggleMode} >
+            <i className={classnames({ 'fa fa-archive': _isPrivate, 'fa fa-cloud': !_isPrivate })}/>
+            &nbsp;&nbsp; 切换仓库
+          </button>
+          &nbsp;&nbsp;
+          <button className={classnames(["btn btn-xs btn-primary"])} onClick={this.addNewPlugin} data-toggle="modal"
+                  data-target="#repoControlModal">
+            <i className={classnames({ 'fa fa-plus-square': _isPrivate, 'fa  fa-upload': !_isPrivate })}/>
+            &nbsp;&nbsp; {classnames({'添加新插件': _isPrivate, '提交插件': !_isPrivate})}
+          </button>
+          &nbsp;&nbsp;
+          <Dropdown className="btn-group" id="widget-demo-dropdown">
+            <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary">
+              <i className="fa fa-wrench"/>&nbsp;&nbsp; 插件操作
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="dropdown-menu pull-right">
+              <MenuItem data-toggle="modal" data-target="#repoControlModal" >
+                <i className="fa fa-edit"/>&nbsp;编辑
+              </MenuItem>
+              <MenuItem>
+                <i className="fa fa-cloud-upload"/>&nbsp;提交
+              </MenuItem>
+              <MenuItem>
+                <i className="fa fa-minus-square"/>&nbsp;删除
+              </MenuItem>
+            </Dropdown.Menu>
+          </Dropdown>
+
+        </div>
+        <div className="widget-toolbar">
+          <div className="progress progress-striped active" data-tooltip="55%"
+               data-tooltip-placement="bottom">
+            <div className="progress-bar progress-bar-success" role="progressbar"
+                 style={{width: '55%'}}>55 %
+            </div>
+          </div>
+        </div>
+      </header>
+    )
+  }
+
   renderDataTable(_isPrivate, _isFetched, _plugins, _newPlugin) {
 
     if (_isFetched) { // Only render the plugin datatable when the data is arrived in store
@@ -378,15 +509,9 @@ class PluginsRepository extends Component {
           // select: true,
           select: {
             style: 'single',
-            info: true
+            info: false
           },
           columns: [
-            // {
-            //   "class": 'details-control',
-            //   "orderable": false,
-            //   "data": null,
-            //   "defaultContent": ''
-            // },
             {data: "index"}, {data: "pluginname"}, {data: "category"},
             {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
         }
@@ -398,7 +523,6 @@ class PluginsRepository extends Component {
               <div className="widget-body no-padding">
                 <Datatable
                   options={ options }
-                  // detailsFormat={this.detailsFormat}
                   newPlugin={ _newPlugin }
                   paginationLength={true} className="table table-striped table-bordered table-hover"
                   width="100%">
@@ -423,78 +547,42 @@ class PluginsRepository extends Component {
         )
       }
 
-      // TEST TABLE
-      let options = {
-        "ajax": 'api/projects/project-list.json',
-        "iDisplayLength": 15,
-        "columns": [
-          {
-            "class": 'details-control',
-            "orderable": false,
-            "data": null,
-            "defaultContent": ''
-          },
-          {"data": "name"},
-          {"data": "est"},
-          {"data": "contacts"},
-          {"data": "status"},
-          {"data": "target-actual"},
-          {"data": "starts"},
-          {"data": "ends"},
-          {"data": "tracker"}
-        ],
-        "order": [[1, 'asc']]
-      }
-
       return (
-        <JarvisWidget className="well">
-
-          <header>
-            <span className="widget-icon"> <i className="fa fa-comments"/> </span>
-
-            <h2>Widget Title </h2>
-          </header>
-          {/* widget div*/}
+        <JarvisWidget editbutton={false} color="darken">
+          <header><span className="widget-icon"> <i className="fa fa-table"/> </span> <h2>Standard
+            Data Tables</h2></header>
           <div>
-            {/* widget content */}
-            <div className="widget-body no-padding">
-
-              <Datatable options={options}
-                         detailsFormat={this.detailsFormat}
-                         className="display projects-table table table-striped table-bordered table-hover"
-                         cellSpacing="0" width="100%">
-                <thead>
-                <tr>
-                  <th/>
-                  <th>Projects</th>
-                  <th><i
-                    className="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"/>
-                    EST
-                  </th>
-                  <th>Contacts</th>
-                  <th>Status</th>
-                  <th><i className="fa fa-circle txt-color-darken font-xs"/> Target/
-                    <i className="fa fa-circle text-danger font-xs"/> Actual
-                  </th>
-                  <th><i
-                    className="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"/>
-                    Starts
-                  </th>
-                  <th><i
-                    className="fa fa-fw fa-calendar text-muted hidden-md hidden-sm hidden-xs"/>
-                    Ends
-                  </th>
-                  <th>Tracker</th>
-                </tr>
-                </thead>
-                {/*
-
-                 */}
-              </Datatable>
-            </div>
-            {/* end widget content */}
+            <div className="widget-body no-padding"><Datatable
+              options={{
+                                        ajax: 'api/tables/datatables.standard.json',
+                                        columns: [ {data: "id"}, {data: "name"}, {data: "phone"}, {data: "company"}, {data: "zip"}, {data: "city"}, {data: "date"} ] }}
+              paginationLength={true} className="table table-striped table-bordered table-hover"
+              width="100%">
+              <thead>
+              <tr>
+                <th data-hide="phone">ID</th>
+                <th data-class="expand"><i
+                  className="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"/>
+                  Name
+                </th>
+                <th data-hide="phone"><i
+                  className="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"/>
+                  Phone
+                </th>
+                <th>Company</th>
+                <th data-hide="phone,tablet"><i
+                  className="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                  Zip
+                </th>
+                <th data-hide="phone,tablet">City</th>
+                <th data-hide="phone,tablet"><i
+                  className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                  Date
+                </th>
+              </tr>
+              </thead>
+            </Datatable></div>
           </div>
-          {/* end widget div */}
         </JarvisWidget>
       )
     }
@@ -512,13 +600,7 @@ class PluginsRepository extends Component {
         </div>
 
         <WidgetGrid>
-
-          <div className="row">
-            <article className="col-sm-12">
-              {this.renderDataTable(isPrivate, isFetched, plugins, newPlugin)}
-            </article>
-          </div>
-
+          { this.renderPrivateRepository(isFetched, plugins, newPlugin) }
         </WidgetGrid>
 
         { this.renderModalTable(isPrivate) }
@@ -526,52 +608,6 @@ class PluginsRepository extends Component {
       </div>
     )
   }
-
-  detailsFormat(d){
-
-    return `<table cellPadding="5" cellSpacing="0" border="0" class="table table-hover table-condensed">
-            <tbody>
-            <tr>
-                <td style="width:100px">名称：</td>
-                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.pluginname}"></td>
-            </tr>
-            <tr>
-                <td>类别：</td>
-                <td><select name="category" ref="category" defaultValue={"类别"}>
-                        <option value="类别" disabled={true}>类别</option>
-                        <option value="核心插件">核心插件</option>
-                        <option value="显示插件">显示插件</option>
-                        <option value="通信插件">通信插件</option>
-                        <option value="辅助插件">辅助插件</option>
-                </select></td>
-            </tr>
-            <tr>
-                <td>版本：</td>
-                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.version}"></td>
-            </tr>
-            <tr>
-                <td>作者：</td>
-                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.author}"></td>
-            </tr>
-            <tr>
-                <td>发布时间：</td>
-                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.releasedate}"></td>
-            </tr>
-            <tr>
-                <td>描述：</td>
-                <td><input type="text" id="row-43-age" name="row-43-age" value="${d.description}"></td>
-            </tr>
-            <tr>
-                <td>操作:</td>
-                <td>
-                  <button class='btn btn-xs btn-success'>保存修改</button> 
-                  <button class='btn btn-xs btn-danger' style='margin-left:5px'>删除插件</button> 
-                </td>
-            </tr>
-            </tbody>
-        </table>`
-  }
-
 }
 
 PluginsRepository.propTypes = {
@@ -591,3 +627,50 @@ function mapStateToProps(state) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps)(PluginsRepository);
+
+
+
+// detailsFormat(d){
+//
+//   return `<table cellPadding="5" cellSpacing="0" border="0" class="table table-hover table-condensed">
+//             <tbody>
+//             <tr>
+//                 <td style="width:100px">名称：</td>
+//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.pluginname}"></td>
+//             </tr>
+//             <tr>
+//                 <td>类别：</td>
+//                 <td><select name="category" ref="category" defaultValue={"类别"}>
+//                         <option value="类别" disabled={true}>类别</option>
+//                         <option value="核心插件">核心插件</option>
+//                         <option value="显示插件">显示插件</option>
+//                         <option value="通信插件">通信插件</option>
+//                         <option value="辅助插件">辅助插件</option>
+//                 </select></td>
+//             </tr>
+//             <tr>
+//                 <td>版本：</td>
+//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.version}"></td>
+//             </tr>
+//             <tr>
+//                 <td>作者：</td>
+//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.author}"></td>
+//             </tr>
+//             <tr>
+//                 <td>发布时间：</td>
+//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.releasedate}"></td>
+//             </tr>
+//             <tr>
+//                 <td>描述：</td>
+//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.description}"></td>
+//             </tr>
+//             <tr>
+//                 <td>操作:</td>
+//                 <td>
+//                   <button class='btn btn-xs btn-success'>保存修改</button>
+//                   <button class='btn btn-xs btn-danger' style='margin-left:5px'>删除插件</button>
+//                 </td>
+//             </tr>
+//             </tbody>
+//         </table>`
+// }

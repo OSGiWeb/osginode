@@ -48,7 +48,7 @@ export default (store) => {
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
         <Route component={Layout}>
           <Route path="home" component={Home} onEnter={requireAuth} />
-          <Route path="pluginsRepository" component={PluginsRepository} />
+          <Route path="pluginsRepository" component={PluginsRepository} onEnter={requireAuth} />
         </Route>
       </Route>
     </Route>

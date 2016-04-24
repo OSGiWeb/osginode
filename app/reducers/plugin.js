@@ -8,7 +8,8 @@ import {
   CREATE_PLUGIN_FAILURE,
   GET_PLUGINS_REQUEST,
   GET_PLUGINS_SUCCESS,
-  GET_PLUGINS_FAILURE
+  GET_PLUGINS_FAILURE,
+  SHOW_NOTIFICATION_DONE
 } from '../constants/index';
 
 export default function plugin(
@@ -27,6 +28,7 @@ export default function plugin(
 
     case CREATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
+        plugins: [...state.plugins, action.data],
         newPlugin: action.data,
         isFetched: true,
         isCreated: true
@@ -58,12 +60,16 @@ export default function plugin(
     case GET_PLUGINS_SUCCESS:
       return Object.assign({}, state, {
         plugins: action.data,
-        isFetched: true,
-        isCreated: undefined
+        isFetched: true
       });
     case GET_PLUGINS_FAILURE:
       return Object.assign({}, state, {
-        isFetched: false,
+        isFetched: false
+      });
+
+    case SHOW_NOTIFICATION_DONE:
+      return Object.assign({}, state, {
+        newPlugin: [],
         isCreated: undefined
       });
     default:

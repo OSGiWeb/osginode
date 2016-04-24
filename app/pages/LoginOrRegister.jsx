@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { manualLogin, toggleLoginMode, signUp } from '../actions/users';
+import { fetchPlugins } from '../actions/plugins';
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
 import styles from '../css/components/login';
 import classNames from 'classnames/bind';
@@ -13,6 +14,10 @@ class LoginOrRegister extends Component {
     this.toggleMode = this.toggleMode.bind(this);
     this.onLoginSubmit = this.onLoginSubmit.bind(this);
     this.onRegisterSubmit = this.onRegisterSubmit.bind(this);
+
+    // no server-side rendering, fetch all plugins info from database here in <IndexRoute>
+    const {dispatch} = this.props;
+    dispatch(fetchPlugins());
   }
 
   onLoginSubmit() {

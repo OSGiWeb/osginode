@@ -91,6 +91,13 @@ function formatPluginData(pluginData) {
   return formatData;
 }
 
+// The notification is already shown in UI, this action is used to set some related states in store
+export function showNotificationDone() {
+  return {
+    type: types.SHOW_NOTIFICATION_DONE
+  };
+}
+
 // This action creator returns a function,
 // which will get executed by Redux-Thunk middleware
 // This function does not need to be pure, and thus allowed

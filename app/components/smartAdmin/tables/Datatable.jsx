@@ -17,15 +17,22 @@ let Datatable = React.createClass({
 
   componentDidUpdate: function(){
 
-    // Add new row when react UI component updated
-    const { newPlugin } = this.props;
-    var element = $(this.getHold());
-    var _dataTable = element.DataTable();
-    _dataTable.row.add(newPlugin).draw();
-    
-    // _dataTable
-    //   .clear()
-    //   .draw();
+    // Only update Datatable when it is initialized
+    if (this.initialized === true) {
+      const { newPlugin } = this.props;
+
+      // When new added plugin is avaialbe
+      if (_.trim(newPlugin).length > 0) {
+        // Add new row when react UI component updated
+        var element = $(this.getHold());
+        var _dataTable = element.DataTable();
+        _dataTable.row.add(newPlugin).draw();
+      }
+
+      // _dataTable
+      //   .clear()
+      //   .draw();
+    }
 
   },
 
@@ -99,6 +106,10 @@ let Datatable = React.createClass({
         }
       })
     }
+
+    // Set Datatable component is initialized othewise caused '_dataTable' not funound
+    // error in function 'componentDidUpdate()' at startup process
+    this.initialized = true;
 
   },
 
