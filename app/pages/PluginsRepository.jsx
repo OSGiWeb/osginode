@@ -375,6 +375,11 @@ class PluginsRepository extends Component {
         // Datatable options
         let options = {
           data: _plugins,
+          // select: true,
+          select: {
+            style: 'single',
+            info: true
+          },
           columns: [
             // {
             //   "class": 'details-control',
