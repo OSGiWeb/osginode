@@ -31,10 +31,12 @@ let RecentProjects = React.createClass({
       <div className="project-context hidden-xs dropdown">
 
         <span className="label">
-            <Msg phrase="Projects" />
+          {/*<Msg phrase="Projects" />*/}
+          项目
         </span>
         <span className="project-selector dropdown-toggle" data-toggle="dropdown">
-            <Msg phrase="Recent projects" />
+            {/*<Msg phrase="Recent projects" />*/}
+          最近的项目
           { projects.length ?
             <i  className="fa fa-angle-down"/>
             : null }

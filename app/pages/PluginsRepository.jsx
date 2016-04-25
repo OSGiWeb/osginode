@@ -592,7 +592,7 @@ class PluginsRepository extends Component {
         </WidgetGrid>
 
         { this.renderAddPluginModal() }
-        { this.renderEditPluginModal(plugins) }
+        {/* this.renderEditPluginModal(plugins) */}
 
       </div>
     )

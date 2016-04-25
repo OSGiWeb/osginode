@@ -16,34 +16,7 @@ const rawItems = {
     {
       "title": "主页",
       "icon": "fa fa-lg fa-fw fa-home",
-      "items": [
-        {
-          "icon": "fa fa-user",
-          "title": "用户管理",
-          "route": "/home"
-        },
-        {
-          "icon": "fa fa-file-text-o",
-          "title": "项目管理",
-          "route": "/home"
-        },
-        {
-          "icon": "fa fa-gear",
-          "title": "配置管理",
-          "items": [
-            {
-              "icon": "fa fa-lg fa-fw fa-cloud",
-              "title": "基本配置",
-              "route": "/home"
-            },
-            {
-              "icon": "fa fa-suitcase",
-              "title": "插件配置",
-              "route": "/home"
-            }
-          ]
-        }
-      ]
+      "route": "/home"
     },
     {
       "title": "插件开发",
@@ -93,7 +66,7 @@ const rawItems = {
       "items": [
         {
           "icon": "fa fa-user",
-          "title": "插件审核",
+          "title": "用户管理",
           "route": "/home"
         },
         {
@@ -102,9 +75,25 @@ const rawItems = {
           "route": "/home"
         },
         {
+          "icon": "fa fa-user",
+          "title": "插件审核",
+          "route": "/home"
+        },
+        {
           "icon": "fa fa-gear",
           "title": "配置管理",
-          "route": "/home"
+          "items": [
+            {
+              "icon": "fa fa-lg fa-fw fa-cloud",
+              "title": "基本配置",
+              "route": "/home"
+            },
+            {
+              "icon": "fa fa-suitcase",
+              "title": "插件配置",
+              "route": "/home"
+            }
+          ]
         }
       ]
     }
