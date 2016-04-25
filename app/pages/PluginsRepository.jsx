@@ -536,6 +536,9 @@ class PluginsRepository extends Component {
         style: 'single',
         info: false
       },
+      // "language": {
+      //   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json"
+      // },
       columns: [
         {data: "index"}, {data: "pluginname"}, {data: "symbolicname"}, {data: "category"},
         {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
