@@ -588,7 +588,7 @@ class PluginsRepository extends Component {
 
         <WidgetGrid>
           { this.renderPrivateRepository(isFetched, plugins, newPlugin) }
-          { /*this.renderPublicRepository(plugins, newPlugin) */}
+          { this.renderPublicRepository(plugins, newPlugin) }
         </WidgetGrid>
 
         { this.renderAddPluginModal() }

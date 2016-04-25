@@ -56,7 +56,7 @@ class LoginOrRegister extends Component {
     if (passwordConfirm !== password) {
       errMsg = '请确定密码一致性'
     }
-    
+
     dispatch(signUp({
       username: username,
       password: password,
@@ -80,7 +80,7 @@ class LoginOrRegister extends Component {
       return (
         <header id="header" className="animated fadeInDown">
           <div id="logo-group">
-            <span id="logo"> <img src="styles/img/logo.png" alt="SmartAdmin"/> </span>
+            <span> <img src="styles/img/project/glass.jpg" alt="PluginPlatform"/> </span>
           </div>
           <span id="extr-page-header-space">&nbsp;<a className="btn btn-danger"　onClick={this.toggleMode}>用户注册</a> </span>
         </header>
@@ -90,7 +90,7 @@ class LoginOrRegister extends Component {
     return (
       <header id="header" className="animated fadeInDown">
         <div id="logo-group">
-          <span id="logo"> <img src="styles/img/logo.png" alt="SmartAdmin"/> </span>
+          <span> <img src="styles/img/project/glass.jpg" alt="PluginPlatform"/> </span>
         </div>
         <span id="extr-page-header-space">&nbsp;已经注册？<a className="btn btn-danger"　onClick={this.toggleMode}>用户登录</a> </span>
       </header>
@@ -245,35 +245,78 @@ class LoginOrRegister extends Component {
           <div id="content" className="container">
             <div className="row">
               <div className="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
-                <h1 className="txt-color-red login-header-big">SmartAdmin</h1>
+                <div className="well">
+                  <h1 ><span className="alert-heading"><i className="fa fa-puzzle-piece"/> 一体化插件管理平台 </span>
+                    <sup className="badge bg-color-red bounceIn animated"> A l p h a </sup> <br />
+                    <small className="text-danger slideInRight fast animated"><strong>Exclusive to
+                      PluginPlatform!</strong></small>
+                  </h1>
 
-                <div className="hero">
-                  <div className="pull-left login-desc-box-l">
-                    <h4 className="paragraph-header">It's Okay to be Smart. Experience the simplicity of SmartAdmin,
-                      everywhere you go!</h4>
+                  <div id="myCarousel-2" className="carousel slide" data-smart-ride-carousel=""
+                       data-interval="3000">
+                    <ol className="carousel-indicators">
+                      <li data-target="#myCarousel-2" data-slide-to="0" className="active"/>
+                      <li data-target="#myCarousel-2" data-slide-to="1" className=""/>
+                      <li data-target="#myCarousel-2" data-slide-to="2" className=""/>
+                    </ol>
+                    <div className="carousel-inner">
+                      {/* Slide 1 */}
+                      <div className="item active">
+                        <img src="styles/img/project/m1.png" alt=""/>
+                        <div className="carousel-caption caption-right">
+                          <h4> </h4>
+                          <p>
+
+                          </p>
+                          <br/>
+                        </div>
+                      </div>
+                      {/* Slide 2 */}
+                      <div className="item">
+                        <img src="styles/img/project/m2.png" alt=""/>
+                        <div className="carousel-caption caption-left">
+                          <h4> </h4>
+                          <p>
+
+                          </p>
+                          <br/>
+                        </div>
+                      </div>
+                      {/* Slide 3 */}
+                      <div className="item">
+                        <img src="styles/img/project/m3.png" alt=""/>
+                        <div className="carousel-caption">
+                          <h4> </h4>
+                          <br/>
+                        </div>
+                      </div>
+                    </div>
+                    <a className="left carousel-control" href="#myCarousel-2" ng-non-bindable=""
+                       data-slide="prev"> <span className="glyphicon glyphicon-chevron-left"/>
+                    </a>
+                    <a className="right carousel-control" href="#myCarousel-2"
+                       ng-non-bindable="" data-slide="next"> <span
+                      className="glyphicon glyphicon-chevron-right"/> </a>
                   </div>
-                  <img src="styles/img/demo/iphoneview.png" className="pull-right display-image" alt="" style={{width:'210px'}}/>
+                  {/*End Well */}
                 </div>
-                <div className="row">
-                  <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <h5 className="about-heading">About SmartAdmin - Are you up to date?</h5>
 
-                    <p>
-                      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                      laudantium, totam rem aperiam, eaque ipsa.
-                    </p>
-                  </div>
-                  <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <h5 className="about-heading">Not just your average template!</h5>
-
-                    <p>
-                      Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta
-                      nobis est eligendi voluptatem accusantium!
-                    </p>
-                  </div>
+                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <h5 className="about-heading">一体化插件开发平台</h5>
+                  <p>
+                    一体化插件开发平台向您提供了规范化的 OSGi 插件框架和可复用的插件仓库，通过插件仓库来解决应用系统的持续集成、远程管理、自动更新、敏捷发布，无缝实现开发/QA/运维间无缝协作，并允许您将自定义的插件共享。
+                  </p>
+                </div>
+                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <h5 className="about-heading">多样化插件仓库</h5>
+                  <p>
+                    插件仓库提供了众多开发框架和系统服务，使您只需关注自己的商业逻辑，以“搭积木”方式来开发软件，加速应用程序的开发部署。
+                  </p>
                 </div>
               </div>
+
               {this.renderForm()}
+
               <div className="col-xs-12 col-sm-12 col-md-5 col-lg-4">
               </div>
             </div>
@@ -302,3 +345,57 @@ function mapStateToProps(state) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps)(LoginOrRegister);
+
+
+/**
+ * Backup code
+ */
+// /* Main render function */
+// render() {
+//
+//   return (
+//     <div id="extr-page" >
+//       { this.renderHeader() }
+//
+//       <div id="main" role="main" className="animated fadeInDown">
+//
+//         <div id="content" className="container">
+//           <div className="row">
+//             <div className="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+//               <h1 className="txt-color-red login-header-big">SmartAdmin</h1>
+//
+//               <div className="hero">
+//                 <div className="pull-left login-desc-box-l">
+//                   <h4 className="paragraph-header">It's Okay to be Smart. Experience the simplicity of SmartAdmin,
+//                     everywhere you go!</h4>
+//                 </div>
+//                 <img src="styles/img/demo/iphoneview.png" className="pull-right display-image" alt="" style={{width:'210px'}}/>
+//               </div>
+//               <div className="row">
+//                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+//                   <h5 className="about-heading">About SmartAdmin - Are you up to date?</h5>
+//
+//                   <p>
+//                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+//                     laudantium, totam rem aperiam, eaque ipsa.
+//                   </p>
+//                 </div>
+//                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+//                   <h5 className="about-heading">Not just your average template!</h5>
+//
+//                   <p>
+//                     Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta
+//                     nobis est eligendi voluptatem accusantium!
+//                   </p>
+//                 </div>
+//               </div>
+//             </div>
+//             {this.renderForm()}
+//             <div className="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
