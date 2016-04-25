@@ -56,3 +56,5 @@
 - PluginRepository 组件和数据库实现部分添加异常处理机制
 - 所有Form控件添加 validation
 - Datatables 的中文化问题
+- 私有插件仓库只显示该登录用户提交的插件
+- 在新添加插件时加入依赖填写栏，可以用<select>控件+版本号输入的方式

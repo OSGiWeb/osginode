@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var PluginSchema = new mongoose.Schema({
   id: String,
   pluginname: String,
+  symbolicname: String,
   category: String,
   version: String,
   author: String,

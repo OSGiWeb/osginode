@@ -109,6 +109,7 @@ export function createPlugin(pluginInfo) {
 
     // Calculate md5 identifier
     const identifier = md5.hash(pluginInfo.pluginname);
+    pluginInfo.id = identifier; // store md5 id in database, id is used to update plugin info
 
     // First dispatch an optimistic update
     dispatch(createPluginRequest());
