@@ -29,3 +29,33 @@ exports.add = function(req, res) {
     res.status(200).send('OK');
   });
 };
+
+/**
+ * Update a plugin
+ */
+exports.update = function(req, res) {
+  var query = { id: req.params.id };
+  var omitKeys = ['_id', '__v'];
+  var data = _.omit(req.body, omitKeys);
+
+  Plugin.findOneAndUpdate(query, data, function(err, data) {
+    if(err) {
+      console.log('Error on save!');
+      // Not sure if server status is the correct status to return
+      res.status(500).send('We failed to save to due some reason');
+    }
+    res.status(200).send('Updated successfully');
+  });
+
+};
+
+/**
+ * Remove a plugin
+ */
+exports.remove = function(req, res) {
+  var query = { id: req.params.id };
+  Topic.findOneAndRemove(query, function(err, data) {
+    if(err) console.log('Error on delete');
+    res.status(200).send('Removed Successfully');
+  });
+};

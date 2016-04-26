@@ -10,7 +10,10 @@ import {
   GET_PLUGINS_SUCCESS,
   GET_PLUGINS_FAILURE,
   SHOW_NOTIFICATION_DONE,
-  SET_DATATABLE_SELECTED_DATA
+  SET_DATATABLE_SELECTED_DATA,
+  UPDATE_PLUGIN_REQUEST,
+  UPDATE_PLUGIN_SUCCESS,
+  UPDATE_PLUGIN_FAILURE
 } from '../constants/index';
 
 export default function plugin(
@@ -19,9 +22,11 @@ export default function plugin(
     isFetched: false,
     isSelected: false, // Is row in Datatable selected
     isCreated: undefined,
+    isUpdated: undefined,
     plugins: [],
     newPlugin: [],
-    selectedData: []
+    selectedData: [],
+    updatedPlugin:[]
   }, action={}) {
   switch (action.type) {
     case TOGGLE_PRIVATE_REPOSITORY_MODE:
@@ -29,6 +34,7 @@ export default function plugin(
         isPrivate: !state.isPrivate
       });
 
+    /* Create plugin functions */
     case CREATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
         plugins: [...state.plugins, action.data],
@@ -56,6 +62,7 @@ export default function plugin(
     //     newPlugin: state.newPlugin
     //   });
 
+    /* Get plugins functions */
     case GET_PLUGINS_REQUEST:
       return Object.assign({}, state, {
         isFetched: false
@@ -70,16 +77,36 @@ export default function plugin(
         isFetched: false
       });
 
+    /* Update plugin functions */
+    case UPDATE_PLUGIN_SUCCESS:
+      return Object.assign({}, state, {
+        plugins: [
+          ...state.plugins.slice(0, action.index),
+          Object.assign({}, state.plugins[action.index], action.data),
+          ...state.plugins.slice(action.index + 1)
+        ],
+        updatedPlugin: action.data,
+        isUpdated: true
+      });
+    case UPDATE_PLUGIN_FAILURE:
+      return Object.assign({}, state, {
+        updatedPlugin: [],
+        isUpdated: false
+      });
+
+    /* Plugin datatable operation functions */
     case SHOW_NOTIFICATION_DONE:
       return Object.assign({}, state, {
         newPlugin: [],
-        isCreated: undefined
+        isCreated: undefined,
+        isUpdated: undefined
       });
     case SET_DATATABLE_SELECTED_DATA:
       return Object.assign({}, state, {
         selectedData: action.data,
         isSelected: action.isSelected
       });
+
     default:
       return state;
   }

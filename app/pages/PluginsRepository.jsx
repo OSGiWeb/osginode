@@ -13,8 +13,8 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import {Dropdown, MenuItem} from 'react-bootstrap'
 
-import { togglePrivateRepositoryMode, createPlugin,
-  fetchPlugins, showNotificationDone, setDatatableSelectedData } from '../actions/plugins';
+import { togglePrivateRepositoryMode, createPlugin, fetchPlugins,
+  showNotificationDone, setDatatableSelectedData, updatePlugin } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -95,12 +95,12 @@ class PluginsRepository extends Component {
 
   showSmartNotification() {
     const {dispatch} = this.props;
-    const { isCreated } = this.props.plugin;
+    const { isCreated, isUpdated } = this.props.plugin;
 
     // TODO: Add waiting icon to show the plugin adding process
     // TODO: Show valid plugin infomation on message boxes
-    if (isCreated !== undefined) {
-      if (isCreated) {
+    if (isCreated !== undefined || isUpdated!==undefined) {
+      if (isCreated === true) {
         $.bigBox({
           title: "插件添加成功！",
           content: "插件名：高度窗；提交人：许昀",
@@ -109,7 +109,7 @@ class PluginsRepository extends Component {
           icon: "fa fa-check",
           // number: "4"
         });
-      } else {
+      } else if (isCreated === false) {
         $.bigBox({
           title: "插件添加失败！",
           content: "插件名：高度窗；提交人：许昀",
@@ -119,6 +119,26 @@ class PluginsRepository extends Component {
           // number: "4"
         });
       }
+
+      // if (isUpdated === true) {
+      //   $.bigBox({
+      //     title: "插件更新成功！",
+      //     content: "插件名：高度窗；提交人：许昀",
+      //     color: "#739E73",
+      //     timeout: 2000,
+      //     icon: "fa fa-check",
+      //     // number: "4"
+      //   });
+      // } else if (isUpdated === false){
+      //   $.bigBox({
+      //     title: "插件更新失败！",
+      //     content: "插件名：高度窗；提交人：许昀",
+      //     color: "#296191",
+      //     timeout: 2000,
+      //     icon: "fa fa-check",
+      //     // number: "4"
+      //   });
+      // }
       // Notification is shown, set related state to default value to avoid render notification again
       dispatch(showNotificationDone());
     }
@@ -151,14 +171,29 @@ class PluginsRepository extends Component {
   }
 
   onDatatableRowSelected(rowData, isSelected) {
-    var data = rowData;
+    // Single row selection
+    var data = rowData[0];
+
     const {dispatch} = this.props;
     dispatch(setDatatableSelectedData(data, isSelected));
   }
 
   onEditPluginSubmit() {
+    const {dispatch} = this.props;
+    const { selectedData } = this.props.plugin;
+    const { userFullname } = this.props.user
 
-
+    dispatch(updatePlugin({
+        id: selectedData.id,
+        index: selectedData.index, // realitive numeic index: 1-N
+        pluginname: ReactDOM.findDOMNode(this.refs.editpluginname).value,
+        symbolicname: ReactDOM.findDOMNode(this.refs.editsymbolicname).value,
+        category: ReactDOM.findDOMNode(this.refs.editcategory).value,
+        version: ReactDOM.findDOMNode(this.refs.editversion).value,
+        author: userFullname,
+        releasedate: ReactDOM.findDOMNode(this.refs.editreleasedate).value,
+        description: ReactDOM.findDOMNode(this.refs.editdescription).value
+    }))
   }
 
   onEditSelectedPlugin() {
@@ -307,12 +342,12 @@ class PluginsRepository extends Component {
                           <div className="row">
                             <section className="col col-6">
                               <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-                                <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={selectedData[0].pluginname}/>
+                                <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={selectedData.pluginname}/>
                               </label>
                             </section>
                             <section className="col col-6">
                               <label className="input"> <i className="icon-append fa fa-user"/>
-                                <input type="text" name="editsymbolicname" ref="editsymbolicname" placeholder="标识" defaultValue={selectedData[0].symbolicname}/>
+                                <input type="text" name="editsymbolicname" ref="editsymbolicname" placeholder="标识" defaultValue={selectedData.symbolicname}/>
                               </label>
                             </section>
                           </div>
@@ -320,12 +355,12 @@ class PluginsRepository extends Component {
                           <div className="row">
                             <section className="col col-6">
                               <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                                <input type="text" name="editversion" ref="editversion" placeholder="版本号" value="0.0.1" defaultValue={selectedData[0].version}/>
+                                <input type="text" name="editversion" ref="editversion" placeholder="版本号" defaultValue={selectedData.version}/>
                               </label>
                             </section>
                             <section className="col col-6">
                               <label className="select">
-                                <select name="editcategory" ref="editcategory" defaultValue={selectedData[0].category}>
+                                <select name="editcategory" ref="editcategory" defaultValue={selectedData.category}>
                                   <option value="类别" disabled={true}>类别</option>
                                   <option value="核心插件">核心插件</option>
                                   <option value="显示插件">显示插件</option>
@@ -339,7 +374,7 @@ class PluginsRepository extends Component {
                             <section className="col col-6">
                               <label className="input"> <i className="icon-append fa fa-calendar"/>
                                 <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
-                                              placeholder="发布时间" defaultValue={selectedData[0].releasedate}/>
+                                              placeholder="发布时间" defaultValue={selectedData.releasedate}/>
                               </label>
                             </section>
                           </div>
@@ -356,7 +391,7 @@ class PluginsRepository extends Component {
                           </section>
                           <section>
                             <label className="textarea"> <i className="icon-append fa fa-comment"/>
-                              <textarea rows="5" name="editdescription" ref="editdescription" placeholder="插件描述" defaultValue={selectedData[0].description}/>
+                              <textarea rows="5" name="editdescription" ref="editdescription" placeholder="插件描述" defaultValue={selectedData.description}/>
                             </label>
                           </section>
                         </fieldset>
@@ -383,7 +418,7 @@ class PluginsRepository extends Component {
   }
 
 
-  renderPublicRepository(_plugins, _newPlugin) {
+  renderPublicRepository(_plugins) {
     return (
       <div className="row">
         <article className="col-sm-12">
@@ -426,7 +461,7 @@ class PluginsRepository extends Component {
               </div>
             </header>
 
-            { this.renderPublicDataTable(_plugins, _newPlugin) }
+            { this.renderPublicDataTable(_plugins) }
 
           </JarvisWidget>
           { this.showSmartNotification() }
@@ -482,7 +517,7 @@ class PluginsRepository extends Component {
   }
 
 
-  renderPrivateRepository(_isFetched, _plugins, _newPlugin) {
+  renderPrivateRepository(_isFetched, _plugins) {
     // Check if row in datatable is selected
     const { isSelected } = this.props.plugin;
 
@@ -528,7 +563,7 @@ class PluginsRepository extends Component {
               </div>
             </header>
 
-            { this.renderPrivateDataTable(_isFetched, _plugins, _newPlugin) }
+            { this.renderPrivateDataTable(_isFetched, _plugins) }
 
           </JarvisWidget>
           { this.showSmartNotification() }
@@ -537,7 +572,7 @@ class PluginsRepository extends Component {
     )
   }
 
-  renderPrivateDataTable(_isFetched, _plugins, _newPlugin) {
+  renderPrivateDataTable(_isFetched, _plugins) {
     // TODO: Only render the plugin datatable when the data is arrived in store (temp. solution for debugging this page)
     // if (_isFetched) {
 
@@ -553,12 +588,15 @@ class PluginsRepository extends Component {
         {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
     }
 
+    const { newPlugin, updatedPlugin } = this.props.plugin;
+
     return (
       <div>
         <div className="widget-body no-padding">
           <Datatable
             options={ options }
-            newPlugin={ _newPlugin }
+            newPlugin={ newPlugin }
+            updatedPlugin = { updatedPlugin }
             onDatatableRowSelected={ this.onDatatableRowSelected }
             paginationLength={true} className="table table-striped table-bordered table-hover"
             width="100%">
@@ -589,7 +627,7 @@ class PluginsRepository extends Component {
    * @returns {XML}
    */
   render() {
-    const { isPrivate, isFetched, plugins, newPlugin } = this.props.plugin;
+    const { isPrivate, isFetched, plugins } = this.props.plugin;
 
     return (
       <div id="content">
@@ -600,8 +638,8 @@ class PluginsRepository extends Component {
         </div>
 
         <WidgetGrid>
-          { this.renderPrivateRepository(isFetched, plugins, newPlugin) }
-          { this.renderPublicRepository(plugins, newPlugin) }
+          { this.renderPrivateRepository(isFetched, plugins) }
+          {/* this.renderPublicRepository(plugins) */}
         </WidgetGrid>
 
         { this.renderAddPluginModal() }

@@ -19,15 +19,24 @@ let Datatable = React.createClass({
 
     // Only update Datatable when it is initialized
     if (this.initialized === true) {
-      const { newPlugin } = this.props;
+      const { newPlugin, updatedPlugin, selRowIndex } = this.props;
+      var element = $(this.getHold());
+      var _dataTable = element.DataTable();
 
       // When new added plugin is avaialbe
       if (_.trim(newPlugin).length > 0) {
         // Add new row when react UI component updated
-        var element = $(this.getHold());
-        var _dataTable = element.DataTable();
         _dataTable.row.add(newPlugin).draw();
       }
+
+      // When updated plugin is avaialbe
+      if (_.trim(updatedPlugin).length > 0) {
+        // Update data in row
+        _dataTable.row(updatedPlugin.index -1).data(updatedPlugin).draw(); // _dataTable.row(index) index counted from 0
+      }
+
+
+      // TODO: try to use draw callback functions -> 'drawCallback' to decouple relationships
 
       // _dataTable
       //   .clear()
@@ -136,9 +145,9 @@ let Datatable = React.createClass({
         onDatatableRowSelected(rowData, true);
       })
       .on( 'deselect', function ( e, dt, type, indexes ) {
-      var rowData = [];
+        var rowData = [];
         onDatatableRowSelected(rowData, false);
-    } );;
+      });
 
     // Set Datatable component is initialized othewise caused '_dataTable' not funound
     // error in function 'componentDidUpdate()' at startup process

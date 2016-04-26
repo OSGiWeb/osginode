@@ -47,7 +47,6 @@ function getPluginsSuccess(data) {
     data:data
   }
 }
-
 function getPluginsFailure() {
   return {
     type: types.GET_PLUGINS_FAILURE
@@ -62,14 +61,12 @@ function createPluginRequest() {
     type: types.CREATE_PLUGIN_REQUEST
   };
 }
-
 function createPluginSuccess(data) {
   return {
     type: types.CREATE_PLUGIN_SUCCESS,
     data:data
   };
 }
-
 function createPluginFailure(data) {
   return {
     type: types.CREATE_PLUGIN_FAILURE,
@@ -77,6 +74,34 @@ function createPluginFailure(data) {
     error: data.error
   };
 }
+
+/*
+  Update plguin functions
+ */
+function updatePluginRequest() {
+  return {
+    type: types.UPDATE_PLUGIN_REQUEST
+  };
+}
+
+function updatePluginSuccess(data) {
+  return {
+    type: types.UPDATE_PLUGIN_SUCCESS,
+    index: data.index - 1, // Array index should minus realitive index
+    data: data
+  };
+}
+
+function updatePluginFailure() {
+  return {
+    type: types.UPDATE_PLUGIN_FAILURE
+  };
+}
+
+
+/*
+  Delete plguin functions
+ */
 
 /*
  Datatable operation functions
@@ -102,16 +127,16 @@ function formatPluginData(pluginData) {
   // Format data which will be saved in store
   for (let i = 0; i < pluginData.length; i++) {
     formatData[i] = _.omit(pluginData[i], '_id', '__v'); // Delete unused plugin info
-    formatData[i].index = i+1; // Add plugin numeric index
+    formatData[i].index = i + 1; // Add plugin numeric index
   }
-
   return formatData;
 }
 
-// This action creator returns a function,
-// which will get executed by Redux-Thunk middleware
-// This function does not need to be pure, and thus allowed
-// to have side effects, including executing asynchronous API calls.
+/**
+ * Create plugin
+ * @param pluginInfo
+ * @returns {function()}
+ */
 export function createPlugin(pluginInfo) {
   return (dispatch, getState) => {
     // If the creating plugin name is empty
@@ -141,7 +166,10 @@ export function createPlugin(pluginInfo) {
   };
 }
 
-// Fetch posts logic
+/**
+ * Fetch all plugins
+ * @returns {function()}
+ */
 export function fetchPlugins() {
 
   return dispatch => {
@@ -161,8 +189,6 @@ export function fetchPlugins() {
       });
   };
 
-
-
   // return dispatch => {
   //   dispatch(beginLogout());
   //
@@ -180,4 +206,40 @@ export function fetchPlugins() {
   //   type: types.GET_PLUGINS_REQUEST,
   //   promise: makePluginRequest('get')
   // };
+}
+/**
+ *
+ * @param id: used to update plugin data in database
+ * @param index: used to update plguin data in store
+ * @param pluginInfo: data retrieved from 'editPluginModal' modal UI
+ * @returns {function()}
+ */
+export function updatePlugin(pluginInfo) {
+  return dispatch => {
+    dispatch(updatePluginRequest());
+
+    // No 'index' field in database (recalculate in cliet side), delete it for DB data update
+    let pluginInfoDB = _.omit(pluginInfo, 'index', 'id'); // Delete unused plugin info in client side
+
+    return makePluginRequest('put', pluginInfo.id, pluginInfoDB).then(res => {
+        if (res.status === 200) {
+          return dispatch(updatePluginSuccess(pluginInfo));
+        }
+      })
+      .catch(ex => {
+        return dispatch(updatePluginFailure());
+      });
+  };
+}
+
+
+export function deletePlguin(id, index) {
+  return dispatch => {
+    dispatch(destroy(index));
+    return makePluginRequest('delete', id);
+    // TODO: do something with the ajax response
+    // You can also dispatch here
+    // E.g.
+    // .then(response => {});
+  };
 }

@@ -13,29 +13,23 @@ var users = require('../controllers/users');
 // var App = require(compiled_app_module_path);
 
 module.exports = function(app, passport) {
-  // user routes
+  // User routes
   app.post('/login', users.postLogin);
   app.post('/signup', users.postSignUp);
   // app.post('/logout', users.postLogout);
 
 
-// topic routes
+  // Plugin routes
   app.get('/pluginsRepository', plugins.all);
   app.post('/pluginsRepository/:id', function(req, res) {
     plugins.add(req, res);
   });
-
-  // app.post('/topic/:id', function(req, res) {
-  //   topics.add(req, res);
-  // });
-  //
-  // app.put('/topic/:id', function(req, res) {
-  //   topics.update(req, res);
-  // });
-  //
-  // app.delete('/topic/:id', function(req, res) {
-  //   topics.remove(req, res);
-  // });
+  app.put('/pluginsRepository/:id', function(req, res) {
+    plugins.update(req, res);
+  });
+  app.delete('/pluginsRepository/:id', function(req, res) {
+    plugins.remove(req, res);
+  });
 
   // This is where the magic happens. We take the locals data we have already
   // fetched and seed our stores with data.
