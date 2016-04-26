@@ -78,6 +78,23 @@ function createPluginFailure(data) {
   };
 }
 
+/*
+ Datatable operation functions
+ */
+export function setDatatableSelectedData(data, isSelected) {
+  return {
+    type: types.SET_DATATABLE_SELECTED_DATA,
+    data: data,
+    isSelected: isSelected
+  };
+}
+// The notification is already shown in UI, this action is used to set some related states in store
+export function showNotificationDone() {
+  return {
+    type: types.SHOW_NOTIFICATION_DONE
+  };
+}
+
 function formatPluginData(pluginData) {
   let formatData = [];
   // TODO: Maybe we need to keep the md5 id field which will be used to update plugin info!
@@ -89,13 +106,6 @@ function formatPluginData(pluginData) {
   }
 
   return formatData;
-}
-
-// The notification is already shown in UI, this action is used to set some related states in store
-export function showNotificationDone() {
-  return {
-    type: types.SHOW_NOTIFICATION_DONE
-  };
 }
 
 // This action creator returns a function,

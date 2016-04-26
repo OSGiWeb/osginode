@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
 
 import ScriptLoader from '../utils/mixins/ScriptLoader.jsx'
@@ -59,6 +59,7 @@ let Datatable = React.createClass({
       }
     }
 
+    // Extend Datatable options in initialization
     options = _.extend(options, {
 
       "dom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs text-right'" + toolbar + ">r>" +
@@ -127,6 +128,18 @@ let Datatable = React.createClass({
       })
     }
 
+    // Bind Datatable selection events and return selected data via callback function
+    const { onDatatableRowSelected } = this.props;
+    _dataTable
+      .on( 'select', function ( e, dt, type, indexes) {
+        var rowData = _dataTable.rows( indexes ).data().toArray();
+        onDatatableRowSelected(rowData, true);
+      })
+      .on( 'deselect', function ( e, dt, type, indexes ) {
+      var rowData = [];
+        onDatatableRowSelected(rowData, false);
+    } );;
+
     // Set Datatable component is initialized othewise caused '_dataTable' not funound
     // error in function 'componentDidUpdate()' at startup process
     this.initialized = true;
@@ -144,6 +157,7 @@ let Datatable = React.createClass({
 });
 
 export default Datatable
+
 
 
 // import React from 'react';

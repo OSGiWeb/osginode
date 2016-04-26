@@ -13,7 +13,8 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import {Dropdown, MenuItem} from 'react-bootstrap'
 
-import { togglePrivateRepositoryMode, createPlugin, fetchPlugins, showNotificationDone } from '../actions/plugins';
+import { togglePrivateRepositoryMode, createPlugin,
+  fetchPlugins, showNotificationDone, setDatatableSelectedData } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -76,6 +77,7 @@ class PluginsRepository extends Component {
     this.onAddPluginSubmit = this.onAddPluginSubmit.bind(this);
     this.onEditPluginSubmit = this.onEditPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
+    this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
@@ -146,6 +148,12 @@ class PluginsRepository extends Component {
       releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
       description: ReactDOM.findDOMNode(this.refs.description).value
     }));
+  }
+
+  onDatatableRowSelected(rowData, isSelected) {
+    var data = rowData;
+    const {dispatch} = this.props;
+    dispatch(setDatatableSelectedData(data, isSelected));
   }
 
   onEditPluginSubmit() {
@@ -272,105 +280,106 @@ class PluginsRepository extends Component {
    * renderEditPluginModal
    * @returns {XML}
    */
-  renderEditPluginModal(_plugins) {
+  renderEditPluginModal() {
 
-    // TODO: if no row in datatalbe is selected, return a error!
-    // TODO: find selected row in datatable and return plugin data in that row!
-    return (
-      <div className="modal fade" id="editPluginModal" tabIndex="-1" role="dialog"
-           aria-labelledby="editPluginModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
-                &times;
-              </button>
-              <h2 className="row-seperator-header" id="editPluginModalLabel">
-                <i className="fa fa-reorder"/> 编辑插件 </h2>
-            </div>
-            <div className="modal-body">
+    const { isSelected, selectedData } = this.props.plugin;
 
-              <div>
-                <div className="widget-body no-padding">
-                  <UiValidate options={validationOptions}>
-                    <form id="editplugin-form" className="smart-form" noValidate="novalidate">
-                      <fieldset>
-                        <div className="row">
-                          <section className="col col-6">
-                            <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-                              <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" value="TODO"/>
-                            </label>
-                          </section>
-                          <section className="col col-6">
-                            <label className="input"> <i className="icon-append fa fa-user"/>
-                              <input type="text" name="editsymbolicname" ref="editsymbolicname" placeholder="标识" value="com.plugins.test"/>
-                            </label>
-                          </section>
-                        </div>
+    if (isSelected) {
+      return (
+        <div className="modal fade" id="editPluginModal" tabIndex="-1" role="dialog"
+             aria-labelledby="editPluginModalLabel" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <h2 className="row-seperator-header" id="editPluginModalLabel" >
+                  <i className="fa fa-reorder"/> 编辑插件 </h2>
+              </div>
+              <div className="modal-body">
 
-                        <div className="row">
-                          <section className="col col-6">
-                            <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                              <input type="text" name="editversion" ref="editversion" placeholder="版本号" value="0.0.1" />
-                            </label>
-                          </section>
-                          <section className="col col-6">
-                            <label className="select">
-                              <select name="editcategory" ref="editcategory" defaultValue={"类别"}>
-                                <option value="类别" disabled={true}>类别</option>
-                                <option value="核心插件">核心插件</option>
-                                <option value="显示插件">显示插件</option>
-                                <option value="通信插件">通信插件</option>
-                                <option value="辅助插件">辅助插件</option>
-                              </select> <i/> </label>
-                          </section>
-                        </div>
+                <div>
+                  <div className="widget-body no-padding">
+                    <UiValidate options={validationOptions}>
+                      <form id="editplugin-form" className="smart-form" noValidate="novalidate">
+                        <fieldset>
+                          <div className="row">
+                            <section className="col col-6">
+                              <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
+                                <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={selectedData[0].pluginname}/>
+                              </label>
+                            </section>
+                            <section className="col col-6">
+                              <label className="input"> <i className="icon-append fa fa-user"/>
+                                <input type="text" name="editsymbolicname" ref="editsymbolicname" placeholder="标识" defaultValue={selectedData[0].symbolicname}/>
+                              </label>
+                            </section>
+                          </div>
 
-                        <div className="row">
-                          <section className="col col-6">
-                            <label className="input"> <i className="icon-append fa fa-calendar"/>
-                              <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
-                                            placeholder="发布时间"/>
-                            </label>
-                          </section>
-                        </div>
-                      </fieldset>
+                          <div className="row">
+                            <section className="col col-6">
+                              <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
+                                <input type="text" name="editversion" ref="editversion" placeholder="版本号" value="0.0.1" defaultValue={selectedData[0].version}/>
+                              </label>
+                            </section>
+                            <section className="col col-6">
+                              <label className="select">
+                                <select name="editcategory" ref="editcategory" defaultValue={selectedData[0].category}>
+                                  <option value="类别" disabled={true}>类别</option>
+                                  <option value="核心插件">核心插件</option>
+                                  <option value="显示插件">显示插件</option>
+                                  <option value="通信插件">通信插件</option>
+                                  <option value="辅助插件">辅助插件</option>
+                                </select> <i/> </label>
+                            </section>
+                          </div>
 
-                      <fieldset>
-                        <section>
-                          <div className="input input-file">
+                          <div className="row">
+                            <section className="col col-6">
+                              <label className="input"> <i className="icon-append fa fa-calendar"/>
+                                <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
+                                              placeholder="发布时间" defaultValue={selectedData[0].releasedate}/>
+                              </label>
+                            </section>
+                          </div>
+                        </fieldset>
+
+                        <fieldset>
+                          <section>
+                            <div className="input input-file">
                       <span className="button"><input id="editfile2" type="editfile" name="editpluginfile"
                                                       onchange="this.parentNode.nextSibling.value = this.value"/>
                         上传插件</span>
-                            <input type="text" placeholder="上传插件包" readOnly={true}/>
-                          </div>
-                        </section>
-
-                        <section>
-                          <label className="textarea"> <i className="icon-append fa fa-comment"/>
-                            <textarea rows="5" name="editdescription" ref="editdescription" placeholder="插件描述" value="测试插件，部分域不可被输入信息。"/>
-                          </label>
-                        </section>
-                      </fieldset>
-                    </form>
-                  </UiValidate>
+                              <input type="text" placeholder="上传插件包" readOnly={true}/>
+                            </div>
+                          </section>
+                          <section>
+                            <label className="textarea"> <i className="icon-append fa fa-comment"/>
+                              <textarea rows="5" name="editdescription" ref="editdescription" placeholder="插件描述" defaultValue={selectedData[0].description}/>
+                            </label>
+                          </section>
+                        </fieldset>
+                      </form>
+                    </UiValidate>
+                  </div>
                 </div>
-              </div>
 
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">
-                取消
-              </button>
-              <button type="button" className="btn btn-primary" data-dismiss="modal"
-                      onClick={this.onEditPluginSubmit}>
-                添加插件
-              </button>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-default" data-dismiss="modal">
+                  取消
+                </button>
+                <button type="button" className="btn btn-primary" data-dismiss="modal"
+                        onClick={this.onEditPluginSubmit}>
+                  更新插件
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
 
@@ -474,6 +483,9 @@ class PluginsRepository extends Component {
 
 
   renderPrivateRepository(_isFetched, _plugins, _newPlugin) {
+    // Check if row in datatable is selected
+    const { isSelected } = this.props.plugin;
+
     return (
       <div className="row">
         <article className="col-sm-12">
@@ -488,8 +500,8 @@ class PluginsRepository extends Component {
                   &nbsp;&nbsp; 添加新插件
                 </button>
                 &nbsp;&nbsp;
-                <Dropdown className="btn-group" id="widget-demo-dropdown">
-                  <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary">
+                <Dropdown className="btn-group" id="widget-demo-dropdown" >
+                  <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary" disabled={ !isSelected }>
                     <i className="fa fa-wrench"/>&nbsp;&nbsp; 插件操作
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="dropdown-menu pull-right">
@@ -536,9 +548,6 @@ class PluginsRepository extends Component {
         style: 'single',
         info: false
       },
-      // "language": {
-      //   "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json"
-      // },
       columns: [
         {data: "index"}, {data: "pluginname"}, {data: "symbolicname"}, {data: "category"},
         {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
@@ -550,6 +559,7 @@ class PluginsRepository extends Component {
           <Datatable
             options={ options }
             newPlugin={ _newPlugin }
+            onDatatableRowSelected={ this.onDatatableRowSelected }
             paginationLength={true} className="table table-striped table-bordered table-hover"
             width="100%">
             <thead>
@@ -595,7 +605,7 @@ class PluginsRepository extends Component {
         </WidgetGrid>
 
         { this.renderAddPluginModal() }
-        {/* this.renderEditPluginModal(plugins) */}
+        { this.renderEditPluginModal() }
 
       </div>
     )

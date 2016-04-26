@@ -9,16 +9,19 @@ import {
   GET_PLUGINS_REQUEST,
   GET_PLUGINS_SUCCESS,
   GET_PLUGINS_FAILURE,
-  SHOW_NOTIFICATION_DONE
+  SHOW_NOTIFICATION_DONE,
+  SET_DATATABLE_SELECTED_DATA
 } from '../constants/index';
 
 export default function plugin(
   state={
     isPrivate: true, // Is private plugins repository
     isFetched: false,
+    isSelected: false, // Is row in Datatable selected
     isCreated: undefined,
     plugins: [],
-    newPlugin: []
+    newPlugin: [],
+    selectedData: []
   }, action={}) {
   switch (action.type) {
     case TOGGLE_PRIVATE_REPOSITORY_MODE:
@@ -71,6 +74,11 @@ export default function plugin(
       return Object.assign({}, state, {
         newPlugin: [],
         isCreated: undefined
+      });
+    case SET_DATATABLE_SELECTED_DATA:
+      return Object.assign({}, state, {
+        selectedData: action.data,
+        isSelected: action.isSelected
       });
     default:
       return state;
