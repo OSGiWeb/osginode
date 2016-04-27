@@ -33,10 +33,11 @@ let Datatable = React.createClass({
       if (_.trim(updatedPlugin).length > 0) {
         // Update data in row
         _dataTable.row(updatedPlugin.index -1).data(updatedPlugin).draw(); // _dataTable.row(index) index counted from 0
+        // TODO: selected updated row after draw the table
       }
 
 
-      // TODO: try to use draw callback functions -> 'drawCallback' to decouple relationships
+      // TODO: try to use draw callback functions -> 'drawCallback' or 'Events/Events refs' to decouple relationships
 
       // _dataTable
       //   .clear()
