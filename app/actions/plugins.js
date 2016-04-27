@@ -83,7 +83,6 @@ function updatePluginRequest() {
     type: types.UPDATE_PLUGIN_REQUEST
   };
 }
-
 function updatePluginSuccess(data) {
   return {
     type: types.UPDATE_PLUGIN_SUCCESS,
@@ -91,10 +90,29 @@ function updatePluginSuccess(data) {
     data: data
   };
 }
-
 function updatePluginFailure() {
   return {
     type: types.UPDATE_PLUGIN_FAILURE
+  };
+}
+
+/*
+ Delete plguin functions
+ */
+function deletePluginRequest() {
+  return {
+    type: types.DELETE_PLUGIN_REQUEST
+  };
+}
+function deletePluginSuccess(index) {
+  return {
+    type: types.DELETE_PLUGIN_SUCCESS,
+    index: index - 1, // Array index should minus realitive index
+  };
+}
+function deletePluginFailure() {
+  return {
+    type: types.DELETE_PLUGIN_FAILURE
   };
 }
 
@@ -176,7 +194,7 @@ export function fetchPlugins() {
     dispatch(getPluginsRequest());
 
     return makePluginRequest('get').then(res => {
-        if (res.status === 200) {
+        if (res.status === 200) { // Only when database operation return 'SUCCESS(200)', then modify the data in store
           // Format plugin data structure which will be saved in store
           const pluginData = formatPluginData(res.data);
 
@@ -208,9 +226,9 @@ export function fetchPlugins() {
   // };
 }
 /**
- *
- * @param id: used to update plugin data in database
- * @param index: used to update plguin data in store
+ * updatePlugin(pluginInfo)
+ * @param pluginInfo.id: used to update plugin data in database
+ * @param pluginInfo.index: used to update plguin data in store
  * @param pluginInfo: data retrieved from 'editPluginModal' modal UI
  * @returns {function()}
  */
@@ -232,14 +250,24 @@ export function updatePlugin(pluginInfo) {
   };
 }
 
-
+/**
+ * deletePlguin(id, index)
+ * @param id: used to update plugin data in database
+ * @param index: used to update plguin data in store
+ * @param pluginInfo: data retrieved from 'editPluginModal' modal UI
+ * @returns {function()}
+ */
 export function deletePlguin(id, index) {
   return dispatch => {
-    dispatch(destroy(index));
-    return makePluginRequest('delete', id);
-    // TODO: do something with the ajax response
-    // You can also dispatch here
-    // E.g.
-    // .then(response => {});
+    dispatch(deletePluginRequest());
+    
+    return makePluginRequest('delete', id).then(res => {
+        if (res.status === 200) {
+          return dispatch(deletePluginSuccess(index));
+        }
+      })
+      .catch(ex => {
+        return dispatch(deletePluginFailure());
+      });
   };
 }

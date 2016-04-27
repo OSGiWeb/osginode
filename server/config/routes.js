@@ -19,17 +19,11 @@ module.exports = function(app, passport) {
   // app.post('/logout', users.postLogout);
 
 
-  // Plugin routes
+  // Private repository routes
   app.get('/privateRepository', plugins.all);
-  app.post('/privateRepository/:id', function(req, res) {
-    plugins.add(req, res);
-  });
-  app.put('/privateRepository/:id', function(req, res) {
-    plugins.update(req, res);
-  });
-  app.delete('/privateRepository/:id', function(req, res) {
-    plugins.remove(req, res);
-  });
+  app.post('/privateRepository/:id', function(req, res) { plugins.add(req, res); });
+  app.put('/privateRepository/:id', function(req, res) { plugins.update(req, res); });
+  app.delete('/privateRepository/:id', function(req, res) { plugins.remove(req, res); });
 
   // This is where the magic happens. We take the locals data we have already
   // fetched and seed our stores with data.

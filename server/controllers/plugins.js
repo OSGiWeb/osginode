@@ -54,7 +54,7 @@ exports.update = function(req, res) {
  */
 exports.remove = function(req, res) {
   var query = { id: req.params.id };
-  Topic.findOneAndRemove(query, function(err, data) {
+  Plugin.findOneAndRemove(query, function(err, data) {
     if(err) console.log('Error on delete');
     res.status(200).send('Removed Successfully');
   });

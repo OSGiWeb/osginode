@@ -13,9 +13,14 @@ import {
   SET_DATATABLE_SELECTED_DATA,
   UPDATE_PLUGIN_REQUEST,
   UPDATE_PLUGIN_SUCCESS,
-  UPDATE_PLUGIN_FAILURE
+  UPDATE_PLUGIN_FAILURE,
+  DELETE_PLUGIN_REQUEST,
+  DELETE_PLUGIN_SUCCESS,
+  DELETE_PLUGIN_FAILURE
 } from '../constants/index';
 
+
+// TODO: try to use redux middleware to make the action logic simple!
 export default function plugin(
   state={
     isPrivate: true, // Is private plugins repository
@@ -23,6 +28,8 @@ export default function plugin(
     isSelected: false, // Is row in Datatable selected
     isCreated: undefined,
     isUpdated: undefined,
+    isDeleted: undefined,
+    deletedIndex: '', // Indicate which row is deleted (already minus 1)
     plugins: [],
     newPlugin: [],
     selectedData: [],
@@ -94,6 +101,20 @@ export default function plugin(
         isUpdated: false
       });
 
+    /* Delete plugin functions */
+    case DELETE_PLUGIN_SUCCESS:
+      return Object.assign({}, state, {
+        plugins: [...state.plugins.filter((tp, i) => i !== action.index)],
+        deletedIndex: action.index,
+        isDeleted: true,
+        isSelected: false // must set 'isSelected' to false to avoid reading false data on edit plugin modal
+      });
+    case DELETE_PLUGIN_FAILURE:
+      return Object.assign({}, state, {
+        isDeleted: false,
+        isSelected: false
+      });
+
     /* Plugin datatable operation functions */
     // Show operation success/failure notification and set some state to default*IMPORTANT!*
     case SHOW_NOTIFICATION_DONE:
@@ -101,7 +122,8 @@ export default function plugin(
         newPlugin: [],
         updatedPlugin: [],
         isCreated: undefined,
-        isUpdated: undefined
+        isUpdated: undefined,
+        isDeleted: undefined
       });
     case SET_DATATABLE_SELECTED_DATA:
       return Object.assign({}, state, {

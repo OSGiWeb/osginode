@@ -11,10 +11,10 @@ import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/component
 import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
-import {Dropdown, MenuItem} from 'react-bootstrap'
+import { Dropdown, MenuItem } from 'react-bootstrap'
 
 import { togglePrivateRepositoryMode, createPlugin, fetchPlugins,
-  showNotificationDone, setDatatableSelectedData, updatePlugin } from '../actions/plugins';
+  showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -72,12 +72,14 @@ class PrivateRepository extends Component {
   constructor(props) {
     super(props);
 
-    // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class
+    // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
+    // Otherwise fields in 'this.props' is NOT avaiable
     // this.toggleMode = this.toggleMode.bind(this);
     this.onAddPluginSubmit = this.onAddPluginSubmit.bind(this);
     this.onEditPluginSubmit = this.onEditPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
+    this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
@@ -91,11 +93,11 @@ class PrivateRepository extends Component {
 
   showSmartNotification() {
     const {dispatch} = this.props;
-    const { isCreated, isUpdated } = this.props.plugin;
+    const { isCreated, isUpdated, isDeleted } = this.props.plugin;
 
     // TODO: Add waiting icon to show the plugin adding process
     // TODO: Show valid plugin infomation on message boxes
-    if (isCreated !== undefined || isUpdated!==undefined) {
+    if (isCreated !== undefined || isUpdated !== undefined || isDeleted !== undefined) {
       if (isCreated === true) {
         $.bigBox({
           title: "插件添加成功！",
@@ -153,7 +155,7 @@ class PrivateRepository extends Component {
     const { userFullname } = this.props.user;
 
     // Sending plugin data to node and saving to database
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
 
     dispatch(createPlugin({
       pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
@@ -175,13 +177,13 @@ class PrivateRepository extends Component {
   }
 
   onEditPluginSubmit() {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     const { selectedData } = this.props.plugin;
     const { userFullname } = this.props.user
 
     dispatch(updatePlugin({
         id: selectedData.id,
-        index: selectedData.index, // realitive numeic index: 1-N
+        index: selectedData.index,
         pluginname: ReactDOM.findDOMNode(this.refs.editpluginname).value,
         symbolicname: ReactDOM.findDOMNode(this.refs.editsymbolicname).value,
         category: ReactDOM.findDOMNode(this.refs.editcategory).value,
@@ -190,6 +192,12 @@ class PrivateRepository extends Component {
         releasedate: ReactDOM.findDOMNode(this.refs.editreleasedate).value,
         description: ReactDOM.findDOMNode(this.refs.editdescription).value
     }))
+  }
+
+  onDeletePluginSubmit() {
+    const { dispatch } = this.props;
+    const { selectedData } = this.props.plugin;
+    dispatch(deletePlguin(selectedData.id, selectedData.index));
   }
 
   /**
@@ -424,13 +432,13 @@ class PrivateRepository extends Component {
                     <i className="fa fa-wrench"/>&nbsp;&nbsp; 插件操作
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="dropdown-menu pull-right">
-                    <MenuItem data-toggle="modal" data-target="#editPluginModal" >
+                    <MenuItem data-toggle="modal" data-target="#editPluginModal">
                       <i className="fa fa-edit"/>&nbsp;编辑
                     </MenuItem>
                     <MenuItem>
                       <i className="fa fa-cloud-upload"/>&nbsp;提交
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem onClick={this.onDeletePluginSubmit}>
                       <i className="fa fa-minus-square"/>&nbsp;删除
                     </MenuItem>
                   </Dropdown.Menu>
@@ -471,7 +479,7 @@ class PrivateRepository extends Component {
         {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
     }
 
-    const { newPlugin, updatedPlugin } = this.props.plugin;
+    const { newPlugin, updatedPlugin, deletedIndex, isDeleted } = this.props.plugin;
 
     return (
       <div>
@@ -480,9 +488,11 @@ class PrivateRepository extends Component {
             options={ options }
             newPlugin={ newPlugin }
             updatedPlugin = { updatedPlugin }
+            deletedIndex = { deletedIndex }
+            isDeleted = { isDeleted }
             onDatatableRowSelected={ this.onDatatableRowSelected }
-            paginationLength={true} className="table table-striped table-bordered table-hover"
-            width="100%">
+            paginationLength={ true }
+            className="table table-striped table-bordered table-hover" width="100%">
             <thead>
             <tr>
               <th data-class="expand">ID</th>

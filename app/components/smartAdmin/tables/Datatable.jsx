@@ -19,9 +19,10 @@ let Datatable = React.createClass({
 
     // Only update Datatable when it is initialized
     if (this.initialized === true) {
-      const { newPlugin, updatedPlugin, selRowIndex } = this.props;
       var element = $(this.getHold());
       var _dataTable = element.DataTable();
+
+      const { newPlugin, updatedPlugin, deletedIndex, isDeleted } = this.props;
 
       // When new added plugin is avaialbe
       if (_.trim(newPlugin).length > 0) {  //_.trim(newPlugin).length > 0
@@ -32,16 +33,17 @@ let Datatable = React.createClass({
       // When updated plugin is avaialbe
       if (_.trim(updatedPlugin).length > 0) {
         // Update data in row
-        _dataTable.row(updatedPlugin.index -1).data(updatedPlugin).draw(); // _dataTable.row(index) index counted from 0
+        _dataTable.row(updatedPlugin.index - 1).data(updatedPlugin).draw(); // _dataTable.row(index) index counted from 0
         // TODO: selected updated row after draw the table
       }
 
+      // TODO: Remove the selected row in datatable or fetch all plugins again to order the new index
+      // s.a. row().remove()
+      if (isDeleted === true) {
+        _dataTable.row(deletedIndex).remove().draw();
+      }
 
       // TODO: try to use draw callback functions -> 'drawCallback' or 'Events/Events refs' to decouple relationships
-
-      // _dataTable
-      //   .clear()
-      //   .draw();
     }
 
   },
