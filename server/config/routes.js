@@ -20,14 +20,14 @@ module.exports = function(app, passport) {
 
 
   // Plugin routes
-  app.get('/pluginsRepository', plugins.all);
-  app.post('/pluginsRepository/:id', function(req, res) {
+  app.get('/privateRepository', plugins.all);
+  app.post('/privateRepository/:id', function(req, res) {
     plugins.add(req, res);
   });
-  app.put('/pluginsRepository/:id', function(req, res) {
+  app.put('/privateRepository/:id', function(req, res) {
     plugins.update(req, res);
   });
-  app.delete('/pluginsRepository/:id', function(req, res) {
+  app.delete('/privateRepository/:id', function(req, res) {
     plugins.remove(req, res);
   });
 

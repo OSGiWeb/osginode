@@ -29,7 +29,7 @@ export function togglePrivateRepositoryMode() {
  * @param String endpoint
  * @return Promise
  */
-function makePluginRequest(method, id, data, api='/pluginsRepository') {
+function makePluginRequest(method, id, data, api='/privateRepository') {
   return request[method](api + (id ? ('/' + id) : ''), data);
 }
 

@@ -95,9 +95,11 @@ export default function plugin(
       });
 
     /* Plugin datatable operation functions */
+    // Show operation success/failure notification and set some state to default*IMPORTANT!*
     case SHOW_NOTIFICATION_DONE:
       return Object.assign({}, state, {
         newPlugin: [],
+        updatedPlugin: [],
         isCreated: undefined,
         isUpdated: undefined
       });

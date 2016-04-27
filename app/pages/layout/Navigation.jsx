@@ -23,9 +23,20 @@ const rawItems = {
       "icon": "fa fa-lg fa-fw fa-puzzle-piece",
       "items": [
         {
-          "icon": "fa fa-lg fa-fw fa-cloud",
+          "icon": "fa fa-lg fa-fw fa-database",
           "title": "插件仓库",
-          "route": "/pluginsRepository"
+          "items": [
+            {
+              "icon": "fa fa-lg fa-fw fa-briefcase",
+              "title": "私有仓库",
+              "route": "/privateRepository"
+            },
+            {
+              "icon": "fa fa-cloud",
+              "title": "公共仓库",
+              "route": "/home"
+            }
+          ]
         },
         {
           "icon": "fa fa-group",

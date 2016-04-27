@@ -61,7 +61,7 @@ let validationOptions = {
 };
 
 
-class PluginsRepository extends Component {
+class PublicRepository extends Component {
 
   //TODO: Data that needs to be called before rendering the component This is used for server-side rending
   // via the fetchComponentDataBeforeRender() method
@@ -566,7 +566,6 @@ class PluginsRepository extends Component {
             { this.renderPrivateDataTable(_isFetched, _plugins) }
 
           </JarvisWidget>
-          { this.showSmartNotification() }
         </article>
       </div>
     )
@@ -644,13 +643,14 @@ class PluginsRepository extends Component {
 
         { this.renderAddPluginModal() }
         { this.renderEditPluginModal() }
+        { this.showSmartNotification() }
 
       </div>
     )
   }
 }
 
-PluginsRepository.propTypes = {
+PublicRepository.propTypes = {
   plugin: PropTypes.object,
   user: PropTypes.object,
   dispatch: PropTypes.func
@@ -668,7 +668,7 @@ function mapStateToProps(state) {
 // Connects React component to the redux store
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps)(PluginsRepository);
+export default connect(mapStateToProps)(PublicRepository);
 
 
 /**
