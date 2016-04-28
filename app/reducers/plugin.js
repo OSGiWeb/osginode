@@ -2,7 +2,7 @@
  * Created by Information on 2016/4/19.
  */
 import {
-  TOGGLE_PRIVATE_REPOSITORY_MODE,
+  SET_PLUGIN_STATUS,
   CREATE_PLUGIN_REQUEST,
   CREATE_PLUGIN_SUCCESS,
   CREATE_PLUGIN_FAILURE,
@@ -23,22 +23,21 @@ import {
 // TODO: try to use redux middleware to make the action logic simple!
 export default function plugin(
   state={
-    isPrivate: true, // Is private plugins repository
+    isPrivate: true, // Is private plugin
     isFetched: false,
     isSelected: false, // Is row in Datatable selected
     isCreated: undefined,
     isUpdated: undefined,
     isDeleted: undefined,
-    deletedIndex: '', // Indicate which row is deleted (already minus 1)
     plugins: [],
     newPlugin: [],
     selectedData: [],
     updatedPlugin:[]
   }, action={}) {
   switch (action.type) {
-    case TOGGLE_PRIVATE_REPOSITORY_MODE:
+    case SET_PLUGIN_STATUS:
       return Object.assign({}, state, {
-        isPrivate: !state.isPrivate
+        isPrivate: action.isPrivate
       });
 
     /* Create plugin functions */
@@ -105,7 +104,6 @@ export default function plugin(
     case DELETE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
         plugins: [...state.plugins.filter((tp, i) => i !== action.index)],
-        deletedIndex: action.index,
         isDeleted: true,
         isSelected: false // must set 'isSelected' to false to avoid reading false data on edit plugin modal
       });

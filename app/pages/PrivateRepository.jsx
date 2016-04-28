@@ -13,7 +13,7 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { togglePrivateRepositoryMode, createPlugin, fetchPlugins,
+import { setPluginStatus, createPlugin, fetchPlugins,
   showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
@@ -74,7 +74,7 @@ class PrivateRepository extends Component {
 
     // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
     // Otherwise fields in 'this.props' is NOT avaiable
-    // this.toggleMode = this.toggleMode.bind(this);
+    this.onSetStatus = this.onSetStatus.bind(this);
     this.onAddPluginSubmit = this.onAddPluginSubmit.bind(this);
     this.onEditPluginSubmit = this.onEditPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
@@ -86,10 +86,12 @@ class PrivateRepository extends Component {
     // dispatch(fetchPlugins());
   }
 
-  // toggleMode() {
-  //   const {dispatch} = this.props;
-  //   dispatch(togglePrivateRepositoryMode());
-  // }
+  // Set plugin as private plugin or public plugin
+  // true: private plugin / false: public plugin
+  onSetStatus(isPrivate) {
+    const {dispatch} = this.props;
+    dispatch(setPluginStatus(isPrivate));
+  }
 
   showSmartNotification() {
     const {dispatch} = this.props;
@@ -157,6 +159,14 @@ class PrivateRepository extends Component {
     // Sending plugin data to node and saving to database
     const { dispatch } = this.props;
 
+    // TEST plugin dependencies
+    let dependencies = [];
+    dependencies[0] = {'name':'PluginA', 'version':'0.0.1'};
+    dependencies[1] = {'name':'PluginB', 'version':'0.0.2'};
+
+    let name = dependencies[0].name;
+    let version = dependencies[0].version;
+
     dispatch(createPlugin({
       pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
       symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
@@ -164,7 +174,8 @@ class PrivateRepository extends Component {
       version: ReactDOM.findDOMNode(this.refs.version).value,
       author: userFullname,
       releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
-      description: ReactDOM.findDOMNode(this.refs.description).value
+      description: ReactDOM.findDOMNode(this.refs.description).value,
+      dependencies: dependencies
     }));
   }
 
@@ -409,7 +420,7 @@ class PrivateRepository extends Component {
     }
   }
 
-  renderPrivateRepository(_isFetched, _plugins) {
+  renderPrivateRepository() {
     // Check if row in datatable is selected
     const { isSelected } = this.props.plugin;
 
@@ -455,7 +466,7 @@ class PrivateRepository extends Component {
               </div>
             </header>
 
-            { this.renderPrivateDataTable(_isFetched, _plugins) }
+            { this.renderPrivateDataTable() }
 
           </JarvisWidget>
         </article>
@@ -463,13 +474,14 @@ class PrivateRepository extends Component {
     )
   }
 
-  renderPrivateDataTable(_isFetched, _plugins) {
+  renderPrivateDataTable() {
     // TODO: Only render the plugin datatable when the data is arrived in store (temp. solution for debugging this page)
     // if (_isFetched) {
+    const { isPrivate, plugins, newPlugin, updatedPlugin, isDeleted } = this.props.plugin;
 
     // Datatable options
     let options = {
-      data: _plugins,
+      data: plugins,
       select: {
         style: 'single',
         info: false
@@ -479,8 +491,6 @@ class PrivateRepository extends Component {
         {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
     }
 
-    const { newPlugin, updatedPlugin, deletedIndex, isDeleted } = this.props.plugin;
-
     return (
       <div>
         <div className="widget-body no-padding">
@@ -488,7 +498,6 @@ class PrivateRepository extends Component {
             options={ options }
             newPlugin={ newPlugin }
             updatedPlugin = { updatedPlugin }
-            deletedIndex = { deletedIndex }
             isDeleted = { isDeleted }
             onDatatableRowSelected={ this.onDatatableRowSelected }
             paginationLength={ true }
@@ -520,7 +529,6 @@ class PrivateRepository extends Component {
    * @returns {XML}
    */
   render() {
-    const { isPrivate, isFetched, plugins } = this.props.plugin;
 
     return (
       <div id="content">
@@ -531,7 +539,7 @@ class PrivateRepository extends Component {
         </div>
 
         <WidgetGrid>
-          { this.renderPrivateRepository(isFetched, plugins) }
+          { this.renderPrivateRepository() }
         </WidgetGrid>
 
         { this.renderAddPluginModal() }

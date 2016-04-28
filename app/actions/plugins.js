@@ -10,13 +10,6 @@ import * as types from '../constants';
 
 polyfill();
 
-/*
- Plugin repository control functions
- */
-export function togglePrivateRepositoryMode() {
-  return { type: types.TOGGLE_PRIVATE_REPOSITORY_MODE };
-}
-
 
 /*
  * Utility function to make AJAX requests using isomorphic fetch.
@@ -31,6 +24,16 @@ export function togglePrivateRepositoryMode() {
  */
 function makePluginRequest(method, id, data, api='/privateRepository') {
   return request[method](api + (id ? ('/' + id) : ''), data);
+}
+
+/*
+ Plugin status control functions
+ */
+export function setPluginStatus(isPrivate) {
+  return {
+    type: types.SET_PLUGIN_STATUS,
+    isPrivate: isPrivate
+  };
 }
 
 /*

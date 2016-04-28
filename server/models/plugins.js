@@ -15,7 +15,9 @@ var PluginSchema = new mongoose.Schema({
   version: String,
   author: String,
   releasedate: String,
-  description: String
+  description: String,
+  isprivate: { type: Boolean, default: true},
+  dependencies: Array
 });
 
 // Compiles the schema into a model, opening (or creating, if
