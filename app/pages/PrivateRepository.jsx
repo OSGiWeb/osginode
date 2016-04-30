@@ -13,7 +13,7 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { setPluginStatus, createPlugin, fetchPlugins,
+import { toggleStatus, createPlugin, fetchPlugins,
   showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
@@ -74,7 +74,7 @@ class PrivateRepository extends Component {
 
     // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
     // Otherwise fields in 'this.props' is NOT avaiable
-    this.onSetStatus = this.onSetStatus.bind(this);
+    this.onToggleStatus = this.onToggleStatus.bind(this);
     this.onAddPluginSubmit = this.onAddPluginSubmit.bind(this);
     this.onEditPluginSubmit = this.onEditPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
@@ -87,10 +87,13 @@ class PrivateRepository extends Component {
   }
 
   // Set plugin as private plugin or public plugin
-  // true: private plugin / false: public plugin
-  onSetStatus(isPrivate) {
+  // true: private / false: public plugin
+  onToggleStatus() {
     const {dispatch} = this.props;
-    dispatch(setPluginStatus(isPrivate));
+    const { selectedData } = this.props.plugin;
+
+    status = ( !selectedData.isprivate );
+    dispatch(toggleStatus(selectedData.id, selectedData.index, status));
   }
 
   showSmartNotification() {
@@ -166,6 +169,7 @@ class PrivateRepository extends Component {
 
     let name = dependencies[0].name;
     let version = dependencies[0].version;
+    // TEST plugin dependencies
 
     dispatch(createPlugin({
       pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
@@ -175,7 +179,8 @@ class PrivateRepository extends Component {
       author: userFullname,
       releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
       description: ReactDOM.findDOMNode(this.refs.description).value,
-      dependencies: dependencies
+      dependencies: dependencies,
+      isprivate: true
     }));
   }
 
@@ -193,15 +198,15 @@ class PrivateRepository extends Component {
     const { userFullname } = this.props.user
 
     dispatch(updatePlugin({
-        id: selectedData.id,
-        index: selectedData.index,
-        pluginname: ReactDOM.findDOMNode(this.refs.editpluginname).value,
-        symbolicname: ReactDOM.findDOMNode(this.refs.editsymbolicname).value,
-        category: ReactDOM.findDOMNode(this.refs.editcategory).value,
-        version: ReactDOM.findDOMNode(this.refs.editversion).value,
-        author: userFullname,
-        releasedate: ReactDOM.findDOMNode(this.refs.editreleasedate).value,
-        description: ReactDOM.findDOMNode(this.refs.editdescription).value
+      id: selectedData.id,
+      index: selectedData.index,
+      pluginname: ReactDOM.findDOMNode(this.refs.editpluginname).value,
+      symbolicname: ReactDOM.findDOMNode(this.refs.editsymbolicname).value,
+      category: ReactDOM.findDOMNode(this.refs.editcategory).value,
+      version: ReactDOM.findDOMNode(this.refs.editversion).value,
+      author: userFullname,
+      releasedate: ReactDOM.findDOMNode(this.refs.editreleasedate).value,
+      description: ReactDOM.findDOMNode(this.refs.editdescription).value
     }))
   }
 
@@ -422,7 +427,7 @@ class PrivateRepository extends Component {
 
   renderPrivateRepository() {
     // Check if row in datatable is selected
-    const { isSelected } = this.props.plugin;
+    const { isSelected, selectedData } = this.props.plugin;
 
     return (
       <div className="row">
@@ -446,7 +451,8 @@ class PrivateRepository extends Component {
                     <MenuItem data-toggle="modal" data-target="#editPluginModal">
                       <i className="fa fa-edit"/>&nbsp;编辑
                     </MenuItem>
-                    <MenuItem>
+                    {/*disabled={ !selectedData.isprivate }*/}
+                    <MenuItem onClick={this.onToggleStatus} >
                       <i className="fa fa-cloud-upload"/>&nbsp;提交
                     </MenuItem>
                     <MenuItem onClick={this.onDeletePluginSubmit}>
@@ -481,7 +487,28 @@ class PrivateRepository extends Component {
 
     // Datatable options
     let options = {
-      data: plugins,
+      // data: plugins, // DONOT use manual request to database, use ajax request instead
+      ajax: {
+        url: '/privateRepository',
+        dataSrc: function ( json ) {
+
+          // let statusIcon = '';
+          // if (_isPrivate)
+          //   statusIcon = "<span class='label label-success'>Private</span>";
+          // else
+          //   statusIcon = "<span class='label label-danger'>Public</span>";
+
+          let formatData = [];
+          // TODO: Maybe we need to keep the md5 id field which will be used to update plugin info!
+
+          // Format data which will be saved in store
+          for (let i = 0; i < json.length; i++) {
+            formatData[i] = _.omit(json[i], '_id', '__v'); // Delete unused plugin info
+            formatData[i].index = i + 1; // Add plugin numeric index
+          }
+          return formatData;
+        }
+      },
       select: {
         style: 'single',
         info: false

@@ -2,7 +2,7 @@
  * Created by Information on 2016/4/19.
  */
 import {
-  SET_PLUGIN_STATUS,
+  TOGGLE_PLUGIN_STATUS,
   CREATE_PLUGIN_REQUEST,
   CREATE_PLUGIN_SUCCESS,
   CREATE_PLUGIN_FAILURE,
@@ -23,27 +23,34 @@ import {
 // TODO: try to use redux middleware to make the action logic simple!
 export default function plugin(
   state={
-    isPrivate: true, // Is private plugin
+    // isPrivate: true, // Is private plugin
     isFetched: false,
     isSelected: false, // Is row in Datatable selected
     isCreated: undefined,
     isUpdated: undefined,
     isDeleted: undefined,
-    plugins: [],
+    // plugins: [],
     newPlugin: [],
     selectedData: [],
     updatedPlugin:[]
   }, action={}) {
   switch (action.type) {
-    case SET_PLUGIN_STATUS:
+    case TOGGLE_PLUGIN_STATUS:
       return Object.assign({}, state, {
-        isPrivate: action.isPrivate
+        // plugins: [
+        //   ...state.plugins.slice(0, action.index),
+        //   Object.assign({}, state.plugins[action.index], {
+        //     isprivate: action.status
+        //   }),
+        //   ...state.plugins.slice(action.index + 1)
+        // ],
+        isSelected: false
       });
 
     /* Create plugin functions */
     case CREATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
-        plugins: [...state.plugins, action.data],
+        // plugins: [...state.plugins, action.data],
         newPlugin: action.data,
         isFetched: true,
         isCreated: true
@@ -75,7 +82,7 @@ export default function plugin(
       });
     case GET_PLUGINS_SUCCESS:
       return Object.assign({}, state, {
-        plugins: action.data,
+        // plugins: action.data,
         isFetched: true
       });
     case GET_PLUGINS_FAILURE:
@@ -86,11 +93,11 @@ export default function plugin(
     /* Update plugin functions */
     case UPDATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
-        plugins: [
-          ...state.plugins.slice(0, action.index),
-          Object.assign({}, state.plugins[action.index], action.data),
-          ...state.plugins.slice(action.index + 1)
-        ],
+        // plugins: [
+        //   ...state.plugins.slice(0, action.index),
+        //   Object.assign({}, state.plugins[action.index], action.data),
+        //   ...state.plugins.slice(action.index + 1)
+        // ],
         updatedPlugin: action.data,
         isUpdated: true
       });
@@ -103,7 +110,7 @@ export default function plugin(
     /* Delete plugin functions */
     case DELETE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
-        plugins: [...state.plugins.filter((tp, i) => i !== action.index)],
+        // plugins: [...state.plugins.filter((tp, i) => i !== action.index)],
         isDeleted: true,
         isSelected: false // must set 'isSelected' to false to avoid reading false data on edit plugin modal
       });

@@ -13,7 +13,7 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import {Dropdown, MenuItem} from 'react-bootstrap'
 
-import { setPluginStatus, createPlugin, fetchPlugins,
+import { togglePluginStatus, createPlugin, fetchPlugins,
   showNotificationDone, setDatatableSelectedData, updatePlugin } from '../actions/plugins';
 
 
@@ -86,7 +86,7 @@ class PublicRepository extends Component {
 
   toggleMode() {
     const {dispatch} = this.props;
-    dispatch(setPluginStatus());
+    dispatch(togglePluginStatus());
   }
 
   addNewPlugin() {

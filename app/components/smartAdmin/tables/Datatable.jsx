@@ -26,7 +26,8 @@ let Datatable = React.createClass({
 
       // When new added plugin is avaialbe
       if (_.trim(newPlugin).length > 0) {  //_.trim(newPlugin).length > 0
-        // Add new row when react UI component updated
+        // Add new row with index when react UI component updated
+        newPlugin.index = _dataTable.data().length + 1;
         _dataTable.row.add(newPlugin).draw();
       }
 

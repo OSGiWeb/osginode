@@ -29,10 +29,11 @@ function makePluginRequest(method, id, data, api='/privateRepository') {
 /*
  Plugin status control functions
  */
-export function setPluginStatus(isPrivate) {
+export function togglePluginStatus(index, status) {
   return {
-    type: types.SET_PLUGIN_STATUS,
-    isPrivate: isPrivate
+    type: types.TOGGLE_PLUGIN_STATUS,
+    index: index - 1,
+    status: status
   };
 }
 
@@ -174,8 +175,8 @@ export function createPlugin(pluginInfo) {
       .then(res => {
         if (res.status === 200) {
           // Add plugin numeric index
-          const { plugins } = getState().plugin;
-          pluginInfo.index = plugins.length + 1;
+          // const { plugins } = getState().plugin;
+          // pluginInfo.index = plugins.length + 1;
 
           // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
           return dispatch(createPluginSuccess(pluginInfo));
@@ -257,7 +258,6 @@ export function updatePlugin(pluginInfo) {
  * deletePlguin(id, index)
  * @param id: used to update plugin data in database
  * @param index: used to update plguin data in store
- * @param pluginInfo: data retrieved from 'editPluginModal' modal UI
  * @returns {function()}
  */
 export function deletePlguin(id, index) {
@@ -267,6 +267,26 @@ export function deletePlguin(id, index) {
     return makePluginRequest('delete', id).then(res => {
         if (res.status === 200) {
           return dispatch(deletePluginSuccess(index));
+        }
+      })
+      .catch(ex => {
+        return dispatch(deletePluginFailure());
+      });
+  };
+}
+
+/**
+ * toggleStatus(id)
+ * @param id: md5 format, used to update plugin props'isprivate' in database
+ * @param index: used to update plguin data in store
+ * @returns {function()}
+ */
+export function toggleStatus(id, index, status) {
+  return dispatch => {
+
+    return makePluginRequest('put', id, { isprivate:status }).then(res => {
+        if (res.status === 200) {
+          return dispatch(togglePluginStatus(index, status)); // Update state in store
         }
       })
       .catch(ex => {
