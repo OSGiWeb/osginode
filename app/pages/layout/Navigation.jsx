@@ -34,7 +34,7 @@ const rawItems = {
             {
               "icon": "fa fa-cloud",
               "title": "公共仓库",
-              "route": "/home"
+              "route": "/publicRepository"
             }
           ]
         },

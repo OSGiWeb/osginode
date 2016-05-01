@@ -499,7 +499,7 @@ class PrivateRepository extends Component {
     let options = {
       // data: plugins, // DONOT use manual request to database, use ajax request instead
       ajax: {
-        url: '/privateRepository',
+        url: '/pluginRepository',
         dataSrc: function ( json ) {
 
           let status = '';
@@ -576,7 +576,7 @@ class PrivateRepository extends Component {
     return (
       <div id="content">
         <div className="row">
-          <BigBreadcrumbs items={['插件开发', '插件仓库']} icon="table"
+          <BigBreadcrumbs items={['插件开发', '私有插件仓库']} icon="table"
                           className="col-xs-12 col-sm-7 col-md-7 col-lg-4"/>
           <SubHeader />
         </div>

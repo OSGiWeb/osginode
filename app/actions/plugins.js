@@ -22,7 +22,7 @@ polyfill();
  * @param String endpoint
  * @return Promise
  */
-function makePluginRequest(method, id, data, api='/privateRepository') {
+function makePluginRequest(method, id, data, api='/pluginRepository') {
   return request[method](api + (id ? ('/' + id) : ''), data);
 }
 

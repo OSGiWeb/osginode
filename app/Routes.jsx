@@ -8,6 +8,7 @@ import Layout from './pages/layout/Layout.jsx'
 import Home from './pages/Home.jsx'
 import LoginOrRegister from './pages/LoginOrRegister.jsx'
 import PrivateRepository from './pages/PrivateRepository.jsx'
+import PublicRepository from './pages/PublicRepository.jsx'
 
 // import Register from './pages/Register.jsx'
 // import LockedScreen from './pages/LockedScreen.jsx'
@@ -49,6 +50,7 @@ export default (store) => {
         <Route component={Layout}>
           <Route path="home" component={Home} onEnter={requireAuth} />
           <Route path="privateRepository" component={PrivateRepository} onEnter={requireAuth} />
+          <Route path="publicRepository" component={PublicRepository} onEnter={requireAuth} />
         </Route>
       </Route>
     </Route>
