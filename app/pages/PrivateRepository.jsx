@@ -170,7 +170,8 @@ class PrivateRepository extends Component {
       releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
       description: ReactDOM.findDOMNode(this.refs.description).value,
       dependencies: dependencies,
-      isprivate: true
+      isprivate: true,
+      statusIcon: "<span class='label label-danger'>私有</span>"
     }));
   }
 
@@ -197,9 +198,11 @@ class PrivateRepository extends Component {
     const { selectedData } = this.props.plugin;
 
     selectedData.isprivate = !selectedData.isprivate;
+    selectedData.statusIcon = selectedData.isprivate ? "<span class='label label-danger'>私有</span>" :
+      "<span class='label label-success'>公共</span>";
+
+    // Dispatch action
     dispatch(updatePlugin(selectedData));
-
-
   }
 
   onEditPluginSubmit() {
@@ -459,7 +462,6 @@ class PrivateRepository extends Component {
                     <MenuItem data-toggle="modal" data-target="#editPluginModal">
                       <i className="fa fa-edit"/>&nbsp;编辑
                     </MenuItem>
-                    {/*disabled={ !selectedData.isprivate }*/}
                     <MenuItem disabled={ !selectedData.isprivate } onClick={this.onToggleStatus} >
                       <i className="fa fa-cloud-upload"/>&nbsp;提交
                     </MenuItem>
@@ -500,7 +502,7 @@ class PrivateRepository extends Component {
         url: '/privateRepository',
         dataSrc: function ( json ) {
 
-          // let statusIcon = '';
+          let status = '';
           // if (_isPrivate)
           //   statusIcon = "<span class='label label-success'>Private</span>";
           // else
@@ -512,6 +514,11 @@ class PrivateRepository extends Component {
           for (let i = 0; i < json.length; i++) {
             formatData[i] = _.omit(json[i], '_id', '__v'); // Delete unused plugin info
             formatData[i].index = i + 1; // Add plugin numeric index
+
+            // Set status icon based on plugin status (private / public)
+            formatData[i].statusIcon = formatData[i].isprivate ? "<span class='label label-danger'>私有</span>" :
+              "<span class='label label-success'>公共</span>"
+            ;
           }
           return formatData;
         }
@@ -522,7 +529,8 @@ class PrivateRepository extends Component {
       },
       columns: [
         {data: "index"}, {data: "pluginname"}, {data: "symbolicname"}, {data: "category"},
-        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
+        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"},
+        {data: "statusIcon"}]
     }
 
     return (
@@ -549,6 +557,7 @@ class PrivateRepository extends Component {
                 &nbsp;&nbsp; 发布时间
               </th>
               <th data-class="expand">描述</th>
+              <th data-class="expand">状态</th>
             </tr>
             </thead>
           </Datatable>
