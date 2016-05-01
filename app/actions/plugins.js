@@ -90,7 +90,6 @@ function updatePluginRequest() {
 function updatePluginSuccess(data) {
   return {
     type: types.UPDATE_PLUGIN_SUCCESS,
-    index: data.index - 1, // Array index should minus realitive index
     data: data
   };
 }
@@ -236,16 +235,16 @@ export function fetchPlugins() {
  * @param pluginInfo: data retrieved from 'editPluginModal' modal UI
  * @returns {function()}
  */
-export function updatePlugin(pluginInfo) {
+export function updatePlugin(updatePlugin) {
   return dispatch => {
     dispatch(updatePluginRequest());
 
     // No 'index' field in database (recalculate in cliet side), delete it for DB data update
-    let pluginInfoDB = _.omit(pluginInfo, 'index', 'id'); // Delete unused plugin info in client side
+    let updatePluginDB = _.omit(updatePlugin, 'id'); // Delete unused plugin info in client side
 
-    return makePluginRequest('put', pluginInfo.id, pluginInfoDB).then(res => {
+    return makePluginRequest('put', updatePlugin.id, updatePluginDB).then(res => {
         if (res.status === 200) {
-          return dispatch(updatePluginSuccess(pluginInfo));
+          return dispatch(updatePluginSuccess(updatePlugin));
         }
       })
       .catch(ex => {

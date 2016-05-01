@@ -86,16 +86,6 @@ class PrivateRepository extends Component {
     // dispatch(fetchPlugins());
   }
 
-  // Set plugin as private plugin or public plugin
-  // true: private / false: public plugin
-  onToggleStatus() {
-    const {dispatch} = this.props;
-    const { selectedData } = this.props.plugin;
-
-    status = ( !selectedData.isprivate );
-    dispatch(toggleStatus(selectedData.id, selectedData.index, status));
-  }
-
   showSmartNotification() {
     const {dispatch} = this.props;
     const { isCreated, isUpdated, isDeleted } = this.props.plugin;
@@ -192,22 +182,40 @@ class PrivateRepository extends Component {
     dispatch(setDatatableSelectedData(data, isSelected));
   }
 
+  // Set plugin as private plugin or public plugin
+  // true: private / false: public plugin
+  onToggleStatus() {
+    // const {dispatch} = this.props;
+    // const { selectedData } = this.props.plugin;
+    //
+    // status = ( !selectedData.isprivate );
+    // dispatch(toggleStatus(selectedData.id, selectedData.index, status));
+
+
+    // TODO: use update plugin to change 'isprivate' prop, and delete all params which used to change 'plugins[]' in store
+    const { dispatch } = this.props;
+    const { selectedData } = this.props.plugin;
+
+    selectedData.isprivate = !selectedData.isprivate;
+    dispatch(updatePlugin(selectedData));
+
+
+  }
+
   onEditPluginSubmit() {
     const { dispatch } = this.props;
     const { selectedData } = this.props.plugin;
     const { userFullname } = this.props.user
 
-    dispatch(updatePlugin({
-      id: selectedData.id,
-      index: selectedData.index,
-      pluginname: ReactDOM.findDOMNode(this.refs.editpluginname).value,
-      symbolicname: ReactDOM.findDOMNode(this.refs.editsymbolicname).value,
-      category: ReactDOM.findDOMNode(this.refs.editcategory).value,
-      version: ReactDOM.findDOMNode(this.refs.editversion).value,
-      author: userFullname,
-      releasedate: ReactDOM.findDOMNode(this.refs.editreleasedate).value,
-      description: ReactDOM.findDOMNode(this.refs.editdescription).value
-    }))
+    selectedData.pluginname = ReactDOM.findDOMNode(this.refs.editpluginname).value;
+    selectedData.symbolicname = ReactDOM.findDOMNode(this.refs.editsymbolicname).value;
+    selectedData.category = ReactDOM.findDOMNode(this.refs.editcategory).value;
+    selectedData.version = ReactDOM.findDOMNode(this.refs.editversion).value;
+    selectedData.author = userFullname;
+    selectedData.releasedate = ReactDOM.findDOMNode(this.refs.editreleasedate).value;
+    selectedData.description = ReactDOM.findDOMNode(this.refs.editdescription).value;
+    
+    dispatch(updatePlugin(selectedData));
   }
 
   onDeletePluginSubmit() {
@@ -452,7 +460,7 @@ class PrivateRepository extends Component {
                       <i className="fa fa-edit"/>&nbsp;编辑
                     </MenuItem>
                     {/*disabled={ !selectedData.isprivate }*/}
-                    <MenuItem onClick={this.onToggleStatus} >
+                    <MenuItem disabled={ !selectedData.isprivate } onClick={this.onToggleStatus} >
                       <i className="fa fa-cloud-upload"/>&nbsp;提交
                     </MenuItem>
                     <MenuItem onClick={this.onDeletePluginSubmit}>
@@ -499,7 +507,6 @@ class PrivateRepository extends Component {
           //   statusIcon = "<span class='label label-danger'>Public</span>";
 
           let formatData = [];
-          // TODO: Maybe we need to keep the md5 id field which will be used to update plugin info!
 
           // Format data which will be saved in store
           for (let i = 0; i < json.length; i++) {

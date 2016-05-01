@@ -149,7 +149,7 @@ let Datatable = React.createClass({
         onDatatableRowSelected(rowData, true);
       })
       .on( 'deselect', function ( e, dt, type, indexes ) {
-        var rowData = [];
+        var rowData = _dataTable.rows( indexes ).data().toArray(); // DONOT use empty data '[]' here to avoid check error for some parameter in selected data
         onDatatableRowSelected(rowData, false);
       });
 
