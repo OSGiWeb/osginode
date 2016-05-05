@@ -4,8 +4,8 @@
 import { polyfill } from 'es6-promise';
 import request from 'axios';
 import md5 from 'spark-md5';
-import _ from 'lodash'
-
+import _ from 'lodash';
+import axios from 'axios';
 import * as types from '../constants';
 
 polyfill();
@@ -23,6 +23,10 @@ polyfill();
  * @return Promise
  */
 function makePluginRequest(method, id, data, api='/pluginRepository') {
+  return request[method](api + (id ? ('/' + id) : ''), data);
+}
+
+function makeUploadRequest(method, id, data, api) {
   return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
@@ -184,6 +188,41 @@ export function createPlugin(pluginInfo) {
       .catch(ex => {
         return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
       });
+  };
+}
+
+export function uploadPluginPkg(file) {
+  return (dispatch) => {
+
+    const id = md5.hash(file.name);
+
+    var data = new FormData();
+    // data.append('pluginfile', file.name);
+    data.append('pluginfile', file);
+    
+    var opts = {
+      transformRequest: function (data) {
+        return data;
+      }
+    }
+    axios.post('/pluginRepository/upload' + (id ? ('/' + id) : ''), data, opts);
+
+    // return makeUploadRequest('post', id, data, '/pluginRepository/upload')
+    //   .then(res => {
+    //     if (res.status === 200) {
+    //       // Add plugin numeric index
+    //       // const { plugins } = getState().plugin;
+    //       // pluginInfo.index = plugins.length + 1;
+    //
+    //       // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
+    //       // return dispatch(createPluginSuccess(pluginInfo));
+    //       return;
+    //     }
+    //   })
+    //   .catch(ex => {
+    //     // return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
+    //     return;
+    //   });
   };
 }
 

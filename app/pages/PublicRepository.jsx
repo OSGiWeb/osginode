@@ -502,17 +502,15 @@ class PublicRepository extends Component {
         url: '/pluginRepository',
         dataSrc: function ( json ) {
 
-          let status = '';
-          // if (_isPrivate)
-          //   statusIcon = "<span class='label label-success'>Private</span>";
-          // else
-          //   statusIcon = "<span class='label label-danger'>Public</span>";
-
-          let formatData = [];
+          // Delete private plugin in json data from database
+          var publicPlugins = _.remove(json, function(obj) {
+            return obj.isprivate == false;
+          });
 
           // Format data which will be saved in store
-          for (let i = 0; i < json.length; i++) {
-            formatData[i] = _.omit(json[i], '_id', '__v'); // Delete unused plugin info
+          let formatData = [];
+          for (let i = 0; i < publicPlugins.length; i++) {
+            formatData[i] = _.omit(publicPlugins[i], '_id', '__v'); // Delete unused plugin info
             formatData[i].index = i + 1; // Add plugin numeric index
 
             // Set status icon based on plugin status (private / public)

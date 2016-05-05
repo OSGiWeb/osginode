@@ -7,7 +7,7 @@ var webpack = require('webpack');
 var app = express();
 
 // Find the appropriate database to connect to, default to localhost if not found.
-var connect = function() {
+var mongoConn = function() {
   mongoose.connect(secrets.db, function(err, res) {
     if(err) {
       console.log('Error connecting to: ' + secrets.db + '. ' + err);
@@ -16,10 +16,10 @@ var connect = function() {
     }
   });
 };
-connect();
+mongoConn();
 
 mongoose.connection.on('error', console.log);
-mongoose.connection.on('disconnected', connect);
+mongoose.connection.on('disconnected', mongoConn);
 
 // Bootstrap models
 fs.readdirSync(__dirname + '/models').forEach(function(file) {
@@ -40,13 +40,16 @@ if (isDev) {
 }
 
 
-// Bootstrap passport config
+// Application passport config
 require('./config/passport')(app, passport);
 
-// Bootstrap application settings
+// Application settings
 require('./config/express')(app, passport);
 
-// Bootstrap routes
+// Application routes
 require('./config/routes')(app, passport);
+
+// Application file manager (handling file upload/download processes)
+require('./config/fileManager')(app, mongoose.connection);
 
 app.listen(app.get('port'));

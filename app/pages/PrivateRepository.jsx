@@ -13,7 +13,7 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { toggleStatus, createPlugin, fetchPlugins,
+import { toggleStatus, createPlugin, fetchPlugins, uploadPluginPkg,
   showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
@@ -80,6 +80,7 @@ class PrivateRepository extends Component {
     this.showSmartNotification = this.showSmartNotification.bind(this);
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
     this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
+    this.onUploadPluginPkg = this.onUploadPluginPkg.bind(this);
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
@@ -175,6 +176,13 @@ class PrivateRepository extends Component {
     }));
   }
 
+  onUploadPluginPkg(event) {
+    const { dispatch } = this.props;
+    let file = event.target.files[0];
+
+    dispatch(uploadPluginPkg(file));
+  }
+
   onDatatableRowSelected(rowData, isSelected) {
     // Single row selection
     var data = rowData[0];
@@ -217,7 +225,7 @@ class PrivateRepository extends Component {
     selectedData.author = userFullname;
     selectedData.releasedate = ReactDOM.findDOMNode(this.refs.editreleasedate).value;
     selectedData.description = ReactDOM.findDOMNode(this.refs.editdescription).value;
-    
+
     dispatch(updatePlugin(selectedData));
   }
 
@@ -296,9 +304,8 @@ class PrivateRepository extends Component {
                       <fieldset>
                         <section>
                           <div className="input input-file">
-                      <span className="button"><input id="file2" type="file" name="pluginfile"
-                                                      onchange="this.parentNode.nextSibling.value = this.value"/>
-                        上传插件</span>
+                            <span className="button"><input id="file2" type="file" name="pluginfile" ref="pluginfile" onChange={this.onUploadPluginPkg}/>
+                              上传插件</span>
                             <input type="text" placeholder="上传插件包" readOnly={true}/>
                           </div>
                         </section>
@@ -316,6 +323,11 @@ class PrivateRepository extends Component {
 
             </div>
             <div className="modal-footer">
+              <form action="/"  formMethod="POST" id="upload-form" className="smart-form client-form" encType="multipart/form-data">
+                <input type="file" name = "avatar"/>
+                <input type="submit" value = "submit"/>
+              </form>
+
               <button type="button" className="btn btn-default" data-dismiss="modal">
                 取消
               </button>
@@ -500,14 +512,7 @@ class PrivateRepository extends Component {
       // data: plugins, // DONOT use manual request to database, use ajax request instead
       ajax: {
         url: '/pluginRepository',
-        dataSrc: function ( json ) {
-
-          let status = '';
-          // if (_isPrivate)
-          //   statusIcon = "<span class='label label-success'>Private</span>";
-          // else
-          //   statusIcon = "<span class='label label-danger'>Public</span>";
-
+        dataSrc: function ( json ) { // data preprocess when retrieved data from databases
           let formatData = [];
 
           // Format data which will be saved in store
@@ -527,6 +532,7 @@ class PrivateRepository extends Component {
         style: 'single',
         info: false
       },
+      stateSave: true,
       columns: [
         {data: "index"}, {data: "pluginname"}, {data: "symbolicname"}, {data: "category"},
         {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"},
@@ -813,4 +819,9 @@ export default connect(mapStateToProps)(PrivateRepository);
 //         </table>`
 // }
 
-
+// <div className="input input-file">
+//   {/*onchange="this.parentNode.nextSibling.value = this.value"*/}
+//                               <span className="button"><input id="file2" type="file" name="pluginfile" ref="pluginfile" onClick={this.onUploadPluginPkg}/>
+//                               上传插件</span>
+//   <input type="text" placeholder="上传插件包" readOnly={true}/>
+// </div>
