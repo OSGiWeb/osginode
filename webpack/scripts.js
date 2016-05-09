@@ -80,7 +80,7 @@ var scripts = {
     // "bootstrap-slider": "/bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js",
     // "clockpicker": "/bower_components/clockpicker/dist/bootstrap-clockpicker.min.js",
     // "bootstrap-colorpicker": "/bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.js",
-    // "bootstrap-tagsinput": "/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
+    "bootstrap-tagsinput": "/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js",
     //
     // "jquery-knob": "/bower_components/jquery-knob/dist/jquery.knob.min.js",
     //
@@ -144,7 +144,7 @@ var scripts = {
       // "bootstrap-timepicker",
       // "clockpicker",
       // "bootstrap-colorpicker",
-      // "bootstrap-tagsinput",
+      "bootstrap-tagsinput",
       // "jquery-knob",
       // "x-editable",
       // "fuelux-wizard",

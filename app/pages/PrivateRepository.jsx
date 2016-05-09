@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
 import UiDatepicker from '../components/smartAdmin/forms/inputs/UiDatepicker.jsx'
+import Tagsinput from '../components/smartAdmin/forms/inputs/Tagsinput.jsx'
 import SubHeader from './layout/SubHeader.jsx'
 import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
 import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
@@ -162,6 +163,9 @@ class PrivateRepository extends Component {
     let version = dependencies[0].version;
     // TEST plugin dependencies
 
+    // Get uploaded file instance in create plugin form
+    let file = ReactDOM.findDOMNode(this.refs.pluginfile).files[0];
+
     dispatch(createPlugin({
       pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
       symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
@@ -173,14 +177,14 @@ class PrivateRepository extends Component {
       dependencies: dependencies,
       isprivate: true,
       statusIcon: "<span class='label label-danger'>私有</span>"
-    }));
+    }, file));
   }
 
   onUploadPluginPkg(event) {
     const { dispatch } = this.props;
     let file = event.target.files[0];
-
-    dispatch(uploadPluginPkg(file));
+    ReactDOM.findDOMNode(this.refs.fileinputname).value = file.name;
+    // dispatch(uploadPluginPkg(file));
   }
 
   onDatatableRowSelected(rowData, isSelected) {
@@ -304,9 +308,9 @@ class PrivateRepository extends Component {
                       <fieldset>
                         <section>
                           <div className="input input-file">
-                            <span className="button"><input id="file2" type="file" name="pluginfile" ref="pluginfile" onChange={this.onUploadPluginPkg}/>
+                            <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onUploadPluginPkg}/>
                               上传插件</span>
-                            <input type="text" placeholder="上传插件包" readOnly={true}/>
+                            <input name="fileinputname" ref="fileinputname" type="text" placeholder="上传插件包" readOnly={true}/>
                           </div>
                         </section>
 

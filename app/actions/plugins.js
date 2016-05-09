@@ -3,6 +3,7 @@
  */
 import { polyfill } from 'es6-promise';
 import request from 'axios';
+import moment from 'moment'
 import md5 from 'spark-md5';
 import _ from 'lodash';
 import axios from 'axios';
@@ -162,33 +163,68 @@ function formatPluginData(pluginData) {
  * @param pluginInfo
  * @returns {function()}
  */
-export function createPlugin(pluginInfo) {
+export function createPlugin(pluginInfo, uploadFile) {
   return (dispatch, getState) => {
     // If the creating plugin name is empty
+    // TODO: Add validation of all fileds
     if (_.trim(pluginInfo.pluginname).length <= 0) return;
 
-    // Calculate md5 identifier
-    const identifier = md5.hash(pluginInfo.pluginname);
+    // Calculate plugin md5 identifier
+    const identifier = getMd5Identifier(pluginInfo.pluginname);
     pluginInfo.id = identifier; // store md5 id in database, id is used to update plugin info
 
     // First dispatch an optimistic update
     dispatch(createPluginRequest());
 
-    return makePluginRequest('post', identifier, pluginInfo)
-      .then(res => {
-        if (res.status === 200) {
-          // Add plugin numeric index
-          // const { plugins } = getState().plugin;
-          // pluginInfo.index = plugins.length + 1;
+    // Calulate id for uploading file and will be stored in plugin info
+    // const id = getMd5Identifier(uploadFile.name);
+    // pluginInfo.uploadfileid = id;
+    
+    // Create form data to let server know the request source is from a form
+    var data = new FormData();
+    data.append('pluginfile', uploadFile);
 
-          // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
-          return dispatch(createPluginSuccess(pluginInfo));
-        }
-      })
+    // Upload file to mongoDB GridFS
+    makeUploadRequest('post', pluginInfo.id, data, '/pluginRepository/upload')
+      .then(res => {
+        if (res.status === 200) { // When file create success then storing new plugin information
+          return makePluginRequest('post', identifier, pluginInfo)
+            .then(res => {
+              if (res.status === 200) {
+                // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
+                return dispatch(createPluginSuccess(pluginInfo));
+              }
+            })
+            .catch(ex => {
+              return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on storing plugin info!'}));
+            });
+        }})
       .catch(ex => {
-        return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
+        return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on upload plugin file!'}));
       });
+
+
+    // dispatch(uploadPluginPkg(uploadFile));
+
+    // return makePluginRequest('post', identifier, pluginInfo)
+    //   .then(res => {
+    //     if (res.status === 200) {
+    //       // Add plugin numeric index
+    //       // const { plugins } = getState().plugin;
+    //       // pluginInfo.index = plugins.length + 1;
+    //
+    //       // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
+    //       return dispatch(createPluginSuccess(pluginInfo));
+    //     }
+    //   })
+    //   .catch(ex => {
+    //     return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
+    //   });
   };
+}
+
+function getMd5Identifier(field) {
+  return md5.hash(field + moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
 }
 
 export function uploadPluginPkg(file) {
@@ -200,12 +236,13 @@ export function uploadPluginPkg(file) {
     // data.append('pluginfile', file.name);
     data.append('pluginfile', file);
     
-    var opts = {
-      transformRequest: function (data) {
-        return data;
-      }
-    }
-    axios.post('/pluginRepository/upload' + (id ? ('/' + id) : ''), data, opts);
+    // var opts = {
+    //   transformRequest: function (data) {
+    //     return data;
+    //   }
+    // }
+    // axios.post('/pluginRepository/upload' + (id ? ('/' + id) : ''), data);
+    makeUploadRequest('post', id, data, '/pluginRepository/upload')
 
     // return makeUploadRequest('post', id, data, '/pluginRepository/upload')
     //   .then(res => {

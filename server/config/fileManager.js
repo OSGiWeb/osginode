@@ -32,15 +32,16 @@ module.exports = function(app, conn) {
 
       //create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
       var writestream = gfs.createWriteStream({
+        _id: req.params.id, // Create link between plugin and uploaded plugin code files
         filename: req.file.originalname
       });
 
       // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
       fs.createReadStream("./uploads/" + req.file.filename)
         .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
-          res.send("success");
+          res.status(200).send('Success');
         })})
-        .on("err", function(){res.send("Error uploading image")})
+        .on("err", function(){res.status(400).send("Error on uploading file");})
         .pipe(writestream);
     });
 
