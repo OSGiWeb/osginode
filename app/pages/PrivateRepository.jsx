@@ -323,11 +323,6 @@ class PrivateRepository extends Component {
 
             </div>
             <div className="modal-footer">
-              <form action="/"  formMethod="POST" id="upload-form" className="smart-form client-form" encType="multipart/form-data">
-                <input type="file" name = "avatar"/>
-                <input type="submit" value = "submit"/>
-              </form>
-
               <button type="button" className="btn btn-default" data-dismiss="modal">
                 取消
               </button>

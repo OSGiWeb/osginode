@@ -34,7 +34,7 @@ module.exports = function(app, conn) {
       var writestream = gfs.createWriteStream({
         filename: req.file.originalname
       });
-      //
+
       // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
       fs.createReadStream("./uploads/" + req.file.filename)
         .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
@@ -46,7 +46,8 @@ module.exports = function(app, conn) {
 
     // sends the image we saved by filename.
     // YunXu: use e.g.: 'localhost:3000/osginode.rar' to download .rar files in Mongo GridFS
-    app.get("/:filename", function(req, res){
+    // TODO: Add manuel request to URL
+    app.get("/pluginRepository/upload/:filename", function(req, res){
 
       // TEST: use GridFS find method to get meta data
       gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
