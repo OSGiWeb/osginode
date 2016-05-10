@@ -14,7 +14,7 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { toggleStatus, createPlugin, fetchPlugins, uploadPluginPkg,
+import { toggleStatus, createPlugin, fetchPlugins,
   showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
@@ -62,6 +62,8 @@ let validationOptions = {
 };
 
 
+var g_uploadPercent = 0;
+
 class PrivateRepository extends Component {
 
   //TODO: Data that needs to be called before rendering the component This is used for server-side rending
@@ -82,10 +84,34 @@ class PrivateRepository extends Component {
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
     this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
     this.onUploadPluginPkg = this.onUploadPluginPkg.bind(this);
+    this.setUploadProgress = this.setUploadProgress.bind(this);
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
     // dispatch(fetchPlugins());
+
+    // Set state for progress bar to upload file
+    this.state = {
+      uploadProgress: 0
+    };
+  }
+
+  componentDidMount() {
+    // this.interval = setInterval(this.tick.bind(this), 500);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  tick() {
+    this.setState({
+      uploadProgress: g_uploadPercent
+    });
+  }
+
+  setUploadProgress(percent) {
+    var p = percent;
   }
 
   showSmartNotification() {
@@ -104,6 +130,11 @@ class PrivateRepository extends Component {
           icon: "fa fa-check",
           // number: "4"
         });
+
+        // clear progress bar percent at first and then Stop update timer for upload progress
+        g_uploadPercent = 0;
+        // clearInterval(this.interval);
+        
       } else if (isCreated === false) {
         $.bigBox({
           title: "插件添加失败！",
@@ -113,6 +144,11 @@ class PrivateRepository extends Component {
           icon: "fa fa-check",
           // number: "4"
         });
+
+        // clear progress bar percent at first and then Stop update timer for upload progress
+        g_uploadPercent = 0;
+        // clearInterval(this.interval);
+
       }
 
       // if (isUpdated === true) {
@@ -165,6 +201,21 @@ class PrivateRepository extends Component {
 
     // Get uploaded file instance in create plugin form
     let file = ReactDOM.findDOMNode(this.refs.pluginfile).files[0];
+    // Create form data to let server know the request source is from a form
+    var data = new FormData();
+    data.append('pluginfile', file);
+
+    // Start upload progress control timer
+    this.interval = setInterval(this.tick.bind(this), 500);
+
+    //TODO: Add progress calculate (new axios version)
+    var config = {
+      progress: function (progressEvent) {
+        // var percentCompleted = progressEvent.loaded / progressEvent.total;
+        var percentCompleted = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+        g_uploadPercent = percentCompleted;
+      }
+    }
 
     dispatch(createPlugin({
       pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
@@ -176,8 +227,8 @@ class PrivateRepository extends Component {
       description: ReactDOM.findDOMNode(this.refs.description).value,
       dependencies: dependencies,
       isprivate: true,
-      statusIcon: "<span class='label label-danger'>私有</span>"
-    }, file));
+      statusIcon: "<span class='label label-danger'>私有</span>" },
+      data, config)); // upload data info and upload config as parameter
   }
 
   onUploadPluginPkg(event) {
@@ -486,8 +537,8 @@ class PrivateRepository extends Component {
               <div className="widget-toolbar">
                 <div className="progress progress-striped active" data-tooltip="55%"
                      data-tooltip-placement="bottom">
-                  <div className="progress-bar progress-bar-success" role="progressbar"
-                       style={{width: '55%'}}>55 %
+                  <div className="progress-bar progress-bar-success" ref="uploadprogress" role="progressbar"
+                       style={{width: this.state.uploadProgress + '%'}}>{this.state.uploadProgress + '%'}
                   </div>
                 </div>
               </div>
@@ -521,8 +572,7 @@ class PrivateRepository extends Component {
 
             // Set status icon based on plugin status (private / public)
             formatData[i].statusIcon = formatData[i].isprivate ? "<span class='label label-danger'>私有</span>" :
-              "<span class='label label-success'>公共</span>"
-            ;
+              "<span class='label label-success'>公共</span>";
           }
           return formatData;
         }

@@ -27,8 +27,8 @@ function makePluginRequest(method, id, data, api='/pluginRepository') {
   return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
-function makeUploadRequest(method, id, data, api) {
-  return request[method](api + (id ? ('/' + id) : ''), data);
+function makeUploadRequest(method, api, id, data, config) {
+  return request[method](api + (id ? ('/' + id) : ''), data, config);
 }
 
 /*
@@ -159,11 +159,13 @@ function formatPluginData(pluginData) {
 }
 
 /**
- * Create plugin
+ * createPlugin()
  * @param pluginInfo
+ * @param uploadData
+ * @param uploadConfig
  * @returns {function()}
  */
-export function createPlugin(pluginInfo, uploadFile) {
+export function createPlugin(pluginInfo, uploadData, uploadConfig) {
   return (dispatch, getState) => {
     // If the creating plugin name is empty
     // TODO: Add validation of all fileds
@@ -180,12 +182,19 @@ export function createPlugin(pluginInfo, uploadFile) {
     // const id = getMd5Identifier(uploadFile.name);
     // pluginInfo.uploadfileid = id;
     
-    // Create form data to let server know the request source is from a form
-    var data = new FormData();
-    data.append('pluginfile', uploadFile);
+    // // Create form data to let server know the request source is from a form
+    // var data = new FormData();
+    // data.append('pluginfile', uploadData);
+    // //TODO: Add progress calculate (new axios version)
+    // var config = {
+    //   progress: function (progressEvent) {
+    //     var percentCompleted = progressEvent.loaded / progressEvent.total;
+    //   }
+    // }
 
     // Upload file to mongoDB GridFS
-    makeUploadRequest('post', pluginInfo.id, data, '/pluginRepository/upload')
+    // axios.post('/pluginRepository/upload'+ pluginInfo.id, data, config)
+    makeUploadRequest('post', '/pluginRepository/upload', pluginInfo.id, uploadData, uploadConfig)
       .then(res => {
         if (res.status === 200) { // When file create success then storing new plugin information
           return makePluginRequest('post', identifier, pluginInfo)
@@ -227,41 +236,41 @@ function getMd5Identifier(field) {
   return md5.hash(field + moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
 }
 
-export function uploadPluginPkg(file) {
-  return (dispatch) => {
-
-    const id = md5.hash(file.name);
-
-    var data = new FormData();
-    // data.append('pluginfile', file.name);
-    data.append('pluginfile', file);
-    
-    // var opts = {
-    //   transformRequest: function (data) {
-    //     return data;
-    //   }
-    // }
-    // axios.post('/pluginRepository/upload' + (id ? ('/' + id) : ''), data);
-    makeUploadRequest('post', id, data, '/pluginRepository/upload')
-
-    // return makeUploadRequest('post', id, data, '/pluginRepository/upload')
-    //   .then(res => {
-    //     if (res.status === 200) {
-    //       // Add plugin numeric index
-    //       // const { plugins } = getState().plugin;
-    //       // pluginInfo.index = plugins.length + 1;
-    //
-    //       // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
-    //       // return dispatch(createPluginSuccess(pluginInfo));
-    //       return;
-    //     }
-    //   })
-    //   .catch(ex => {
-    //     // return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
-    //     return;
-    //   });
-  };
-}
+// export function uploadPluginPkg(file) {
+//   return (dispatch) => {
+//
+//     const id = md5.hash(file.name);
+//
+//     var data = new FormData();
+//     // data.append('pluginfile', file.name);
+//     data.append('pluginfile', file);
+//
+//     // var opts = {
+//     //   transformRequest: function (data) {
+//     //     return data;
+//     //   }
+//     // }
+//     // axios.post('/pluginRepository/upload' + (id ? ('/' + id) : ''), data);
+//     makeUploadRequest('post', id, data, '/pluginRepository/upload')
+//
+//     // return makeUploadRequest('post', id, data, '/pluginRepository/upload')
+//     //   .then(res => {
+//     //     if (res.status === 200) {
+//     //       // Add plugin numeric index
+//     //       // const { plugins } = getState().plugin;
+//     //       // pluginInfo.index = plugins.length + 1;
+//     //
+//     //       // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
+//     //       // return dispatch(createPluginSuccess(pluginInfo));
+//     //       return;
+//     //     }
+//     //   })
+//     //   .catch(ex => {
+//     //     // return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
+//     //     return;
+//     //   });
+//   };
+// }
 
 /**
  * Fetch all plugins

@@ -43,7 +43,7 @@
   "dependencies": {
     "autoprefixer": "^6.3.3",
     "autoprefixer-loader": "^3.1.0",
-    "axios": "^0.9.1",
+    "axios": "^0.11.0",
     "babel": "^6.5.2",
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
@@ -59,6 +59,7 @@
     "blueimp-file-upload": "^9.12.1",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
+    "bootstrap-tagsinput": "^0.7.1",
     "classnames": "^2.2.3",
     "connect-mongo": "^1.1.0",
     "cross-env": "^1.0.7",

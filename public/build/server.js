@@ -19628,10 +19628,10 @@ module.exports =
 	var defaults = __webpack_require__(159);
 	var utils = __webpack_require__(160);
 	var dispatchRequest = __webpack_require__(161);
-	var InterceptorManager = __webpack_require__(187);
-	var isAbsoluteURL = __webpack_require__(188);
-	var combineURLs = __webpack_require__(189);
-	var bind = __webpack_require__(190);
+	var InterceptorManager = __webpack_require__(188);
+	var isAbsoluteURL = __webpack_require__(189);
+	var combineURLs = __webpack_require__(190);
+	var bind = __webpack_require__(191);
 	var transformData = __webpack_require__(165);
 
 	function Axios(defaultConfig) {
@@ -19704,21 +19704,20 @@ module.exports =
 	var defaultInstance = new Axios(defaults);
 	var axios = module.exports = bind(Axios.prototype.request, defaultInstance);
 
+	// Expose properties from defaultInstance
+	axios.defaults = defaultInstance.defaults;
+	axios.interceptors = defaultInstance.interceptors;
+
+	// Factory for creating new instances
 	axios.create = function create(defaultConfig) {
 	  return new Axios(defaultConfig);
 	};
-
-	// Expose defaults
-	axios.defaults = defaultInstance.defaults;
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(191);
-
-	// Expose interceptors
-	axios.interceptors = defaultInstance.interceptors;
+	axios.spread = __webpack_require__(192);
 
 	// Provide aliases for supported request methods
 	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
@@ -19759,11 +19758,8 @@ module.exports =
 	};
 
 	module.exports = {
-	  transformRequest: [function transformResponseJSON(data, headers) {
-	    if (utils.isFormData(data)) {
-	      return data;
-	    }
-	    if (utils.isArrayBuffer(data)) {
+	  transformRequest: [function transformRequest(data, headers) {
+	    if (utils.isFormData(data) || utils.isArrayBuffer(data) || utils.isStream(data)) {
 	      return data;
 	    }
 	    if (utils.isArrayBufferView(data)) {
@@ -19787,7 +19783,7 @@ module.exports =
 	    return data;
 	  }],
 
-	  transformResponse: [function transformResponseJSON(data) {
+	  transformResponse: [function transformResponse(data) {
 	    /*eslint no-param-reassign:0*/
 	    if (typeof data === 'string') {
 	      data = data.replace(PROTECTION_PREFIX, '');
@@ -19810,7 +19806,13 @@ module.exports =
 	  timeout: 0,
 
 	  xsrfCookieName: 'XSRF-TOKEN',
-	  xsrfHeaderName: 'X-XSRF-TOKEN'
+	  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+	  maxContentLength: -1,
+
+	  validateStatus: function validateStatus(status) {
+	    return status >= 200 && status < 300;
+	  }
 	};
 
 
@@ -19943,6 +19945,26 @@ module.exports =
 	}
 
 	/**
+	 * Determine if a value is a Function
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Function, otherwise false
+	 */
+	function isFunction(val) {
+	  return toString.call(val) === '[object Function]';
+	}
+
+	/**
+	 * Determine if a value is a Stream
+	 *
+	 * @param {Object} val The value to test
+	 * @returns {boolean} True if value is a Stream, otherwise false
+	 */
+	function isStream(val) {
+	  return isObject(val) && isFunction(val.pipe);
+	}
+
+	/**
 	 * Trim excess whitespace off the beginning and end of a string
 	 *
 	 * @param {String} str The String to trim
@@ -20057,6 +20079,8 @@ module.exports =
 	  isDate: isDate,
 	  isFile: isFile,
 	  isBlob: isBlob,
+	  isFunction: isFunction,
+	  isStream: isStream,
 	  isStandardBrowserEnv: isStandardBrowserEnv,
 	  forEach: forEach,
 	  merge: merge,
@@ -20090,7 +20114,7 @@ module.exports =
 	        adapter = __webpack_require__(162);
 	      } else if (typeof process !== 'undefined') {
 	        // For node use HTTP adapter
-	        adapter = __webpack_require__(169);
+	        adapter = __webpack_require__(170);
 	      }
 
 	      if (typeof adapter === 'function') {
@@ -20115,7 +20139,8 @@ module.exports =
 	var parseHeaders = __webpack_require__(164);
 	var transformData = __webpack_require__(165);
 	var isURLSameOrigin = __webpack_require__(166);
-	var btoa = window.btoa || __webpack_require__(167);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(167);
+	var settle = __webpack_require__(168);
 
 	module.exports = function xhrAdapter(resolve, reject, config) {
 	  var requestData = config.data;
@@ -20126,11 +20151,16 @@ module.exports =
 	  }
 
 	  var request = new XMLHttpRequest();
+	  var loadEvent = 'onreadystatechange';
+	  var xDomain = false;
 
 	  // For IE 8/9 CORS support
 	  // Only supports POST and GET calls and doesn't returns the response headers.
-	  if (window.XDomainRequest && !('withCredentials' in request) && !isURLSameOrigin(config.url)) {
+	  // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+	  if (process.env.NODE_ENV !== 'test' && typeof window !== 'undefined' && window.XDomainRequest && !('withCredentials' in request) && !isURLSameOrigin(config.url)) {
 	    request = new window.XDomainRequest();
+	    loadEvent = 'onload';
+	    xDomain = true;
 	  }
 
 	  // HTTP basic authentication
@@ -20145,14 +20175,25 @@ module.exports =
 	  // Set the request timeout in MS
 	  request.timeout = config.timeout;
 
+	  // For IE 9 CORS support.
+	  request.onprogress = function handleProgress() {};
+	  request.ontimeout = function handleTimeout() {};
+
 	  // Listen for ready state
-	  request.onload = function handleLoad() {
-	    if (!request) {
+	  request[loadEvent] = function handleLoad() {
+	    if (!request || (request.readyState !== 4 && !xDomain)) {
 	      return;
 	    }
+
+	    // The request errored out and we didn't get a response, this will be
+	    // handled by onerror instead
+	    if (request.status === 0) {
+	      return;
+	    }
+
 	    // Prepare the response
 	    var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-	    var responseData = ['text', ''].indexOf(config.responseType || '') !== -1 ? request.responseText : request.response;
+	    var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
 	    var response = {
 	      data: transformData(
 	        responseData,
@@ -20163,14 +20204,11 @@ module.exports =
 	      status: request.status === 1223 ? 204 : request.status,
 	      statusText: request.status === 1223 ? 'No Content' : request.statusText,
 	      headers: responseHeaders,
-	      config: config
+	      config: config,
+	      request: request
 	    };
 
-	    // Resolve or reject the Promise based on the status
-	    ((response.status >= 200 && response.status < 300) ||
-	     (!('status' in request) && response.responseText) ?
-	      resolve :
-	      reject)(response);
+	    settle(resolve, reject, response);
 
 	    // Clean up request
 	    request = null;
@@ -20186,11 +20224,22 @@ module.exports =
 	    request = null;
 	  };
 
+	  // Handle timeout
+	  request.ontimeout = function handleTimeout() {
+	    var err = new Error('timeout of ' + config.timeout + 'ms exceeded');
+	    err.timeout = config.timeout;
+	    err.code = 'ECONNABORTED';
+	    reject(err);
+
+	    // Clean up request
+	    request = null;
+	  };
+
 	  // Add xsrf header
 	  // This is only done if running in a standard browser environment.
 	  // Specifically not if we're in a web worker, or react-native.
 	  if (utils.isStandardBrowserEnv()) {
-	    var cookies = __webpack_require__(168);
+	    var cookies = __webpack_require__(169);
 
 	    // Add xsrf header
 	    var xsrfValue = config.withCredentials || isURLSameOrigin(config.url) ?
@@ -20231,8 +20280,17 @@ module.exports =
 	    }
 	  }
 
-	  if (utils.isArrayBuffer(requestData)) {
-	    requestData = new DataView(requestData);
+	  // Handle progress if needed
+	  if (config.progress) {
+	    if (config.method === 'post' || config.method === 'put') {
+	      request.upload.addEventListener('progress', config.progress);
+	    } else if (config.method === 'get') {
+	      request.addEventListener('progress', config.progress);
+	    }
+	  }
+
+	  if (requestData === undefined) {
+	    requestData = null;
 	  }
 
 	  // Send the request
@@ -20466,12 +20524,12 @@ module.exports =
 
 	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-	function InvalidCharacterError(message) {
-	  this.message = message;
+	function E() {
+	  this.message = 'String contains an invalid character';
 	}
-	InvalidCharacterError.prototype = new Error;
-	InvalidCharacterError.prototype.code = 5;
-	InvalidCharacterError.prototype.name = 'InvalidCharacterError';
+	E.prototype = new Error;
+	E.prototype.code = 5;
+	E.prototype.name = 'InvalidCharacterError';
 
 	function btoa(input) {
 	  var str = String(input);
@@ -20488,7 +20546,7 @@ module.exports =
 	  ) {
 	    charCode = str.charCodeAt(idx += 3 / 4);
 	    if (charCode > 0xFF) {
-	      throw new InvalidCharacterError('INVALID_CHARACTER_ERR: DOM Exception 5');
+	      throw new E();
 	    }
 	    block = block << 8 | charCode;
 	  }
@@ -20500,6 +20558,30 @@ module.exports =
 
 /***/ },
 /* 168 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Resolve or reject a Promise based on response status.
+	 *
+	 * @param {Function} resolve A function that resolves the promise.
+	 * @param {Function} reject A function that rejects the promise.
+	 * @param {object} response The response.
+	 */
+	module.exports = function settle(resolve, reject, response) {
+	  var validateStatus = response.config.validateStatus;
+	  // Note: status is not exposed by XDomainRequest
+	  if (!response.status || !validateStatus || validateStatus(response.status)) {
+	    resolve(response);
+	  } else {
+	    reject(response);
+	  }
+	};
+
+
+/***/ },
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20558,7 +20640,7 @@ module.exports =
 
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20566,13 +20648,15 @@ module.exports =
 	var utils = __webpack_require__(160);
 	var buildURL = __webpack_require__(163);
 	var transformData = __webpack_require__(165);
-	var http = __webpack_require__(170).http;
-	var https = __webpack_require__(170).https;
-	var url = __webpack_require__(172);
-	var zlib = __webpack_require__(184);
-	var pkg = __webpack_require__(185);
-	var Buffer = __webpack_require__(186).Buffer;
+	var http = __webpack_require__(171).http;
+	var https = __webpack_require__(171).https;
+	var url = __webpack_require__(173);
+	var zlib = __webpack_require__(185);
+	var pkg = __webpack_require__(186);
+	var Buffer = __webpack_require__(187).Buffer;
+	var settle = __webpack_require__(168);
 
+	/*eslint consistent-return:0*/
 	module.exports = function httpAdapter(resolve, reject, config) {
 	  var data = config.data;
 	  var headers = config.headers;
@@ -20586,13 +20670,13 @@ module.exports =
 	    headers['User-Agent'] = 'axios/' + pkg.version;
 	  }
 
-	  if (data) {
+	  if (data && !utils.isStream(data)) {
 	    if (utils.isArrayBuffer(data)) {
 	      data = new Buffer(new Uint8Array(data));
 	    } else if (utils.isString(data)) {
 	      data = new Buffer(data, 'utf-8');
 	    } else {
-	      return reject(new Error('Data after transformation must be a string or an ArrayBuffer'));
+	      return reject(new Error('Data after transformation must be a string, an ArrayBuffer, or a Stream'));
 	    }
 
 	    // Add Content-Length header if data exists
@@ -20609,6 +20693,12 @@ module.exports =
 
 	  // Parse url
 	  var parsed = url.parse(config.url);
+	  if (!auth && parsed.auth) {
+	    var urlAuth = parsed.auth.split(':');
+	    var urlUsername = urlAuth[0] || '';
+	    var urlPassword = urlAuth[1] || '';
+	    auth = urlUsername + ':' + urlPassword;
+	  }
 	  var options = {
 	    hostname: parsed.hostname,
 	    port: parsed.port,
@@ -20618,6 +20708,12 @@ module.exports =
 	    agent: config.agent,
 	    auth: auth
 	  };
+
+	  if (config.proxy) {
+	    options.host = config.proxy.host;
+	    options.port = config.proxy.port;
+	    options.path = parsed.protocol + '//' + parsed.hostname + options.path;
+	  }
 
 	  // Create the request
 	  var transport = parsed.protocol === 'https:' ? https : http;
@@ -20643,33 +20739,37 @@ module.exports =
 	      break;
 	    }
 
-	    var responseBuffer = [];
-	    stream.on('data', function handleStreamData(chunk) {
-	      responseBuffer.push(chunk);
-	    });
+	    var response = {
+	      status: res.statusCode,
+	      statusText: res.statusMessage,
+	      headers: res.headers,
+	      config: config,
+	      request: req
+	    };
 
-	    stream.on('end', function handleStreamEnd() {
-	      var d = Buffer.concat(responseBuffer);
-	      if (config.responseType !== 'arraybuffer') {
-	        d = d.toString('utf8');
-	      }
-	      var response = {
-	        data: transformData(
-	          d,
-	          res.headers,
-	          config.transformResponse
-	        ),
-	        status: res.statusCode,
-	        statusText: res.statusMessage,
-	        headers: res.headers,
-	        config: config
-	      };
+	    if (config.responseType === 'stream') {
+	      response.data = stream;
+	      settle(resolve, reject, response);
+	    } else {
+	      var responseBuffer = [];
+	      stream.on('data', function handleStreamData(chunk) {
+	        responseBuffer.push(chunk);
 
-	      // Resolve or reject the Promise based on the status
-	      (res.statusCode >= 200 && res.statusCode < 300 ?
-	        resolve :
-	        reject)(response);
-	    });
+	        // make sure the content length is not over the maxContentLength if specified
+	        if (config.maxContentLength > -1 && Buffer.concat(responseBuffer).length > config.maxContentLength) {
+	          reject(new Error('maxContentLength size of ' + config.maxContentLength + ' exceeded'));
+	        }
+	      });
+
+	      stream.on('end', function handleStreamEnd() {
+	        var responseData = Buffer.concat(responseBuffer);
+	        if (config.responseType !== 'arraybuffer') {
+	          responseData = responseData.toString('utf8');
+	        }
+	        response.data = transformData(responseData, res.headers, config.transformResponse);
+	        settle(resolve, reject, response);
+	      });
+	    }
 	  });
 
 	  // Handle errors
@@ -20691,29 +20791,33 @@ module.exports =
 	  }
 
 	  // Send the request
-	  req.end(data);
+	  if (utils.isStream(data)) {
+	    data.pipe(req);
+	  } else {
+	    req.end(data);
+	  }
 	};
-
-
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(171)({
-	  'http': __webpack_require__(182),
-	  'https': __webpack_require__(183)
-	});
 
 
 /***/ },
 /* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(172)({
+	  'http': __webpack_require__(183),
+	  'https': __webpack_require__(184)
+	});
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
-	var url = __webpack_require__(172);
-	var debug = __webpack_require__(173)('follow-redirects');
-	var assert = __webpack_require__(180);
-	var consume = __webpack_require__(181);
+	var url = __webpack_require__(173);
+	var debug = __webpack_require__(174)('follow-redirects');
+	var assert = __webpack_require__(181);
+	var consume = __webpack_require__(182);
 
 	module.exports = function(_nativeProtocols) {
 	  var nativeProtocols = {};
@@ -20874,13 +20978,13 @@ module.exports =
 
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports) {
 
 	module.exports = require("url");
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -20888,8 +20992,8 @@ module.exports =
 	 * Module dependencies.
 	 */
 
-	var tty = __webpack_require__(174);
-	var util = __webpack_require__(175);
+	var tty = __webpack_require__(175);
+	var util = __webpack_require__(176);
 
 	/**
 	 * This is the Node.js implementation of `debug()`.
@@ -20897,7 +21001,7 @@ module.exports =
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = __webpack_require__(176);
+	exports = module.exports = __webpack_require__(177);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -21045,14 +21149,14 @@ module.exports =
 	      break;
 
 	    case 'FILE':
-	      var fs = __webpack_require__(178);
+	      var fs = __webpack_require__(179);
 	      stream = new fs.SyncWriteStream(fd, { autoClose: false });
 	      stream._type = 'fs';
 	      break;
 
 	    case 'PIPE':
 	    case 'TCP':
-	      var net = __webpack_require__(179);
+	      var net = __webpack_require__(180);
 	      stream = new net.Socket({
 	        fd: fd,
 	        readable: false,
@@ -21095,19 +21199,19 @@ module.exports =
 
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports) {
 
 	module.exports = require("tty");
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports) {
 
 	module.exports = require("util");
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21123,7 +21227,7 @@ module.exports =
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(177);
+	exports.humanize = __webpack_require__(178);
 
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -21310,7 +21414,7 @@ module.exports =
 
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports) {
 
 	/**
@@ -21441,25 +21545,25 @@ module.exports =
 
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports) {
 
 	module.exports = require("fs");
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports) {
 
 	module.exports = require("net");
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports) {
 
 	module.exports = require("assert");
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	module.exports = function(stream) {
@@ -21479,36 +21583,39 @@ module.exports =
 
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports) {
 
 	module.exports = require("http");
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports) {
 
 	module.exports = require("https");
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports) {
 
 	module.exports = require("zlib");
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports) {
 
 	module.exports = {
 		"name": "axios",
-		"version": "0.9.1",
+		"version": "0.11.0",
 		"description": "Promise based HTTP client for the browser and node.js",
 		"main": "index.js",
 		"scripts": {
-			"build": "grunt build",
 			"test": "grunt test",
 			"start": "node ./sandbox/server.js",
+			"build": "NODE_ENV=production grunt build",
+			"preversion": "npm test",
+			"version": "npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json",
+			"postversion": "git push && git push --tags",
 			"examples": "node ./examples/server.js",
 			"coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
 		},
@@ -21532,33 +21639,38 @@ module.exports =
 		},
 		"homepage": "https://github.com/mzabriskie/axios",
 		"devDependencies": {
-			"coveralls": "2.11.6",
-			"es6-promise": "3.0.2",
+			"coveralls": "2.11.8",
+			"es6-promise": "3.1.2",
 			"grunt": "0.4.5",
 			"grunt-banner": "0.6.0",
 			"grunt-cli": "0.1.13",
-			"grunt-contrib-clean": "0.7.0",
-			"grunt-contrib-nodeunit": "0.4.1",
+			"grunt-contrib-clean": "1.0.0",
+			"grunt-contrib-nodeunit": "1.0.0",
 			"grunt-contrib-watch": "0.6.1",
-			"grunt-eslint": "17.3.1",
+			"grunt-eslint": "18.0.0",
 			"grunt-karma": "0.12.1",
 			"grunt-ts": "5.3.2",
-			"grunt-update-json": "0.2.2",
 			"grunt-webpack": "1.0.11",
-			"istanbul-instrumenter-loader": "^0.1.3",
+			"istanbul-instrumenter-loader": "^0.2.0",
 			"jasmine-core": "2.4.1",
-			"karma": "0.13.19",
-			"karma-coverage": "0.5.3",
-			"karma-jasmine": "0.3.6",
+			"karma": "0.13.21",
+			"karma-chrome-launcher": "^0.2.2",
+			"karma-coverage": "0.5.4",
+			"karma-firefox-launcher": "^0.1.7",
+			"karma-jasmine": "0.3.7",
 			"karma-jasmine-ajax": "0.1.13",
-			"karma-phantomjs-launcher": "0.2.3",
+			"karma-opera-launcher": "^0.3.0",
+			"karma-phantomjs-launcher": "1.0.0",
+			"karma-safari-launcher": "^0.1.1",
+			"karma-sauce-launcher": "^0.3.1",
 			"karma-sinon": "1.0.4",
 			"karma-sourcemap-loader": "0.3.7",
 			"karma-webpack": "1.7.0",
-			"load-grunt-tasks": "3.4.0",
+			"load-grunt-tasks": "3.4.1",
 			"minimist": "1.2.0",
-			"phantomjs": "1.9.19",
-			"webpack": "1.12.11",
+			"phantomjs-prebuilt": "2.1.6",
+			"sinon": "1.17.3",
+			"webpack": "1.12.14",
 			"webpack-dev-server": "1.14.1"
 		},
 		"browser": {
@@ -21570,38 +21682,46 @@ module.exports =
 		"dependencies": {
 			"follow-redirects": "0.0.7"
 		},
-		"gitHead": "5176623d6c70e9d66c17f7867703a8e9990554bd",
-		"_id": "axios@0.9.1",
-		"_shasum": "95608b16447ee29b033589854c3fc7ee2c06bf6e",
-		"_from": "axios@>=0.9.1 <0.10.0",
-		"_npmVersion": "2.14.3",
-		"_nodeVersion": "3.3.1",
+		"gitHead": "82d34ac743022aaf0c4e68650b39d2f7edab73a4",
+		"_id": "axios@0.11.0",
+		"_shasum": "50adc59bd0f11bee89a383b24b2d407648e6d6e8",
+		"_from": "axios@latest",
+		"_npmVersion": "3.8.6",
+		"_nodeVersion": "6.0.0",
 		"_npmUser": {
-			"name": "mzabriskie",
-			"email": "mzabriskie@gmail.com"
+			"name": "nickuraltsev",
+			"email": "nick.uraltsev@gmail.com"
+		},
+		"dist": {
+			"shasum": "50adc59bd0f11bee89a383b24b2d407648e6d6e8",
+			"tarball": "https://registry.npmjs.org/axios/-/axios-0.11.0.tgz"
 		},
 		"maintainers": [
 			{
 				"name": "mzabriskie",
 				"email": "mzabriskie@gmail.com"
+			},
+			{
+				"name": "nickuraltsev",
+				"email": "nick.uraltsev@gmail.com"
 			}
 		],
-		"dist": {
-			"shasum": "95608b16447ee29b033589854c3fc7ee2c06bf6e",
-			"tarball": "http://registry.npmjs.org/axios/-/axios-0.9.1.tgz"
+		"_npmOperationalInternal": {
+			"host": "packages-16-east.internal.npmjs.com",
+			"tmp": "tmp/axios-0.11.0.tgz_1461730790535_0.26179565815255046"
 		},
 		"directories": {},
-		"_resolved": "https://registry.npmjs.org/axios/-/axios-0.9.1.tgz"
+		"_resolved": "https://registry.npmjs.org/axios/-/axios-0.11.0.tgz"
 	};
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports) {
 
 	module.exports = require("buffer");
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21659,7 +21779,7 @@ module.exports =
 
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21679,7 +21799,7 @@ module.exports =
 
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21697,7 +21817,7 @@ module.exports =
 
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21714,7 +21834,7 @@ module.exports =
 
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports) {
 
 	'use strict';
