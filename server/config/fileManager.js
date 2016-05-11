@@ -4,6 +4,7 @@
  */
 
 var fs = require("fs");
+var mime = require('mime');
 var multer = require("multer");
 var upload = multer({dest: "./uploads"});
 var secrets = require('./secrets');
@@ -57,40 +58,55 @@ module.exports = function(app, conn) {
     // sends the image we saved by filename.
     // YunXu: use e.g.: 'localhost:3000/osginode.rar' to download .rar files in Mongo GridFS
     // TODO: Add manuel request to URL
-    app.get("/:filename", function(req, res){
+    // TODO: As one plugin can link to many uploaded files, must add another paramerter, e.g.: filename to identify file in DB
+    app.get("/download/:id", function(req, res){
 
-      // TEST: use GridFS find method to get meta data
-      gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
-        if (err)
-          console.log(err);
+      // Use GridFS find method to get meta data
+      gfs.files.find({ _id: req.params.id }).toArray(function (err, files) { // CAUTION: 'files' is an array!
 
+        if (err) { console.log(err); return res.send("Error occured on finding file with _id");}
         console.log(files);
-      });
-      // TEST
 
-      var readstream = gfs.createReadStream({filename: req.params.filename});
-      readstream.on("error", function(err){
-        res.send("No image found with that title");
-      });
-      readstream.pipe(res);
-    });
+        // Set download file header incl. filename and type
+        res.setHeader('Content-disposition', 'attachment; filename=' + files[0].filename);
+        res.setHeader('Content-type', files[0].contentType);
 
-    //delete the image
-    app.get("/delete/:filename", function(req, res){
-      gfs.exist({filename: req.params.filename}, function(err, found){
-        if(err) return res.send("Error occured");
-        if(found){
-          gfs.remove({filename: req.params.filename}, function(err){
-            if(err) return res.send("Error occured");
-            res.send("Image deleted!");
-          });
-        } else{
-          res.send("No image found with that title");
-        }
+        // Create file read stream and pipe stream
+        var readstream = gfs.createReadStream({filename: files[0].filename});
+        readstream.on("error", function(err){
+          res.send("No file found with that id");});
+
+        readstream.pipe(res);
+
       });
     });
 
+    // Delete file in MongoDB GridFS
+    app.get("/delete/:id", function(req, res){
+      /**
+       * TODO: CANNOT use 'gfs.exist(_id)' to define whether file with _id in GridFs exist. So we use '_id' to
+       * 'gfs.files.find() to find related files (type: Array) and then delete all files which are link to this
+       * plugin id
+       */
+      gfs.files.find({ _id: req.params.id }).toArray(function (err, files) { // CAUTION: 'files' is an array!
 
+        if (err) { console.log(err); return res.status(400).send("Error occured on finding file with _id");}
+        console.log(files);
+
+        // Delete files by using filename
+        gfs.exist({filename: files[0].filename}, function(err, found){ // TODO: Delete all files in array which are linked to plugin
+          if(err) return res.send("Error occured");
+          if(found){
+            gfs.remove({filename: files[0].filename}, function(err){
+              if(err) return res.send("Error occured");
+              res.status(200).send("File deleted");
+            });
+          } else{
+            res.status(400).send("No File found with that filename");
+          }
+        });
+      });
+    });
   });
 
 };
