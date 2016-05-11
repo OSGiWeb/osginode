@@ -13,8 +13,8 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { toggleStatus, createPlugin, fetchPlugins,
-  showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
+import { toggleStatus, createPlugin, fetchPlugins, showNotificationDone,
+  resetStoreStates, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -84,6 +84,15 @@ class PublicRepository extends Component {
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
     // dispatch(fetchPlugins());
+  }
+
+  componentDidMount() {
+  }
+
+  // Deconstructor
+  componentWillUnmount() {
+    const {dispatch} = this.props;
+    dispatch(resetStoreStates());
   }
 
   // showSmartNotification() {

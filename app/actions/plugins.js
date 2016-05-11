@@ -124,11 +124,6 @@ function deletePluginFailure() {
   };
 }
 
-
-/*
-  Delete plguin functions
- */
-
 /*
  Datatable operation functions
  */
@@ -146,6 +141,12 @@ export function showNotificationDone() {
   };
 }
 
+export function resetStoreStates() {
+  return {
+    type: types.RESET_STORE_STATES
+  }
+}
+
 function formatPluginData(pluginData) {
   let formatData = [];
   // TODO: Maybe we need to keep the md5 id field which will be used to update plugin info!
@@ -157,6 +158,8 @@ function formatPluginData(pluginData) {
   }
   return formatData;
 }
+
+
 
 /**
  * createPlugin()

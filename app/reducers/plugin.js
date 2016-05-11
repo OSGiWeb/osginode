@@ -10,6 +10,7 @@ import {
   GET_PLUGINS_SUCCESS,
   GET_PLUGINS_FAILURE,
   SHOW_NOTIFICATION_DONE,
+  RESET_STORE_STATES,
   SET_DATATABLE_SELECTED_DATA,
   UPDATE_PLUGIN_REQUEST,
   UPDATE_PLUGIN_SUCCESS,
@@ -128,6 +129,16 @@ export default function plugin(
         updatedPlugin: [],
         isCreated: undefined,
         isUpdated: undefined,
+        isDeleted: undefined
+      });
+    case RESET_STORE_STATES:
+      return Object.assign({}, state, {
+        newPlugin: [],
+        updatedPlugin: [],
+        selectedData: [],
+        isCreated: undefined,
+        isUpdated: undefined,
+        isSelected: undefined,
         isDeleted: undefined
       });
     case SET_DATATABLE_SELECTED_DATA:

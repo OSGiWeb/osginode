@@ -14,8 +14,8 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { toggleStatus, createPlugin, fetchPlugins,
-  showNotificationDone, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
+import { toggleStatus, createPlugin, fetchPlugins, showNotificationDone,
+  resetStoreStates, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
 
 
 // TODO: Modify validation fields
@@ -61,7 +61,7 @@ let validationOptions = {
   }
 };
 
-
+/* Global variables to handle vars from callbacks */
 var g_uploadPercent = 0;
 
 class PrivateRepository extends Component {
@@ -84,7 +84,7 @@ class PrivateRepository extends Component {
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
     this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
     this.onUploadPluginPkg = this.onUploadPluginPkg.bind(this);
-    this.setUploadProgress = this.setUploadProgress.bind(this);
+    this.getUploadProgress = this.getUploadProgress.bind(this);
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
@@ -100,18 +100,39 @@ class PrivateRepository extends Component {
     // this.interval = setInterval(this.tick.bind(this), 500);
   }
 
+  // Deconstructor
   componentWillUnmount() {
+    const {dispatch} = this.props;
+
+    g_uploadPercent = 0;
+    dispatch(resetStoreStates());
     clearInterval(this.interval);
+
   }
 
+  // Timer callback function to control update progress
   tick() {
-    this.setState({
-      uploadProgress: g_uploadPercent
-    });
+    if (this.state.uploadProgress < 70) {
+      this.setState({
+        uploadProgress: g_uploadPercent
+      });
+    } else if (this.state.uploadProgress < 99) {
+      if (this.state.uploadProgress === 95) {
+        this.state.uploadProgress = 95;
+      } else {
+        var calPecent = this.state.uploadProgress + parseFloat(Math.random());
+        this.setState({
+          uploadProgress: parseFloat(parseFloat(calPecent).toFixed(2))
+        });
+      }
+    }
   }
 
-  setUploadProgress(percent) {
-    var p = percent;
+  // Get file upload progress under control
+  getUploadProgress() {
+    // var progress = this.state.uploadProgress;
+    //
+    // return progress;
   }
 
   showSmartNotification() {
@@ -132,9 +153,9 @@ class PrivateRepository extends Component {
         });
 
         // clear progress bar percent at first and then Stop update timer for upload progress
-        g_uploadPercent = 0;
+        this.state.uploadProgress = 100;
         // clearInterval(this.interval);
-        
+
       } else if (isCreated === false) {
         $.bigBox({
           title: "插件添加失败！",
@@ -146,7 +167,7 @@ class PrivateRepository extends Component {
         });
 
         // clear progress bar percent at first and then Stop update timer for upload progress
-        g_uploadPercent = 0;
+        this.state.uploadProgress = 100;
         // clearInterval(this.interval);
 
       }
@@ -209,6 +230,8 @@ class PrivateRepository extends Component {
     this.interval = setInterval(this.tick.bind(this), 500);
 
     //TODO: Add progress calculate (new axios version)
+    g_uploadPercent = 0;
+    this.state.uploadProgress = 0;
     var config = {
       progress: function (progressEvent) {
         // var percentCompleted = progressEvent.loaded / progressEvent.total;
@@ -218,16 +241,16 @@ class PrivateRepository extends Component {
     }
 
     dispatch(createPlugin({
-      pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
-      symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
-      category: ReactDOM.findDOMNode(this.refs.category).value,
-      version: ReactDOM.findDOMNode(this.refs.version).value,
-      author: userFullname,
-      releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
-      description: ReactDOM.findDOMNode(this.refs.description).value,
-      dependencies: dependencies,
-      isprivate: true,
-      statusIcon: "<span class='label label-danger'>私有</span>" },
+        pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
+        symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
+        category: ReactDOM.findDOMNode(this.refs.category).value,
+        version: ReactDOM.findDOMNode(this.refs.version).value,
+        author: userFullname,
+        releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
+        description: ReactDOM.findDOMNode(this.refs.description).value,
+        dependencies: dependencies,
+        isprivate: true,
+        statusIcon: "<span class='label label-danger'>私有</span>" },
       data, config)); // upload data info and upload config as parameter
   }
 

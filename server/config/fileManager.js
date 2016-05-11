@@ -24,22 +24,31 @@ module.exports = function(app, conn) {
       res.render("home");
     });
 
-    //second parameter is multer middleware.
+    /**
+     * Second parameter 'upload.single("pluginfile")' is multer middleware:
+     * Defined file upload stream to multer and return upload status (e.g.: progress) to request.
+     * When reached the innner of app.post() function, indicated the upload stream to multer is completed and
+     * the multer -> MongoDB GridFS will begin.
+     */
     app.post("/pluginRepository/upload/:id", upload.single("pluginfile"), function(req, res, next){
 
       console.log(req.params.id);
       console.log(req.file);
 
-      //create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+      // res.status(200).send("Success");
+
+      // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
       var writestream = gfs.createWriteStream({
         _id: req.params.id, // Create link between plugin and uploaded plugin code files
         filename: req.file.originalname
       });
 
-      // //pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-      fs.createReadStream("./uploads/" + req.file.filename)
+      // TODO: when writestream created 'end', send status(200)? otherwise user wait until all upload process finished!
+
+      // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+      fs.createReadStream("./uploads/" + req.file.filename) // req.file.filename is already calculate with MD5
         .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
-          res.status(200).send('Success');
+          res.status(200).send("Success");
         })})
         .on("err", function(){res.status(400).send("Error on uploading file");})
         .pipe(writestream);
@@ -48,7 +57,7 @@ module.exports = function(app, conn) {
     // sends the image we saved by filename.
     // YunXu: use e.g.: 'localhost:3000/osginode.rar' to download .rar files in Mongo GridFS
     // TODO: Add manuel request to URL
-    app.get("/pluginRepository/upload/:filename", function(req, res){
+    app.get("/:filename", function(req, res){
 
       // TEST: use GridFS find method to get meta data
       gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
