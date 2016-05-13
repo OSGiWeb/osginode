@@ -2,7 +2,6 @@
  * Created by Information on 2016/4/19.
  */
 import {
-  TOGGLE_PLUGIN_STATUS,
   CREATE_PLUGIN_REQUEST,
   CREATE_PLUGIN_SUCCESS,
   CREATE_PLUGIN_FAILURE,
@@ -17,7 +16,9 @@ import {
   UPDATE_PLUGIN_FAILURE,
   DELETE_PLUGIN_REQUEST,
   DELETE_PLUGIN_SUCCESS,
-  DELETE_PLUGIN_FAILURE
+  DELETE_PLUGIN_FAILURE,
+  DOWNLOAD_PLUGIN_SUCCESS,
+  DOWNLOAD_PLUGIN_FAILURE
 } from '../constants/index';
 
 
@@ -36,17 +37,17 @@ export default function plugin(
     updatedPlugin:[]
   }, action={}) {
   switch (action.type) {
-    case TOGGLE_PLUGIN_STATUS:
-      return Object.assign({}, state, {
-        // plugins: [
-        //   ...state.plugins.slice(0, action.index),
-        //   Object.assign({}, state.plugins[action.index], {
-        //     isprivate: action.status
-        //   }),
-        //   ...state.plugins.slice(action.index + 1)
-        // ],
-        isSelected: false
-      });
+    // case TOGGLE_PLUGIN_STATUS:
+    //   return Object.assign({}, state, {
+    //     // plugins: [
+    //     //   ...state.plugins.slice(0, action.index),
+    //     //   Object.assign({}, state.plugins[action.index], {
+    //     //     isprivate: action.status
+    //     //   }),
+    //     //   ...state.plugins.slice(action.index + 1)
+    //     // ],
+    //     isSelected: false
+    //   });
 
     /* Create plugin functions */
     case CREATE_PLUGIN_SUCCESS:
@@ -131,15 +132,15 @@ export default function plugin(
         isUpdated: undefined,
         isDeleted: undefined
       });
-    case RESET_STORE_STATES:
+    case RESET_STORE_STATES: // CANNOT reset all fields in store, otherwise some backend process would return false results
       return Object.assign({}, state, {
-        newPlugin: [],
-        updatedPlugin: [],
-        selectedData: [],
-        isCreated: undefined,
-        isUpdated: undefined,
+        // newPlugin: [],
+        // updatedPlugin: [],
+        // selectedData: [],
+        // isCreated: undefined,
+        // isUpdated: undefined,
         isSelected: undefined,
-        isDeleted: undefined
+        // isDeleted: undefined
       });
     case SET_DATATABLE_SELECTED_DATA:
       return Object.assign({}, state, {

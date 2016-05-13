@@ -14,11 +14,11 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
-import { toggleStatus, createPlugin, fetchPlugins, showNotificationDone,
-  resetStoreStates, setDatatableSelectedData, updatePlugin, deletePlguin } from '../actions/plugins';
+import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
+  resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
 
 
-// TODO: Modify validation fields
+// TODO: Modify validation fields for form
 let validationOptions = {
   // Rules for form validation
   rules : {
@@ -83,8 +83,9 @@ class PrivateRepository extends Component {
     this.showSmartNotification = this.showSmartNotification.bind(this);
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
     this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
-    this.onUploadPluginPkg = this.onUploadPluginPkg.bind(this);
-    this.getUploadProgress = this.getUploadProgress.bind(this);
+    this.onChangePluginUploadField = this.onChangePluginUploadField.bind(this);
+    this.onDownloadPluginPkg = this.onDownloadPluginPkg.bind(this);
+
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
@@ -128,11 +129,18 @@ class PrivateRepository extends Component {
     }
   }
 
-  // Get file upload progress under control
-  getUploadProgress() {
-    // var progress = this.state.uploadProgress;
-    //
-    // return progress;
+  // Set plugin as private plugin or public plugin
+  onToggleStatus() {
+    const { dispatch } = this.props;
+    const { selectedData } = this.props.plugin;
+
+    // Private/Public control
+    selectedData.isprivate = !selectedData.isprivate;
+    selectedData.statusIcon = selectedData.isprivate ? "<span class='label label-danger'>私有</span>" :
+      "<span class='label label-success'>公共</span>";
+
+    // Dispatch update plugin action
+    dispatch(updatePlugin(selectedData));
   }
 
   showSmartNotification() {
@@ -141,6 +149,7 @@ class PrivateRepository extends Component {
 
     // TODO: Add waiting icon to show the plugin adding process
     // TODO: Show valid plugin infomation on message boxes
+    // DONOT delete condition 'isDeleted', otherwise 'isDeleted' will not be reset in showNotificationDone()
     if (isCreated !== undefined || isUpdated !== undefined || isDeleted !== undefined) {
       if (isCreated === true) {
         $.bigBox({
@@ -151,11 +160,6 @@ class PrivateRepository extends Component {
           icon: "fa fa-check",
           // number: "4"
         });
-
-        // clear progress bar percent at first and then Stop update timer for upload progress
-        this.state.uploadProgress = 100;
-        // clearInterval(this.interval);
-
       } else if (isCreated === false) {
         $.bigBox({
           title: "插件添加失败！",
@@ -165,32 +169,31 @@ class PrivateRepository extends Component {
           icon: "fa fa-check",
           // number: "4"
         });
-
-        // clear progress bar percent at first and then Stop update timer for upload progress
-        this.state.uploadProgress = 100;
-        // clearInterval(this.interval);
-
       }
 
-      // if (isUpdated === true) {
-      //   $.bigBox({
-      //     title: "插件更新成功！",
-      //     content: "插件名：高度窗；提交人：许昀",
-      //     color: "#739E73",
-      //     timeout: 2000,
-      //     icon: "fa fa-check",
-      //     // number: "4"
-      //   });
-      // } else if (isUpdated === false){
-      //   $.bigBox({
-      //     title: "插件更新失败！",
-      //     content: "插件名：高度窗；提交人：许昀",
-      //     color: "#296191",
-      //     timeout: 2000,
-      //     icon: "fa fa-check",
-      //     // number: "4"
-      //   });
-      // }
+      if (isUpdated === true) {
+        $.bigBox({
+          title: "插件更新成功！",
+          content: "插件名：高度窗；提交人：许昀",
+          color: "#739E73",
+          timeout: 2000,
+          icon: "fa fa-check",
+          // number: "4"
+        });
+      } else if (isUpdated === false){
+        $.bigBox({
+          title: "插件更新失败！",
+          content: "插件名：高度窗；提交人：许昀",
+          color: "#296191",
+          timeout: 2000,
+          icon: "fa fa-check",
+          // number: "4"
+        });
+      }
+
+      // clear progress bar percent at first and then Stop update timer for upload progress
+      this.state.uploadProgress = 100;
+
       // Notification is shown, set related state to default value to avoid render notification again
       dispatch(showNotificationDone());
     }
@@ -221,25 +224,25 @@ class PrivateRepository extends Component {
     // TEST plugin dependencies
 
     // Get uploaded file instance in create plugin form
+    // TODO: Bug to fix by remeber file name but cannot find file
     let file = ReactDOM.findDOMNode(this.refs.pluginfile).files[0];
     // Create form data to let server know the request source is from a form
-    var data = new FormData();
-    data.append('pluginfile', file);
+    let uploadFile = new FormData();
+    uploadFile.append('pluginfile', file);
 
     // Start upload progress control timer
     this.interval = setInterval(this.tick.bind(this), 500);
-
-    //TODO: Add progress calculate (new axios version)
+    // Do upload progress calculate
     g_uploadPercent = 0;
     this.state.uploadProgress = 0;
-    var config = {
+    var config = { // Callback to send upload progress back from request
       progress: function (progressEvent) {
-        // var percentCompleted = progressEvent.loaded / progressEvent.total;
-        var percentCompleted = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-        g_uploadPercent = percentCompleted;
+        var percentCompleted = (progressEvent.loaded / progressEvent.total) * 100;
+        g_uploadPercent = parseFloat(percentCompleted.toFixed(2));
       }
     }
 
+    // Dispath create plugin action
     dispatch(createPlugin({
         pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
         symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
@@ -251,14 +254,38 @@ class PrivateRepository extends Component {
         dependencies: dependencies,
         isprivate: true,
         statusIcon: "<span class='label label-danger'>私有</span>" },
-      data, config)); // upload data info and upload config as parameter
+      uploadFile, config)); // upload data info and upload config as parameter
   }
 
-  onUploadPluginPkg(event) {
+  onChangePluginUploadField(event) {
     const { dispatch } = this.props;
     let file = event.target.files[0];
     ReactDOM.findDOMNode(this.refs.fileinputname).value = file.name;
     // dispatch(uploadPluginPkg(file));
+  }
+
+  onDownloadPluginPkg() {
+    // const { dispatch } = this.props;
+    //
+    // // Start upload progress control timer
+    // this.interval = setInterval(this.tick.bind(this), 500);
+    // // Do download progress calculate
+    // // TODO: can not get total length
+    // g_uploadPercent = 0;
+    // this.state.uploadProgress = 0;
+    // var config = { // Callback to send upload progress back from request
+    //   progress: function (progressEvent) {
+    //     var percentCompleted = (progressEvent.loaded / progressEvent.total) * 100;
+    //     g_uploadPercent = parseFloat(percentCompleted.toFixed(2));
+    //   }
+    // }
+
+    const { selectedData } = this.props.plugin;
+    let url = '/pluginRepository/download/' + selectedData.id;
+    window.location = url;
+    window.open(url, '_self');
+
+    // dispatch(downloadPluginPkg(selectedData.id, config));
   }
 
   onDatatableRowSelected(rowData, isSelected) {
@@ -267,28 +294,6 @@ class PrivateRepository extends Component {
 
     const {dispatch} = this.props;
     dispatch(setDatatableSelectedData(data, isSelected));
-  }
-
-  // Set plugin as private plugin or public plugin
-  // true: private / false: public plugin
-  onToggleStatus() {
-    // const {dispatch} = this.props;
-    // const { selectedData } = this.props.plugin;
-    //
-    // status = ( !selectedData.isprivate );
-    // dispatch(toggleStatus(selectedData.id, selectedData.index, status));
-
-
-    // TODO: use update plugin to change 'isprivate' prop, and delete all params which used to change 'plugins[]' in store
-    const { dispatch } = this.props;
-    const { selectedData } = this.props.plugin;
-
-    selectedData.isprivate = !selectedData.isprivate;
-    selectedData.statusIcon = selectedData.isprivate ? "<span class='label label-danger'>私有</span>" :
-      "<span class='label label-success'>公共</span>";
-
-    // Dispatch action
-    dispatch(updatePlugin(selectedData));
   }
 
   onEditPluginSubmit() {
@@ -304,13 +309,40 @@ class PrivateRepository extends Component {
     selectedData.releasedate = ReactDOM.findDOMNode(this.refs.editreleasedate).value;
     selectedData.description = ReactDOM.findDOMNode(this.refs.editdescription).value;
 
-    dispatch(updatePlugin(selectedData));
+    // Get uploaded file instance in create plugin form
+    // TODO: Bug to fix by remeber file name but cannot find file
+    let file = ReactDOM.findDOMNode(this.refs.pluginfile).files[0];
+
+    // Update plugin with new uploading file
+    if (file !== undefined) {
+      // Create form data to let server know the request source is from a form
+      let uploadFile = new FormData();
+      uploadFile.append('pluginfile', file);
+
+      // Start upload progress control timer
+      this.interval = setInterval(this.tick.bind(this), 500);
+      // Do upload progress calculate
+      g_uploadPercent = 0;
+      this.state.uploadProgress = 0;
+      var config = { // Callback to send upload progress back from request
+        progress: function (progressEvent) {
+          var percentCompleted = (progressEvent.loaded / progressEvent.total) * 100;
+          g_uploadPercent = parseFloat(percentCompleted.toFixed(2));
+        }
+      }
+
+      // Dispatch update plugin with uploaded files
+      dispatch(updatePluginWithUploads(selectedData, uploadFile, config));
+    } else { // If no upload file selected, update only plugin info in database
+      dispatch(updatePlugin(selectedData));
+    }
+
   }
 
   onDeletePluginSubmit() {
     const { dispatch } = this.props;
     const { selectedData } = this.props.plugin;
-    dispatch(deletePlguin(selectedData.id, selectedData.index));
+    dispatch(deletePlguin(selectedData.id));
   }
 
   /**
@@ -382,7 +414,7 @@ class PrivateRepository extends Component {
                       <fieldset>
                         <section>
                           <div className="input input-file">
-                            <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onUploadPluginPkg}/>
+                            <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onChangePluginUploadField}/>
                               上传插件</span>
                             <input name="fileinputname" ref="fileinputname" type="text" placeholder="上传插件包" readOnly={true}/>
                           </div>
@@ -487,10 +519,9 @@ class PrivateRepository extends Component {
                         <fieldset>
                           <section>
                             <div className="input input-file">
-                      <span className="button"><input id="editfile2" type="editfile" name="editpluginfile"
-                                                      onchange="this.parentNode.nextSibling.value = this.value"/>
-                        上传插件</span>
-                              <input type="text" placeholder="上传插件包" readOnly={true}/>
+                            <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onChangePluginUploadField}/>
+                              上传插件</span>
+                              <input name="fileinputname" ref="fileinputname" type="text" placeholder="不上传新插件文件即保留已上传的文件" readOnly={true}/>
                             </div>
                           </section>
                           <section>
@@ -528,7 +559,8 @@ class PrivateRepository extends Component {
     return (
       <div className="row">
         <article className="col-sm-12">
-          <JarvisWidget editbutton={false} color="blueDark">
+          <JarvisWidget colorbutton={false} togglebutton={false} fullscreenbutton={false}
+                        deletebutton={false} editbutton={false} color="blueDark">
             <header>
               <span className="widget-icon"> <i className="fa fa-table"/> </span>
               <h2>私有插件仓库</h2>
@@ -549,6 +581,9 @@ class PrivateRepository extends Component {
                     </MenuItem>
                     <MenuItem disabled={ !selectedData.isprivate } onClick={this.onToggleStatus} >
                       <i className="fa fa-cloud-upload"/>&nbsp;提交
+                    </MenuItem>
+                    <MenuItem onClick={this.onDownloadPluginPkg} >
+                      <i className="fa fa-cloud-download"/>&nbsp;下载
                     </MenuItem>
                     <MenuItem onClick={this.onDeletePluginSubmit}>
                       <i className="fa fa-minus-square"/>&nbsp;删除

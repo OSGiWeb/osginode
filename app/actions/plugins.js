@@ -34,13 +34,13 @@ function makeUploadRequest(method, api, id, data, config) {
 /*
  Plugin status control functions
  */
-export function togglePluginStatus(index, status) {
-  return {
-    type: types.TOGGLE_PLUGIN_STATUS,
-    index: index - 1,
-    status: status
-  };
-}
+// export function togglePluginStatus(index, status) {
+//   return {
+//     type: types.TOGGLE_PLUGIN_STATUS,
+//     index: index - 1,
+//     status: status
+//   };
+// }
 
 /*
  Get plugin functions
@@ -105,17 +105,16 @@ function updatePluginFailure() {
 }
 
 /*
- Delete plguin functions
+ Delete plugin functions
  */
 function deletePluginRequest() {
   return {
     type: types.DELETE_PLUGIN_REQUEST
   };
 }
-function deletePluginSuccess(index) {
+function deletePluginSuccess() {
   return {
-    type: types.DELETE_PLUGIN_SUCCESS,
-    index: index - 1, // Array index should minus realitive index
+    type: types.DELETE_PLUGIN_SUCCESS
   };
 }
 function deletePluginFailure() {
@@ -123,6 +122,21 @@ function deletePluginFailure() {
     type: types.DELETE_PLUGIN_FAILURE
   };
 }
+
+/*
+  Download plugin functions
+ */
+function downloadPluginSuccess() {
+  return {
+    type: types.DOWNLOAD_PLUGIN_SUCCESS
+  };
+}
+function downloadPluginFailure() {
+  return {
+    type: types.DOWNLOAD_PLUGIN_FAILURE
+  };
+}
+
 
 /*
  Datatable operation functions
@@ -181,22 +195,7 @@ export function createPlugin(pluginInfo, uploadData, uploadConfig) {
     // First dispatch an optimistic update
     dispatch(createPluginRequest());
 
-    // Calulate id for uploading file and will be stored in plugin info
-    // const id = getMd5Identifier(uploadFile.name);
-    // pluginInfo.uploadfileid = id;
-    
-    // // Create form data to let server know the request source is from a form
-    // var data = new FormData();
-    // data.append('pluginfile', uploadData);
-    // //TODO: Add progress calculate (new axios version)
-    // var config = {
-    //   progress: function (progressEvent) {
-    //     var percentCompleted = progressEvent.loaded / progressEvent.total;
-    //   }
-    // }
-
     // Upload file to mongoDB GridFS
-    // axios.post('/pluginRepository/upload'+ pluginInfo.id, data, config)
     makeUploadRequest('post', '/pluginRepository/upload', pluginInfo.id, uploadData, uploadConfig)
       .then(res => {
         if (res.status === 200) { // When file create success then storing new plugin information
@@ -214,24 +213,6 @@ export function createPlugin(pluginInfo, uploadData, uploadConfig) {
       .catch(ex => {
         return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on upload plugin file!'}));
       });
-
-
-    // dispatch(uploadPluginPkg(uploadFile));
-
-    // return makePluginRequest('post', identifier, pluginInfo)
-    //   .then(res => {
-    //     if (res.status === 200) {
-    //       // Add plugin numeric index
-    //       // const { plugins } = getState().plugin;
-    //       // pluginInfo.index = plugins.length + 1;
-    //
-    //       // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
-    //       return dispatch(createPluginSuccess(pluginInfo));
-    //     }
-    //   })
-    //   .catch(ex => {
-    //     return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
-    //   });
   };
 }
 
@@ -239,46 +220,11 @@ function getMd5Identifier(field) {
   return md5.hash(field + moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
 }
 
-// export function uploadPluginPkg(file) {
-//   return (dispatch) => {
-//
-//     const id = md5.hash(file.name);
-//
-//     var data = new FormData();
-//     // data.append('pluginfile', file.name);
-//     data.append('pluginfile', file);
-//
-//     // var opts = {
-//     //   transformRequest: function (data) {
-//     //     return data;
-//     //   }
-//     // }
-//     // axios.post('/pluginRepository/upload' + (id ? ('/' + id) : ''), data);
-//     makeUploadRequest('post', id, data, '/pluginRepository/upload')
-//
-//     // return makeUploadRequest('post', id, data, '/pluginRepository/upload')
-//     //   .then(res => {
-//     //     if (res.status === 200) {
-//     //       // Add plugin numeric index
-//     //       // const { plugins } = getState().plugin;
-//     //       // pluginInfo.index = plugins.length + 1;
-//     //
-//     //       // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
-//     //       // return dispatch(createPluginSuccess(pluginInfo));
-//     //       return;
-//     //     }
-//     //   })
-//     //   .catch(ex => {
-//     //     // return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on sending to database!'}));
-//     //     return;
-//     //   });
-//   };
-// }
-
 /**
  * Fetch all plugins
  * @returns {function()}
  */
+// TODO: fetch plugin based on username
 export function fetchPlugins() {
 
   return dispatch => {
@@ -297,30 +243,14 @@ export function fetchPlugins() {
         return dispatch(getPluginsFailure());
       });
   };
-
-  // return dispatch => {
-  //   dispatch(beginLogout());
-  //
-  //   return makeUserRequest('post', null, '/logout')
-  //     .then( response => {
-  //       if (response.status === 200) {
-  //         dispatch(logoutSuccess());
-  //       } else {
-  //         dispatch(logoutError());
-  //       }
-  //     });
-  // };
-
-  // return {
-  //   type: types.GET_PLUGINS_REQUEST,
-  //   promise: makePluginRequest('get')
-  // };
 }
+
 /**
- * updatePlugin(pluginInfo)
- * @param pluginInfo.id: used to update plugin data in database
- * @param pluginInfo.index: used to update plguin data in store
- * @param pluginInfo: data retrieved from 'editPluginModal' modal UI
+ * updatePlugin()
+ * For plugin uploaded files: first delete related plugin files and then update with new plugin file
+ * @param updatePlugin
+ * @param uploadData
+ * @param uploadConfig
  * @returns {function()}
  */
 export function updatePlugin(updatePlugin) {
@@ -342,24 +272,83 @@ export function updatePlugin(updatePlugin) {
 }
 
 /**
- * deletePlguin(id, index)
- * @param id: used to update plugin data in database
- * @param index: used to update plguin data in store
+ * updatePluginWithUploads()
+ * @param updatePlugin
+ * @param uploadData
+ * @param uploadConfig
  * @returns {function()}
  */
-export function deletePlguin(id, index) {
+export function updatePluginWithUploads(updatePlugin, uploadData, uploadConfig) {
   return dispatch => {
-    dispatch(deletePluginRequest());
-    
-    return makePluginRequest('delete', id).then(res => {
-        if (res.status === 200) {
-          return dispatch(deletePluginSuccess(index));
-        }
-      })
+
+    let pluginID = updatePlugin.id;
+    // No 'index' field in database (recalculate in cliet side), delete it for DB data update
+    let updatePluginDB = _.omit(updatePlugin, 'id');
+
+    dispatch(updatePluginRequest());
+
+    makeUploadRequest('put', '/pluginRepository/update', pluginID, uploadData, uploadConfig)
+      .then(res => {
+        if (res.status === 200) { // When old upload file is updated, change plugin info in database
+          return makePluginRequest('put', pluginID, updatePluginDB).then(res => {
+              if (res.status === 200) {
+                return dispatch(updatePluginSuccess(updatePlugin));
+              }
+            })
+            .catch(ex => {
+              return dispatch(updatePluginFailure());
+            });
+        }})
       .catch(ex => {
         return dispatch(deletePluginFailure());
       });
   };
+}
+
+/**
+ * deletePlguin(id)
+ * @param id: used to update plugin data in database
+ * @returns {function()}
+ */
+export function deletePlguin(id) {
+  return dispatch => {
+    dispatch(deletePluginRequest());
+
+    // Delete file in mongoDB GridFS and delete plugin info in database
+    makeUploadRequest('delete', '/pluginRepository/delete', id)
+      .then(res => {
+        if (res.status === 200) { // When upload file is deleted, then delete plugin info
+          return makePluginRequest('delete', id)
+            .then(res => {
+              if (res.status === 200) {return dispatch(deletePluginSuccess());}})
+            .catch(ex => {return dispatch(deletePluginFailure());});
+        }})
+      .catch(ex => {
+        return dispatch(deletePluginFailure());
+      });
+  };
+}
+/**
+ * downloadPluginPkg(id)
+ * @param id: used to find download plugin file in database
+ */
+export function downloadPluginPkg(id, downloadConfig) { // USE open new download window instead
+  // return dispatch => {
+  //   // Delete file in mongoDB GridFS and delete plugin info in database
+  //   // makeUploadRequest('get', '/pluginRepository/download', id, '', downloadConfig)
+  //   axios.get('/pluginRepository/download/' + id, downloadConfig)
+  //     .then(res => {
+  //       if (res.status === 200) {
+  //         let url = '/pluginRepository/download' + '/' + id;
+  //         window.location = url;
+  //         window.open(url, '_self');
+  //         return dispatch(downloadPluginSuccess());
+  //       }
+  //     })
+  //     .catch(ex => {
+  //       return dispatch(downloadPluginFailure());
+  //     });
+  // };
 }
 
 /**
@@ -368,16 +357,16 @@ export function deletePlguin(id, index) {
  * @param index: used to update plguin data in store
  * @returns {function()}
  */
-export function toggleStatus(id, index, status) {
-  return dispatch => {
-
-    return makePluginRequest('put', id, { isprivate:status }).then(res => {
-        if (res.status === 200) {
-          return dispatch(togglePluginStatus(index, status)); // Update state in store
-        }
-      })
-      .catch(ex => {
-        return dispatch(deletePluginFailure());
-      });
-  };
-}
+// export function toggleStatus(id, index, status) {
+//   return dispatch => {
+//
+//     return makePluginRequest('put', id, { isprivate:status }).then(res => {
+//         if (res.status === 200) {
+//           return dispatch(togglePluginStatus(index, status)); // Update state in store
+//         }
+//       })
+//       .catch(ex => {
+//         return dispatch(deletePluginFailure());
+//       });
+//   };
+// }
