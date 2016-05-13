@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
+import uuid from 'uuid'
 import classnames from 'classnames'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
@@ -78,7 +79,7 @@ class PrivateRepository extends Component {
     // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
     // Otherwise fields in 'this.props' is NOT avaiable
     this.onToggleStatus = this.onToggleStatus.bind(this);
-    this.onAddPluginSubmit = this.onAddPluginSubmit.bind(this);
+    this.onCreatePluginSubmit = this.onCreatePluginSubmit.bind(this);
     this.onEditPluginSubmit = this.onEditPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
@@ -191,7 +192,7 @@ class PrivateRepository extends Component {
         });
       }
 
-      // clear progress bar percent at first and then Stop update timer for upload progress
+      // clear progress bar percent
       this.state.uploadProgress = 100;
 
       // Notification is shown, set related state to default value to avoid render notification again
@@ -207,7 +208,7 @@ class PrivateRepository extends Component {
     // });
   }
 
-  onAddPluginSubmit() {
+  onCreatePluginSubmit() {
 
     const { userFullname } = this.props.user;
 
@@ -229,6 +230,9 @@ class PrivateRepository extends Component {
     // Create form data to let server know the request source is from a form
     let uploadFile = new FormData();
     uploadFile.append('pluginfile', file);
+    // Create uuid for uploading plugin file based on time
+    const fileId = uuid.v1();
+
 
     // Start upload progress control timer
     this.interval = setInterval(this.tick.bind(this), 500);
@@ -253,6 +257,9 @@ class PrivateRepository extends Component {
         description: ReactDOM.findDOMNode(this.refs.description).value,
         dependencies: dependencies,
         isprivate: true,
+        filemeta: {
+          sourcecodeid: fileId
+        },
         statusIcon: "<span class='label label-danger'>私有</span>" },
       uploadFile, config)); // upload data info and upload config as parameter
   }
@@ -261,7 +268,12 @@ class PrivateRepository extends Component {
     const { dispatch } = this.props;
     let file = event.target.files[0];
     ReactDOM.findDOMNode(this.refs.fileinputname).value = file.name;
-    // dispatch(uploadPluginPkg(file));
+  }
+
+  onChangeEditPluginUploadField(event) {
+    const { dispatch } = this.props;
+    let file = event.target.files[0];
+    ReactDOM.findDOMNode(this.refs.editfileinputname).value = file.name;
   }
 
   onDownloadPluginPkg() {
@@ -281,7 +293,7 @@ class PrivateRepository extends Component {
     // }
 
     const { selectedData } = this.props.plugin;
-    let url = '/pluginRepository/download/' + selectedData.id;
+    let url = '/pluginRepository/download/' + selectedData.filemeta.sourcecodeid;
     window.location = url;
     window.open(url, '_self');
 
@@ -437,7 +449,7 @@ class PrivateRepository extends Component {
                 取消
               </button>
               <button type="button" className="btn btn-primary" data-dismiss="modal"
-                      onClick={this.onAddPluginSubmit}>
+                      onClick={this.onCreatePluginSubmit}>
                 添加插件
               </button>
             </div>
@@ -519,9 +531,9 @@ class PrivateRepository extends Component {
                         <fieldset>
                           <section>
                             <div className="input input-file">
-                            <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onChangePluginUploadField}/>
-                              上传插件</span>
-                              <input name="fileinputname" ref="fileinputname" type="text" placeholder="不上传新插件文件即保留已上传的文件" readOnly={true}/>
+                            <span className="button"><input id="editfile" type="editfile" name="editpluginfile" ref="editpluginfile"
+                                                            onChange={this.onChangeEditPluginUploadField}/> 上传插件 </span>
+                              <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件文件即保留已上传的文件" readOnly={true}/>
                             </div>
                           </section>
                           <section>

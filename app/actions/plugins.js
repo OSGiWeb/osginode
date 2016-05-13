@@ -188,15 +188,15 @@ export function createPlugin(pluginInfo, uploadData, uploadConfig) {
     // TODO: Add validation of all fileds
     if (_.trim(pluginInfo.pluginname).length <= 0) return;
 
-    // Calculate plugin md5 identifier
+    // Calculate plugin and uploading file md5 identifier
     const identifier = getMd5Identifier(pluginInfo.pluginname);
     pluginInfo.id = identifier; // store md5 id in database, id is used to update plugin info
 
     // First dispatch an optimistic update
     dispatch(createPluginRequest());
-
+    
     // Upload file to mongoDB GridFS
-    makeUploadRequest('post', '/pluginRepository/upload', pluginInfo.id, uploadData, uploadConfig)
+    makeUploadRequest('post', '/pluginRepository/upload', pluginInfo.filemeta.sourcecodeid, uploadData, uploadConfig)
       .then(res => {
         if (res.status === 200) { // When file create success then storing new plugin information
           return makePluginRequest('post', identifier, pluginInfo)

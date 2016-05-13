@@ -8,6 +8,7 @@ var mime = require('mime');
 var multer = require("multer");
 var upload = multer({dest: "./uploads"});
 var secrets = require('./secrets');
+var _ = require('lodash');
 
 var mongoose = require("mongoose");
 var Grid = require("gridfs-stream");
@@ -32,20 +33,25 @@ module.exports = function(app, conn) {
      * When reached the innner of app.post() function, indicated the upload stream to multer is completed and
      * the multer -> MongoDB GridFS will begin.
      */
-    app.post("/pluginRepository/upload/:id", upload.single("pluginfile"), function(req, res, next){
+    app.post("/pluginRepository/upload/:fileid", upload.single("pluginfile"), function(req, res, next){
 
-      console.log(req.params.id);
+      console.log(req.params.fileid);
       console.log(req.file);
 
       // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
       var writestream = gfs.createWriteStream({
-        _id: req.params.id, // Create link between plugin and uploaded plugin code files
-        filename: req.file.originalname
+        _id: req.params.fileid, // Create link between plugin and uploaded plugin code files
+        filename: req.file.originalname,
+        root: 'plugins',
+        // metadata: {
+        //   fileid: req.params.fileid
+        // }
       });
 
       // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
       fs.createReadStream("./uploads/" + req.file.filename) // req.file.filename is already calculate with MD5
         .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
+          if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file");}
           res.status(200).send("Uploading file success");
         })})
         .on("err", function(){res.status(400).send("Error on uploading file");})
@@ -62,21 +68,26 @@ module.exports = function(app, conn) {
      * TODO: Add manuel request to URL
      * TODO: As one plugin can link to many uploaded files, must add another paramerter, e.g.: filename to identify file in DB
      */
-    app.get("/pluginRepository/download/:id", function(req, res){
+    app.get("/pluginRepository/download/:fileid", function(req, res){
+
+      // Config download options (CAUTION: 'root' must be defined, if use none-default i.e.:'fs' GridFS DB)
+      var options = {
+        _id: req.params.fileid,
+        root: 'plugins'
+      };
 
       // Use GridFS find method to get meta data
-      gfs.files.find({ _id: req.params.id }).toArray(function (err, files) { // CAUTION: 'files' is an array!
-
+      gfs.findOne(options, function (err, file) {
         if (err) { console.log(err); return res.status(400).send("Error occured on finding file with _id");}
-        console.log(files);
-        console.log(req.headers);
+        console.log(file);
+        // console.log(req.headers);
 
         // Set download file header incl. filename and type
-        res.setHeader('Content-disposition', 'attachment; filename=' + files[0].filename);
-        res.setHeader('Content-type', files[0].contentType);
+        res.setHeader('Content-disposition', 'attachment; filename=' + file.filename);
+        res.setHeader('Content-type', file.contentType);
 
         // Create file read stream and pipe stream
-        var readstream = gfs.createReadStream({filename: files[0].filename});
+        var readstream = gfs.createReadStream(options);
         readstream.on("error", function(err){res.send("No file found with that id");});
 
         readstream.pipe(res);
@@ -98,6 +109,7 @@ module.exports = function(app, conn) {
         if (err) { console.log(err); return res.status(400).send("Error occured on finding file with _id");}
         console.log(files);
 
+        // TODO: Change delete process
         // Delete files by using filename
         gfs.exist({filename: files[0].filename}, function(err, found){ // TODO: Delete all files in array which are linked to plugin
           if(err) return res.send("Error occured");
@@ -142,18 +154,38 @@ module.exports = function(app, conn) {
         if (err) { console.log(err); return res.status(400).send("Error occured on finding file with _id");}
         console.log(files);
 
+        // If found files
+        if (_.trim(files).length > 0) {
+          console.log('File found!');
+
+          gfs.remove({
+            _id: req.params.id,
+            filename: files[0].filename
+          }, function(err){
+            if(err) {
+              return res.status(400).send("Error occured");
+              console.log(err);
+            }
+            console.log('File deleted!');
+            res.status(200).send("File deleted");
+          });
+        } else {
+          res.status(400).send("No File found with that filename");
+        }
+
         // Delete files by using filename
-        gfs.exist({filename: files[0].filename}, function(err, found){ // TODO: Delete all files in array which are linked to plugin
-          if(err) return res.send("Error occured");
-          if(found){
-            gfs.remove({filename: files[0].filename}, function(err){
-              if(err) return res.send("Error occured");
-              res.status(200).send("File deleted");
-            });
-          } else{
-            res.status(400).send("No File found with that filename");
-          }
-        });
+        // TODO: Delete all files in array which are linked to plugin
+        // gfs.exist({filename: files[0].filename}, function(err, found){
+        //   if(err) return res.send("Error occured");
+        //   if(found){
+        //     gfs.remove({filename: files[0].filename}, function(err){
+        //       if(err) return res.send("Error occured");
+        //       res.status(200).send("File deleted");
+        //     });
+        //   } else{
+        //     res.status(400).send("No File found with that filename");
+        //   }
+        // });
       });
     });
 

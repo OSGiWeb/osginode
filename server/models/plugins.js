@@ -17,7 +17,10 @@ var PluginSchema = new mongoose.Schema({
   releasedate: String,
   description: String,
   isprivate: { type: Boolean, default: true},
-  dependencies: Array
+  dependencies: Array,
+  filemeta: {
+    sourcecodeid: { type: String, default: ''},
+  }
 });
 
 // Compiles the schema into a model, opening (or creating, if
