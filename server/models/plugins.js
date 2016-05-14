@@ -19,7 +19,16 @@ var PluginSchema = new mongoose.Schema({
   isprivate: { type: Boolean, default: true},
   dependencies: Array,
   filemeta: {
-    sourcecodeid: { type: String, default: ''},
+    sourcecode: {
+      id: { type: String, default: ''},
+      name: { type: String, default: '' }
+    },
+    library: {
+      id: { type: String, default: ''},
+      name: { type: String, default: '' },
+      type: { type: String, default: '' }
+    },
+    Documents: Array,
   }
 });
 

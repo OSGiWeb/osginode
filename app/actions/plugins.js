@@ -194,13 +194,19 @@ export function createPlugin(pluginInfo, uploadData, uploadConfig) {
 
     // First dispatch an optimistic update
     dispatch(createPluginRequest());
-    
+
     // Upload file to mongoDB GridFS
-    makeUploadRequest('post', '/pluginRepository/upload', pluginInfo.filemeta.sourcecodeid, uploadData, uploadConfig)
+    // makeUploadRequest('post', '/pluginRepository/upload', uploadData, uploadConfig)
+    axios.post('/pluginRepository/upload/' + pluginInfo.id, uploadData, uploadConfig)
       .then(res => {
-        if (res.status === 200) { // When file create success then storing new plugin information
+        // Response from file success stored in GridFS
+        if (res.status === 200) {
+          // Set corresponding file id in flie metadata which will be saved in database
+          pluginInfo.filemeta.sourcecode.id = res.data.fileid;
+
           return makePluginRequest('post', identifier, pluginInfo)
             .then(res => {
+              // Response from plugin info success stored in GridFS
               if (res.status === 200) {
                 // Dispatch a CREATE_PLUGIN_SUCCESS action and (in reducer) save the created plugin info to store
                 return dispatch(createPluginSuccess(pluginInfo));
@@ -310,15 +316,15 @@ export function updatePluginWithUploads(updatePlugin, uploadData, uploadConfig) 
  * @param id: used to update plugin data in database
  * @returns {function()}
  */
-export function deletePlguin(id) {
+export function deletePlguin(pluginid, fileid) {
   return dispatch => {
     dispatch(deletePluginRequest());
 
-    // Delete file in mongoDB GridFS and delete plugin info in database
-    makeUploadRequest('delete', '/pluginRepository/delete', id)
+    // Delete file in mongoDB GridFS
+    axios.delete('/pluginRepository/delete/' + fileid)
       .then(res => {
         if (res.status === 200) { // When upload file is deleted, then delete plugin info
-          return makePluginRequest('delete', id)
+          return makePluginRequest('delete', pluginid)
             .then(res => {
               if (res.status === 200) {return dispatch(deletePluginSuccess());}})
             .catch(ex => {return dispatch(deletePluginFailure());});
@@ -331,8 +337,9 @@ export function deletePlguin(id) {
 /**
  * downloadPluginPkg(id)
  * @param id: used to find download plugin file in database
+ * CAUTION: USE open new download window instead
  */
-export function downloadPluginPkg(id, downloadConfig) { // USE open new download window instead
+export function downloadPluginPkg(id, downloadConfig) {
   // return dispatch => {
   //   // Delete file in mongoDB GridFS and delete plugin info in database
   //   // makeUploadRequest('get', '/pluginRepository/download', id, '', downloadConfig)

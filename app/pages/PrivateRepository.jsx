@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
-import uuid from 'uuid'
+// import uuid from 'uuid'
 import classnames from 'classnames'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
@@ -231,7 +231,9 @@ class PrivateRepository extends Component {
     let uploadFile = new FormData();
     uploadFile.append('pluginfile', file);
     // Create uuid for uploading plugin file based on time
-    const fileId = uuid.v1();
+    // const fileId = uuid.v1();
+
+
 
 
     // Start upload progress control timer
@@ -258,7 +260,7 @@ class PrivateRepository extends Component {
         dependencies: dependencies,
         isprivate: true,
         filemeta: {
-          sourcecodeid: fileId
+          sourcecode: { id: '', name: file.name }
         },
         statusIcon: "<span class='label label-danger'>私有</span>" },
       uploadFile, config)); // upload data info and upload config as parameter
@@ -293,7 +295,7 @@ class PrivateRepository extends Component {
     // }
 
     const { selectedData } = this.props.plugin;
-    let url = '/pluginRepository/download/' + selectedData.filemeta.sourcecodeid;
+    let url = '/pluginRepository/download/' + selectedData.filemeta.sourcecode.id;
     window.location = url;
     window.open(url, '_self');
 
@@ -354,7 +356,7 @@ class PrivateRepository extends Component {
   onDeletePluginSubmit() {
     const { dispatch } = this.props;
     const { selectedData } = this.props.plugin;
-    dispatch(deletePlguin(selectedData.id));
+    dispatch(deletePlguin(selectedData.id, selectedData.filemeta.sourcecode.id));
   }
 
   /**
