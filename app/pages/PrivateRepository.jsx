@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
-// import uuid from 'uuid'
 import classnames from 'classnames'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
@@ -83,11 +82,10 @@ class PrivateRepository extends Component {
     this.onEditPluginSubmit = this.onEditPluginSubmit.bind(this);
     this.showSmartNotification = this.showSmartNotification.bind(this);
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
-    this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
+    this.onDeletePlugin = this.onDeletePlugin.bind(this);
     this.onChangePluginUploadField = this.onChangePluginUploadField.bind(this);
     this.onChangeEditPluginUploadField = this.onChangeEditPluginUploadField.bind(this);
     this.onDownloadPluginPkg = this.onDownloadPluginPkg.bind(this);
-
 
     // no server-side rendering, just get plugins info here
     // const {dispatch} = this.props;
@@ -145,6 +143,10 @@ class PrivateRepository extends Component {
     dispatch(updatePlugin(selectedData));
   }
 
+
+  /**
+   * showSmartNotification()
+   */
   showSmartNotification() {
     const {dispatch} = this.props;
     const { isCreated, isUpdated, isDeleted } = this.props.plugin;
@@ -154,22 +156,36 @@ class PrivateRepository extends Component {
     // DONOT delete condition 'isDeleted', otherwise 'isDeleted' will not be reset in showNotificationDone()
     if (isCreated !== undefined || isUpdated !== undefined || isDeleted !== undefined) {
       if (isCreated === true) {
-        $.bigBox({
+        // $.bigBox({
+        //   title: "插件添加成功！",
+        //   content: "插件名：高度窗；提交人：许昀",
+        //   color: "#739E73",
+        //   timeout: 2000,
+        //   icon: "fa fa-check",
+        //   // number: "4"
+        // });
+        $.smallBox({
           title: "插件添加成功！",
-          content: "插件名：高度窗；提交人：许昀",
-          color: "#739E73",
-          timeout: 2000,
-          icon: "fa fa-check",
-          // number: "4"
+          content: "<i class='fa fa-clock-o'></i> <i>插件添加成功！</i>",
+          color: "#659265",
+          iconSmall: "fa fa-check fa-2x fadeInRight animated",
+          timeout: 2000
         });
       } else if (isCreated === false) {
-        $.bigBox({
+        // $.bigBox({
+        //   title: "插件添加失败！",
+        //   content: "插件名：高度窗；提交人：许昀",
+        //   color: "#296191",
+        //   timeout: 2000,
+        //   icon: "fa fa-check",
+        //   // number: "4"
+        // });
+        $.smallBox({
           title: "插件添加失败！",
-          content: "插件名：高度窗；提交人：许昀",
-          color: "#296191",
-          timeout: 2000,
-          icon: "fa fa-check",
-          // number: "4"
+          content: "<i class='fa fa-clock-o'></i> <i>插件添加失败！</i>",
+          color: "#C46A69",
+          iconSmall: "fa fa-times fa-2x fadeInRight animated",
+          timeout: 2000
         });
       }
 
@@ -199,16 +215,12 @@ class PrivateRepository extends Component {
       // Notification is shown, set related state to default value to avoid render notification again
       dispatch(showNotificationDone());
     }
-
-    // $.smallBox({
-    //   title: "插件添加成功！",
-    //   content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
-    //   color: "#296191",
-    //   iconSmall: "fa fa-thumbs-up bounce animated",
-    //   timeout: 4000
-    // });
   }
 
+
+  /**
+   * onCreatePluginSubmit()
+   */
   onCreatePluginSubmit() {
 
     const { userFullname } = this.props.user;
@@ -231,11 +243,6 @@ class PrivateRepository extends Component {
     // Create form data to let server know the request source is from a form
     let uploadFile = new FormData();
     uploadFile.append('pluginfile', file);
-    // Create uuid for uploading plugin file based on time
-    // const fileId = uuid.v1();
-
-
-
 
     // Start upload progress control timer
     this.interval = setInterval(this.tick.bind(this), 500);
@@ -303,6 +310,11 @@ class PrivateRepository extends Component {
     // dispatch(downloadPluginPkg(selectedData.id, config));
   }
 
+  /**
+   * onDatatableRowSelected()
+   * @param rowData
+   * @param isSelected
+   */
   onDatatableRowSelected(rowData, isSelected) {
     // Single row selection
     var data = rowData[0];
@@ -311,6 +323,9 @@ class PrivateRepository extends Component {
     dispatch(setDatatableSelectedData(data, isSelected));
   }
 
+  /**
+   * onEditPluginSubmit()
+   */
   onEditPluginSubmit() {
     const { dispatch } = this.props;
     const { selectedData } = this.props.plugin;
@@ -356,10 +371,40 @@ class PrivateRepository extends Component {
 
   }
 
-  onDeletePluginSubmit() {
+  /**
+   * onDeletePlugin()
+   */
+  onDeletePlugin() {
     const { dispatch } = this.props;
     const { selectedData } = this.props.plugin;
-    dispatch(deletePlguin(selectedData.id, selectedData.filemeta.sourcecode.id));
+
+    $.SmartMessageBox({
+      title: "删除插件",
+      content: "将从数据库中删除该插件的所有信息，确认？",
+      buttons: '[否][是]'
+    }, function (ButtonPressed) {
+      if (ButtonPressed === "是") {
+        // Dispatch delete plugin action
+        dispatch(deletePlguin(selectedData.id, selectedData.filemeta.sourcecode.id));
+        // Show notification (TODO: consider notification to move to showSmartNotification())
+        $.smallBox({
+          title: selectedData.pluginname,
+          content: "<i class='fa fa-clock-o'></i> <i>插件已删除</i>",
+          color: "#659265",
+          iconSmall: "fa fa-check fa-2x fadeInRight animated",
+          timeout: 2000
+        });
+      }
+      if (ButtonPressed === "否") {
+        // $.smallBox({
+        //   title: "Callback function",
+        //   content: "<i class='fa fa-clock-o'></i> <i>You pressed No...</i>",
+        //   color: "#C46A69",
+        //   iconSmall: "fa fa-times fa-2x fadeInRight animated",
+        //   timeout: 2000
+        // });
+      }
+    });
   }
 
   /**
@@ -602,7 +647,7 @@ class PrivateRepository extends Component {
                     <MenuItem onClick={this.onDownloadPluginPkg} >
                       <i className="fa fa-cloud-download"/>&nbsp;下载
                     </MenuItem>
-                    <MenuItem onClick={this.onDeletePluginSubmit}>
+                    <MenuItem onClick={this.onDeletePlugin}>
                       <i className="fa fa-minus-square"/>&nbsp;删除
                     </MenuItem>
                   </Dropdown.Menu>
