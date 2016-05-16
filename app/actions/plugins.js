@@ -287,16 +287,21 @@ export function updatePlugin(updatePlugin) {
 export function updatePluginWithUploads(updatePlugin, uploadData, uploadConfig) {
   return dispatch => {
 
-    let pluginID = updatePlugin.id;
+    let pluginId = updatePlugin.id;
+    let fileId = updatePlugin.filemeta.sourcecode.id;
     // No 'index' field in database (recalculate in cliet side), delete it for DB data update
     let updatePluginDB = _.omit(updatePlugin, 'id');
 
     dispatch(updatePluginRequest());
 
-    makeUploadRequest('put', '/pluginRepository/update', pluginID, uploadData, uploadConfig)
+    axios.put('/pluginRepository/update/' + fileId + '&' + pluginId, uploadData, uploadConfig)
       .then(res => {
         if (res.status === 200) { // When old upload file is updated, change plugin info in database
-          return makePluginRequest('put', pluginID, updatePluginDB).then(res => {
+          // Set corresponding file id in flie metadata which will be updated in database
+          updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
+
+          // 'Put' update plugin info request
+          return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
               if (res.status === 200) {
                 return dispatch(updatePluginSuccess(updatePlugin));
               }

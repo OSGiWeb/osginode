@@ -93,22 +93,30 @@ module.exports = function(app, conn) {
         root: 'plugins'
       };
 
-      // Use GridFS find method to get meta data
-      gfs.findOne(options, function (err, file) {
-        if (err) { console.log(err); return res.status(400).send("Error occured on finding file with _id");}
-        console.log(file);
+      gfs.exist(options, function(err, found) {
+        if (err) return res.status(400).send("Error occured");
+        if (found) {
+          // Use GridFS find method to get meta data
+          gfs.findOne(options, function (err, file) {
+            if (err) {
+              console.log(err);
+              return res.status(400).send("Error occured on finding file with _id");
+            }
 
-        // Set download file header incl. filename and type
-        res.setHeader('Content-disposition', 'attachment; filename=' + file.filename);
-        res.setHeader('Content-type', file.contentType);
+            // Set download file header incl. filename and type
+            res.setHeader('Content-disposition', 'attachment; filename=' + file.filename);
+            res.setHeader('Content-type', file.contentType);
 
-        // Create file read stream and pipe stream
-        var readstream = gfs.createReadStream(options);
-        readstream.on("error", function(err){res.send("No file found with that id");});
-
-        readstream.pipe(res);
-        // res.status(200).send("Downloading file success");
-
+            // Create file read stream and pipe stream
+            var readstream = gfs.createReadStream(options);
+            readstream.on("error", function (err) {
+              res.send("No file found with that id");
+            });
+            readstream.pipe(res);
+          });
+        } else {
+          res.status(400).send("No File found with that id");
+        }
       });
     });
 
@@ -118,41 +126,67 @@ module.exports = function(app, conn) {
      * 1. Delete related plugins based on plugin id;
      * 2. When deleting successful, update new plugin file.
      */
-    app.put("/pluginRepository/update/:id", upload.single("pluginfile"), function(req, res){
-      // TODO: delete file must depend on 2nd. parameter 'pluginname', when 1->N relationship exists
-      gfs.files.find({ _id: req.params.id }).toArray(function (err, files) { // CAUTION: 'files' is an array!
+    app.put("/pluginRepository/update/:fileid&:pluginid", upload.single("editpluginfile"), function(req, res){
 
-        if (err) { console.log(err); return res.status(400).send("Error occured on finding file with _id");}
-        console.log(files);
+      console.log(req.params.fileid, req.params.pluginid);
 
-        // TODO: Change delete process
-        // Delete files by using filename
-        gfs.exist({filename: files[0].filename}, function(err, found){ // TODO: Delete all files in array which are linked to plugin
-          if(err) return res.send("Error occured");
-          if(found){
-            gfs.remove({filename: files[0].filename}, function(err){
-              if(err) return res.send("Error occured");
+      // Config delete options (CAUTION: 'root' must be defined, if use none-default i.e.:'fs' GridFS DB)
+      var deleteOptions = {
+        _id: req.params.fileid,
+        root: 'plugins'
+      };
 
-              // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
-              var writestream = gfs.createWriteStream({
-                _id: req.params.id, // Create link between plugin and uploaded plugin code files
-                filename: req.file.originalname
-              });
+      /* DELETE PROCESS: Delete files by using GridFS '_id' */
+      gfs.exist(deleteOptions, function(err, found){
+        if(err) return res.status(400).send("Error occured");
+        if(found){
+          gfs.remove(deleteOptions, function(err){
+            if(err)
+              return res.status(400).send("Error occured");
+            console.log('removed with id: ', req.params.fileid);
 
-              // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-              fs.createReadStream("./uploads/" + req.file.filename) // req.file.filename is already calculate with MD5
-                .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
-                  res.status(200).send("Updating file success");
-                })})
-                .on("err", function(){res.status(400).send("Error on uploading file");})
-                .pipe(writestream);
+            /* CREATE PROCESS: After deleting create new GridFS file instance which contains updated file */
+            var ObjectId = mongoose.Types.ObjectId;
+            var mongoId = new ObjectId();
+            // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+            var writestream = gfs.createWriteStream({
+              _id: mongoId, // Create link between plugin and uploaded plugin code files
+              filename: req.file.originalname,
+              root: 'plugins',
+              metadata: {
+                pluginid: req.params.pluginid
+              }
             });
-          } else{
-            res.status(400).send("No File found with that filename");
-          }
-        });
-      });
 
+            // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+            fs.createReadStream("./uploads/" + req.file.filename) // req.file.filename is already calculate with MD5
+              .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
+                if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file");}
+
+                console.log('created fileid: ', mongoId);
+                res.status(200).json({ updatedfileid: mongoId })
+              })})
+              .on("err", function(){res.status(400).send("Error on uploading file");})
+              .pipe(writestream);
+
+            // // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+            // var writestream = gfs.createWriteStream({
+            //   _id: req.params.id, // Create link between plugin and uploaded plugin code files
+            //   filename: req.file.originalname
+            // });
+            //
+            // // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+            // fs.createReadStream("./uploads/" + req.file.filename)
+            //   .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
+            //     res.status(200).send("Updating file success");
+            //   })})
+            //   .on("err", function(){res.status(400).send("Error on uploading file");})
+            //   .pipe(writestream);
+          });
+        } else {
+          res.status(400).send("No File found with that id");
+        }
+      });
     });
 
     /**

@@ -85,6 +85,7 @@ class PrivateRepository extends Component {
     this.onDatatableRowSelected = this.onDatatableRowSelected.bind(this);
     this.onDeletePluginSubmit = this.onDeletePluginSubmit.bind(this);
     this.onChangePluginUploadField = this.onChangePluginUploadField.bind(this);
+    this.onChangeEditPluginUploadField = this.onChangeEditPluginUploadField.bind(this);
     this.onDownloadPluginPkg = this.onDownloadPluginPkg.bind(this);
 
 
@@ -323,15 +324,16 @@ class PrivateRepository extends Component {
     selectedData.releasedate = ReactDOM.findDOMNode(this.refs.editreleasedate).value;
     selectedData.description = ReactDOM.findDOMNode(this.refs.editdescription).value;
 
+
     // Get uploaded file instance in create plugin form
     // TODO: Bug to fix by remeber file name but cannot find file
-    let file = ReactDOM.findDOMNode(this.refs.pluginfile).files[0];
+    let file = ReactDOM.findDOMNode(this.refs.editpluginfile).files[0];
 
     // Update plugin with new uploading file
     if (file !== undefined) {
       // Create form data to let server know the request source is from a form
       let uploadFile = new FormData();
-      uploadFile.append('pluginfile', file);
+      uploadFile.append('editpluginfile', file);
 
       // Start upload progress control timer
       this.interval = setInterval(this.tick.bind(this), 500);
@@ -346,6 +348,7 @@ class PrivateRepository extends Component {
       }
 
       // Dispatch update plugin with uploaded files
+      selectedData.filemeta.sourcecode.name = file.name;
       dispatch(updatePluginWithUploads(selectedData, uploadFile, config));
     } else { // If no upload file selected, update only plugin info in database
       dispatch(updatePlugin(selectedData));
@@ -533,7 +536,7 @@ class PrivateRepository extends Component {
                         <fieldset>
                           <section>
                             <div className="input input-file">
-                            <span className="button"><input id="editfile" type="editfile" name="editpluginfile" ref="editpluginfile"
+                            <span className="button"><input id="editfile" type="file" name="editpluginfile" ref="editpluginfile"
                                                             onChange={this.onChangeEditPluginUploadField}/> 上传插件 </span>
                               <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件文件即保留已上传的文件" readOnly={true}/>
                             </div>
