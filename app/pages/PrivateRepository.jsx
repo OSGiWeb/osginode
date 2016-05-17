@@ -14,6 +14,8 @@ import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.j
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
+import RepositoryChangeWizard from './RepositoryChangeWizard.jsx'
+
 import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
   resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
 
@@ -621,8 +623,8 @@ class PrivateRepository extends Component {
     return (
       <div className="row">
         <article className="col-sm-12">
-          <JarvisWidget colorbutton={false} togglebutton={false} fullscreenbutton={false}
-                        deletebutton={false} editbutton={false} color="blueDark">
+          <JarvisWidget sortable={false} colorbutton={false} togglebutton={false} editbutton={false}
+                        fullscreenbutton={false} deletebutton={false} color="blueDark">
             <header>
               <span className="widget-icon"> <i className="fa fa-table"/> </span>
               <h2>私有插件仓库</h2>
@@ -748,6 +750,8 @@ class PrivateRepository extends Component {
    */
   render() {
 
+    var isCollapsed = true;
+
     return (
       <div id="content">
         <div className="row">
@@ -757,6 +761,7 @@ class PrivateRepository extends Component {
         </div>
 
         <WidgetGrid>
+          <RepositoryChangeWizard setCollapsed={isCollapsed} />
           { this.renderPrivateRepository() }
         </WidgetGrid>
 

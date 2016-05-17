@@ -8,6 +8,7 @@
 - 在 sign up 成功后，提示“用户已经注册”信息。
 - 切换成中文后，在切入到别的主页，如‘私有仓库’，'Recent projects' 没有自动翻译。
 - 下载 jquery-maskedinput，打包到scripts.js中，并激活uivalidation功能。
+- 如果插件Uploading File上传/更新成功，但插件信息创建/更新不成功，需要删除该上传/更新的file信息。
 
 
 
