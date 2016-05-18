@@ -1,5 +1,6 @@
 /**
  * Created by Information on 2016/4/8.
+ * This file contains all navigation (menu) control actions.
  */
 import { polyfill } from 'es6-promise'
 import _ from 'lodash'

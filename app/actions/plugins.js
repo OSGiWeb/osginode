@@ -1,5 +1,6 @@
 /**
  * Created by pc on 2016/4/18.
+ * This file contains all plugin control actions.
  */
 import { polyfill } from 'es6-promise';
 import request from 'axios';

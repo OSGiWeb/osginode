@@ -17,8 +17,8 @@ import { Dropdown, MenuItem } from 'react-bootstrap'
 import RepositoryChangeWizard from './RepositoryChangeWizard.jsx'
 
 import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
-  resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
-
+        resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
+import { setRepoWizardExpand } from '../actions/processes'
 
 // TODO: Modify validation fields for form
 let validationOptions = {
@@ -93,7 +93,7 @@ class PrivateRepository extends Component {
     // const {dispatch} = this.props;
     // dispatch(fetchPlugins());
 
-    // Set state for progress bar to upload file
+    // Initialize react state variables
     this.state = {
       uploadProgress: 0
     };
@@ -134,15 +134,20 @@ class PrivateRepository extends Component {
   // Set plugin as private plugin or public plugin
   onToggleStatus() {
     const { dispatch } = this.props;
-    const { selectedData } = this.props.plugin;
+    // const { selectedData } = this.props.plugin;
 
     // Private/Public control
-    selectedData.isprivate = !selectedData.isprivate;
-    selectedData.statusIcon = selectedData.isprivate ? "<span class='label label-danger'>私有</span>" :
-      "<span class='label label-success'>公共</span>";
+    // selectedData.isprivate = !selectedData.isprivate;
+    // selectedData.statusIcon = selectedData.isprivate ? "<span class='label label-danger'>私有</span>" :
+    //   "<span class='label label-success'>公共</span>";
 
+    // TODO: dispatch only first to fill private -> public form
     // Dispatch update plugin action
-    dispatch(updatePlugin(selectedData));
+    // dispatch(updatePlugin(selectedData));
+
+    // When repository is no longer private(i.e. being public), expand extran plugin info filling form
+    const setExpand = true;
+    dispatch(setRepoWizardExpand(setExpand));
   }
 
 
@@ -320,8 +325,9 @@ class PrivateRepository extends Component {
   onDatatableRowSelected(rowData, isSelected) {
     // Single row selection
     var data = rowData[0];
-
     const {dispatch} = this.props;
+    
+    // Set selected data and states
     dispatch(setDatatableSelectedData(data, isSelected));
   }
 
@@ -750,8 +756,6 @@ class PrivateRepository extends Component {
    */
   render() {
 
-    var isCollapsed = true;
-
     return (
       <div id="content">
         <div className="row">
@@ -761,7 +765,7 @@ class PrivateRepository extends Component {
         </div>
 
         <WidgetGrid>
-          <RepositoryChangeWizard setCollapsed={isCollapsed} />
+          <RepositoryChangeWizard />
           { this.renderPrivateRepository() }
         </WidgetGrid>
 

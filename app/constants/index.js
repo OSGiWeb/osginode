@@ -12,7 +12,7 @@
 // export const TYPING = 'TYPING';
 
 /**
- * User actions constant
+ * Users actions constant
  * @type {string}
  */
 export const TOGGLE_LOGIN_MODE = 'TOGGLE_LOGIN_MODE';
@@ -27,7 +27,7 @@ export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
 
 /**
- * Navigation bar actions constant
+ * Navigations bar actions constant
  * @type {string}
  */
 export const SET_NAVIGATION_ITEM_ACTIVE = 'SET_NAVIGATION_ITEM_ACTIVE';
@@ -38,7 +38,6 @@ export const SET_MENUITEM_OPEN_CLOSE = 'SET_MENUITEM_OPEN_CLOSE';
  * Plugins repository actions constant
  * @type {string}
  */
-/* Private Plugin Actions */
 export const CREATE_PLUGIN_REQUEST = 'CREATE_PLUGIN_REQUEST';
 export const CREATE_PLUGIN_SUCCESS = 'CREATE_PLUGIN_SUCCESS';
 export const CREATE_PLUGIN_FAILURE = 'CREATE_PLUGIN_FAILURE';
@@ -56,3 +55,9 @@ export const DELETE_PLUGIN_SUCCESS = 'DELETE_PLUGIN_SUCCESS';
 export const DELETE_PLUGIN_FAILURE = 'DELETE_PLUGIN_FAILURE';
 export const DOWNLOAD_PLUGIN_SUCCESS = 'DOWNLOAD_PLUGIN_SUCCESS';
 export const DOWNLOAD_PLUGIN_FAILURE = 'DOWNLOAD_PLUGIN_FAILURE';
+
+/**
+ * Processes repository actions constant
+ * @type {string}
+ */
+export const TOGGLE_REPO_WIZARD_EXPAND = 'TOGGLE_REPO_WIZARD_EXPAND'

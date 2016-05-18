@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
-
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
 import Wizard from '../components/smartAdmin/forms/wizards/Wizard.jsx'
-
 import countries from '../components/smartAdmin/forms/commons/countries'
+
+import { setRepoWizardExpand } from '../actions/processes'
+import { updatePlugin } from '../actions/plugins'
 
 let validateOptions = {
   highlight: function (element) {
@@ -17,17 +20,52 @@ let validateOptions = {
   errorClass: 'help-block'
 };
 
-let RepositoryChangeWizard = React.createClass({
-  _onWizardComplete: function(data){
-    console.log('wizard submit stuff', data)
-  },
-  render: function () {
 
-    const { setCollapsed } = this.props;
+
+
+
+// TODO: use store to make params transfer bw. PrivateRepository and RepositoryChangeWizard
+class RepositoryChangeWizard extends Component {
+  constructor(props) {
+    super(props);
+
+    // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
+    // Otherwise fields in 'this.props' is NOT avaiable
+    this.onWizardComplete = this.onWizardComplete.bind(this);
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  onWizardComplete(data){
+    console.log('wizard submit stuff', data);
+
+    const { dispatch } = this.props;
+    const { selectedData } = this.props.plugin;
+
+    // Private/Public control
+    selectedData.isprivate = !selectedData.isprivate;
+    selectedData.statusIcon = selectedData.isprivate ? "<span class='label label-danger'>私有</span>" :
+      "<span class='label label-success'>公共</span>";
+
+    // When the private->public of repo filled completed, collapse the form
+    dispatch(setRepoWizardExpand(false));
+    // Set to default state as selecting new plugin
+    dispatch(setRepoWizardExpand(undefined)); // CAUTION: this action must be dispatched ABSOLUTLLY after calling 'dispatch(setRepoWizardExpand(false))'s
+    
+    // Dispatch update plugin action
+    dispatch(updatePlugin(selectedData));
+  }
+
+  render() {
+
+    const { isRepoWizardExpand } = this.props.process;
 
     return (
       <JarvisWidget sortable={false} colorbutton={false} editbutton={false} deletebutton={false}
-                    fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={setCollapsed} color="darken">
+                    fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={true} color="darken"
+                    setExpand={isRepoWizardExpand}>
 
         <header>
           <span className="widget-icon"> <i className="fa fa-check"/> </span>
@@ -46,7 +84,7 @@ let RepositoryChangeWizard = React.createClass({
               <UiValidate options={validateOptions}>
                 <form noValidate="novalidate">
                   <Wizard className="col-sm-12"
-                          onComplete={this._onWizardComplete}>
+                          onComplete={this.onWizardComplete}>
                     <div className="form-bootstrapWizard clearfix">
                       <ul className="bootstrapWizard">
                         <li data-smart-wizard-tab="1">
@@ -291,6 +329,24 @@ let RepositoryChangeWizard = React.createClass({
 
     )
   }
-});
+}
 
-export default RepositoryChangeWizard
+RepositoryChangeWizard.propTypes = {
+  process: PropTypes.object,
+  plugin: PropTypes.object,
+  dispatch: PropTypes.func
+};
+
+// Function passed in to `connect` to subscribe to Redux store updates.
+// Any time it updates, mapStateToProps is called.
+function mapStateToProps(state) {
+  return {
+    plugin: state.plugin,
+    process: state.process
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(RepositoryChangeWizard);
