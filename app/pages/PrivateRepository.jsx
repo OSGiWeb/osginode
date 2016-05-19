@@ -145,9 +145,8 @@ class PrivateRepository extends Component {
     // Dispatch update plugin action
     // dispatch(updatePlugin(selectedData));
 
-    // When repository is no longer private(i.e. being public), expand extran plugin info filling form
-    const setExpand = true;
-    dispatch(setRepoWizardExpand(setExpand));
+    // When repository is no longer private(i.e. being public), open extran plugin info form to fill
+    dispatch(setRepoWizardExpand(true));
   }
 
 
@@ -329,6 +328,10 @@ class PrivateRepository extends Component {
     
     // Set selected data and states
     dispatch(setDatatableSelectedData(data, isSelected));
+
+    // Close extra plugin info form when new plugin selected
+    dispatch(setRepoWizardExpand(false));
+
   }
 
   /**

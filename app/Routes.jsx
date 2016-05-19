@@ -45,9 +45,12 @@ export default (store) => {
   return (
     <Route>
       <Route path="/">
-        <IndexRoute component={LoginOrRegister} />
+        {/*<IndexRoute component={LoginOrRegister} />*/}
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
         <Route component={Layout}>
+          
+          <IndexRoute component={PrivateRepository} />
+
           <Route path="home" component={Home} onEnter={requireAuth} />
           <Route path="privateRepository" component={PrivateRepository} onEnter={requireAuth} />
           <Route path="publicRepository" component={PublicRepository} onEnter={requireAuth} />
