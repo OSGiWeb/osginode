@@ -20,8 +20,73 @@ let validateOptions = {
   errorClass: 'help-block'
 };
 
-
-
+/**
+ * Styles for React component
+ */
+var styles = {
+  // page: {
+  //   paddingBottom: 300,
+  // },
+  // default: {
+  //   height: 26,
+  //   borderWidth: 0.5,
+  //   borderColor: '#0f0f0f',
+  //   flex: 1,
+  //   fontSize: 13,
+  //   padding: 4,
+  // },
+  // multiline: {
+  //   borderWidth: 0.5,
+  //   borderColor: '#0f0f0f',
+  //   flex: 1,
+  //   fontSize: 13,
+  //   height: 50,
+  //   padding: 4,
+  //   marginBottom: 4,
+  // },
+  // multilineWithFontStyles: {
+  //   color: 'blue',
+  //   fontWeight: 'bold',
+  //   fontSize: 18,
+  //   fontFamily: 'Cochin',
+  //   height: 60,
+  // },
+  // multilineChild: {
+  //   width: 50,
+  //   height: 40,
+  //   position: 'absolute',
+  //   right: 5,
+  //   backgroundColor: 'red',
+  // },
+  // eventLabel: {
+  //   margin: 3,
+  //   fontSize: 12,
+  // },
+  // labelContainer: {
+  //   flexDirection: 'row',
+  //   marginVertical: 2,
+  //   flex: 1,
+  // },
+  // label: {
+  //   width: 115,
+  //   alignItems: 'flex-end',
+  //   marginRight: 10,
+  //   paddingTop: 2,
+  // },
+  // rewriteContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  // },
+  // remainder: {
+  //   textAlign: 'right',
+  //   width: 24,
+  // },
+  legendFont: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 15
+  },
+}
 
 
 // TODO: use store to make params transfer bw. PrivateRepository and RepositoryChangeWizard
@@ -33,6 +98,30 @@ class RepositoryChangeWizard extends Component {
     // Otherwise fields in 'this.props' is NOT avaiable
     this.onWizardComplete = this.onWizardComplete.bind(this);
     this.onWizardFormClose = this.onWizardFormClose.bind(this);
+    this.onTextInputFoucused = this.onTextInputFoucused.bind(this);
+    this.onTextInputBlured = this.onTextInputBlured.bind(this);
+
+    // Initialize react state variables
+    this.state = {
+      installmanualStyle: {
+        textAlign:'center',
+        // fontSize:20,
+        // fontWeight:'bold'
+      },
+      compilemanualStyle: {
+        textAlign:'center',
+        // fontSize:20,
+        // fontWeight:'bold'
+      }
+    };
+  }
+
+  componentDidMount() {
+
+  }
+
+  // Deconstructor
+  componentWillUnmount() {
   }
 
   onWizardComplete(data){
@@ -57,16 +146,46 @@ class RepositoryChangeWizard extends Component {
     const { dispatch } = this.props;
     // Close wizard form
     dispatch(setRepoWizardExpand(false));
+
+  }
+
+  onTextInputFoucused(e) {
+    const { name } = e.currentTarget;
+
+    if(name === 'installmanual') {
+      this.setState({
+        installmanualStyle: {
+          textAlign:'left'
+        }});
+    } else if (name === 'compilemanual') {
+      this.setState({
+        compilemanualStyle: {
+          textAlign:'left'
+        }});
+    }
+  }
+
+  onTextInputBlured(e) {
+    const { name } = e.currentTarget;
+
+    if(name === 'installmanual') {
+      this.setState({
+        installmanualStyle: {
+          textAlign:'center'
+        }});
+    } else if (name === 'compilemanual') {
+      this.setState({
+        compilemanualStyle: {
+          textAlign:'center'
+        }});
+    }
   }
 
   render() {
 
-    // setExpand={isRepoWizardExpand}
-
     const { isRepoWizardExpand } = this.props.process;
 
     if (isRepoWizardExpand === true) {
-
       return (
         <JarvisWidget togglebutton={true} sortable={false} colorbutton={false} editbutton={false} deletebutton={true}
                       fullscreenbutton={true} deletebutton={false} editbutton={false} collapsed={false} color="green">
@@ -74,7 +193,7 @@ class RepositoryChangeWizard extends Component {
             <span className="widget-icon"> <i className="fa fa-cloud-upload"/> </span>
             <h2> 插件提交流程 </h2>
             <div className="widget-toolbar">
-                <i className="fa fa-sm fa-times" onClick={this.onWizardFormClose}/>
+              <i className="fa fa-times" onClick={this.onWizardFormClose}/>
             </div>
           </header>
           {/* widget div*/}
@@ -91,20 +210,20 @@ class RepositoryChangeWizard extends Component {
                         <ul className="bootstrapWizard">
                           <li data-smart-wizard-tab="1">
                             <a href="#"> <span className="step">1</span> <span
-                              className="title">Basic information</span>
+                              className="title">基本信息</span>
                             </a>
                           </li>
                           <li data-smart-wizard-tab="2">
                             <a href="#"> <span className="step">2</span> <span
-                              className="title">Billing information</span> </a>
+                              className="title">版本管理</span> </a>
                           </li>
                           <li data-smart-wizard-tab="3">
                             <a href="#"> <span className="step">3</span> <span
-                              className="title">Domain Setup</span> </a>
+                              className="title">附件上传</span> </a>
                           </li>
                           <li data-smart-wizard-tab="4">
                             <a href="#"> <span className="step">4</span> <span
-                              className="title">Save Form</span> </a>
+                              className="title">保存表单</span> </a>
                           </li>
                         </ul>
                       </div>
@@ -112,55 +231,55 @@ class RepositoryChangeWizard extends Component {
                         <div className="tab-pane" data-smart-wizard-pane="1">
                           <br/>
 
-                          <h3><strong>Step 1 </strong> - Basic Information</h3>
+                          <h3><strong> 步骤 1 </strong> - 基本信息 </h3>
 
                           <div className="row">
-
                             <div className="col-sm-12">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-envelope fa-lg fa-fw"/></span>
-                                  <input className="form-control input-lg"
-                                         placeholder="email@address.com" type="text"
-                                         name="email" data-smart-validate-input=""
-                                         data-required="" data-email=""
-                                         data-message-required="We need your email address to contact you"
-                                         data-message-email="Your email address must be in the format of name@domain.com"/>
-
+                              <fieldset>
+                                <legend style={styles.legendFont}> 插件介绍 </legend>
+                                <div className="form-group">
+                                  <div className="input-group">
+                                    <span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
+                                  <textarea rows="1" className="form-control"
+                                            placeholder="请简短介绍该插件的功能" type="text" name="pluginintrod"
+                                            data-smart-validate-input="" data-required=""
+                                            data-message="请填写提交插件介绍信息"/>
+                                  </div>
                                 </div>
-                              </div>
-
+                              </fieldset>
                             </div>
-
                           </div>
 
                           <div className="row">
                             <div className="col-sm-6">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-user fa-lg fa-fw"/></span>
-                                  <input className="form-control input-lg"
-                                         placeholder="First Name" type="text" name="fname"
-                                         data-smart-validate-input="" data-required=""
-                                         data-message="Please specify your First name"/>
-
+                              <fieldset>
+                                <legend style={styles.legendFont}> 安装指南 </legend>
+                                <div className="form-group">
+                                  <div className="input-group">
+                                    <span className="input-group-addon"><i className="fa fa-gavel fa-fw"/></span>
+                                  <textarea rows="6" className="form-control" style={ this.state.installmanualStyle }
+                                            placeholder="请输入插件安装步骤" type="text" name="installmanual"
+                                            data-smart-validate-input="" data-required=""
+                                            data-message="请填写提交插件安装指南信息"
+                                            onFocus={this.onTextInputFoucused} onBlur={this.onTextInputBlured}/>
+                                  </div>
                                 </div>
-                              </div>
+                              </fieldset>
                             </div>
                             <div className="col-sm-6">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-user fa-lg fa-fw"/></span>
-                                  <input className="form-control input-lg"
-                                         placeholder="Last Name" type="text" name="lname"
-                                         data-smart-validate-input="" data-required=""
-                                         data-message="Please specify your Last name"/>
-
+                              <fieldset>
+                                <legend style={styles.legendFont}> 编译指南 </legend>
+                                <div className="form-group">
+                                  <div className="input-group">
+                                    <span className="input-group-addon"><i className="fa fa-tasks fa-fw"/></span>
+                                  <textarea rows="6" className="form-control" style={ this.state.compilemanualStyle }
+                                            placeholder="请输入插件编译和集成方法" type="text" name="compilemanual"
+                                            data-smart-validate-input="" data-required=""
+                                            data-message="请填写提交插件编译指南信息"
+                                            onFocus={this.onTextInputFoucused} onBlur={this.onTextInputBlured}/>
+                                  </div>
                                 </div>
-                              </div>
+                              </fieldset>
                             </div>
                           </div>
 
@@ -168,7 +287,7 @@ class RepositoryChangeWizard extends Component {
                         <div className="tab-pane" data-smart-wizard-pane="2">
                           <br/>
 
-                          <h3><strong>Step 2</strong> - Billing Information</h3>
+                          <h3><strong> 步骤 2 </strong> - 版本管理 </h3>
 
                           <div className="row">
                             <div className="col-sm-4">
@@ -269,7 +388,7 @@ class RepositoryChangeWizard extends Component {
                         <div className="tab-pane" data-smart-wizard-pane="3">
                           <br/>
 
-                          <h3><strong>Step 3</strong> - Domain Setup</h3>
+                          <h3><strong> 步骤 3 </strong> - 附件上传 </h3>
 
                           <div className="alert alert-info fade in">
                             <button className="close" data-dismiss="alert">
@@ -288,12 +407,12 @@ class RepositoryChangeWizard extends Component {
                         <div className="tab-pane" data-smart-wizard-pane="4">
                           <br/>
 
-                          <h3><strong>Step 4</strong> - Save Form</h3>
+                          <h3><strong> 步骤 4 </strong> - 保存表单 </h3>
                           <br/>
 
                           <h1 className="text-center text-success"><strong><i
-                            className="fa fa-check fa-lg"/> Complete</strong></h1>
-                          <h4 className="text-center">Click next to finish</h4>
+                            className="fa fa-check fa-lg"/> 完成！</strong></h1>
+                          <h4 className="text-center"> 点击 “下一步” 提交插件 </h4>
                           <br/>
                           <br/>
                         </div>
@@ -303,12 +422,12 @@ class RepositoryChangeWizard extends Component {
                             <div className="col-sm-12">
                               <ul className="pager wizard no-margin">
                                 <li className="previous" data-smart-wizard-prev="">
-                                  <a href="#" className="btn btn-lg btn-default">
-                                    Previous </a>
+                                  <a href="#" className="btn btn-sm btn-default">
+                                    上一步 </a>
                                 </li>
                                 <li className="next" data-smart-wizard-next="">
-                                  <a href="#" className="btn btn-lg txt-color-darken">
-                                    Next </a>
+                                  <a href="#" className="btn btn-sm txt-color-darken">
+                                    下一步 </a>
                                 </li>
                               </ul>
                             </div>
@@ -323,12 +442,9 @@ class RepositoryChangeWizard extends Component {
 
             </div>
             {/* end widget content */}
-
           </div>
           {/* end widget div */}
-
         </JarvisWidget>
-
       )
     }
 
@@ -359,3 +475,12 @@ function mapStateToProps(state) {
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
 export default connect(mapStateToProps)(RepositoryChangeWizard);
+
+
+/**
+ * Backup code
+ */
+// <textarea rows="4" className="form-control" style={{ textAlign: this.state.textAlignment}}
+//           placeholder="安装指南" type="text" name="installmanual"
+//           data-smart-validate-input="" data-required=""
+//           data-message="请填写提交插件安装指南信息" onFocus={this.onTextInputFoucused}/>
