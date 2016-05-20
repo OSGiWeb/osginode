@@ -10,7 +10,6 @@ import SearchMobile from '../../components/smartAdmin/layout/actions/SearchMobil
 
 import DeviceDetect from '../../components/smartAdmin/layout/tools/DeviceDetect.jsx'
 import ActivitiesDropdown from '../../components/smartAdmin/activities/ActivitiesDropdown.jsx'
-import LanguageSelector from '../../components/smartAdmin/i18n/LanguageSelector.jsx'
 
 import RecentProjects from './header/RecentProjects.jsx'
 
@@ -122,7 +121,7 @@ let Header = React.createClass({
 
 
         {/* multiple lang dropdown : find all flags in the flags page */}
-        <LanguageSelector />
+        {/* <LanguageSelector />*/}
 
 
       </div>
@@ -137,3 +136,4 @@ let Header = React.createClass({
 
 
 export default Header
+

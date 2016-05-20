@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx'
 import LoginOrRegister from './pages/LoginOrRegister.jsx'
 import PrivateRepository from './pages/PrivateRepository.jsx'
 import PublicRepository from './pages/PublicRepository.jsx'
+import PluginCodeGenerator from './pages/PluginCodeGenerator.jsx'
 
 // import Register from './pages/Register.jsx'
 // import LockedScreen from './pages/LockedScreen.jsx'
@@ -45,15 +46,16 @@ export default (store) => {
   return (
     <Route>
       <Route path="/">
-        {/*<IndexRoute component={LoginOrRegister} />*/}
+        <IndexRoute component={LoginOrRegister} />
         <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
         <Route component={Layout}>
-          
-          <IndexRoute component={PrivateRepository} />
+
+          {/*<IndexRoute component={PluginCodeGenerator} />*/}
 
           <Route path="home" component={Home} onEnter={requireAuth} />
           <Route path="privateRepository" component={PrivateRepository} onEnter={requireAuth} />
           <Route path="publicRepository" component={PublicRepository} onEnter={requireAuth} />
+          <Route path="pluginCodeGenerator" component={PluginCodeGenerator} onEnter={requireAuth} />
         </Route>
       </Route>
     </Route>

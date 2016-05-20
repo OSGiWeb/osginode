@@ -171,12 +171,14 @@ class RepositoryChangeWizard extends Component {
     if(name === 'installmanual') {
       this.setState({
         installmanualStyle: {
-          textAlign:'center'
+          textAlign:'left',
+          color: 'green'
         }});
     } else if (name === 'compilemanual') {
       this.setState({
         compilemanualStyle: {
-          textAlign:'center'
+          textAlign:'left',
+          color: 'green'
         }});
     }
   }
@@ -187,13 +189,13 @@ class RepositoryChangeWizard extends Component {
 
     if (isRepoWizardExpand === true) {
       return (
-        <JarvisWidget togglebutton={true} sortable={false} colorbutton={false} editbutton={false} deletebutton={true}
-                      fullscreenbutton={true} deletebutton={false} editbutton={false} collapsed={false} color="green">
+        <JarvisWidget togglebutton={false} sortable={false} colorbutton={false} editbutton={false} deletebutton={false}
+                      fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={false} color="green">
           <header>
             <span className="widget-icon"> <i className="fa fa-cloud-upload"/> </span>
             <h2> 插件提交流程 </h2>
             <div className="widget-toolbar">
-              <i className="fa fa-times" onClick={this.onWizardFormClose}/>
+              <i className="fa fa-lg fa-times" onClick={this.onWizardFormClose}/>
             </div>
           </header>
           {/* widget div*/}
@@ -307,11 +309,11 @@ class RepositoryChangeWizard extends Component {
                                 </div>
                               </div>
                             </div>
+
                             <div className="col-sm-4">
                               <div className="form-group">
                                 <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-map-marker fa-lg fa-fw"/></span>
+                                  <span className="input-group-addon"><i className="fa fa-map-marker fa-lg fa-fw"/></span>
                                   <select className="form-control input-lg"
                                           data-smart-validate-input="" data-required=""
                                           name="city">
@@ -341,6 +343,7 @@ class RepositoryChangeWizard extends Component {
                                 </div>
                               </div>
                             </div>
+
                             <div className="col-sm-4">
                               <div className="form-group">
                                 <div className="input-group">
@@ -349,7 +352,8 @@ class RepositoryChangeWizard extends Component {
                                   <input className="form-control input-lg"
                                          placeholder="Postal Code" type="text"
                                          name="postal" data-smart-validate-input=""
-                                         data-required="" data-minlength="4"/>
+                                         data-required="" data-minlength="4"
+                                         value="London"/>
                                 </div>
                               </div>
                             </div>
@@ -365,7 +369,8 @@ class RepositoryChangeWizard extends Component {
                                          data-mask-placeholder="X" placeholder="+1"
                                          type="text" name="wphone"
                                          data-smart-validate-input="" data-required=""
-                                         data-minlength="10"/>
+                                         data-minlength="10"
+                                         value="13013039639"/>
                                 </div>
                               </div>
                             </div>
@@ -379,7 +384,8 @@ class RepositoryChangeWizard extends Component {
                                          data-mask-placeholder="X" placeholder="+01"
                                          type="text" name="hphone"
                                          data-smart-validate-input="" data-required=""
-                                         data-minlength="10"/>
+                                         data-minlength="10"
+                                         value="13013039639"/>
                                 </div>
                               </div>
                             </div>
@@ -395,12 +401,12 @@ class RepositoryChangeWizard extends Component {
                               ×
                             </button>
                             <i className="fa-fw fa fa-info"/>
-                            <strong>Info!</strong> Place an info message box if you wish.
+                            <strong>注意!</strong> 可以上传多种插件信息，包括源码、文档和链接库等
                           </div>
                           <div className="form-group">
-                            <label>This is a label</label>
+                            <label>插件附件列表</label>
                             <input className="form-control input-lg"
-                                   placeholder="Another input box here..." type="text"
+                                   placeholder="上传插件信息" type="text"
                                    name="etc" id="etc"/>
                           </div>
                         </div>

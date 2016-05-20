@@ -40,6 +40,15 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import createRoutes from './routes.jsx';
 import configureStore from 'store/configureStore';
 
+// Used for material-ui
+import injectTapEventPlugin from 'react-tap-event-plugin';
+//Needed for onTouchTap
+//Can go away when react 1.0 release
+//Check this repo:
+//https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
+
+
 // Using new browserHistory reference
 // const initialState = window.__INITIAL_STATE__;
 // const store = configureStore(initialState, browserHistory);

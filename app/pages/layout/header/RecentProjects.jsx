@@ -1,5 +1,4 @@
 import React from 'react'
-import Msg from '../../../components/smartAdmin/i18n/Msg.jsx'
 
 let RecentProjects = React.createClass({
   getInitialState: function(){

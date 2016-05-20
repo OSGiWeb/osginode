@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import {Link} from 'react-router'
 import classnames from 'classnames'
-import Msg from '../../../i18n/Msg.jsx'
 import SmartMenuList from './SmartMenuList.jsx'
 
 let config = window.SMARTADMIN_GLOBALS;
@@ -53,7 +52,7 @@ export default class SmartMenuItem extends Component {
   render() {
     var item = this.props.item;
 
-    var title = !item.parent ? <span className="menu-item-parent"><Msg phrase={item.title} /></span> : <Msg phrase={item.title} />;
+    var title = !item.parent ? <span className="menu-item-parent"> {item.title} </span> : <span> {item.title} </span>;
     var badge = item.badge ? <span className={item.badge.class}>{item.badge.label || ''}</span> : null;
     var childItems = item.items ? <SmartMenuList style={{
         display: (item.isOpen ? 'block' : 'none')

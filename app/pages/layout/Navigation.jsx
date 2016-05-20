@@ -67,7 +67,7 @@ const rawItems = {
         {
           "icon": "fa fa-clock-o",
           "title": "插件代码生成工具",
-          "route": "/home"
+          "route": "/pluginCodeGenerator"
         }
       ]
     },
