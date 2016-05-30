@@ -14,7 +14,7 @@ const clientConfig = {
 };
 
 // configure baseURL for axios requests (for serverside API calls)
-axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
+axios.defaults.baseURL = 'http://${clientConfig.host}:${clientConfig.port}';
 
 // /*
 //  * Our html template file

@@ -194,7 +194,7 @@ class PrivateRepository extends Component {
           timeout: 2000
         });
       }
-
+      
       if (isUpdated === true) {
         $.bigBox({
           title: "插件更新成功！",
@@ -624,7 +624,7 @@ class PrivateRepository extends Component {
       )
     }
   }
-
+  
   renderPrivateRepository() {
     // Check if row in datatable is selected
     const { isSelected, selectedData } = this.props.plugin;
