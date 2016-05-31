@@ -17,9 +17,6 @@ let data = {
   items: []        // Items tree including ALL items property
 };
 
-
-
-
 function setInitialItem(items) {
   items.forEach(function(item){
     if (item.isActive){

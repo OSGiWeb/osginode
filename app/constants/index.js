@@ -60,4 +60,12 @@ export const DOWNLOAD_PLUGIN_FAILURE = 'DOWNLOAD_PLUGIN_FAILURE';
  * Processes repository actions constant
  * @type {string}
  */
-export const TOGGLE_REPO_WIZARD_EXPAND = 'TOGGLE_REPO_WIZARD_EXPAND'
+export const TOGGLE_REPO_WIZARD_EXPAND = 'TOGGLE_REPO_WIZARD_EXPAND';
+
+/**
+ * Plugin generator actions constant
+ * @type {string}
+ */
+export const GENERATE_PLUGIN_SUCCESS = 'GENERATE_PLUGIN_SUCCESS';
+export const GENERATE_PLUGIN_FAILURE = 'GENERATE_PLUGIN_FAILURE';
+

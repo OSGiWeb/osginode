@@ -9,8 +9,7 @@ import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
 import Wizard from '../components/smartAdmin/forms/wizards/Wizard.jsx'
 
-import { setRepoWizardExpand } from '../actions/processes'
-import { updatePlugin } from '../actions/plugins'
+import { generatePluginWithTemplate } from '../actions/generators'
 
 /**
  * Styles for React component
@@ -49,7 +48,6 @@ class PluginCodeGenerator extends Component {
 		this.onWizardComplete = this.onWizardComplete.bind(this);
 		this.onChangePluginName = this.onChangePluginName.bind(this);
 
-
 		// Initialize react state variables
     this.state = {
       pluginname: ''
@@ -66,17 +64,17 @@ class PluginCodeGenerator extends Component {
 	}
 
 	onWizardComplete(data) {
+		// TODO: Send data to server 
+
+		const { dispatch } = this.props;
+		dispatch(generatePluginWithTemplate(data));
 		console.log('wizard submit stuff', data);
 	}
 
-	onWizardCompleteTEST(data) {
-		console.log('wizard submit stuff', data);
-	}
-	
 	onChangePluginName(event) {
 		this.setState({
-        pluginname: event.currentTarget.value
-      });
+			pluginname: event.currentTarget.value
+		});
 	}
 
 	render() {
@@ -174,7 +172,7 @@ class PluginCodeGenerator extends Component {
 																				<input className="form-control"
 																					placeholder="插件全称" type="text" name="pluginsymblicname"
 																					data-smart-validate-input="" data-required="" readOnly={true}
-																					data-message="请填写插件简称" value={'com.plugins.'+this.state.pluginname}/>
+																					data-message="请填写插件简称" value={'com.plugins.' + this.state.pluginname}/>
 																			</div>
 																		</div>
 																	</fieldset>
@@ -247,26 +245,26 @@ class PluginCodeGenerator extends Component {
 																	<div className="form-group">
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="pluginframework"  defaultValue="插件框架"/> 插件框架 </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="pluginframework"  defaultValue="插件框架"/> 插件框架 </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="plugincore" defaultValue="核心插件"/> 核心插件 </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="plugincore" defaultValue="核心插件"/> 核心插件 </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="plugincomm" defaultValue="数据通信插件"/> 数据通信插件 </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="plugincomm" defaultValue="数据通信插件"/> 数据通信插件 </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="plugindatabase" defaultValue="数据库管理插件"/> 数据库管理插件 </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="plugindatabase" defaultValue="数据库管理插件"/> 数据库管理插件 </label>
 																			</div>
 																		</div>
 																	</div>
@@ -281,26 +279,26 @@ class PluginCodeGenerator extends Component {
 																	<div className="form-group">
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="libqwt" defaultValue="QWT"/> QWT </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="libqwt" defaultValue="QWT"/> QWT </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="libboost" defaultValue="Boost"/> Boost </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="libboost" defaultValue="Boost"/> Boost </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="libgdal" defaultValue="GDAL"/> GDAL </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="libgdal" defaultValue="GDAL"/> GDAL </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }} 
-																				type="checkbox" name="libopengl" defaultValue="OpenGL"/> OpenGL </label>
+																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																					type="checkbox" name="libopengl" defaultValue="OpenGL"/> OpenGL </label>
 																			</div>
 																		</div>
 																	</div>
@@ -361,26 +359,26 @@ class PluginCodeGenerator extends Component {
 	}
 }
 
-// PluginCodeGenerator.propTypes = {
-//   process: PropTypes.object,
-//   plugin: PropTypes.object,
-//   dispatch: PropTypes.func
-// };
-//
-// // Function passed in to `connect` to subscribe to Redux store updates.
-// // Any time it updates, mapStateToProps is called.
-// function mapStateToProps(state) {
-//   return {
-//     plugin: state.plugin,
-//     process: state.process
-//   };
-// }
-//
-// // Connects React component to the redux store
-// // It does not modify the component class passed to it
-// // Instead, it returns a new, connected component class, for you to use.
-// export default connect(mapStateToProps)(PluginCodeGenerator);
-export default PluginCodeGenerator;
+PluginCodeGenerator.propTypes = {
+  generators: PropTypes.object,
+  dispatch: PropTypes.func
+};
+
+// Function passed in to `connect` to subscribe to Redux store updates.
+// Any time it updates, mapStateToProps is called.
+function mapStateToProps(state) {
+  return {
+    generators: state.generators
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(PluginCodeGenerator);
+
+
+// export default PluginCodeGenerator;
 
 		/**
 		 * Backup code
