@@ -69,6 +69,20 @@ class PluginCodeGenerator extends Component {
 		const { dispatch } = this.props;
 		dispatch(generatePluginWithTemplate(data));
 		console.log('wizard submit stuff', data);
+
+
+		// console.log('/<------ Compress files into zip file ------>/');
+		// var JSZip = require("jszip");
+		// var zip = new JSZip();
+		// zip.file("Hello.txt", "Hello World\n");
+		// // var img = zip.folder("images");
+		// // img.file("smile.gif", imgData, { base64: true });
+		// zip.generateAsync({ type: "blob" })
+		// 	.then(function (content) {
+		// 		// see FileSaver.js
+		// 		saveAs(content, "example.zip");
+		// 	});
+
 	}
 
 	onChangePluginName(event) {

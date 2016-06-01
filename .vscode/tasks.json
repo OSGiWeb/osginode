@@ -18,6 +18,10 @@
     {
       "taskName": "dev",
       "args": ["run", "dev"]
+    },
+    {
+      "taskName": "build",
+      "args": ["run", "build"]
     }
   ]
 }

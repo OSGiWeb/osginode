@@ -10,33 +10,37 @@ var assert = require('assert'),
   path = require('path');
 var mkdirp = require('mkdirp');
 
+var JSZip = require("jszip");
+
 /**
  * Generate a plugin with template on server-side
  */
-exports.generatePlugin = function(req, res) {
+exports.generatePlugin = function (req, res) {
   console.log('/<------ Generating Plugun with Template ------>/');
   console.log(req.body);
-  
-  
-    /**
-   * IMPLEMENT CODE Generator here
-   */
-  
+
+
+  /**
+ * IMPLEMENT CODE Generator here
+ */
+
   /* Step 1: Generate plugin file system structure with plugin name */
   // Define paths
   mu.root = path.join(__dirname, '..', 'generator/templates/plugin/');
   destPath = path.join(__dirname, '..', 'generator/generated/');
-  
+  var zip = new JSZip();
+
   // Read generator rules in plugins.js
   var js = fs.readFileSync(mu.root + '/plugins.js').toString();
   js = eval('(' + js + ')');
 
   // Make directories
-  pluginPath = destPath + 'com.plugins.' + js.pluginname + '/';
+  var pluginSymblicName = 'com.plugins.' + js.pluginname;
+  var pluginPath = destPath + pluginSymblicName + '/';
   mkdir(pluginPath);
   mkdir(pluginPath + '/gui');
 
-  
+
   /* Step 2: Do plugin generation process */
   [
     'CMakeLists.txt',
@@ -49,13 +53,14 @@ exports.generatePlugin = function(req, res) {
     'gui/{{pluginname}}WindowWidgetPlugin.cpp',
     'gui/{{pluginname}}WindowWidgetPlugin.h'
   ].forEach(function (name) {
-    
+
     // Change plugin name
-    pluginName = name.replace('{{pluginname}}', js.pluginname);
-    
+    pluginFileName = name.replace('{{pluginname}}', js.pluginname);
+
     // Create write stream to write buffer content to files
     var buffer = '';
-    var wstream = fs.createWriteStream(pluginPath + pluginName);
+    var wstream = fs.createWriteStream(pluginPath + pluginFileName);
+    
     
     mu.compileAndRender(name, js) // Use predefined 'mu.root' as root path
       .on('data', function (c) {
@@ -64,9 +69,32 @@ exports.generatePlugin = function(req, res) {
       .on('end', function () {
         wstream.write(buffer);
         wstream.end();
-        console.log("Generated: " + pluginName);
+        console.log("Generated: " + name.replace('{{pluginname}}', js.pluginname));
+
+
+        /* Compress generated file of plugin into zip file */
+        console.log('/<------ Compress files into zip file:' + pluginFileName + ' ------>/');
+        
+        // TODO: zip folder when generating finished!
+        zip.file(name.replace('{{pluginname}}', js.pluginname), buffer);
+        var wstreamZip = fs.createWriteStream(destPath + pluginSymblicName + '.zip');
+
+        zip
+          .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+          .pipe(wstreamZip)
+          .on('finish', function () {
+            // JSZip generates a readable stream with a "end" event,
+            // but is piped here in a writable stream which emits a "finish" event.
+            // wsZip.end();
+            console.log(pluginSymblicName + ".zip written.");
+          });
+          
+          // wstream.end();
+
       });
-  });
+  })
+
+
 
 };
 
@@ -85,10 +113,10 @@ function mkdir(path, fn) {
   });
 }
 
-function copy_template(from, to) {
-  from = path.join(__dirname, '..', 'templates/com.plugins.template/', from);
-  write(to, fs.readFileSync(from, 'utf-8'));
-}
+// function copy_template(from, to) {
+//   from = path.join(__dirname, '..', 'templates/com.plugins.template/', from);
+//   write(to, fs.readFileSync(from, 'utf-8'));
+// }
 
 /**
  * Check if the given directory `path` is empty.
@@ -97,12 +125,12 @@ function copy_template(from, to) {
  * @param {Function} fn
  */
 
-function emptyDirectory(path, fn) {
-  fs.readdir(path, function (err, files) {
-    if (err && 'ENOENT' != err.code) throw err;
-    fn(!files || !files.length);
-  });
-}
+// function emptyDirectory(path, fn) {
+//   fs.readdir(path, function (err, files) {
+//     if (err && 'ENOENT' != err.code) throw err;
+//     fn(!files || !files.length);
+//   });
+// }
 
 /**
  * echo str > path.
@@ -111,7 +139,7 @@ function emptyDirectory(path, fn) {
  * @param {String} str
  */
 
-function write(path, str, mode) {
-  fs.writeFileSync(path, str, { mode: mode || 0666 });
-  console.log('   \x1b[36mcreate\x1b[0m : ' + path);
-}
+// function write(path, str, mode) {
+//   fs.writeFileSync(path, str, { mode: mode || 0666 });
+//   console.log('   \x1b[36mcreate\x1b[0m : ' + path);
+// }
