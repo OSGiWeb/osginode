@@ -43,11 +43,15 @@ class PluginCodeGenerator extends Component {
 	constructor(props) {
 		super(props);
 
+		// this.currentStep = 1;
+
 		// Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
 		// Otherwise fields in 'this.props' is NOT avaiable
-		this.onWizardComplete = this.onWizardComplete.bind(this);
+		this.onDownloadPlugin = this.onDownloadPlugin.bind(this);
 		this.onChangePluginName = this.onChangePluginName.bind(this);
-
+		this.onCurruntStepChange = this.onCurruntStepChange.bind(this);
+		
+		
 		// Initialize react state variables
     this.state = {
       pluginname: ''
@@ -55,7 +59,7 @@ class PluginCodeGenerator extends Component {
 	}
 
 	componentDidMount() {
-
+		
 	}
 
 	// Deconstructor
@@ -63,13 +67,17 @@ class PluginCodeGenerator extends Component {
 
 	}
 
-	onWizardComplete(data) {
-		// TODO: Send data to server 
+	onDownloadPlugin(data) {
+		// TODO: Download from server
 
-		const { dispatch } = this.props;
-		dispatch(generatePluginWithTemplate(data));
-		console.log('wizard submit stuff', data);
+		// const { dispatch } = this.props;
+		// dispatch(generatePluginWithTemplate(data));
+		// console.log('wizard submit stuff', data);
 
+		let pluginsymblicname = ReactDOM.findDOMNode(this.refs.pluginsymblicname).value;
+		let url = '/pluginCodeGenerator/download/' + pluginsymblicname;
+    window.location = url;
+    window.open(url, '_self');
 
 		// console.log('/<------ Compress files into zip file ------>/');
 		// var JSZip = require("jszip");
@@ -83,6 +91,24 @@ class PluginCodeGenerator extends Component {
 		// 		saveAs(content, "example.zip");
 		// 	});
 
+	}
+	
+	onCurruntStepChange(step) {
+		// this.currentStep = step;
+		const { dispatch } = this.props;
+		
+		// Before download step, send data to server-side to generate downloadable plugin code
+		if (step === 3) {
+			dispatch(generatePluginWithTemplate({
+				pluginauthor: ReactDOM.findDOMNode(this.refs.pluginauthor).value,
+				pluginintrod: ReactDOM.findDOMNode(this.refs.pluginintrod).value,
+				pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
+				pluginsymblicname: ReactDOM.findDOMNode(this.refs.pluginsymblicname).value,
+				plugintype: ReactDOM.findDOMNode(this.refs.plugintype).value,
+				pluginversion: ReactDOM.findDOMNode(this.refs.pluginversion).value,
+				pluginwebsite: ReactDOM.findDOMNode(this.refs.pluginwebsite).value,
+			}));
+		}
 	}
 
 	onChangePluginName(event) {
@@ -114,7 +140,7 @@ class PluginCodeGenerator extends Component {
 								<div className="row">
 									<UiValidate options={validateOptions}>
 										<form noValidate="novalidate">
-											<Wizard className="col-sm-12" onComplete={this.onWizardComplete}>
+											<Wizard className="col-sm-12" ref="generatorwizard"  onCurruntStepChange={this.onCurruntStepChange} onComplete={this.onDownloadPlugin}>
 												<div className="form-bootstrapWizard clearfix">
 													<ul className="bootstrapWizard">
 														<li data-smart-wizard-tab="1">
@@ -137,7 +163,7 @@ class PluginCodeGenerator extends Component {
 													<div className="tab-pane" data-smart-wizard-pane="1">
 														<br/>
 														<h3><strong> 步骤 1 </strong> - 基本信息 </h3>
-
+														
 														<div className="row">
 															<div className="col-sm-12">
 																<legend style={styles.legendFont}> 插件生成设置 </legend>
@@ -147,7 +173,7 @@ class PluginCodeGenerator extends Component {
 																			<div className="input-group">
 																				<span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
 																				<input className="form-control"
-																					placeholder="插件简称" type="text" name="pluginname"
+																					placeholder="插件简称" type="text" ref="pluginname"
 																					data-smart-validate-input="" data-required=""
 																					data-message="请填写插件简称" onChange={this.onChangePluginName}/>
 																			</div>
@@ -161,7 +187,7 @@ class PluginCodeGenerator extends Component {
 																				<span className="input-group-addon"><i className="fa fa-file fa-fw"/></span>
 																				<select className="form-control"
 																					data-smart-validate-input="" data-required=""
-																					name="plugintype" defaultValue={"插件类型"} data-message="请选择插件类型">
+																					ref="plugintype" defaultValue={"插件类型"} data-message="请选择插件类型">
 																					<option defaultValue="插件类型" disabled={true}> 插件类型 </option>
 																					<option defaultValue="核心插件">核心插件</option>
 																					<option defaultValue="显示插件">显示插件</option>
@@ -184,7 +210,7 @@ class PluginCodeGenerator extends Component {
 																			<div className="input-group">
 																				<span className="input-group-addon"><i className="fa fa-tag fa-fw"/></span>
 																				<input className="form-control"
-																					placeholder="插件全称" type="text" name="pluginsymblicname"
+																					placeholder="插件全称" type="text" ref="pluginsymblicname"
 																					data-smart-validate-input="" data-required="" readOnly={true}
 																					data-message="请填写插件简称" value={'com.plugins.' + this.state.pluginname}/>
 																			</div>
@@ -197,7 +223,7 @@ class PluginCodeGenerator extends Component {
 																			<div className="input-group">
 																				<span className="input-group-addon"><i className="fa fa-file-excel-o fa-fw"/></span>
 																				<input className="form-control"
-																					placeholder="插件版本" type="text" name="pluginversion"
+																					placeholder="插件版本" type="text" ref="pluginversion"
 																					data-smart-validate-input="" data-required=""
 																					defaultValue="0.0.1" data-message="请填写插件版本"/>
 																			</div>
@@ -210,7 +236,7 @@ class PluginCodeGenerator extends Component {
 																			<div className="input-group">
 																				<span className="input-group-addon"><i className="fa fa-user fa-fw"/></span>
 																				<input className="form-control"
-																					placeholder="插件作者" type="text" name="pluginauthor"
+																					placeholder="插件作者" type="text" ref="pluginauthor"
 																					data-smart-validate-input="" data-required=""
 																					defaultValue="许昀" data-message="请填写插件作者"/>
 																			</div>
@@ -223,7 +249,7 @@ class PluginCodeGenerator extends Component {
 																			<div className="input-group">
 																				<span className="input-group-addon"><i className="fa fa-wordpress fa-fw"/></span>
 																				<input className="form-control"
-																					placeholder="插件网站" type="text" name="pluginwebsite"
+																					placeholder="插件网站" type="text" ref="pluginwebsite"
 																					data-smart-validate-input="" data-required=""
 																					defaultValue="http://localhost:3000/" data-message="请填写插件网站"/>
 																			</div>
@@ -236,7 +262,7 @@ class PluginCodeGenerator extends Component {
 																			<div className="input-group">
 																				<span className="input-group-addon"><i className="fa fa-comment fa-fw"/></span>
 																				<textarea rows="2" className="form-control"
-																					placeholder="插件简介" type="text" name="pluginintrod"
+																					placeholder="插件简介" type="text" ref="pluginintrod"
 																					data-smart-validate-input="" data-required=""
 																					defaultValue="该插件由插件模板创建" data-message="请填写插件简介"/>
 																			</div>
@@ -260,25 +286,25 @@ class PluginCodeGenerator extends Component {
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="pluginframework"  defaultValue="插件框架"/> 插件框架 </label>
+																					type="checkbox" ref="pluginframework"  defaultValue="插件框架"/> 插件框架 </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="plugincore" defaultValue="核心插件"/> 核心插件 </label>
+																					type="checkbox" ref="plugincore" defaultValue="核心插件"/> 核心插件 </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="plugincomm" defaultValue="数据通信插件"/> 数据通信插件 </label>
+																					type="checkbox" ref="plugincomm" defaultValue="数据通信插件"/> 数据通信插件 </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="plugindatabase" defaultValue="数据库管理插件"/> 数据库管理插件 </label>
+																					type="checkbox" ref="plugindatabase" defaultValue="数据库管理插件"/> 数据库管理插件 </label>
 																			</div>
 																		</div>
 																	</div>
@@ -294,25 +320,25 @@ class PluginCodeGenerator extends Component {
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="libqwt" defaultValue="QWT"/> QWT </label>
+																					type="checkbox" ref="libqwt" defaultValue="QWT"/> QWT </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="libboost" defaultValue="Boost"/> Boost </label>
+																					type="checkbox" ref="libboost" defaultValue="Boost"/> Boost </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="libgdal" defaultValue="GDAL"/> GDAL </label>
+																					type="checkbox" ref="libgdal" defaultValue="GDAL"/> GDAL </label>
 																			</div>
 																		</div>
 																		<div className="col-sm-3">
 																			<div className="checkbox">
 																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" name="libopengl" defaultValue="OpenGL"/> OpenGL </label>
+																					type="checkbox" ref="libopengl" defaultValue="OpenGL"/> OpenGL </label>
 																			</div>
 																		</div>
 																	</div>

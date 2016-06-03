@@ -20,7 +20,7 @@ exports.generatePlugin = function (req, res) {
   console.log(req.body);
 
 
-  /**
+/**
  * IMPLEMENT CODE Generator here
  */
 
@@ -28,17 +28,22 @@ exports.generatePlugin = function (req, res) {
   // Define paths
   mu.root = path.join(__dirname, '..', 'generator/templates/plugin/');
   destPath = path.join(__dirname, '..', 'generator/generated/');
-  var zip = new JSZip();
 
-  // Read generator rules in plugins.js
-  var js = fs.readFileSync(mu.root + '/plugins.js').toString();
-  js = eval('(' + js + ')');
+  // // Read generator rules from plugins.js
+  // var js = fs.readFileSync(mu.root + '/plugins.js').toString();
+  // js = eval('(' + js + ')');
+
+  // Read generator rules from client-side
+  js = req.body;
 
   // Make directories
   var pluginSymblicName = 'com.plugins.' + js.pluginname;
   var pluginPath = destPath + pluginSymblicName + '/';
-  mkdir(pluginPath);
-  mkdir(pluginPath + '/gui');
+
+  // Create zip and zip write stream instance
+  var zip = new JSZip();
+
+  // var wstreamZip = fs.createWriteStream(destPath + pluginSymblicName + '.zip');
 
 
   /* Step 2: Do plugin generation process */
@@ -59,41 +64,67 @@ exports.generatePlugin = function (req, res) {
 
     // Create write stream to write buffer content to files
     var buffer = '';
-    var wstream = fs.createWriteStream(pluginPath + pluginFileName);
-    
-    
+
+    /* Generate plugin files in local file system (ONLY for checking) */
     mu.compileAndRender(name, js) // Use predefined 'mu.root' as root path
       .on('data', function (c) {
         buffer += c.toString();
       })
       .on('end', function () {
-        wstream.write(buffer);
-        wstream.end();
-        console.log("Generated: " + name.replace('{{pluginname}}', js.pluginname));
 
 
-        /* Compress generated file of plugin into zip file */
-        console.log('/<------ Compress files into zip file:' + pluginFileName + ' ------>/');
-        
-        // TODO: zip folder when generating finished!
+        // Compress generated file of plugin into zip file
         zip.file(name.replace('{{pluginname}}', js.pluginname), buffer);
-        var wstreamZip = fs.createWriteStream(destPath + pluginSymblicName + '.zip');
 
-        zip
-          .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
-          .pipe(wstreamZip)
-          .on('finish', function () {
-            // JSZip generates a readable stream with a "end" event,
-            // but is piped here in a writable stream which emits a "finish" event.
-            // wsZip.end();
-            console.log(pluginSymblicName + ".zip written.");
+        zip.generateAsync({ type: "nodebuffer" })
+          .then(function (content) {
+            fs.writeFileSync(destPath + pluginSymblicName + '.zip', content);
+            console.log('/<------ Compress files into zip file sync: ' + name.replace('{{pluginname}}', js.pluginname) + ' ------>/');
+
+            // TODO: Send 'success' to client to change to 'download' UI type when all files generated (impl. with count)
+            // res.status(200).send('OK'); 
           });
-          
-          // wstream.end();
-
       });
-  })
+  }) // END forEach()
 
+
+};
+
+/**
+ * Download a generated plugin with template from server-side
+ */
+exports.downloadPlugin = function (req, res) {
+
+  // Set download path
+  downloadPath = path.join(__dirname, '..', 'generator/generated/');
+
+  /* Send zip to download */
+  var zipName = req.params.pluginname + '.zip'
+  var zipFilePath = downloadPath + zipName;
+  
+  // Set download file header incl. filename and type
+  res.setHeader('Content-disposition', 'attachment; filename=' + zipName);
+  res.setHeader('Content-type', 'binary/octet-stream');
+
+  // Check file existance
+  fs.exists(zipFilePath, function (exists) {
+    if (exists) {
+      fs.createReadStream(zipFilePath)
+        .on("err", function () { res.status(400).send("No generated plugin found with that name"); })
+        .on('end', function () {
+          /* TODO: Comment out deleting generated zip, delete generated zips every day/half day periodically */
+          // fs.unlink(zipFilePath, function (err) {
+          //   if (err) { console.log("Error occured on deleting generated file"); } 
+          //   else { 
+          //     console.log('Generated file deleted with name: ', zipName); 
+          //   }
+          // })
+        })
+        .pipe(res);
+    } else {
+      console.log("No generated plugin file is found with: " + zipFilePath);
+    }
+  });
 
 
 };

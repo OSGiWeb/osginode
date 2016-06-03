@@ -80,7 +80,6 @@ module.exports = function(app, conn) {
 
     /**
      * Handle 'get' request for files
-     * sends the image we saved by filename.
      * YunXu: use e.g.: 'localhost:3000/osginode.rar' to download .rar files in Mongo GridFS
      * TODO: Add manuel request to URL
      * TODO: As one plugin can link to many uploaded files, must add another paramerter, e.g.: filename to identify file in DB

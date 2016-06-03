@@ -28,6 +28,7 @@ module.exports = function(app, passport) {
 
   /* Plugin generator routes */
   app.post('/pluginCodeGenerator/generatePlugin', function(req, res) { generators.generatePlugin(req, res); });
+  app.get('/pluginCodeGenerator/download/:pluginname', function(req, res) { generators.downloadPlugin(req, res); });
 
 
   // This is where the magic happens. We take the locals data we have already

@@ -44,3 +44,22 @@ export function generatePluginWithTemplate(data) {
       });
   };
 }
+
+// export function downloadGeneratedPlugin(pluginName) {
+//   return dispatch => {
+//     // Check if data is avaiable
+//     if (_.trim(pluginName).length <= 0) return;
+    
+//     // Send generating plugin based on input data and template on server-side
+//     axios.get('/pluginCodeGenerator/generatePlugin', data)
+//       .then(res => {
+//         // Response from file success stored in GridFS
+//         if (res.status === 200) {
+//           return dispatch(generatePluginSuccess());
+//         }})
+//       .catch(ex => {
+//         return dispatch(generatePluginFailure());
+//       });
+//   };
+// }
+
