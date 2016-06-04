@@ -29,10 +29,13 @@ export default class Wizard extends Component {
             $('[data-smart-wizard-tab=' + step + ']', element).addClass('active').siblings('[data-smart-wizard-tab]').removeClass('active');
 
             $prev.toggleClass('disabled', step == 1)
-            
+
             // Invoke call back to set current step
             const { onCurruntStepChange } = self.props;
-            onCurruntStepChange(currentStep);
+            if (onCurruntStepChange !== undefined) { // for some wizard instance 'onCurruntStepChange()' call back function is not defined 
+                onCurruntStepChange(currentStep);
+            }
+
         }
 
 
@@ -95,8 +98,6 @@ export default class Wizard extends Component {
 
     render() {
         let {children, ...props} = this.props;
-        const { onCurruntStepChange } = this.props;
-        onCurruntStepChange(1);
         return (
             <div {...props}>
                 {children}

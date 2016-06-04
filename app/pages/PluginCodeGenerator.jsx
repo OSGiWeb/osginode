@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import SubHeader from './layout/SubHeader.jsx'
 import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'

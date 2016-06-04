@@ -47,6 +47,7 @@ exports.generatePlugin = function (req, res) {
 
 
   /* Step 2: Do plugin generation process */
+  // TODO: create a function to read all files (incl. folder path) to buffer
   [
     'CMakeLists.txt',
     'manifest_headers.cmake',
@@ -56,7 +57,10 @@ exports.generatePlugin = function (req, res) {
     '{{pluginname}}ZmqBuilder.cpp',
     '{{pluginname}}ZmqBuilder.h',
     'gui/{{pluginname}}WindowWidgetPlugin.cpp',
-    'gui/{{pluginname}}WindowWidgetPlugin.h'
+    'gui/{{pluginname}}WindowWidgetPlugin.h',
+    'gui/form.ui',
+    'gui/form.h',
+    'gui/form.cpp'
   ].forEach(function (name) {
 
     // Change plugin name

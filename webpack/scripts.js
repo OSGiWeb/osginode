@@ -62,7 +62,7 @@ var scripts = {
     // "jqgrid-locale-en": "/bower_components/jqgrid/js/i18n/grid.locale-en.js",
     //
     //
-    // "select2": "/bower_components/select2/select2.min.js",
+    "select2": "/node_modules/select2/dist/js/select2.full.min.js",
     // "summernote": "/bower_components/summernote/dist/summernote.min.js",
     // "bootstrap-markdown": "/bower_components/bootstrap-markdown/js/bootstrap-markdown.js",
     // "markdown": "/bower_components/markdown/lib/markdown.js",
@@ -127,7 +127,7 @@ var scripts = {
       // //"jvectormap"
     ] ,
     "vendor.ui": [
-      // "select2",
+      "select2",
       // "script!summernote",
       // "script!markdown",
       // "script!he",
@@ -183,7 +183,7 @@ var scripts = {
     //"easy-pie",
     //"sparkline",
     //'react-dom',
-    //"select2",
+    // "select2",
     "summernote",
     "to-markdown",
     //"bootstrap-markdown",

@@ -107,11 +107,9 @@ module.exports = function(app, conn) {
             res.setHeader('Content-type', file.contentType);
 
             // Create file read stream and pipe stream
-            var readstream = gfs.createReadStream(options);
-            readstream.on("error", function (err) {
-              res.send("No file found with that id");
-            });
-            readstream.pipe(res);
+            gfs.createReadStream(options)
+            .on("error", function (err) { res.send("No file found with that id"); })
+            .pipe(res);
           });
         } else {
           res.status(400).send("No File found with that id");

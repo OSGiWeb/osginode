@@ -12,53 +12,54 @@ import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/component
 import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
+import Select2 from '../components/smartAdmin/forms/inputs/Select2.jsx'
 import { Dropdown, MenuItem } from 'react-bootstrap'
 
 import RepositoryChangeWizard from './RepositoryChangeWizard.jsx'
 
 import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
-        resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
+  resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
 import { setRepoWizardExpand } from '../actions/processes'
 
 // TODO: Modify validation fields for form
 let validationOptions = {
   // Rules for form validation
-  rules : {
-    name : {
-      required : true
+  rules: {
+    name: {
+      required: true
     },
-    email : {
-      required : true,
-      email : true
+    email: {
+      required: true,
+      email: true
     },
-    phone : {
-      required : true
+    phone: {
+      required: true
     },
-    interested : {
-      required : true
+    interested: {
+      required: true
     },
-    budget : {
-      required : true
+    budget: {
+      required: true
     }
   },
 
   // Messages for form validation
-  messages : {
-    name : {
-      required : 'Please enter your name'
+  messages: {
+    name: {
+      required: 'Please enter your name'
     },
-    email : {
-      required : 'Please enter your email address',
-      email : 'Please enter a VALID email address'
+    email: {
+      required: 'Please enter your email address',
+      email: 'Please enter a VALID email address'
     },
-    phone : {
-      required : 'Please enter your phone number'
+    phone: {
+      required: 'Please enter your phone number'
     },
-    interested : {
-      required : 'Please select interested service'
+    interested: {
+      required: 'Please select interested service'
     },
-    budget : {
-      required : 'Please select your budget'
+    budget: {
+      required: 'Please select your budget'
     }
   }
 };
@@ -194,7 +195,7 @@ class PrivateRepository extends Component {
           timeout: 2000
         });
       }
-      
+
       if (isUpdated === true) {
         $.bigBox({
           title: "插件更新成功！",
@@ -204,7 +205,7 @@ class PrivateRepository extends Component {
           icon: "fa fa-check",
           // number: "4"
         });
-      } else if (isUpdated === false){
+      } else if (isUpdated === false) {
         $.bigBox({
           title: "插件更新失败！",
           content: "插件名：高度窗；提交人：许昀",
@@ -236,8 +237,8 @@ class PrivateRepository extends Component {
 
     // TEST plugin dependencies
     let dependencies = [];
-    dependencies[0] = {'name':'PluginA', 'version':'0.0.1'};
-    dependencies[1] = {'name':'PluginB', 'version':'0.0.2'};
+    dependencies[0] = { 'name': 'PluginA', 'version': '0.0.1' };
+    dependencies[1] = { 'name': 'PluginB', 'version': '0.0.2' };
 
     let name = dependencies[0].name;
     let version = dependencies[0].version;
@@ -264,19 +265,20 @@ class PrivateRepository extends Component {
 
     // Dispath create plugin action
     dispatch(createPlugin({
-        pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
-        symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
-        category: ReactDOM.findDOMNode(this.refs.category).value,
-        version: ReactDOM.findDOMNode(this.refs.version).value,
-        author: userFullname,
-        releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
-        description: ReactDOM.findDOMNode(this.refs.description).value,
-        dependencies: dependencies,
-        isprivate: true,
-        filemeta: {
-          sourcecode: { id: '', name: file.name }
-        },
-        statusIcon: "<span class='label label-danger'>私有</span>" },
+      pluginname: ReactDOM.findDOMNode(this.refs.pluginname).value,
+      symbolicname: ReactDOM.findDOMNode(this.refs.symbolicname).value,
+      category: ReactDOM.findDOMNode(this.refs.category).value,
+      version: ReactDOM.findDOMNode(this.refs.version).value,
+      author: userFullname,
+      releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
+      description: ReactDOM.findDOMNode(this.refs.description).value,
+      dependencies: dependencies,
+      isprivate: true,
+      filemeta: {
+        sourcecode: { id: '', name: file.name }
+      },
+      statusIcon: "<span class='label label-danger'>私有</span>"
+    },
       uploadFile, config)); // upload data info and upload config as parameter
   }
 
@@ -325,7 +327,7 @@ class PrivateRepository extends Component {
     // Single row selection
     var data = rowData[0];
     const {dispatch} = this.props;
-    
+
     // Set selected data and states
     dispatch(setDatatableSelectedData(data, isSelected));
 
@@ -426,7 +428,7 @@ class PrivateRepository extends Component {
 
     return (
       <div className="modal fade" id="addPluginModal" tabIndex="-1" role="dialog"
-           aria-labelledby="addPluginModalLabel" aria-hidden="true">
+        aria-labelledby="addPluginModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -478,7 +480,7 @@ class PrivateRepository extends Component {
                           <section className="col col-6">
                             <label className="input"> <i className="icon-append fa fa-calendar"/>
                               <UiDatepicker type="text" name="releasedate" ref="releasedate" id="releasedate"
-                                            placeholder="发布时间"/>
+                                placeholder="发布时间"/>
                             </label>
                           </section>
                         </div>
@@ -510,7 +512,7 @@ class PrivateRepository extends Component {
                 取消
               </button>
               <button type="button" className="btn btn-primary" data-dismiss="modal"
-                      onClick={this.onCreatePluginSubmit}>
+                onClick={this.onCreatePluginSubmit}>
                 添加插件
               </button>
             </div>
@@ -531,7 +533,7 @@ class PrivateRepository extends Component {
     if (isSelected) {
       return (
         <div className="modal fade" id="editPluginModal" tabIndex="-1" role="dialog"
-             aria-labelledby="editPluginModalLabel" aria-hidden="true">
+          aria-labelledby="editPluginModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -583,7 +585,7 @@ class PrivateRepository extends Component {
                             <section className="col col-6">
                               <label className="input"> <i className="icon-append fa fa-calendar"/>
                                 <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
-                                              placeholder="发布时间" defaultValue={selectedData.releasedate}/>
+                                  placeholder="发布时间" defaultValue={selectedData.releasedate}/>
                               </label>
                             </section>
                           </div>
@@ -592,8 +594,8 @@ class PrivateRepository extends Component {
                         <fieldset>
                           <section>
                             <div className="input input-file">
-                            <span className="button"><input id="editfile" type="file" name="editpluginfile" ref="editpluginfile"
-                                                            onChange={this.onChangeEditPluginUploadField}/> 上传插件 </span>
+                              <span className="button"><input id="editfile" type="file" name="editpluginfile" ref="editpluginfile"
+                                onChange={this.onChangeEditPluginUploadField}/> 上传插件 </span>
                               <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件文件即保留已上传的文件" readOnly={true}/>
                             </div>
                           </section>
@@ -614,7 +616,7 @@ class PrivateRepository extends Component {
                   取消
                 </button>
                 <button type="button" className="btn btn-primary" data-dismiss="modal"
-                        onClick={this.onEditPluginSubmit}>
+                  onClick={this.onEditPluginSubmit}>
                   更新插件
                 </button>
               </div>
@@ -624,7 +626,7 @@ class PrivateRepository extends Component {
       )
     }
   }
-  
+
   renderPrivateRepository() {
     // Check if row in datatable is selected
     const { isSelected, selectedData } = this.props.plugin;
@@ -633,33 +635,33 @@ class PrivateRepository extends Component {
       <div className="row">
         <article className="col-sm-12">
           <JarvisWidget sortable={false} colorbutton={false} togglebutton={false} editbutton={false}
-                        fullscreenbutton={false} deletebutton={false} color="blueDark">
+            fullscreenbutton={false} deletebutton={false} color="blueDark">
             <header>
               <span className="widget-icon"> <i className="fa fa-table"/> </span>
               <h2>私有插件仓库</h2>
               <div className="widget-toolbar">
-                <button className={classnames(["btn btn-xs btn-primary"])} data-toggle="modal"
-                        data-target="#addPluginModal">
+                <button className={classnames(["btn btn-xs btn-primary"]) } data-toggle="modal"
+                  data-target="#addPluginModal">
                   <i className="fa fa-plus-square"/>
-                  &nbsp;&nbsp; 添加新插件
+                  &nbsp; &nbsp; 添加新插件
                 </button>
-                &nbsp;&nbsp;
+                &nbsp; &nbsp;
                 <Dropdown className="btn-group" id="widget-demo-dropdown" >
                   <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary" disabled={ !isSelected }>
-                    <i className="fa fa-wrench"/>&nbsp;&nbsp; 插件操作
+                    <i className="fa fa-wrench"/>&nbsp; &nbsp; 插件操作
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="dropdown-menu pull-right">
                     <MenuItem data-toggle="modal" data-target="#editPluginModal">
-                      <i className="fa fa-edit"/>&nbsp;编辑
+                      <i className="fa fa-edit"/>&nbsp; 编辑
                     </MenuItem>
                     <MenuItem disabled={ !selectedData.isprivate } onClick={this.onToggleStatus} >
-                      <i className="fa fa-cloud-upload"/>&nbsp;提交
+                      <i className="fa fa-cloud-upload"/>&nbsp; 发布
                     </MenuItem>
                     <MenuItem onClick={this.onDownloadPluginPkg} >
-                      <i className="fa fa-cloud-download"/>&nbsp;下载
+                      <i className="fa fa-cloud-download"/>&nbsp; 下载
                     </MenuItem>
                     <MenuItem onClick={this.onDeletePlugin}>
-                      <i className="fa fa-minus-square"/>&nbsp;删除
+                      <i className="fa fa-minus-square"/>&nbsp; 删除
                     </MenuItem>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -667,9 +669,9 @@ class PrivateRepository extends Component {
 
               <div className="widget-toolbar">
                 <div className="progress progress-striped active" data-tooltip="55%"
-                     data-tooltip-placement="bottom">
+                  data-tooltip-placement="bottom">
                   <div className="progress-bar progress-bar-success" ref="uploadprogress" role="progressbar"
-                       style={{width: this.state.uploadProgress + '%'}}>{this.state.uploadProgress + '%'}
+                    style={{ width: this.state.uploadProgress + '%' }}>{this.state.uploadProgress + '%'}
                   </div>
                 </div>
               </div>
@@ -693,7 +695,7 @@ class PrivateRepository extends Component {
       // data: plugins, // DONOT use manual request to database, use ajax request instead
       ajax: {
         url: '/pluginRepository',
-        dataSrc: function ( json ) { // data preprocess when retrieved data from databases
+        dataSrc: function (json) { // data preprocess when retrieved data from databases
           let formatData = [];
 
           // Format data which will be saved in store
@@ -704,6 +706,9 @@ class PrivateRepository extends Component {
             // Set status icon based on plugin status (private / public)
             formatData[i].statusIcon = formatData[i].isprivate ? "<span class='label label-danger'>私有</span>" :
               "<span class='label label-success'>公共</span>";
+              
+            //TODO: Create plugin list with symbolicname an version under category
+            // this.pluginlist = formatData[i]
           }
           return formatData;
         }
@@ -714,9 +719,9 @@ class PrivateRepository extends Component {
       },
       stateSave: true,
       columns: [
-        {data: "index"}, {data: "pluginname"}, {data: "symbolicname"}, {data: "category"},
-        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"},
-        {data: "statusIcon"}]
+        { data: "index" }, { data: "pluginname" }, { data: "symbolicname" }, { data: "category" },
+        { data: "version" }, { data: "author" }, { data: "releasedate" }, { data: "description" },
+        { data: "statusIcon" }]
     }
 
     return (
@@ -731,20 +736,20 @@ class PrivateRepository extends Component {
             paginationLength={ true }
             className="table table-striped table-bordered table-hover" width="100%">
             <thead>
-            <tr>
-              <th data-class="expand">ID</th>
-              <th data-class="expand">名称</th>
-              <th data-class="expand">标识</th>
-              <th data-class="expand">类别</th>
-              <th data-class="expand">版本</th>
-              <th data-class="expand">作者</th>
-              <th data-class="expand"><i
-                className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
-                &nbsp;&nbsp; 发布时间
-              </th>
-              <th data-class="expand">描述</th>
-              <th data-class="expand">状态</th>
-            </tr>
+              <tr>
+                <th data-class="expand">ID</th>
+                <th data-class="expand">名称</th>
+                <th data-class="expand">标识</th>
+                <th data-class="expand">类别</th>
+                <th data-class="expand">版本</th>
+                <th data-class="expand">作者</th>
+                <th data-class="expand"><i
+                  className="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"/>
+                  &nbsp; &nbsp; 发布时间
+                </th>
+                <th data-class="expand">描述</th>
+                <th data-class="expand">状态</th>
+              </tr>
             </thead>
           </Datatable>
         </div>
@@ -763,8 +768,8 @@ class PrivateRepository extends Component {
       <div id="content">
         <div className="row">
           <BigBreadcrumbs items={['插件开发', '私有插件仓库']} icon="table"
-                          className="col-xs-12 col-sm-7 col-md-7 col-lg-4"/>
-          <SubHeader />
+            className="col-xs-12 col-sm-7 col-md-7 col-lg-4"/>
+          {/*<SubHeader />*/}
         </div>
 
         <WidgetGrid>

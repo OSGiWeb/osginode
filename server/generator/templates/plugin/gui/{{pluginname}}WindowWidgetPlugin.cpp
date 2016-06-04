@@ -1,6 +1,7 @@
 #include "{{pluginname}}WindowWidgetPlugin.h"
 /* (TODO) Include user mainwondow GUI header */
 #include <QTextCodec>
+#include "form.h"
 
 
 {{pluginname}}WindowWidgetPlugin::{{pluginname}}WindowWidgetPlugin(){
@@ -22,6 +23,8 @@ void {{pluginname}}WindowWidgetPlugin::createWidget(){
 	*  				ICenterWindow* formsatsearch = new FormSatSearch();
 	*  				m_centerWindowList.append(formsatsearch);
 	**/
+    ICenterWindow* form = new Form();
+    m_centerWindowList.append(form);
 
 }
 

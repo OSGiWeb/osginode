@@ -18,7 +18,7 @@ set(PLUGIN_SRCS
     ${ZMQ_INCLUDE_PATH}/ZmqObject.cpp
     
     ### User class source
-    
+    gui/form.cpp
 )
 
 set(PLUGIN_MOC_SRCS
@@ -41,12 +41,12 @@ set(PLUGIN_MOC_SRCS
     ${ZMQ_INCLUDE_PATH}/ZmqObject.h
     
     ### User class header
-    
+    gui/form.h
 )
 
 set(PLUGIN_UI_FORMS
     ### User QT UI form
-    
+    gui/form.ui
 )
 
 set(PLUGIN_UI_RCCS

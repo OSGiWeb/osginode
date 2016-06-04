@@ -21,7 +21,7 @@ mongoConn();
 mongoose.connection.on('error', console.log);
 mongoose.connection.on('disconnected', mongoConn);
 
-// Bootstrap models
+// Load models
 fs.readdirSync(__dirname + '/models').forEach(function(file) {
   if(~file.indexOf('.js')) require(__dirname + '/models/' + file);
 });

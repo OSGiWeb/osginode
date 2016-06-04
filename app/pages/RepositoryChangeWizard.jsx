@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
 import Wizard from '../components/smartAdmin/forms/wizards/Wizard.jsx'
-import countries from '../components/smartAdmin/forms/commons/countries'
+import Select2 from '../components/smartAdmin/forms/inputs/Select2.jsx'
 
 import { setRepoWizardExpand } from '../actions/processes'
 import { updatePlugin } from '../actions/plugins'
@@ -104,12 +104,12 @@ class RepositoryChangeWizard extends Component {
     // Initialize react state variables
     this.state = {
       installmanualStyle: {
-        textAlign:'center',
+        textAlign: 'center',
         // fontSize:20,
         // fontWeight:'bold'
       },
       compilemanualStyle: {
-        textAlign:'center',
+        textAlign: 'center',
         // fontSize:20,
         // fontWeight:'bold'
       }
@@ -124,7 +124,7 @@ class RepositoryChangeWizard extends Component {
   componentWillUnmount() {
   }
 
-  onWizardComplete(data){
+  onWizardComplete(data) {
     console.log('wizard submit stuff', data);
 
     const { dispatch } = this.props;
@@ -152,48 +152,56 @@ class RepositoryChangeWizard extends Component {
   onTextInputFoucused(e) {
     const { name } = e.currentTarget;
 
-    if(name === 'installmanual') {
+    if (name === 'installmanual') {
       this.setState({
         installmanualStyle: {
-          textAlign:'left'
-        }});
+          textAlign: 'left'
+        }
+      });
     } else if (name === 'compilemanual') {
       this.setState({
         compilemanualStyle: {
-          textAlign:'left'
-        }});
+          textAlign: 'left'
+        }
+      });
     }
   }
 
   onTextInputBlured(e) {
     const { name } = e.currentTarget;
 
-    if(name === 'installmanual') {
+    if (name === 'installmanual') {
       this.setState({
         installmanualStyle: {
-          textAlign:'left',
+          textAlign: 'left',
           color: 'green'
-        }});
+        }
+      });
     } else if (name === 'compilemanual') {
       this.setState({
         compilemanualStyle: {
-          textAlign:'left',
+          textAlign: 'left',
           color: 'green'
-        }});
+        }
+      });
     }
   }
 
   render() {
 
     const { isRepoWizardExpand } = this.props.process;
+    const { selectedData } = this.props.plugin;
+
+    // TEST select2 
+    var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
 
     if (isRepoWizardExpand === true) {
       return (
         <JarvisWidget togglebutton={false} sortable={false} colorbutton={false} editbutton={false} deletebutton={false}
-                      fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={false} color="green">
+          fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={false} color="green">
           <header>
             <span className="widget-icon"> <i className="fa fa-cloud-upload"/> </span>
-            <h2> 插件提交流程 </h2>
+            <h2> 插件发布流程 </h2>
             <div className="widget-toolbar">
               <i className="fa fa-lg fa-times" onClick={this.onWizardFormClose}/>
             </div>
@@ -207,7 +215,7 @@ class RepositoryChangeWizard extends Component {
                 <UiValidate options={validateOptions}>
                   <form noValidate="novalidate">
                     <Wizard className="col-sm-12"
-                            onComplete={this.onWizardComplete}>
+                      onComplete={this.onWizardComplete}>
                       <div className="form-bootstrapWizard clearfix">
                         <ul className="bootstrapWizard">
                           <li data-smart-wizard-tab="1">
@@ -242,10 +250,10 @@ class RepositoryChangeWizard extends Component {
                                 <div className="form-group">
                                   <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
-                                  <textarea rows="1" className="form-control"
-                                            placeholder="请简短介绍该插件的功能" type="text" name="pluginintrod"
-                                            data-smart-validate-input="" data-required=""
-                                            data-message="请填写提交插件介绍信息"/>
+                                    <textarea rows="1" className="form-control"
+                                      placeholder="请简短介绍该插件的功能" type="text" name="pluginintrod"
+                                      data-smart-validate-input="" data-required=""
+                                      data-message="请填写提交插件介绍信息"/>
                                   </div>
                                 </div>
                               </fieldset>
@@ -259,11 +267,11 @@ class RepositoryChangeWizard extends Component {
                                 <div className="form-group">
                                   <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-gavel fa-fw"/></span>
-                                  <textarea rows="6" className="form-control" style={ this.state.installmanualStyle }
-                                            placeholder="请输入插件安装步骤" type="text" name="installmanual"
-                                            data-smart-validate-input="" data-required=""
-                                            data-message="请填写提交插件安装指南信息"
-                                            onFocus={this.onTextInputFoucused} onBlur={this.onTextInputBlured}/>
+                                    <textarea rows="6" className="form-control" style={ this.state.installmanualStyle }
+                                      placeholder="请输入插件安装步骤" type="text" name="installmanual"
+                                      data-smart-validate-input="" data-required=""
+                                      data-message="请填写提交插件安装指南信息"
+                                      onFocus={this.onTextInputFoucused} onBlur={this.onTextInputBlured}/>
                                   </div>
                                 </div>
                               </fieldset>
@@ -274,11 +282,11 @@ class RepositoryChangeWizard extends Component {
                                 <div className="form-group">
                                   <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-tasks fa-fw"/></span>
-                                  <textarea rows="6" className="form-control" style={ this.state.compilemanualStyle }
-                                            placeholder="请输入插件编译和集成方法" type="text" name="compilemanual"
-                                            data-smart-validate-input="" data-required=""
-                                            data-message="请填写提交插件编译指南信息"
-                                            onFocus={this.onTextInputFoucused} onBlur={this.onTextInputBlured}/>
+                                    <textarea rows="6" className="form-control" style={ this.state.compilemanualStyle }
+                                      placeholder="请输入插件编译和集成方法" type="text" name="compilemanual"
+                                      data-smart-validate-input="" data-required=""
+                                      data-message="请填写提交插件编译指南信息"
+                                      onFocus={this.onTextInputFoucused} onBlur={this.onTextInputBlured}/>
                                   </div>
                                 </div>
                               </fieldset>
@@ -286,114 +294,132 @@ class RepositoryChangeWizard extends Component {
                           </div>
 
                         </div>
+
                         <div className="tab-pane" data-smart-wizard-pane="2">
                           <br/>
-
                           <h3><strong> 步骤 2 </strong> - 版本管理 </h3>
 
                           <div className="row">
-                            <div className="col-sm-4">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-flag fa-lg fa-fw"/></span>
-                                  <select name="country" data-smart-validate-input=""
-                                          data-required=""
-                                          className="form-control input-lg">
-
-                                    {countries.map(function(country){
-                                      return <option value={country.key} key={country.key}>{country.value}</option>
-                                    })}
-
-                                  </select>
-                                </div>
+                            <div className="col-sm-12">
+                              <legend style={styles.legendFont}> 发布插件版本 </legend>
+                              <div className="col-sm-6">
+                                <fieldset>
+                                  <div className="form-group">
+                                    <div className="input-group">
+                                      <span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
+                                      <input className="form-control"
+                                        placeholder="发布插件版本" type="text" ref="pluginversion"
+                                        data-smart-validate-input="" data-required="" readOnly={true}
+                                        defaultValue={selectedData.version}/>
+                                    </div>
+                                  </div>
+                                </fieldset>
                               </div>
-                            </div>
-
-                            <div className="col-sm-4">
-                              <div className="form-group">
-                                <div className="input-group">
-                                  <span className="input-group-addon"><i className="fa fa-map-marker fa-lg fa-fw"/></span>
-                                  <select className="form-control input-lg"
-                                          data-smart-validate-input="" data-required=""
-                                          name="city">
-                                    <option value="" >Select City
-                                    </option>
-                                    <option>Amsterdam</option>
-                                    <option>Atlanta</option>
-                                    <option>Baltimore</option>
-                                    <option>Boston</option>
-                                    <option>Buenos Aires</option>
-                                    <option>Calgary</option>
-                                    <option>Chicago</option>
-                                    <option>Denver</option>
-                                    <option>Dubai</option>
-                                    <option>Frankfurt</option>
-                                    <option>Hong Kong</option>
-                                    <option>Honolulu</option>
-                                    <option>Houston</option>
-                                    <option>Kuala Lumpur</option>
-                                    <option>London</option>
-                                    <option>Los Angeles</option>
-                                    <option>Melbourne</option>
-                                    <option>Mexico City</option>
-                                    <option>Miami</option>
-                                    <option>Minneapolis</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-sm-4">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-envelope-o fa-lg fa-fw"/></span>
-                                  <input className="form-control input-lg"
-                                         placeholder="Postal Code" type="text"
-                                         name="postal" data-smart-validate-input=""
-                                         data-required="" data-minlength="4"
-                                         value="London"/>
-                                </div>
+                              <div className="col-sm-6">
+                                <fieldset>
+                                  <div className="form-group">
+                                    <div className="input-group">
+                                      <span className="input-group-addon"><i className="fa fa-file fa-fw"/></span>
+                                      <select className="form-control"
+                                        data-smart-validate-input="" data-required=""
+                                        ref="plugintype" defaultValue={"插件类型"} data-message="请选择插件类型">
+                                        <option defaultValue="插件类型" disabled={true}> 被依赖插件 </option>
+                                        <option defaultValue="核心插件">核心插件</option>
+                                        <option defaultValue="显示插件">显示插件</option>
+                                        <option defaultValue="通信插件">通信插件</option>
+                                        <option defaultValue="辅助插件">辅助插件</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </fieldset>
                               </div>
                             </div>
                           </div>
+
+
                           <div className="row">
-                            <div className="col-sm-6">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-phone fa-lg fa-fw"/></span>
-                                  <input className="form-control input-lg"
-                                         data-smart-masked-input="+99 (999) 999-9999"
-                                         data-mask-placeholder="X" placeholder="+1"
-                                         type="text" name="wphone"
-                                         data-smart-validate-input="" data-required=""
-                                         data-minlength="10"
-                                         value="13013039639"/>
+                            <div className="col-sm-12">
+                              <legend style={styles.legendFont}> 插件依赖管理 </legend>
+                              <div className="col-sm-6">
+                                <label> 选择依赖插件 </label>
+                                <Select2 multiple={true} style={{ width: '100%' }}
+                                  className="select2" defaultValue={["NV", "MT", "MI"]}>
+                                  <optgroup label={selectedData.category}>
+                                    <option value="AK">Alaska</option>
+                                    <option value="HI">Hawaii</option>
+                                  </optgroup>
+                                  <optgroup label="Pacific Time Zone">
+                                    <option value="CA">California</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="WA">Washington</option>
+                                  </optgroup>
+                                  <optgroup label="Mountain Time Zone">
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="WY">Wyoming</option>
+                                  </optgroup>
+                                  <optgroup label="Central Time Zone">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="WI">Wisconsin</option>
+                                  </optgroup>
+                                  <optgroup label="Eastern Time Zone">
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WV">West Virginia</option>
+                                  </optgroup>
+                                </Select2>
                                 </div>
-                              </div>
-                            </div>
-                            <div className="col-sm-6">
-                              <div className="form-group">
-                                <div className="input-group">
-                                                                <span className="input-group-addon"><i
-                                                                  className="fa fa-mobile fa-lg fa-fw"/></span>
-                                  <input className="form-control input-lg"
-                                         data-smart-masked-input="+99 (999) 999-9999"
-                                         data-mask-placeholder="X" placeholder="+01"
-                                         type="text" name="hphone"
-                                         data-smart-validate-input="" data-required=""
-                                         data-minlength="10"
-                                         value="13013039639"/>
+                                
+                                <div className="col-sm-6">
+                                  <label> 选择依赖插件 </label>
+                                  <Select2 multiple={true} style={{ width: '100%' }} data={data}
+                                    className="select2">
+                                  </Select2>
                                 </div>
-                              </div>
+
                             </div>
                           </div>
                         </div>
+
                         <div className="tab-pane" data-smart-wizard-pane="3">
                           <br/>
-
                           <h3><strong> 步骤 3 </strong> - 附件上传 </h3>
 
                           <div className="alert alert-info fade in">
