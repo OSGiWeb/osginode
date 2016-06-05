@@ -107,7 +107,7 @@ exports.downloadPlugin = function (req, res) {
   var zipFilePath = downloadPath + zipName;
   
   // Set download file header incl. filename and type
-  res.setHeader('Content-disposition', 'attachment; filename=' + zipName);
+  res.setHeader("Content-disposition", "attachment; filename*=UTF-8''" + encodeRFC5987ValueChars(zipName));
   res.setHeader('Content-type', 'binary/octet-stream');
 
   // Check file existance
@@ -146,6 +146,17 @@ function mkdir(path, fn) {
     console.log('   \033[36mcreate\033[0m : ' + path);
     fn && fn();
   });
+}
+
+function encodeRFC5987ValueChars(str) {
+  return encodeURIComponent(str).
+    // Note that although RFC3986 reserves "!", RFC5987 does not,
+    // so we do not need to escape it
+    replace(/['()]/g, escape). // i.e., %27 %28 %29
+    replace(/\*/g, '%2A').
+    // The following are not required for percent-encoding per RFC5987, 
+    // so we can allow for a little better readability over the wire: |`^
+    replace(/%(?:7C|60|5E)/g, unescape);
 }
 
 // function copy_template(from, to) {

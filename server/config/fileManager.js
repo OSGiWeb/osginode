@@ -6,7 +6,7 @@
 var fs = require("fs");
 var mime = require('mime');
 var multer = require("multer");
-var upload = multer({dest: "./uploads"});
+var upload = multer({ dest: "./uploads" });
 var secrets = require('./secrets');
 var _ = require('lodash');
 
@@ -15,13 +15,13 @@ var Grid = require("gridfs-stream");
 var gfs;
 Grid.mongo = mongoose.mongo;
 
-module.exports = function(app, conn) {
+module.exports = function (app, conn) {
 
-  conn.once("open", function(){
+  conn.once("open", function () {
 
 
     gfs = Grid(conn.db);
-    app.get("/", function(req,res){
+    app.get("/", function (req, res) {
       //renders a multipart/form-data form
       res.render("home");
     });
@@ -33,7 +33,7 @@ module.exports = function(app, conn) {
      * When reached the innner of app.post() function, indicated the upload stream to multer is completed and
      * the multer -> MongoDB GridFS will begin.
      */
-    app.post("/pluginRepository/upload/:pluginid", upload.single("pluginfile"), function(req, res, next){
+    app.post("/pluginRepository/upload/:pluginid", upload.single("pluginfile"), function (req, res, next) {
 
       console.log(req.params.pluginid);
       console.log(req.file);
@@ -65,13 +65,15 @@ module.exports = function(app, conn) {
 
       // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
       fs.createReadStream("./uploads/" + req.file.filename) // req.file.filename is already calculate with MD5
-        .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
-          if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file");}
+        .on("end", function () {
+          fs.unlink("./uploads/" + req.file.filename, function (err) {
+            if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file"); }
 
-          console.log('fileid: ', mongoId);
-          res.status(200).json({ fileid: mongoId })
-        })})
-        .on("err", function(){res.status(400).send("Error on uploading file");})
+            console.log('fileid: ', mongoId);
+            res.status(200).json({ fileid: mongoId })
+          })
+        })
+        .on("err", function () { res.status(400).send("Error on uploading file"); })
         .pipe(writestream);
     });
 
@@ -84,7 +86,7 @@ module.exports = function(app, conn) {
      * TODO: Add manuel request to URL
      * TODO: As one plugin can link to many uploaded files, must add another paramerter, e.g.: filename to identify file in DB
      */
-    app.get("/pluginRepository/download/:fileid", function(req, res){
+    app.get("/pluginRepository/download/:fileid", function (req, res) {
 
       // Config download options (CAUTION: 'root' must be defined, if use none-default i.e.:'fs' GridFS DB)
       var options = {
@@ -92,7 +94,7 @@ module.exports = function(app, conn) {
         root: 'plugins'
       };
 
-      gfs.exist(options, function(err, found) {
+      gfs.exist(options, function (err, found) {
         if (err) return res.status(400).send("Error occured");
         if (found) {
           // Use GridFS find method to get meta data
@@ -103,13 +105,13 @@ module.exports = function(app, conn) {
             }
 
             // Set download file header incl. filename and type
-            res.setHeader('Content-disposition', 'attachment; filename=' + file.filename);
-            res.setHeader('Content-type', file.contentType);
+            res.setHeader("Content-disposition", "attachment; filename*=UTF-8''" + encodeRFC5987ValueChars(file.filename)); // fixed downlaod with chinese character problem 
+            res.setHeader("Content-type", file.contentType);
 
             // Create file read stream and pipe stream
             gfs.createReadStream(options)
-            .on("error", function (err) { res.send("No file found with that id"); })
-            .pipe(res);
+              .on("error", function (err) { res.send("No file found with that id"); })
+              .pipe(res);
           });
         } else {
           res.status(400).send("No File found with that id");
@@ -123,7 +125,7 @@ module.exports = function(app, conn) {
      * 1. Delete related plugins based on plugin id;
      * 2. When deleting successful, update new plugin file.
      */
-    app.put("/pluginRepository/update/:fileid&:pluginid", upload.single("editpluginfile"), function(req, res){
+    app.put("/pluginRepository/update/:fileid&:pluginid", upload.single("editpluginfile"), function (req, res) {
 
       console.log(req.params.fileid, req.params.pluginid);
 
@@ -134,11 +136,11 @@ module.exports = function(app, conn) {
       };
 
       /* DELETE PROCESS: Delete files by using GridFS '_id' */
-      gfs.exist(deleteOptions, function(err, found){
-        if(err) return res.status(400).send("Error occured");
-        if(found){
-          gfs.remove(deleteOptions, function(err){
-            if(err)
+      gfs.exist(deleteOptions, function (err, found) {
+        if (err) return res.status(400).send("Error occured");
+        if (found) {
+          gfs.remove(deleteOptions, function (err) {
+            if (err)
               return res.status(400).send("Error occured");
             console.log('removed with id: ', req.params.fileid);
 
@@ -157,13 +159,15 @@ module.exports = function(app, conn) {
 
             // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
             fs.createReadStream("./uploads/" + req.file.filename) // req.file.filename is already calculate with MD5
-              .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){
-                if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file");}
+              .on("end", function () {
+                fs.unlink("./uploads/" + req.file.filename, function (err) {
+                  if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file"); }
 
-                console.log('created fileid: ', mongoId);
-                res.status(200).json({ updatedfileid: mongoId })
-              })})
-              .on("err", function(){res.status(400).send("Error on uploading file");})
+                  console.log('created fileid: ', mongoId);
+                  res.status(200).json({ updatedfileid: mongoId })
+                })
+              })
+              .on("err", function () { res.status(400).send("Error on uploading file"); })
               .pipe(writestream);
 
             // // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
@@ -190,22 +194,22 @@ module.exports = function(app, conn) {
      * Handle 'delete' request for files
      * Delete file in MongoDB GridFS
      */
-    app.delete("/pluginRepository/delete/:fileid", function(req, res){
+    app.delete("/pluginRepository/delete/:fileid", function (req, res) {
 
       var options = {
         _id: req.params.fileid,
         root: 'plugins'
       };
 
-      gfs.exist(options, function(err, found){
-        if(err) return res.send("Error occured");
-        if(found){
-          gfs.remove(options, function(err){
-            if(err) return res.status(400).send("Error occured");
+      gfs.exist(options, function (err, found) {
+        if (err) return res.send("Error occured");
+        if (found) {
+          gfs.remove(options, function (err) {
+            if (err) return res.status(400).send("Error occured");
             console.log('File deleted!');
             res.status(200).send("File deleted");
           });
-        } else{
+        } else {
           res.status(400).send("No file found with that id");
         }
       });
@@ -259,3 +263,14 @@ module.exports = function(app, conn) {
   }); //END conn.once()
 
 };
+
+function encodeRFC5987ValueChars(str) {
+  return encodeURIComponent(str).
+    // Note that although RFC3986 reserves "!", RFC5987 does not,
+    // so we do not need to escape it
+    replace(/['()]/g, escape). // i.e., %27 %28 %29
+    replace(/\*/g, '%2A').
+    // The following are not required for percent-encoding per RFC5987, 
+    // so we can allow for a little better readability over the wire: |`^
+    replace(/%(?:7C|60|5E)/g, unescape);
+}
