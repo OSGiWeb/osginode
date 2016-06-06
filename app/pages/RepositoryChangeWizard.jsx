@@ -100,7 +100,10 @@ class RepositoryChangeWizard extends Component {
     this.onWizardFormClose = this.onWizardFormClose.bind(this);
     this.onTextInputFoucused = this.onTextInputFoucused.bind(this);
     this.onTextInputBlured = this.onTextInputBlured.bind(this);
-
+    this.onDependenciesSelect = this.onDependenciesSelect.bind(this);
+    this.onDependenciesUnselect = this.onDependenciesUnselect.bind(this);
+    
+   
     // Initialize react state variables
     this.state = {
       installmanualStyle: {
@@ -149,6 +152,17 @@ class RepositoryChangeWizard extends Component {
 
   }
 
+
+  /* Triggered when dependencies select changed (incl. selected / unselected) */ 
+  onDependenciesSelect(event) {
+    var selectOption = event.params.data.text;
+    
+  }
+  
+  onDependenciesUnselect(event) {
+    var unselectOption = event.params.data.text;
+  }
+  
   onTextInputFoucused(e) {
     const { name } = e.currentTarget;
 
@@ -193,7 +207,18 @@ class RepositoryChangeWizard extends Component {
     const { selectedData } = this.props.plugin;
 
     // TEST select2 
-    var data = [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+    var data = [
+      {
+        text: 'enhancement', "children": [
+          { id: 1, text: 'ench_1' },
+          { id: 2, text: 'ench_2' },
+        ]
+      },
+      { id: 3, text: 'bug' },
+      { id: 4, text: 'duplicate' },
+      { id: 5, text: 'invalid' },
+      { id: 6, text: 'wontfix' }
+    ];
 
     if (isRepoWizardExpand === true) {
       return (
@@ -405,14 +430,15 @@ class RepositoryChangeWizard extends Component {
                                     <option value="WV">West Virginia</option>
                                   </optgroup>
                                 </Select2>
-                                </div>
-                                
-                                <div className="col-sm-6">
-                                  <label> 选择依赖插件 </label>
-                                  <Select2 multiple={true} style={{ width: '100%' }} data={data}
-                                    className="select2">
-                                  </Select2>
-                                </div>
+                              </div>
+
+                              <div className="col-sm-6">
+                                <label> 选择依赖插件 </label>
+                                <Select2 multiple={true} style={{ width: '100%' }} data={data}
+                                  className="select2" ref="dependenciesselect" 
+                                  onDependenciesSelect={this.onDependenciesSelect} onDependenciesUnselect={this.onDependenciesUnselect} >
+                                </Select2>
+                              </div>
 
                             </div>
                           </div>
