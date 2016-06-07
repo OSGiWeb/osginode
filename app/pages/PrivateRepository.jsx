@@ -98,6 +98,8 @@ class PrivateRepository extends Component {
     this.state = {
       uploadProgress: 0
     };
+    
+    // this.pluginlist = {};
   }
 
   componentDidMount() {
@@ -111,7 +113,6 @@ class PrivateRepository extends Component {
     g_uploadPercent = 0;
     dispatch(resetStoreStates());
     clearInterval(this.interval);
-
   }
 
   // Timer callback function to control update progress
@@ -197,22 +198,18 @@ class PrivateRepository extends Component {
       }
 
       if (isUpdated === true) {
-        $.bigBox({
+        $.smallBox({
           title: "插件更新成功！",
           content: "插件名：高度窗；提交人：许昀",
           color: "#739E73",
-          timeout: 2000,
-          icon: "fa fa-check",
-          // number: "4"
+          timeout: 2000
         });
       } else if (isUpdated === false) {
-        $.bigBox({
+        $.smallBox({
           title: "插件更新失败！",
           content: "插件名：高度窗；提交人：许昀",
           color: "#296191",
-          timeout: 2000,
-          icon: "fa fa-check",
-          // number: "4"
+          timeout: 2000
         });
       }
 
@@ -706,9 +703,6 @@ class PrivateRepository extends Component {
             // Set status icon based on plugin status (private / public)
             formatData[i].statusIcon = formatData[i].isprivate ? "<span class='label label-danger'>私有</span>" :
               "<span class='label label-success'>公共</span>";
-              
-            //TODO: Create plugin list with symbolicname an version under category
-            // this.pluginlist = formatData[i]
           }
           return formatData;
         }

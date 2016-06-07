@@ -19,7 +19,7 @@ let Select2 = React.createClass({
         var element = $(this.getHold());
 
         var _select2;
-        _select2 = element.select2({ data: this.props.data });
+        _select2 = element.select2( this.props.options );
 
         // Invoke call back to retrieve select2 events
         const { onDependenciesSelect, onDependenciesUnselect } = this.props;

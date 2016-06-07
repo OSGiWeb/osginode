@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom';
+import _ from 'lodash'
 import { connect } from 'react-redux';
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
@@ -102,8 +103,8 @@ class RepositoryChangeWizard extends Component {
     this.onTextInputBlured = this.onTextInputBlured.bind(this);
     this.onDependenciesSelect = this.onDependenciesSelect.bind(this);
     this.onDependenciesUnselect = this.onDependenciesUnselect.bind(this);
-    
-   
+
+
     // Initialize react state variables
     this.state = {
       installmanualStyle: {
@@ -117,6 +118,9 @@ class RepositoryChangeWizard extends Component {
         // fontWeight:'bold'
       }
     };
+
+    // Initialize variables used in class
+    this.dependencies = [];
   }
 
   componentDidMount() {
@@ -153,16 +157,20 @@ class RepositoryChangeWizard extends Component {
   }
 
 
-  /* Triggered when dependencies select changed (incl. selected / unselected) */ 
+  /* Triggered when dependencies select changed (incl. selected / unselected) */
   onDependenciesSelect(event) {
     var selectOption = event.params.data.text;
-    
+    this.dependencies.push(event.params.data);
   }
-  
+
   onDependenciesUnselect(event) {
     var unselectOption = event.params.data.text;
+    
+    _.remove(this.dependencies, function (n) {
+      return n.id === event.params.data.id;
+    });
   }
-  
+
   onTextInputFoucused(e) {
     const { name } = e.currentTarget;
 
@@ -206,19 +214,63 @@ class RepositoryChangeWizard extends Component {
     const { isRepoWizardExpand } = this.props.process;
     const { selectedData } = this.props.plugin;
 
-    // TEST select2 
-    var data = [
-      {
-        text: 'enhancement', "children": [
-          { id: 1, text: 'ench_1' },
-          { id: 2, text: 'ench_2' },
-        ]
-      },
-      { id: 3, text: 'bug' },
-      { id: 4, text: 'duplicate' },
-      { id: 5, text: 'invalid' },
-      { id: 6, text: 'wontfix' }
-    ];
+    // Select2 options to get data from database via ajax 
+    var options = {
+      ajax: {
+        url: '/pluginRepository',
+        dataType: 'json',
+        delay: 250,
+
+        processResults: function (data, params) {
+          // Initialize variables
+          var plugin = {
+            id: '',
+            text: ''
+          };
+          var pluginList = [];
+
+          // Reformat data from server to fill dependencies select box
+          // TODO: only public plugins can be selected!
+          for (let i = 0; i < data.length; i++) {
+
+            let isNewCategory = false;
+            plugin = {
+              id: data[i].id,
+              text: data[i].symbolicname + ':' + data[i].version
+            }
+
+            // Initialize pluginlist 
+            if (pluginList.length === 0) {
+              pluginList.push({
+                text: data[i].category,
+                children: [plugin]
+              });
+            } else {
+              // Check if the plugin is in same category 
+              for (let j = 0; j < pluginList.length; j++) {
+                if (pluginList[j].text === data[i].category) {
+                  pluginList[j].children.push(plugin);
+                  isNewCategory = false;
+                } else {
+                  isNewCategory = true;
+                }
+              }
+
+              // When the plugin is belong to new category, add it after check all element in pluginlist
+              if (isNewCategory === true) {
+                pluginList.push({
+                  text: data[i].category,
+                  children: [plugin]
+                });
+              }
+            }
+          }
+
+          return { results: pluginList };
+        },
+        cache: true
+      }
+    }
 
     if (isRepoWizardExpand === true) {
       return (
@@ -365,77 +417,10 @@ class RepositoryChangeWizard extends Component {
                           <div className="row">
                             <div className="col-sm-12">
                               <legend style={styles.legendFont}> 插件依赖管理 </legend>
-                              <div className="col-sm-6">
+                              <div className="col-sm-12">
                                 <label> 选择依赖插件 </label>
-                                <Select2 multiple={true} style={{ width: '100%' }}
-                                  className="select2" defaultValue={["NV", "MT", "MI"]}>
-                                  <optgroup label={selectedData.category}>
-                                    <option value="AK">Alaska</option>
-                                    <option value="HI">Hawaii</option>
-                                  </optgroup>
-                                  <optgroup label="Pacific Time Zone">
-                                    <option value="CA">California</option>
-                                    <option value="NV">Nevada</option>
-                                    <option value="OR">Oregon</option>
-                                    <option value="WA">Washington</option>
-                                  </optgroup>
-                                  <optgroup label="Mountain Time Zone">
-                                    <option value="AZ">Arizona</option>
-                                    <option value="CO">Colorado</option>
-                                    <option value="ID">Idaho</option>
-                                    <option value="MT">Montana</option>
-                                    <option value="NE">Nebraska</option>
-                                    <option value="NM">New Mexico</option>
-                                    <option value="ND">North Dakota</option>
-                                    <option value="UT">Utah</option>
-                                    <option value="WY">Wyoming</option>
-                                  </optgroup>
-                                  <optgroup label="Central Time Zone">
-                                    <option value="AL">Alabama</option>
-                                    <option value="AR">Arkansas</option>
-                                    <option value="IL">Illinois</option>
-                                    <option value="IA">Iowa</option>
-                                    <option value="KS">Kansas</option>
-                                    <option value="KY">Kentucky</option>
-                                    <option value="LA">Louisiana</option>
-                                    <option value="MN">Minnesota</option>
-                                    <option value="MS">Mississippi</option>
-                                    <option value="MO">Missouri</option>
-                                    <option value="OK">Oklahoma</option>
-                                    <option value="SD">South Dakota</option>
-                                    <option value="TX">Texas</option>
-                                    <option value="TN">Tennessee</option>
-                                    <option value="WI">Wisconsin</option>
-                                  </optgroup>
-                                  <optgroup label="Eastern Time Zone">
-                                    <option value="CT">Connecticut</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="FL">Florida</option>
-                                    <option value="GA">Georgia</option>
-                                    <option value="IN">Indiana</option>
-                                    <option value="ME">Maine</option>
-                                    <option value="MD">Maryland</option>
-                                    <option value="MA">Massachusetts</option>
-                                    <option value="MI">Michigan</option>
-                                    <option value="NH">New Hampshire</option>
-                                    <option value="NJ">New Jersey</option>
-                                    <option value="NY">New York</option>
-                                    <option value="NC">North Carolina</option>
-                                    <option value="OH">Ohio</option>
-                                    <option value="PA">Pennsylvania</option>
-                                    <option value="RI">Rhode Island</option>
-                                    <option value="SC">South Carolina</option>
-                                    <option value="VT">Vermont</option>
-                                    <option value="VA">Virginia</option>
-                                    <option value="WV">West Virginia</option>
-                                  </optgroup>
-                                </Select2>
-                              </div>
-
-                              <div className="col-sm-6">
-                                <label> 选择依赖插件 </label>
-                                <Select2 multiple={true} style={{ width: '100%' }} data={data}
-                                  className="select2" ref="dependenciesselect" 
+                                <Select2 multiple={true} style={{ width: '100%' }} options={ options }
+                                  className="select2" ref="dependenciesselect"
                                   onDependenciesSelect={this.onDependenciesSelect} onDependenciesUnselect={this.onDependenciesUnselect} >
                                 </Select2>
                               </div>
@@ -542,3 +527,20 @@ export default connect(mapStateToProps)(RepositoryChangeWizard);
 //           placeholder="安装指南" type="text" name="installmanual"
 //           data-smart-validate-input="" data-required=""
 //           data-message="请填写提交插件安装指南信息" onFocus={this.onTextInputFoucused}/>
+
+ // var testlist = [
+          //   {
+          //     text: '核心插件',
+          //     children: [
+          //       { id: '3c', text: 'com.plugins.core:1.0.0' },
+          //       { id: '2b', text: 'com.plugins.framework:1.0.0' },
+          //     ]
+          //   },
+          //   {
+          //     text: '显示插件',
+          //     children: [
+          //       { id: '3dd', text: 'com.plugins.Radar2D:0.0.1' },
+          //       { id: '4cc', text: 'com.plugins.RadarMonitor:0.0.1' },
+          //     ]
+          //   }
+          // ];
