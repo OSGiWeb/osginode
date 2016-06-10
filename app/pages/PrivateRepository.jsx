@@ -232,14 +232,20 @@ class PrivateRepository extends Component {
     // Sending plugin data to node and saving to database
     const { dispatch } = this.props;
 
-    // TEST plugin dependencies
-    let dependencies = [];
-    dependencies[0] = { 'name': 'PluginA', 'version': '0.0.1' };
-    dependencies[1] = { 'name': 'PluginB', 'version': '0.0.2' };
+    // TEST other plugin properties
+    // let dependencies = [];
+    // dependencies[0] = { 'id': 'pluginid', 'name': 'com.plugins.core', 'version': '0.0.1' };
+    // dependencies[1] = { 'id': 'pluginid', 'name': 'com.plugins.zmq', 'version': '0.0.2' };
 
-    let name = dependencies[0].name;
-    let version = dependencies[0].version;
-    // TEST plugin dependencies
+    // let name = dependencies[0].name;
+    // let version = dependencies[0].version;
+
+    // Plugin libraries
+    let libs = [];
+    libs[0] = { 'id': 'gridfs_id', 'name': 'libcore', 'type': '.dll'};
+    libs[1] = { 'id': 'gridfs_id', 'name': 'libzmq', 'type': '.so'};
+
+    // TEST other plugin properties
 
     // Get uploaded file instance in create plugin form
     // TODO: Bug to fix by remeber file name but cannot find file
@@ -269,11 +275,12 @@ class PrivateRepository extends Component {
       author: userFullname,
       releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
       description: ReactDOM.findDOMNode(this.refs.description).value,
-      dependencies: dependencies,
+      dependencies: [],
       isprivate: true,
       filemeta: {
         sourcecode: { id: '', name: file.name }
       },
+      libs: libs,
       statusIcon: "<span class='label label-danger'>私有</span>"
     },
       uploadFile, config)); // upload data info and upload config as parameter
@@ -450,7 +457,7 @@ class PrivateRepository extends Component {
                           </section>
                           <section className="col col-6">
                             <label className="input"> <i className="icon-append fa fa-user"/>
-                              <input type="text" disabled="disabled" name="symbolicname" ref="symbolicname" placeholder="标识" value="com.plugins.test"/>
+                              <input type="text" name="symbolicname" ref="symbolicname" placeholder="标识" defaultValue="com.plugins."/>
                             </label>
                           </section>
                         </div>
@@ -458,12 +465,12 @@ class PrivateRepository extends Component {
                         <div className="row">
                           <section className="col col-6">
                             <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                              <input type="text" disabled="disabled" name="version" ref="version" placeholder="版本号" value="0.0.1" />
+                              <input type="text" name="version" ref="version" placeholder="版本号" defaultValue="0.0.1" />
                             </label>
                           </section>
                           <section className="col col-6">
                             <label className="select">
-                              <select name="category" ref="category" defaultValue={"类别"}>
+                              <select name="category" ref="category" defaultValue={"显示插件"}>
                                 <option value="类别" disabled={true}>类别</option>
                                 <option value="核心插件">核心插件</option>
                                 <option value="显示插件">显示插件</option>

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import _ from 'lodash'
 import { connect } from 'react-redux';
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
@@ -25,63 +26,6 @@ let validateOptions = {
  * Styles for React component
  */
 var styles = {
-  // page: {
-  //   paddingBottom: 300,
-  // },
-  // default: {
-  //   height: 26,
-  //   borderWidth: 0.5,
-  //   borderColor: '#0f0f0f',
-  //   flex: 1,
-  //   fontSize: 13,
-  //   padding: 4,
-  // },
-  // multiline: {
-  //   borderWidth: 0.5,
-  //   borderColor: '#0f0f0f',
-  //   flex: 1,
-  //   fontSize: 13,
-  //   height: 50,
-  //   padding: 4,
-  //   marginBottom: 4,
-  // },
-  // multilineWithFontStyles: {
-  //   color: 'blue',
-  //   fontWeight: 'bold',
-  //   fontSize: 18,
-  //   fontFamily: 'Cochin',
-  //   height: 60,
-  // },
-  // multilineChild: {
-  //   width: 50,
-  //   height: 40,
-  //   position: 'absolute',
-  //   right: 5,
-  //   backgroundColor: 'red',
-  // },
-  // eventLabel: {
-  //   margin: 3,
-  //   fontSize: 12,
-  // },
-  // labelContainer: {
-  //   flexDirection: 'row',
-  //   marginVertical: 2,
-  //   flex: 1,
-  // },
-  // label: {
-  //   width: 115,
-  //   alignItems: 'flex-end',
-  //   marginRight: 10,
-  //   paddingTop: 2,
-  // },
-  // rewriteContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  // },
-  // remainder: {
-  //   textAlign: 'right',
-  //   width: 24,
-  // },
   legendFont: {
     color: 'blue',
     fontWeight: 'bold',
@@ -103,6 +47,8 @@ class RepositoryChangeWizard extends Component {
     this.onTextInputBlured = this.onTextInputBlured.bind(this);
     this.onDependenciesSelect = this.onDependenciesSelect.bind(this);
     this.onDependenciesUnselect = this.onDependenciesUnselect.bind(this);
+    // this.onDependenciesOpening = this.onDependenciesOpening.bind(this);
+    // this.fetchAllPluginsFromDB = this.fetchAllPluginsFromDB.bind(this);
 
 
     // Initialize react state variables
@@ -116,19 +62,25 @@ class RepositoryChangeWizard extends Component {
         textAlign: 'center',
         // fontSize:20,
         // fontWeight:'bold'
-      }
+      },
+      pluginList: []
     };
 
     // Initialize variables used in class
     this.dependencies = [];
+
+    // Initialize functions
+    // this.fetchAllPluginsFromDB();
   }
 
   componentDidMount() {
-
   }
 
   // Deconstructor
   componentWillUnmount() {
+    const { dispatch } = this.props;
+    // Close wizard form
+    dispatch(setRepoWizardExpand(false));
   }
 
   onWizardComplete(data) {
@@ -145,6 +97,9 @@ class RepositoryChangeWizard extends Component {
     // When the private->public of repo filled completed, close the form
     dispatch(setRepoWizardExpand(false));
 
+    // Add plugin dependencies
+    selectedData.dependencies = this.dependencies;
+
     // Dispatch update plugin action
     dispatch(updatePlugin(selectedData));
   }
@@ -156,16 +111,25 @@ class RepositoryChangeWizard extends Component {
 
   }
 
+  // onDependenciesOpening(event) {
+  //   this.fetchAllPluginsFromDB();
+  // }
 
   /* Triggered when dependencies select changed (incl. selected / unselected) */
   onDependenciesSelect(event) {
-    var selectOption = event.params.data.text;
-    this.dependencies.push(event.params.data);
+    let data = event.params.data;
+    let name = _.split(data.text, ':')[0];
+    let version = _.split(data.text, ':')[1];
+
+    let plugin = {
+      id: data.id,
+      name: name,
+      version: version
+    }
+    this.dependencies.push(plugin);
   }
 
   onDependenciesUnselect(event) {
-    var unselectOption = event.params.data.text;
-    
     _.remove(this.dependencies, function (n) {
       return n.id === event.params.data.id;
     });
@@ -219,7 +183,7 @@ class RepositoryChangeWizard extends Component {
       ajax: {
         url: '/pluginRepository',
         dataType: 'json',
-        delay: 250,
+        delay: 0,
 
         processResults: function (data, params) {
           // Initialize variables
@@ -229,8 +193,12 @@ class RepositoryChangeWizard extends Component {
           };
           var pluginList = [];
 
+          // Remove private plugins, only the public plugins can be selected as depended plugin
+          _.remove(data, function (n) {
+            return n.isprivate === true;
+          });
+
           // Reformat data from server to fill dependencies select box
-          // TODO: only public plugins can be selected!
           for (let i = 0; i < data.length; i++) {
 
             let isNewCategory = false;
@@ -251,6 +219,7 @@ class RepositoryChangeWizard extends Component {
                 if (pluginList[j].text === data[i].category) {
                   pluginList[j].children.push(plugin);
                   isNewCategory = false;
+                  break;
                 } else {
                   isNewCategory = true;
                 }
@@ -269,7 +238,9 @@ class RepositoryChangeWizard extends Component {
           return { results: pluginList };
         },
         cache: true
-      }
+      },
+
+      // data: this.state.pluginList
     }
 
     if (isRepoWizardExpand === true) {
@@ -327,7 +298,7 @@ class RepositoryChangeWizard extends Component {
                                 <div className="form-group">
                                   <div className="input-group">
                                     <span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
-                                    <textarea rows="1" className="form-control"
+                                    <textarea rows="2" className="form-control"
                                       placeholder="请简短介绍该插件的功能" type="text" name="pluginintrod"
                                       data-smart-validate-input="" data-required=""
                                       data-message="请填写提交插件介绍信息"/>
@@ -378,7 +349,20 @@ class RepositoryChangeWizard extends Component {
 
                           <div className="row">
                             <div className="col-sm-12">
-                              <legend style={styles.legendFont}> 发布插件版本 </legend>
+                              <legend style={styles.legendFont}> 发布插件名和版本 </legend>
+                              <div className="col-sm-6">
+                                <fieldset>
+                                  <div className="form-group">
+                                    <div className="input-group">
+                                      <span className="input-group-addon"><i className="fa fa-puzzle-piece fa-fw"/></span>
+                                      <input className="form-control"
+                                        placeholder="发布插件版本" type="text" ref="pluginversion"
+                                        data-smart-validate-input="" data-required="" readOnly={true}
+                                        defaultValue={selectedData.symbolicname}/>
+                                    </div>
+                                  </div>
+                                </fieldset>
+                              </div>  
                               <div className="col-sm-6">
                                 <fieldset>
                                   <div className="form-group">
@@ -391,37 +375,18 @@ class RepositoryChangeWizard extends Component {
                                     </div>
                                   </div>
                                 </fieldset>
-                              </div>
-                              <div className="col-sm-6">
-                                <fieldset>
-                                  <div className="form-group">
-                                    <div className="input-group">
-                                      <span className="input-group-addon"><i className="fa fa-file fa-fw"/></span>
-                                      <select className="form-control"
-                                        data-smart-validate-input="" data-required=""
-                                        ref="plugintype" defaultValue={"插件类型"} data-message="请选择插件类型">
-                                        <option defaultValue="插件类型" disabled={true}> 被依赖插件 </option>
-                                        <option defaultValue="核心插件">核心插件</option>
-                                        <option defaultValue="显示插件">显示插件</option>
-                                        <option defaultValue="通信插件">通信插件</option>
-                                        <option defaultValue="辅助插件">辅助插件</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </fieldset>
-                              </div>
+                              </div>  
                             </div>
                           </div>
-
 
                           <div className="row">
                             <div className="col-sm-12">
                               <legend style={styles.legendFont}> 插件依赖管理 </legend>
                               <div className="col-sm-12">
                                 <label> 选择依赖插件 </label>
-                                <Select2 multiple={true} style={{ width: '100%' }} options={ options }
+                                <Select2 multiple="multiple" style={{ width: '100%' }} options={ options }
                                   className="select2" ref="dependenciesselect"
-                                  onDependenciesSelect={this.onDependenciesSelect} onDependenciesUnselect={this.onDependenciesUnselect} >
+                                  onDependenciesSelect={this.onDependenciesSelect} onDependenciesUnselect={this.onDependenciesUnselect}>
                                 </Select2>
                               </div>
 
@@ -544,3 +509,120 @@ export default connect(mapStateToProps)(RepositoryChangeWizard);
           //     ]
           //   }
           // ];
+
+            // page: {
+  //   paddingBottom: 300,
+  // },
+  // default: {
+  //   height: 26,
+  //   borderWidth: 0.5,
+  //   borderColor: '#0f0f0f',
+  //   flex: 1,
+  //   fontSize: 13,
+  //   padding: 4,
+  // },
+  // multiline: {
+  //   borderWidth: 0.5,
+  //   borderColor: '#0f0f0f',
+  //   flex: 1,
+  //   fontSize: 13,
+  //   height: 50,
+  //   padding: 4,
+  //   marginBottom: 4,
+  // },
+  // multilineWithFontStyles: {
+  //   color: 'blue',
+  //   fontWeight: 'bold',
+  //   fontSize: 18,
+  //   fontFamily: 'Cochin',
+  //   height: 60,
+  // },
+  // multilineChild: {
+  //   width: 50,
+  //   height: 40,
+  //   position: 'absolute',
+  //   right: 5,
+  //   backgroundColor: 'red',
+  // },
+  // eventLabel: {
+  //   margin: 3,
+  //   fontSize: 12,
+  // },
+  // labelContainer: {
+  //   flexDirection: 'row',
+  //   marginVertical: 2,
+  //   flex: 1,
+  // },
+  // label: {
+  //   width: 115,
+  //   alignItems: 'flex-end',
+  //   marginRight: 10,
+  //   paddingTop: 2,
+  // },
+  // rewriteContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  // },
+  // remainder: {
+  //   textAlign: 'right',
+  //   width: 24,
+  // },
+
+    // fetchAllPluginsFromDB() {
+  //   axios.get('/pluginRepository').then(res => {
+  //     if (res.status === 200) { // Only when database operation return 'SUCCESS(200)', then modify the data in store
+  //       // Reformating data structure which is used to update select2 UI box
+  //       var data = res.data;
+
+  //       // Initialize variables
+  //       var plugin = {
+  //         id: '',
+  //         text: ''
+  //       };
+  //       var pluginList = [];
+
+  //       // Reformat data from server to fill dependencies select box
+  //       // TODO: only public plugins can be selected!
+  //       for (let i = 0; i < data.length; i++) {
+
+  //         let isNewCategory = false;
+  //         plugin = {
+  //           id: data[i].id,
+  //           text: data[i].symbolicname + ':' + data[i].version
+  //         }
+
+  //         // Initialize pluginlist 
+  //         if (pluginList.length === 0) {
+  //           pluginList.push({
+  //             text: data[i].category,
+  //             children: [plugin]
+  //           });
+  //         } else {
+  //           // Check if the plugin is in same category 
+  //           for (let j = 0; j < pluginList.length; j++) {
+  //             if (pluginList[j].text === data[i].category) {
+  //               pluginList[j].children.push(plugin);
+  //               isNewCategory = false;
+  //               break;
+  //             } else {
+  //               isNewCategory = true;
+  //             }
+  //           }
+
+  //           // When the plugin is belong to new category, add it after check all element in pluginlist
+  //           if (isNewCategory === true) {
+  //             pluginList.push({
+  //               text: data[i].category,
+  //               children: [plugin]
+  //             });
+  //           }
+  //         }
+  //       }
+
+  //       // Update React state
+  //       this.setState({
+  //         pluginList: pluginList
+  //       });
+  //     }
+  //   })
+  // }

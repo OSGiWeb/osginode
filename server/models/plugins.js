@@ -23,12 +23,8 @@ var PluginSchema = new mongoose.Schema({
       id: { type: String, default: ''},
       name: { type: String, default: '' }
     },
-    library: {
-      id: { type: String, default: ''},
-      name: { type: String, default: '' },
-      type: { type: String, default: '' }
-    },
-    Documents: Array,
+    libs: Array,
+    documents: Array,
   }
 });
 
