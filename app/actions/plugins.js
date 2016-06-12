@@ -24,7 +24,7 @@ polyfill();
  * @param String endpoint
  * @return Promise
  */
-function makePluginRequest(method, id, data, api='/pluginRepository') {
+function makePluginRequest(method, id, data, api = '/pluginRepository') {
   return request[method](api + (id ? ('/' + id) : ''), data);
 }
 
@@ -54,7 +54,7 @@ function getPluginsRequest() {
 function getPluginsSuccess(data) {
   return {
     type: types.GET_PLUGINS_SUCCESS,
-    data:data
+    data: data
   }
 }
 function getPluginsFailure() {
@@ -74,7 +74,7 @@ function createPluginRequest() {
 function createPluginSuccess(data) {
   return {
     type: types.CREATE_PLUGIN_SUCCESS,
-    data:data
+    data: data
   };
 }
 function createPluginFailure(data) {
@@ -214,11 +214,12 @@ export function createPlugin(pluginInfo, uploadData, uploadConfig) {
               }
             })
             .catch(ex => {
-              return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on storing plugin info!'}));
+              return dispatch(createPluginFailure({ identifier, error: 'Plugin creation failed on storing plugin info!' }));
             });
-        }})
+        }
+      })
       .catch(ex => {
-        return dispatch(createPluginFailure({identifier, error: 'Plugin creation failed on upload plugin file!'}));
+        return dispatch(createPluginFailure({ identifier, error: 'Plugin creation failed on upload plugin file!' }));
       });
   };
 }
@@ -238,14 +239,14 @@ export function fetchPlugins() {
     dispatch(getPluginsRequest());
 
     return makePluginRequest('get').then(res => {
-        if (res.status === 200) { // Only when database operation return 'SUCCESS(200)', then modify the data in store
-          // Format plugin data structure which will be saved in store
-          const pluginData = formatPluginData(res.data);
+      if (res.status === 200) { // Only when database operation return 'SUCCESS(200)', then modify the data in store
+        // Format plugin data structure which will be saved in store
+        const pluginData = formatPluginData(res.data);
 
-          // Dispatch a GET_PLUGIN_SUCCESS action and (in reducer) save all plugins to store
-          return dispatch(getPluginsSuccess(pluginData));
-        }
-      })
+        // Dispatch a GET_PLUGIN_SUCCESS action and (in reducer) save all plugins to store
+        return dispatch(getPluginsSuccess(pluginData));
+      }
+    })
       .catch(ex => {
         return dispatch(getPluginsFailure());
       });
@@ -268,10 +269,10 @@ export function updatePlugin(updatePlugin) {
     let updatePluginDB = _.omit(updatePlugin, 'id'); // Delete unused plugin info in client side
 
     return makePluginRequest('put', updatePlugin.id, updatePluginDB).then(res => {
-        if (res.status === 200) {
-          return dispatch(updatePluginSuccess(updatePlugin));
-        }
-      })
+      if (res.status === 200) {
+        return dispatch(updatePluginSuccess(updatePlugin));
+      }
+    })
       .catch(ex => {
         return dispatch(updatePluginFailure());
       });
@@ -295,25 +296,24 @@ export function updatePluginWithUploads(updatePlugin, uploadData, uploadConfig) 
 
     dispatch(updatePluginRequest());
 
-    axios.put('/pluginRepository/update/' + fileId + '&' + pluginId, uploadData, uploadConfig)
-      .then(res => {
-        if (res.status === 200) { // When old upload file is updated, change plugin info in database
-          // Set corresponding file id in flie metadata which will be updated in database
-          updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
+    if (uploadData.length > 1) {
 
-          // 'Put' update plugin info request
-          return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
+    } else {
+      axios.put('/pluginRepository/update/' + fileId + '&' + pluginId, uploadData, uploadConfig)
+        .then(res => {
+          if (res.status === 200) { // When old upload file is updated, change plugin info in database
+            // Set corresponding file id in flie metadata which will be updated in database
+            updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
+
+            // 'Put' update plugin info request
+            return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
               if (res.status === 200) {
                 return dispatch(updatePluginSuccess(updatePlugin));
               }
-            })
-            .catch(ex => {
-              return dispatch(updatePluginFailure());
-            });
-        }})
-      .catch(ex => {
-        return dispatch(deletePluginFailure());
-      });
+            }).catch(ex => { return dispatch(updatePluginFailure()); });
+          }
+        }).catch(ex => { return dispatch(deletePluginFailure()); });
+    }
   };
 }
 
@@ -332,9 +332,11 @@ export function deletePlguin(pluginid, fileid) {
         if (res.status === 200) { // When upload file is deleted, then delete plugin info
           return makePluginRequest('delete', pluginid)
             .then(res => {
-              if (res.status === 200) {return dispatch(deletePluginSuccess());}})
-            .catch(ex => {return dispatch(deletePluginFailure());});
-        }})
+              if (res.status === 200) { return dispatch(deletePluginSuccess()); }
+            })
+            .catch(ex => { return dispatch(deletePluginFailure()); });
+        }
+      })
       .catch(ex => {
         return dispatch(deletePluginFailure());
       });

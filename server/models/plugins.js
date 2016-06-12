@@ -16,6 +16,9 @@ var PluginSchema = new mongoose.Schema({
   author: String,
   releasedate: String,
   description: String,
+  pluginintrod: String,
+  installmanual: String,
+  compilemanual: String,
   isprivate: { type: Boolean, default: true},
   dependencies: Array,
   filemeta: {

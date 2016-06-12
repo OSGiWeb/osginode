@@ -248,7 +248,6 @@ class PrivateRepository extends Component {
     // TEST other plugin properties
 
     // Get uploaded file instance in create plugin form
-    // TODO: Bug to fix by remeber file name but cannot find file
     let file = ReactDOM.findDOMNode(this.refs.pluginfile).files[0];
     // Create form data to let server know the request source is from a form
     let uploadFile = new FormData();
@@ -494,8 +493,8 @@ class PrivateRepository extends Component {
                         <section>
                           <div className="input input-file">
                             <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onChangePluginUploadField}/>
-                              上传插件</span>
-                            <input name="fileinputname" ref="fileinputname" type="text" placeholder="上传插件包" readOnly={true}/>
+                              上传</span>
+                            <input name="fileinputname" ref="fileinputname" type="text" placeholder="上传插件源码包" readOnly={true}/>
                           </div>
                         </section>
 

@@ -33,12 +33,13 @@ var styles = {
   },
 }
 
+var testArray = ['app.dll    ', 'core.dll    ', 'zmq.dll    ']
+
 
 // TODO: use store to make params transfer bw. PrivateRepository and RepositoryChangeWizard
 class RepositoryChangeWizard extends Component {
   constructor(props) {
     super(props);
-
     // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
     // Otherwise fields in 'this.props' is NOT avaiable
     this.onWizardComplete = this.onWizardComplete.bind(this);
@@ -47,9 +48,7 @@ class RepositoryChangeWizard extends Component {
     this.onTextInputBlured = this.onTextInputBlured.bind(this);
     this.onDependenciesSelect = this.onDependenciesSelect.bind(this);
     this.onDependenciesUnselect = this.onDependenciesUnselect.bind(this);
-    // this.onDependenciesOpening = this.onDependenciesOpening.bind(this);
-    // this.fetchAllPluginsFromDB = this.fetchAllPluginsFromDB.bind(this);
-
+    this.onSelectUploadFiles = this.onSelectUploadFiles.bind(this);
 
     // Initialize react state variables
     this.state = {
@@ -63,14 +62,17 @@ class RepositoryChangeWizard extends Component {
         // fontSize:20,
         // fontWeight:'bold'
       },
-      pluginList: []
+      pluginList: [],
+      uploadLibsName: [],
+      uploadDocsName: []
     };
 
     // Initialize variables used in class
     this.dependencies = [];
-
-    // Initialize functions
-    // this.fetchAllPluginsFromDB();
+    this.uploadFiles = {
+      libs: [],
+      docs: []
+    }
   }
 
   componentDidMount() {
@@ -96,6 +98,11 @@ class RepositoryChangeWizard extends Component {
 
     // When the private->public of repo filled completed, close the form
     dispatch(setRepoWizardExpand(false));
+
+    // Add properties for plugin plugins
+    selectedData.pluginintrod = data.pluginintrod;
+    selectedData.installmanual = data.installmanual;
+    selectedData.compilemanual = data.compilemanual;
 
     // Add plugin dependencies
     selectedData.dependencies = this.dependencies;
@@ -133,6 +140,29 @@ class RepositoryChangeWizard extends Component {
     _.remove(this.dependencies, function (n) {
       return n.id === event.params.data.id;
     });
+  }
+
+  onSelectUploadFiles(event) {
+    let filesName = [];
+    let files = [];
+    let len = ReactDOM.findDOMNode(this.refs.filesupload).files.length;
+    let fileType = ReactDOM.findDOMNode(this.refs.uploadfiletype).value;
+
+    // Store uploaded files name in array based on file type 
+    for (let i = 0; i < len; i++) {
+      // Push files name in array to display on UI 
+      filesName.push(ReactDOM.findDOMNode(this.refs.filesupload).files[i].name + '; ');
+      files.push(ReactDOM.findDOMNode(this.refs.filesupload).files[i]);
+    }
+
+    // Update react state and files array
+    if (fileType === 'pluginlibs') { // Plugin libraries
+      this.setState({ uploadLibsName: filesName });
+      this.uploadFiles.libs = files;
+    } else if (fileType === 'plugindocs') { // Plugin documents
+      this.setState({ uploadDocsName: filesName });
+      this.uploadFiles.docs = files;
+    }
   }
 
   onTextInputFoucused(e) {
@@ -362,7 +392,7 @@ class RepositoryChangeWizard extends Component {
                                     </div>
                                   </div>
                                 </fieldset>
-                              </div>  
+                              </div>
                               <div className="col-sm-6">
                                 <fieldset>
                                   <div className="form-group">
@@ -375,7 +405,7 @@ class RepositoryChangeWizard extends Component {
                                     </div>
                                   </div>
                                 </fieldset>
-                              </div>  
+                              </div>
                             </div>
                           </div>
 
@@ -405,13 +435,56 @@ class RepositoryChangeWizard extends Component {
                             <i className="fa-fw fa fa-info"/>
                             <strong>注意!</strong> 可以上传多种插件信息，包括源码、文档和链接库等
                           </div>
-                          <div className="form-group">
-                            <label>插件附件列表</label>
-                            <input className="form-control input-lg"
-                                   placeholder="上传插件信息" type="text"
-                                   name="etc" id="etc"/>
+
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <label> 已选择的附件 </label>
+                                <div className="alert alert-info fade in">
+                                  <i className="fa-fw fa fa-info"/>
+                                  <strong> 插件库: </strong> {this.state.uploadLibsName} <br/>
+                                  <i className="fa-fw fa fa-file"/>
+                                  <strong> 插件文档: </strong> {this.state.uploadDocsName}
+                                </div>
+                            </div>
                           </div>
+
+                          <div className="row">
+                            <div className="col-sm-12">
+                              <div className="col-sm-6">
+																	<fieldset>
+																		<div className="form-group">
+																			<div className="input-group">
+																				<span className="input-group-addon"><i className="fa fa-file fa-fw"/></span>
+																				<select className="form-control"
+																					data-smart-validate-input="" data-required=""
+																					ref="uploadfiletype" defaultValue={"附件类型"} data-message="请选择附件类型">
+																					<option value="filetype" disabled={true}> 附件类型 </option>
+                                          <option value="pluginlibs">插件库</option>
+																					<option value="plugindocs">插件文档</option>
+																				</select>
+																			</div>
+																		</div>
+																	</fieldset>
+																</div>
+																<div className="col-sm-6">
+																	<fieldset>
+																		<div className="form-group">
+																			<div className="input-group">
+																				<span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
+																				<input className="form-control"  multiple="multiple" placeholder="上传插件附件"
+                                          type="file" ref="filesupload" onChange={this.onSelectUploadFiles}
+                                          data-smart-validate-input="" data-required="" readOnly={true}/>
+																			</div>
+																		</div>
+																	</fieldset>
+																</div>
+															</div>
+														</div>
+
+
+
                         </div>
+
                         <div className="tab-pane" data-smart-wizard-pane="4">
                           <br/>
 
@@ -591,14 +664,14 @@ export default connect(mapStateToProps)(RepositoryChangeWizard);
   //           text: data[i].symbolicname + ':' + data[i].version
   //         }
 
-  //         // Initialize pluginlist 
+  //         // Initialize pluginlist
   //         if (pluginList.length === 0) {
   //           pluginList.push({
   //             text: data[i].category,
   //             children: [plugin]
   //           });
   //         } else {
-  //           // Check if the plugin is in same category 
+  //           // Check if the plugin is in same category
   //           for (let j = 0; j < pluginList.length; j++) {
   //             if (pluginList[j].text === data[i].category) {
   //               pluginList[j].children.push(plugin);

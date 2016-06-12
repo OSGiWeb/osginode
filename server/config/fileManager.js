@@ -27,6 +27,25 @@ module.exports = function (app, conn) {
     });
 
     /**
+     * TODO: 'post' multiple files to gridfs
+     */
+    // app.post('/photos/upload', upload.array('photos', 12), function (req, res, next) {
+    //   // req.files is array of `photos` files
+    //   // req.body will contain the text fields, if there were any
+    // })
+
+    // var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
+    // app.post("/pluginRepository/uploads/:pluginid", cpUpload, function (req, res, next) {
+    //   // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
+    //   //
+    //   // e.g.
+    //   //  req.files['avatar'][0] -> File
+    //   //  req.files['gallery'] -> Array
+    //   //
+    //   // req.body will contain the text fields, if there were any
+    // })
+
+    /**
      * Handle 'post' request for files
      * Second parameter 'upload.single("pluginfile")' is multer middleware:
      * Defined file upload stream to multer and return upload status (e.g.: progress) to request.
@@ -163,7 +182,7 @@ module.exports = function (app, conn) {
                 fs.unlink("./uploads/" + req.file.filename, function (err) {
                   if (err) { console.log(err); return res.status(400).send("Error occured on creating upload file"); }
 
-                  console.log('created fileid: ', mongoId);
+                  console.log('Created fileid: ', mongoId);
                   res.status(200).json({ updatedfileid: mongoId })
                 })
               })
