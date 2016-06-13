@@ -106,14 +106,22 @@ class RepositoryChangeWizard extends Component {
 
     // Create form data to let server know the request source is from a form
     let attachments = new FormData();
-    
+
     // Attach files to upload 
-    for (let i = 0; i < this.uploadFiles.libs.length; i++) {
-      attachments.append('libs', this.uploadFiles.libs[i]);
-    }
-    for (let i = 0; i < this.uploadFiles.docs.length; i++) {
-      attachments.append('docs', this.uploadFiles.docs[i]);
-    }
+    // for (let i = 0; i < this.uploadFiles.libs.length; i++) {
+    //   attachments.append('libs', this.uploadFiles.libs[i]);
+    // }
+    // for (let i = 0; i < this.uploadFiles.docs.length; i++) {
+    //   attachments.append('docs', this.uploadFiles.docs[i]);
+    // }
+
+    // Attach files to upload 
+    _.forEach(this.uploadFiles, function (value, key) {
+      console.log(key);
+      _.forEach(value, function (file) {
+        attachments.append(key, file);
+      });
+    });
     
     // attachments.append('docs', this.uploadFiles.docs);
 

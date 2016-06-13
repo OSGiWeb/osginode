@@ -34,65 +34,65 @@ function encodeRFC5987ValueChars(str) {
     replace(/%(?:7C|60|5E)/g, unescape);
 }
 
-function doFileUpload(pluginId, file, fileCount) {
-  /**
-   * TODO:
-   * 1. Create a ObjectID for file storing in mongodb / mongoose
-   * 2. Use this id as fileid and saved as _id field in GridFS
-   * 3. Send this id back to clietn and would be saved in plugin info in mongodb
-   */
-  var ObjectId = mongoose.Types.ObjectId;
-  var mongoId = new ObjectId();
+// function doFileUpload(pluginId, file, fileCount) {
+//   /**
+//    * TODO:
+//    * 1. Create a ObjectID for file storing in mongodb / mongoose
+//    * 2. Use this id as fileid and saved as _id field in GridFS
+//    * 3. Send this id back to clietn and would be saved in plugin info in mongodb
+//    */
+//   var ObjectId = mongoose.Types.ObjectId;
+//   var mongoId = new ObjectId();
 
-  // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
-  var writestream = gfs.createWriteStream({
-    _id: mongoId, // Create link between plugin and uploaded plugin code files
-    filename: file.originalname,
-    root: 'plugins',
-    metadata: {
-      pluginid: pluginId
-    }
-  });
+//   // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+//   var writestream = gfs.createWriteStream({
+//     _id: mongoId, // Create link between plugin and uploaded plugin code files
+//     filename: file.originalname,
+//     root: 'plugins',
+//     metadata: {
+//       pluginid: pluginId
+//     }
+//   });
 
-  // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-  fs.createReadStream("./uploads/" + file.filename)
-    .on("end", function () {
-      fs.unlink("./uploads/" + file.filename, function (err) {
-        if (err) {
-          console.log(err);
-          // return res.status(400).send("Error occured on creating upload file"); 
-        }
+//   // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+//   fs.createReadStream("./uploads/" + file.filename)
+//     .on("end", function () {
+//       fs.unlink("./uploads/" + file.filename, function (err) {
+//         if (err) {
+//           console.log(err);
+//           // return res.status(400).send("Error occured on creating upload file"); 
+//         }
 
-        // Save file info (incl. id and name) in Json format
-        switch (file.fieldname) {
-          case 'libs':
-            filesResJson.libs.push({ id: mongoId, name: file.originalname });
-            break;
+//         // Save file info (incl. id and name) in Json format
+//         switch (file.fieldname) {
+//           case 'libs':
+//             filesResJson.libs.push({ id: mongoId, name: file.originalname });
+//             break;
 
-          case 'docs':
-            filesResJson.docs.push({ id: mongoId, name: file.originalname });
-            break;
+//           case 'docs':
+//             filesResJson.docs.push({ id: mongoId, name: file.originalname });
+//             break;
 
-          default:
-            break;
-        }
-        console.log('fileid: ', mongoId);
+//           default:
+//             break;
+//         }
+//         console.log('fileid: ', mongoId);
 
-        // If all files stored in Mongo GridFS, send result to client
-        if (fileCount === counter) {
-          // res.status(200).json({ filesResJson: filesResJson });
-          console.log('counter: ', counter);
-        }
-      })
-    })
-    .on("err", function () {
-      // res.status(400).send("Error on uploading file"); 
-    })
-    .pipe(writestream);
+//         // If all files stored in Mongo GridFS, send result to client
+//         if (fileCount === counter) {
+//           // res.status(200).json({ filesResJson: filesResJson });
+//           console.log('counter: ', counter);
+//         }
+//       })
+//     })
+//     .on("err", function () {
+//       // res.status(400).send("Error on uploading file"); 
+//     })
+//     .pipe(writestream);
 
-  // Set file counter
-  counter++;
-}
+//   // Set file counter
+//   counter++;
+// }
 
 module.exports = function (app, conn) {
 
@@ -129,7 +129,7 @@ module.exports = function (app, conn) {
       // Upload files to GridFS
       _.forEach(req.files, function (value, key) {
         console.log(key);
-        _.forEach(req.files[key], function (file) {
+        _.forEach(value, function (file) {
 
           var ObjectId = mongoose.Types.ObjectId;
           var mongoId = new ObjectId();
