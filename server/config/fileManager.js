@@ -15,6 +15,85 @@ var Grid = require("gridfs-stream");
 var gfs;
 Grid.mongo = mongoose.mongo;
 
+/* Global variables */
+var counter = 1;
+var filesResJson = {
+  libs: [],
+  docs: []
+}
+
+/* Utils Function */
+function encodeRFC5987ValueChars(str) {
+  return encodeURIComponent(str).
+    // Note that although RFC3986 reserves "!", RFC5987 does not,
+    // so we do not need to escape it
+    replace(/['()]/g, escape). // i.e., %27 %28 %29
+    replace(/\*/g, '%2A').
+    // The following are not required for percent-encoding per RFC5987, 
+    // so we can allow for a little better readability over the wire: |`^
+    replace(/%(?:7C|60|5E)/g, unescape);
+}
+
+function doFileUpload(pluginId, file, fileCount) {
+  /**
+   * TODO:
+   * 1. Create a ObjectID for file storing in mongodb / mongoose
+   * 2. Use this id as fileid and saved as _id field in GridFS
+   * 3. Send this id back to clietn and would be saved in plugin info in mongodb
+   */
+  var ObjectId = mongoose.Types.ObjectId;
+  var mongoId = new ObjectId();
+
+  // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+  var writestream = gfs.createWriteStream({
+    _id: mongoId, // Create link between plugin and uploaded plugin code files
+    filename: file.originalname,
+    root: 'plugins',
+    metadata: {
+      pluginid: pluginId
+    }
+  });
+
+  // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+  fs.createReadStream("./uploads/" + file.filename)
+    .on("end", function () {
+      fs.unlink("./uploads/" + file.filename, function (err) {
+        if (err) {
+          console.log(err);
+          // return res.status(400).send("Error occured on creating upload file"); 
+        }
+
+        // Save file info (incl. id and name) in Json format
+        switch (file.fieldname) {
+          case 'libs':
+            filesResJson.libs.push({ id: mongoId, name: file.originalname });
+            break;
+
+          case 'docs':
+            filesResJson.docs.push({ id: mongoId, name: file.originalname });
+            break;
+
+          default:
+            break;
+        }
+        console.log('fileid: ', mongoId);
+
+        // If all files stored in Mongo GridFS, send result to client
+        if (fileCount === counter) {
+          // res.status(200).json({ filesResJson: filesResJson });
+          console.log('counter: ', counter);
+        }
+      })
+    })
+    .on("err", function () {
+      // res.status(400).send("Error on uploading file"); 
+    })
+    .pipe(writestream);
+
+  // Set file counter
+  counter++;
+}
+
 module.exports = function (app, conn) {
 
   conn.once("open", function () {
@@ -34,16 +113,92 @@ module.exports = function (app, conn) {
     //   // req.body will contain the text fields, if there were any
     // })
 
-    // var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
-    // app.post("/pluginRepository/uploads/:pluginid", cpUpload, function (req, res, next) {
-    //   // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
-    //   //
-    //   // e.g.
-    //   //  req.files['avatar'][0] -> File
-    //   //  req.files['gallery'] -> Array
-    //   //
-    //   // req.body will contain the text fields, if there were any
-    // })
+    var attechments = upload.fields([{ name: 'libs', maxCount: 5 }, { name: 'docs', maxCount: 12 }]); // As 'file.fieldname': 'docs'
+    app.post("/pluginRepository/uploads/:pluginid", attechments, function (req, res, next) { // upload.array('libs', 12)
+      // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
+      //
+      // e.g.
+      //  req.files['avatar'][0] -> File
+      //  req.files['gallery'] -> Array
+      //
+      // req.body will contain the text fields, if there were any
+
+      var pluginId = req.params.pluginid;
+      var filesTotal = req.files['libs'].length + req.files['docs'].length;
+
+      // Upload files to GridFS
+      _.forEach(req.files, function (value, key) {
+        console.log(key);
+        _.forEach(req.files[key], function (file) {
+
+          var ObjectId = mongoose.Types.ObjectId;
+          var mongoId = new ObjectId();
+
+          // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+          var writestream = gfs.createWriteStream({
+            _id: mongoId, // Create link between plugin and uploaded plugin code files
+            filename: file.originalname,
+            root: 'plugins',
+            metadata: {
+              pluginid: pluginId
+            }
+          });
+
+          // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+          fs.createReadStream("./uploads/" + file.filename)
+            .on("end", function () {
+              fs.unlink("./uploads/" + file.filename, function (err) {
+                if (err) {
+                  console.log(err);
+                  // return res.status(400).send("Error occured on creating upload file"); 
+                }
+
+                // Save file info (incl. id and name) in Json format
+                // switch (file.fieldname) {
+                //   case 'libs':
+                //     filesResJson.libs.push({ id: mongoId, name: file.originalname });
+                //     break;
+
+                //   case 'docs':
+                //     filesResJson.docs.push({ id: mongoId, name: file.originalname });
+                //     break;
+
+                //   default:
+                //     break;
+                // }
+                
+                _.get(filesResJson, file.fieldname).push({ id: mongoId, name: file.originalname });
+                // console.log('fileid: ', mongoId);
+
+                // If all files stored in Mongo GridFS, send result to client
+                if (filesTotal === counter) { 
+                  console.log(filesResJson);
+                  res.status(200).json({ filesResJson: filesResJson });
+                }
+                
+                // Set file counter
+                counter++;
+              })
+            })
+            .on("err", function () {
+              res.status(400).send("Error on uploading file"); 
+            })
+            .pipe(writestream);
+        });
+      });
+
+      // for (var i = 0; i < req.files['libs'].length; i++) {
+      //   console.log(req.files['libs'][i]);
+      //   doFileUpload(pluginId, req.files['libs'][i], filesTotal);
+      // }
+      // for (var i = 0; i < req.files['docs'].length; i++) {
+      //   console.log(req.files['docs'][i]);
+      //   doFileUpload(pluginId, req.files['docs'][i], filesTotal);
+      // }
+
+      // TODO: return to client as { libs: [{id:'', name:''}...], docs: [{id:'', name:''}...] } when all file stored in Gridfs successful
+
+    });
 
     /**
      * Handle 'post' request for files
@@ -63,15 +218,9 @@ module.exports = function (app, conn) {
        * 2. Use this id as fileid and saved as _id field in GridFS
        * 3. Send this id back to clietn and would be saved in plugin info in mongodb
        */
-
-      // for(var i=0;i<10;i++) {
-      //   var mongoId = new ObjectId();
-      //   console.log('mongoId: ', mongoId);
-      // }
-      // console.log('tmp filename: ', req.file.filename);
-
       var ObjectId = mongoose.Types.ObjectId;
       var mongoId = new ObjectId();
+
       // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
       var writestream = gfs.createWriteStream({
         _id: mongoId, // Create link between plugin and uploaded plugin code files
@@ -95,9 +244,6 @@ module.exports = function (app, conn) {
         .on("err", function () { res.status(400).send("Error on uploading file"); })
         .pipe(writestream);
     });
-
-
-
 
     /**
      * Handle 'get' request for files
@@ -282,14 +428,3 @@ module.exports = function (app, conn) {
   }); //END conn.once()
 
 };
-
-function encodeRFC5987ValueChars(str) {
-  return encodeURIComponent(str).
-    // Note that although RFC3986 reserves "!", RFC5987 does not,
-    // so we do not need to escape it
-    replace(/['()]/g, escape). // i.e., %27 %28 %29
-    replace(/\*/g, '%2A').
-    // The following are not required for percent-encoding per RFC5987, 
-    // so we can allow for a little better readability over the wire: |`^
-    replace(/%(?:7C|60|5E)/g, unescape);
-}

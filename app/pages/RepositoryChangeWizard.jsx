@@ -9,7 +9,7 @@ import Wizard from '../components/smartAdmin/forms/wizards/Wizard.jsx'
 import Select2 from '../components/smartAdmin/forms/inputs/Select2.jsx'
 
 import { setRepoWizardExpand } from '../actions/processes'
-import { updatePlugin } from '../actions/plugins'
+import { updatePlugin, createPluginAttachments } from '../actions/plugins'
 
 let validateOptions = {
   highlight: function (element) {
@@ -32,9 +32,6 @@ var styles = {
     fontSize: 15
   },
 }
-
-var testArray = ['app.dll    ', 'core.dll    ', 'zmq.dll    ']
-
 
 // TODO: use store to make params transfer bw. PrivateRepository and RepositoryChangeWizard
 class RepositoryChangeWizard extends Component {
@@ -107,8 +104,37 @@ class RepositoryChangeWizard extends Component {
     // Add plugin dependencies
     selectedData.dependencies = this.dependencies;
 
+    // Create form data to let server know the request source is from a form
+    let attachments = new FormData();
+    
+    // Attach files to upload 
+    for (let i = 0; i < this.uploadFiles.libs.length; i++) {
+      attachments.append('libs', this.uploadFiles.libs[i]);
+    }
+    for (let i = 0; i < this.uploadFiles.docs.length; i++) {
+      attachments.append('docs', this.uploadFiles.docs[i]);
+    }
+    
+    // attachments.append('docs', this.uploadFiles.docs);
+
+    // // Start upload progress control timer
+    // this.interval = setInterval(this.tick.bind(this), 500);
+    // // Do upload progress calculate
+    // g_uploadPercent = 0;
+    // this.state.uploadProgress = 0;
+    
+    var config = { // Callback to send upload progress back from request
+      // progress: function (progressEvent) {
+      //   var percentCompleted = (progressEvent.loaded / progressEvent.total) * 100;
+      //   g_uploadPercent = parseFloat(percentCompleted.toFixed(2));
+      // }
+    };
+
+    // TODO: Update plugin with attachments
+    dispatch(createPluginAttachments(selectedData, attachments, config));
+    
     // Dispatch update plugin action
-    dispatch(updatePlugin(selectedData));
+    // dispatch(updatePlugin(selectedData));
   }
 
   onWizardFormClose() {

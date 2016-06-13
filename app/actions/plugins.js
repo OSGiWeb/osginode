@@ -9,6 +9,7 @@ import md5 from 'spark-md5';
 import _ from 'lodash';
 import axios from 'axios';
 import * as types from '../constants';
+import * as flieType from '../constants/definitions'
 
 polyfill();
 
@@ -257,9 +258,6 @@ export function fetchPlugins() {
  * updatePlugin()
  * For plugin uploaded files: first delete related plugin files and then update with new plugin file
  * @param updatePlugin
- * @param uploadData
- * @param uploadConfig
- * @returns {function()}
  */
 export function updatePlugin(updatePlugin) {
   return dispatch => {
@@ -280,13 +278,13 @@ export function updatePlugin(updatePlugin) {
 }
 
 /**
- * updatePluginWithUploads()
+ * updatePluginWithSourcecode()
  * @param updatePlugin
  * @param uploadData
  * @param uploadConfig
  * @returns {function()}
  */
-export function updatePluginWithUploads(updatePlugin, uploadData, uploadConfig) {
+export function updatePluginWithSourcecode(updatePlugin, uploadData, uploadConfig) {
   return dispatch => {
 
     let pluginId = updatePlugin.id;
@@ -296,24 +294,58 @@ export function updatePluginWithUploads(updatePlugin, uploadData, uploadConfig) 
 
     dispatch(updatePluginRequest());
 
-    if (uploadData.length > 1) {
+    axios.put('/pluginRepository/update/' + fileId + '&' + pluginId, uploadData, uploadConfig)
+      .then(res => {
+        if (res.status === 200) { // When old upload file is updated, change plugin info in database
+          // Set corresponding file id in flie metadata which will be updated in database
+          updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
 
-    } else {
-      axios.put('/pluginRepository/update/' + fileId + '&' + pluginId, uploadData, uploadConfig)
-        .then(res => {
-          if (res.status === 200) { // When old upload file is updated, change plugin info in database
-            // Set corresponding file id in flie metadata which will be updated in database
-            updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
+          // 'Put' update plugin info request
+          return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
+            if (res.status === 200) {
+              return dispatch(updatePluginSuccess(updatePlugin));
+            }
+          }).catch(ex => { return dispatch(updatePluginFailure()); });
+        }
+      }).catch(ex => { return dispatch(deletePluginFailure()); });
 
-            // 'Put' update plugin info request
-            return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
-              if (res.status === 200) {
-                return dispatch(updatePluginSuccess(updatePlugin));
-              }
-            }).catch(ex => { return dispatch(updatePluginFailure()); });
-          }
-        }).catch(ex => { return dispatch(deletePluginFailure()); });
-    }
+  };
+}
+
+/**
+ * createPluginAttachments()
+ * Fill extran infomation (incl. manual, docs, libs and etc.) to turn plugins from private into public
+ * @param updatePlugin
+ * @param uploadData
+ * @param uploadType: plugin libraries(*.dll/*.so), documents...
+ * @param uploadConfig
+ * @returns {function()}
+ */
+export function createPluginAttachments(updatePlugin, attechments, uploadConfig) {
+  return dispatch => {
+    
+    let pluginId = updatePlugin.id;
+    // No 'index' field in database (recalculate in cliet side), delete it for DB data update
+    let updatePluginDB = _.omit(updatePlugin, 'id');
+
+    dispatch(updatePluginRequest());
+
+    // Create plugin attechments in GridFS 
+    axios.post('/pluginRepository/uploads/' + pluginId, attechments, uploadConfig)
+      .then(res => {
+        if (res.status === 200) { // When old upload file is updated, change plugin info in database
+          // Set corresponding file id in flie metadata which will be updated in database
+          updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
+
+          // 'Put' update plugin info request to link plugin attechments in Mongo GridFS
+          return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
+            if (res.status === 200) {
+              return dispatch(updatePluginSuccess(updatePlugin));
+            }
+          }).catch(ex => { return dispatch(updatePluginFailure()); });
+        }
+      }).catch(ex => { return dispatch(deletePluginFailure()); });
+
   };
 }
 

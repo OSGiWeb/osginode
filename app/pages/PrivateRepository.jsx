@@ -18,7 +18,7 @@ import { Dropdown, MenuItem } from 'react-bootstrap'
 import RepositoryChangeWizard from './RepositoryChangeWizard.jsx'
 
 import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
-  resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithUploads, deletePlguin } from '../actions/plugins';
+  resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithSourcecode, deletePlguin } from '../actions/plugins';
 import { setRepoWizardExpand } from '../actions/processes'
 
 // TODO: Modify validation fields for form
@@ -380,7 +380,7 @@ class PrivateRepository extends Component {
 
       // Dispatch update plugin with uploaded files
       selectedData.filemeta.sourcecode.name = file.name;
-      dispatch(updatePluginWithUploads(selectedData, uploadFile, config));
+      dispatch(updatePluginWithSourcecode(selectedData, uploadFile, config));
     } else { // If no upload file selected, update only plugin info in database
       dispatch(updatePlugin(selectedData));
     }
@@ -598,8 +598,8 @@ class PrivateRepository extends Component {
                           <section>
                             <div className="input input-file">
                               <span className="button"><input id="editfile" type="file" name="editpluginfile" ref="editpluginfile"
-                                onChange={this.onChangeEditPluginUploadField}/> 上传插件 </span>
-                              <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件文件即保留已上传的文件" readOnly={true}/>
+                                onChange={this.onChangeEditPluginUploadField}/> 更新 </span>
+                              <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件源码包即保留已上传的文件" readOnly={true}/>
                             </div>
                           </section>
                           <section>
