@@ -108,22 +108,11 @@ class RepositoryChangeWizard extends Component {
     let attachments = new FormData();
 
     // Attach files to upload 
-    // for (let i = 0; i < this.uploadFiles.libs.length; i++) {
-    //   attachments.append('libs', this.uploadFiles.libs[i]);
-    // }
-    // for (let i = 0; i < this.uploadFiles.docs.length; i++) {
-    //   attachments.append('docs', this.uploadFiles.docs[i]);
-    // }
-
-    // Attach files to upload 
     _.forEach(this.uploadFiles, function (value, key) {
-      console.log(key);
       _.forEach(value, function (file) {
         attachments.append(key, file);
       });
     });
-    
-    // attachments.append('docs', this.uploadFiles.docs);
 
     // // Start upload progress control timer
     // this.interval = setInterval(this.tick.bind(this), 500);
@@ -138,11 +127,15 @@ class RepositoryChangeWizard extends Component {
       // }
     };
 
-    // TODO: Update plugin with attachments
+    // Update plugin with attachments
     dispatch(createPluginAttachments(selectedData, attachments, config));
     
-    // Dispatch update plugin action
-    // dispatch(updatePlugin(selectedData));
+    // Clear buffer for this transfer
+    this.dependencies = [];
+    this.uploadFiles = {
+      libs: [],
+      docs: []
+    }
   }
 
   onWizardFormClose() {
@@ -151,10 +144,6 @@ class RepositoryChangeWizard extends Component {
     dispatch(setRepoWizardExpand(false));
 
   }
-
-  // onDependenciesOpening(event) {
-  //   this.fetchAllPluginsFromDB();
-  // }
 
   /* Triggered when dependencies select changed (incl. selected / unselected) */
   onDependenciesSelect(event) {
@@ -302,9 +291,7 @@ class RepositoryChangeWizard extends Component {
           return { results: pluginList };
         },
         cache: true
-      },
-
-      // data: this.state.pluginList
+      }
     }
 
     if (isRepoWizardExpand === true) {

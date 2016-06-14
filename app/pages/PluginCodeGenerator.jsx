@@ -42,14 +42,11 @@ class PluginCodeGenerator extends Component {
 	constructor(props) {
 		super(props);
 
-		// this.currentStep = 1;
-
 		// Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
 		// Otherwise fields in 'this.props' is NOT avaiable
 		this.onDownloadPlugin = this.onDownloadPlugin.bind(this);
 		this.onChangePluginName = this.onChangePluginName.bind(this);
 		this.onCurruntStepChange = this.onCurruntStepChange.bind(this);
-		
 		
 		// Initialize react state variables
     this.state = {

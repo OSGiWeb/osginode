@@ -241,9 +241,9 @@ class PrivateRepository extends Component {
     // let version = dependencies[0].version;
 
     // Plugin libraries
-    let libs = [];
-    libs[0] = { 'id': 'gridfs_id', 'name': 'libcore', 'type': '.dll'};
-    libs[1] = { 'id': 'gridfs_id', 'name': 'libzmq', 'type': '.so'};
+    // let libs = [];
+    // libs[0] = { 'id': 'gridfs_id', 'name': 'libcore', 'type': '.dll'};
+    // libs[1] = { 'id': 'gridfs_id', 'name': 'libzmq', 'type': '.so'};
 
     // TEST other plugin properties
 
@@ -279,7 +279,6 @@ class PrivateRepository extends Component {
       filemeta: {
         sourcecode: { id: '', name: file.name }
       },
-      libs: libs,
       statusIcon: "<span class='label label-danger'>私有</span>"
     },
       uploadFile, config)); // upload data info and upload config as parameter

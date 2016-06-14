@@ -334,9 +334,10 @@ export function createPluginAttachments(updatePlugin, attechments, uploadConfig)
     axios.post('/pluginRepository/uploads/' + pluginId, attechments, uploadConfig)
       .then(res => {
         if (res.status === 200) { // When old upload file is updated, change plugin info in database
-          // Set corresponding file id in flie metadata which will be updated in database
-          updatePluginDB.filemeta.sourcecode.id = res.data.updatedfileid;
-
+          // Set corresponding file id in plugin 'libs' and 'docs' fields which will be updated in database
+          updatePluginDB.filemeta.libs = res.data.filesResJson.libs;
+          updatePluginDB.filemeta.docs = res.data.filesResJson.docs;
+          
           // 'Put' update plugin info request to link plugin attechments in Mongo GridFS
           return makePluginRequest('put', pluginId, updatePluginDB).then(res => {
             if (res.status === 200) {
@@ -345,7 +346,6 @@ export function createPluginAttachments(updatePlugin, attechments, uploadConfig)
           }).catch(ex => { return dispatch(updatePluginFailure()); });
         }
       }).catch(ex => { return dispatch(deletePluginFailure()); });
-
   };
 }
 

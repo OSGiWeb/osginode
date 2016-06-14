@@ -27,7 +27,7 @@ var PluginSchema = new mongoose.Schema({
       name: { type: String, default: '' }
     },
     libs: Array,
-    documents: Array,
+    docs: Array,
   }
 });
 

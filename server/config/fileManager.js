@@ -2,7 +2,6 @@
  * Created by Information on 2016/5/3.
  * This module is used to handle file upload, download and delete with data which storing in mongoDB GridFS
  */
-
 var fs = require("fs");
 var mime = require('mime');
 var multer = require("multer");
@@ -14,13 +13,6 @@ var mongoose = require("mongoose");
 var Grid = require("gridfs-stream");
 var gfs;
 Grid.mongo = mongoose.mongo;
-
-/* Global variables */
-var counter = 1;
-var filesResJson = {
-  libs: [],
-  docs: []
-}
 
 /* Utils Function */
 function encodeRFC5987ValueChars(str) {
@@ -34,70 +26,44 @@ function encodeRFC5987ValueChars(str) {
     replace(/%(?:7C|60|5E)/g, unescape);
 }
 
-// function doFileUpload(pluginId, file, fileCount) {
-//   /**
-//    * TODO:
-//    * 1. Create a ObjectID for file storing in mongodb / mongoose
-//    * 2. Use this id as fileid and saved as _id field in GridFS
-//    * 3. Send this id back to clietn and would be saved in plugin info in mongodb
-//    */
-//   var ObjectId = mongoose.Types.ObjectId;
-//   var mongoId = new ObjectId();
+/* Buffer / logic control function to format data structure which is sent to client */
+var bufferControl = (function () {
+  var counter = 0;
+  var files = {
+    libs: [],
+    docs: []
+  }
 
-//   // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
-//   var writestream = gfs.createWriteStream({
-//     _id: mongoId, // Create link between plugin and uploaded plugin code files
-//     filename: file.originalname,
-//     root: 'plugins',
-//     metadata: {
-//       pluginid: pluginId
-//     }
-//   });
+  function changeBy(val) {
+    counter += val;
+  }
 
-//   // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-//   fs.createReadStream("./uploads/" + file.filename)
-//     .on("end", function () {
-//       fs.unlink("./uploads/" + file.filename, function (err) {
-//         if (err) {
-//           console.log(err);
-//           // return res.status(400).send("Error occured on creating upload file"); 
-//         }
+  return {
+    add: function (file, mongoId) {
+      _.get(files, file.fieldname).push({ id: mongoId, name: file.originalname });
+      changeBy(1);
+    },
 
-//         // Save file info (incl. id and name) in Json format
-//         switch (file.fieldname) {
-//           case 'libs':
-//             filesResJson.libs.push({ id: mongoId, name: file.originalname });
-//             break;
+    getCounter: function () {
+      return counter;
+    },
+    getFiles: function () {
+      return files;
+    },
+    reset: function () {
+      counter = 0;
+      files = {
+        libs: [],
+        docs: []
+      }
+    }
+  }
+})();
 
-//           case 'docs':
-//             filesResJson.docs.push({ id: mongoId, name: file.originalname });
-//             break;
-
-//           default:
-//             break;
-//         }
-//         console.log('fileid: ', mongoId);
-
-//         // If all files stored in Mongo GridFS, send result to client
-//         if (fileCount === counter) {
-//           // res.status(200).json({ filesResJson: filesResJson });
-//           console.log('counter: ', counter);
-//         }
-//       })
-//     })
-//     .on("err", function () {
-//       // res.status(400).send("Error on uploading file"); 
-//     })
-//     .pipe(writestream);
-
-//   // Set file counter
-//   counter++;
-// }
-
+/* GridFS Operation Module */
 module.exports = function (app, conn) {
 
   conn.once("open", function () {
-
 
     gfs = Grid(conn.db);
     app.get("/", function (req, res) {
@@ -106,14 +72,11 @@ module.exports = function (app, conn) {
     });
 
     /**
-     * TODO: 'post' multiple files to gridfs
+     * Request handle to 'post' multiple files to gridfs
+     * Format: Return to client as { libs: [{id:'', name:''}...], docs: [{id:'', name:''}...] } when all file stored in Gridfs successful
      */
-    // app.post('/photos/upload', upload.array('photos', 12), function (req, res, next) {
-    //   // req.files is array of `photos` files
-    //   // req.body will contain the text fields, if there were any
-    // })
-
-    var attechments = upload.fields([{ name: 'libs', maxCount: 5 }, { name: 'docs', maxCount: 12 }]); // As 'file.fieldname': 'docs'
+    // 
+    var attechments = upload.fields([{ name: 'libs', maxCount: 12 }, { name: 'docs', maxCount: 12 }]); // As 'file.fieldname': 'docs'
     app.post("/pluginRepository/uploads/:pluginid", attechments, function (req, res, next) { // upload.array('libs', 12)
       // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
       //
@@ -124,13 +87,15 @@ module.exports = function (app, conn) {
       // req.body will contain the text fields, if there were any
 
       var pluginId = req.params.pluginid;
-      var filesTotal = req.files['libs'].length + req.files['docs'].length;
 
-      // Upload files to GridFS
+      // DONOT use '.length' otherwise when field not exists, returned 'undefined' as exception
+      var filesTotal = _.size(req.files['libs']) + _.size(req.files['docs']);
+
+      // Upload ALL atteched files to GridFS
       _.forEach(req.files, function (value, key) {
-        console.log(key);
         _.forEach(value, function (file) {
 
+          // Assign GridFS mongo id
           var ObjectId = mongoose.Types.ObjectId;
           var mongoId = new ObjectId();
 
@@ -150,54 +115,28 @@ module.exports = function (app, conn) {
               fs.unlink("./uploads/" + file.filename, function (err) {
                 if (err) {
                   console.log(err);
-                  // return res.status(400).send("Error occured on creating upload file"); 
+                  return res.status(400).send("Error occured on creating upload file");
                 }
-
-                // Save file info (incl. id and name) in Json format
-                // switch (file.fieldname) {
-                //   case 'libs':
-                //     filesResJson.libs.push({ id: mongoId, name: file.originalname });
-                //     break;
-
-                //   case 'docs':
-                //     filesResJson.docs.push({ id: mongoId, name: file.originalname });
-                //     break;
-
-                //   default:
-                //     break;
-                // }
-                
-                _.get(filesResJson, file.fieldname).push({ id: mongoId, name: file.originalname });
-                // console.log('fileid: ', mongoId);
+                // Store response results in json format
+                bufferControl.add(file, mongoId);
 
                 // If all files stored in Mongo GridFS, send result to client
-                if (filesTotal === counter) { 
-                  console.log(filesResJson);
-                  res.status(200).json({ filesResJson: filesResJson });
+                if (filesTotal === bufferControl.getCounter()) {
+                  // Send response to client
+                  console.log(bufferControl.getFiles());
+                  res.status(200).json({ filesResJson: bufferControl.getFiles() });
+
+                  // Clear buffers after transfer
+                  bufferControl.reset();
                 }
-                
-                // Set file counter
-                counter++;
               })
             })
             .on("err", function () {
-              res.status(400).send("Error on uploading file"); 
+              res.status(400).send("Error on uploading file");
             })
             .pipe(writestream);
         });
       });
-
-      // for (var i = 0; i < req.files['libs'].length; i++) {
-      //   console.log(req.files['libs'][i]);
-      //   doFileUpload(pluginId, req.files['libs'][i], filesTotal);
-      // }
-      // for (var i = 0; i < req.files['docs'].length; i++) {
-      //   console.log(req.files['docs'][i]);
-      //   doFileUpload(pluginId, req.files['docs'][i], filesTotal);
-      // }
-
-      // TODO: return to client as { libs: [{id:'', name:''}...], docs: [{id:'', name:''}...] } when all file stored in Gridfs successful
-
     });
 
     /**
