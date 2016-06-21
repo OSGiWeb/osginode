@@ -1,8 +1,8 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
-import promiseMiddleware from '../api/promiseMiddleware';
+import promiseMiddleware from '../middlewares/promiseMiddleware';
 import createLogger from 'redux-logger';
 
 /*
@@ -12,19 +12,17 @@ import createLogger from 'redux-logger';
  *                          rendering.
  */
 export default function configureStore(initialState, history) {
-  let middleware = [ thunk, promiseMiddleware ];
   // Installs hooks that always keep react-router and redux
   // store in sync
-  const reactRouterReduxMiddleware = routerMiddleware(history);
+  const middleware = [thunk, promiseMiddleware, routerMiddleware(history)];
   if (__DEVCLIENT__) {
-    middleware.push(reactRouterReduxMiddleware, createLogger());
-  } else {
-    middleware.push(reactRouterReduxMiddleware);
+    middleware.push(createLogger());
   }
 
-  const finalCreateStore = applyMiddleware(...middleware)(createStore);
-
-  const store = finalCreateStore(rootReducer, initialState);
+  const store = createStore(rootReducer, initialState, compose(
+    applyMiddleware(...middleware),
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+  ));
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

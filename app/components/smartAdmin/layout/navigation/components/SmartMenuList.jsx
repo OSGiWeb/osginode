@@ -40,4 +40,4 @@ SmartMenuList.propTypes = {
   onMenuItemClose: PropTypes.func
 };
 
-export default SmartMenuList
+export default SmartMenuList;

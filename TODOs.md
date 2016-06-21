@@ -25,10 +25,13 @@
   4. 插件远程升级和部署，需要在OSGi框架下用 C++ 开发相关界面，并可以通过配置文档显示远程插件仓库信息，
      并通过匹配加载对应插件（dll+资源加载），实现自动化升级和部署。
 - 重构应用程序，使用 Material-ui (react based) 作为UI主要构成，不使用 SmartAdmin 框架
+- 升级 Node.js 到 5.x ( Git 上很多示例项目已经开始使用 5.x )
 
 ## Recent TODOs
 - 当插件删除时，删除所有相关的 GridFS 中的文件数据，如源码包、库文件和文档等
 - 发布插件时的批量长传进度条
+- 私有插件仓库只显示该登录用户提交的插件
+- 公共插件仓库 UI 改造
 
 
 ## Features
@@ -60,7 +63,7 @@
     -> render 'Navigation' container component and subcomponents, i.e.: 'SmartMenu', 'SmartMenuList', 'SmartMenuItem'
   ```
 - 创建类 Profile 和 Projects 主界面结构 from App-Views
-- 参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构
+- ~~参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构~~
 - 修改action, reducer名称，带上action, reducer前缀or后缀
 - 生成插件框架代码或在已有项目中添加新的插件后，通过 Web端 / Nodejs 直接调用Cmake并配置
   参数生成QT项目树，并打开QT->加载该项目
@@ -68,13 +71,10 @@
 - 测试应用程序在各个浏览器和平台的效果
 - PluginRepository 组件和数据库实现部分添加异常处理机制
 - 所有Form控件添加 validation
-- Datatables 的中文化问题
-- 私有插件仓库只显示该登录用户提交的插件
-- 在新添加插件时加入依赖填写栏，可以用<select>控件+版本号输入的方式
-- 在提升插件私有->公有时，需要上传插件的dll格式文件和资源包
+- ~~Datatables 的中文化问题~~
+- ~~在新添加插件时加入依赖填写栏，可以用<select2>控件+版本号输入的方式~~
+- ~~在提升插件私有->公有时，需要上传插件的dll格式文件和资源包~~
 - 删除所有reflux相关components
-- 当插件删除时，删除所有相关的 GridFS 中的文件数据，如源码包、库文件和文档等
-- 发布插件时的批量长传进度条
 
 ## Code Generator
-- 加入插件：修改主cmakelist.txt和数据库相关配置代码
+- ~~加入插件：修改主cmakelist.txt和数据库相关配置代码~~
