@@ -31,7 +31,7 @@ export default function plugin(
     isCreated: undefined,
     isUpdated: undefined,
     isDeleted: undefined,
-    // plugins: [],
+    plugins: [],
     newPlugin: [],
     selectedData: [],
     updatedPlugin:[]
@@ -80,12 +80,12 @@ export default function plugin(
     /* Get plugins functions */
     case GET_PLUGINS_REQUEST:
       return Object.assign({}, state, {
-        isFetched: false
+        isFetched: true
       });
     case GET_PLUGINS_SUCCESS:
       return Object.assign({}, state, {
-        // plugins: action.data,
-        isFetched: true
+        plugins: action.res.data,
+        isFetched: false
       });
     case GET_PLUGINS_FAILURE:
       return Object.assign({}, state, {

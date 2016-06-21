@@ -7,7 +7,16 @@ import { connect } from 'react-redux';
 import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 
+import { fetchPlugins } from '../actions/plugins';
+
 class Home extends Component {
+  
+  //Data that needs to be called before rendering the component
+  //This is used for server side rending via the fetchComponentDataBeforeRender() method
+  static need = [  // eslint-disable-line
+    fetchPlugins
+  ]
+  
   constructor(props) {
     super(props);
 
@@ -316,4 +325,20 @@ class Home extends Component {
   }
 }
 
-export default Home;
+Home.propTypes = {
+  plugin: PropTypes.object,
+  dispatch: PropTypes.func
+};
+
+// Function passed in to `connect` to subscribe to Redux store updates.
+// Any time it updates, mapStateToProps is called.
+function mapStateToProps(state) {
+  return {
+    plugin: state.plugin
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(Home);

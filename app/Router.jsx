@@ -33,12 +33,14 @@
  */
 import React from 'react';
 import { render } from 'react-dom';
+import _ from 'lodash';
 import { Provider } from 'react-redux';
-import { Router, useRouterHistory  } from 'react-router';
+import { Router, useRouterHistory, browserHistory } from 'react-router';
 import { createHashHistory } from 'history'
 import { syncHistoryWithStore } from 'react-router-redux';
 import createRoutes from './routes.jsx';
 import configureStore from 'store/configureStore';
+import preRenderMiddleware from './middlewares/preRenderMiddleware';
 
 // Used for material-ui
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -48,8 +50,10 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 //https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
-// Using new browserHistory reference
+// // Grab the state from a global injected into
+// // server-generated HTML
 // const initialState = window.__INITIAL_STATE__;
+
 // const store = configureStore(initialState, browserHistory);
 // const history = syncHistoryWithStore(browserHistory, store);
 // const routes = createRoutes(store);
@@ -60,7 +64,6 @@ const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, appHistory);
 const history = syncHistoryWithStore(appHistory, store);
 const routes = createRoutes(store);
-
 
 /**
  * Callback function handling frontend route changes.
@@ -77,9 +80,8 @@ function onUpdate() {
   //   return;
   // }
 
-  // const { components, params } = this.state;
-
-  // preRenderMiddleware(store.dispatch, components, params);
+  const { components, params } = this.state;
+  preRenderMiddleware(store.dispatch, components, params);
 
   
 }
@@ -88,7 +90,7 @@ function onUpdate() {
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 var rootInstance = render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={history} onUpdate={onUpdate} >
       {routes}
     </Router>
   </Provider>,

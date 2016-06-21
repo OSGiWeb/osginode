@@ -47,22 +47,22 @@ function makeUploadRequest(method, api, id, data, config) {
 /*
  Get plugin functions
  */
-function getPluginsRequest() {
-  return {
-    type: types.GET_PLUGINS_REQUEST
-  }
-}
-function getPluginsSuccess(data) {
-  return {
-    type: types.GET_PLUGINS_SUCCESS,
-    data: data
-  }
-}
-function getPluginsFailure() {
-  return {
-    type: types.GET_PLUGINS_FAILURE
-  }
-}
+// function getPluginsRequest() {
+//   return {
+//     type: types.GET_PLUGINS_REQUEST
+//   }
+// }
+// function getPluginsSuccess(data) {
+//   return {
+//     type: types.GET_PLUGINS_SUCCESS,
+//     data: data
+//   }
+// }
+// function getPluginsFailure() {
+//   return {
+//     type: types.GET_PLUGINS_FAILURE
+//   }
+// }
 
 /*
  Create plugin functions
@@ -236,21 +236,25 @@ function getMd5Identifier(field) {
 // TODO: fetch plugin based on username
 export function fetchPlugins() {
 
-  return dispatch => {
-    dispatch(getPluginsRequest());
+  // return dispatch => {
+  //   dispatch(getPluginsRequest());
 
-    return makePluginRequest('get').then(res => {
-      if (res.status === 200) { // Only when database operation return 'SUCCESS(200)', then modify the data in store
-        // Format plugin data structure which will be saved in store
-        const pluginData = formatPluginData(res.data);
+  //   return makePluginRequest('get').then(res => {
+  //     if (res.status === 200) { // Only when database operation return 'SUCCESS(200)', then modify the data in store
+  //       // Format plugin data structure which will be saved in store
+  //       const pluginData = formatPluginData(res.data);
 
-        // Dispatch a GET_PLUGIN_SUCCESS action and (in reducer) save all plugins to store
-        return dispatch(getPluginsSuccess(pluginData));
-      }
-    })
-      .catch(ex => {
-        return dispatch(getPluginsFailure());
-      });
+  //       // Dispatch a GET_PLUGIN_SUCCESS action and (in reducer) save all plugins to store
+  //       return dispatch(getPluginsSuccess(pluginData));
+  //     }
+  //   })
+  //     .catch(ex => {
+  //       return dispatch(getPluginsFailure());
+  //     });
+  // };
+    return {
+    type: types.GET_PLUGINS,
+    promise: makePluginRequest('get')
   };
 }
 
