@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux';
 import Header from './Header.jsx'
 import Navigation from './Navigation.jsx'
 import Ribbon from './Ribbon.jsx'
@@ -16,12 +17,14 @@ class Layout extends Component {
 
 
   render() {
+    const { naviContents } = this.props.navigation;
+
     return (
       <div>
         <Header />
         <Navigation />
         <div id="main" role="main">
-          <Ribbon />
+          <Ribbon naviContents={naviContents}/>
           {this.props.children}
         </div>
         {/*<Footer />*/}
@@ -30,4 +33,21 @@ class Layout extends Component {
     )
   }
 }
-export default Layout
+
+Layout.propTypes = {
+  navigation: PropTypes.object,
+  dispatch: PropTypes.func
+};
+
+// Function passed in to `connect` to subscribe to Redux store updates.
+// Any time it updates, mapStateToProps is called.
+function mapStateToProps(state) {
+  return {
+    navigation: state.navigation
+  };
+}
+
+// Connects React component to the redux store
+// It does not modify the component class passed to it
+// Instead, it returns a new, connected component class, for you to use.
+export default connect(mapStateToProps)(Layout);

@@ -41,7 +41,7 @@ var defaultItems = {
 export default function navigation(
   state={
     isActive: false,
-    data: defaultItems
+    naviContents: defaultItems
   }, action={}) {
   switch (action.type) {
     case SET_NAVIGATION_ITEM_ACTIVE:
@@ -50,11 +50,11 @@ export default function navigation(
       });
     case SET_NAVIGATION_CONTENT:
       return Object.assign({}, state, {
-        data: action.data
+        naviContents: action.data
       });
     case SET_MENUITEM_OPEN_CLOSE:
       return Object.assign({}, state, {
-        data: action.data
+        naviContents: action.data
       });
     default:
       return state;

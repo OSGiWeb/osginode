@@ -19,7 +19,7 @@ let data = {
 
 function setInitialItem(items) {
   items.forEach(function(item){
-    if (item.isActive){
+    if (item.isHome){
       data.item = item
     }
     if(item.items){

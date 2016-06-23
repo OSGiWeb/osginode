@@ -11,11 +11,11 @@ import SmallBreadcrumbs from '../../components/smartAdmin/layout/navigation/comp
 
 
 let tooltip = (
-    <Tooltip id="reset-widgets-suggestion"><i className='text-warning fa fa-warning' /> Warning! This will reset all your widget settings.</Tooltip>
+    <Tooltip id="reset-widgets-suggestion"><i className='text-warning fa fa-warning' /> Warning!This will reset all your widget settings.</Tooltip>
 );
 
 let Ribbon = React.createClass({
-    render: function(){
+    render: function () {
         return (
             <div id="ribbon">
                 <span className="ribbon-button-alignment">
@@ -23,7 +23,7 @@ let Ribbon = React.createClass({
                         <ResetWidgets />
                     </OverlayTrigger>
                 </span>
-                <SmallBreadcrumbs />
+                <SmallBreadcrumbs naviContents={this.props.naviContents}/>
             </div>
         )
     }

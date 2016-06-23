@@ -17,10 +17,10 @@ let Header = React.createClass({
   render: function () {
     return <header id="header">
       <div id="logo-group">
-                <span id="logo">
-                    <img src="styles/img/project/logo.png" // place your logo here
-                         alt="PluginForm"/>
-                </span>
+        <span id="logo">
+          <img src="styles/img/project/logo.png" // place your logo here
+            alt="PluginForm"/>
+        </span>
         {/* Note: The activity badge color changes when clicked and resets the number to 0
          Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications */}
 
@@ -49,25 +49,25 @@ let Header = React.createClass({
               <li className="divider"/>
               <li>
                 <a href="#/views/profile"
-                   className="padding-10 padding-top-0 padding-bottom-0"> <i className="fa fa-user"/>
+                  className="padding-10 padding-top-0 padding-bottom-0"> <i className="fa fa-user"/>
                   <u>P</u>profile</a>
               </li>
               <li className="divider"/>
               <li>
                 <a href-void className="padding-10 padding-top-0 padding-bottom-0"
-                   data-action="toggleShortcut"><i className="fa fa-arrow-down"/> <u>S</u>hortcut</a>
+                  data-action="toggleShortcut"><i className="fa fa-arrow-down"/> <u>S</u>hortcut</a>
               </li>
               <li className="divider"/>
               <li>
                 <a href-void className="padding-10 padding-top-0 padding-bottom-0"
-                   data-action="launchFullscreen"><i className="fa fa-arrows-alt"/> Full
+                  data-action="launchFullscreen"><i className="fa fa-arrows-alt"/> Full
                   <u>S</u>creen</a>
               </li>
               <li className="divider"/>
               <li>
                 <a href="#/login" className="padding-10 padding-top-5 padding-bottom-5"
-                   data-action="userLogout"><i
-                  className="fa fa-sign-out fa-lg"/> <strong><u>L</u>ogout</strong></a>
+                  data-action="userLogout"><i
+                    className="fa fa-sign-out fa-lg"/> <strong><u>L</u>ogout</strong></a>
               </li>
             </ul>
           </li>
@@ -75,9 +75,9 @@ let Header = React.createClass({
 
         {/* logout button */}
         <div id="logout" className="btn-header transparent pull-right">
-                    <span> <a href="#/login" title="Sign Out"
-                              data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i
-                      className="fa fa-sign-out"/></a> </span>
+          <span> <a href="#/login" title="Sign Out"
+            data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i
+              className="fa fa-sign-out"/></a> </span>
         </div>
 
         {/* search mobile button (this is hidden till mobile view port) */}

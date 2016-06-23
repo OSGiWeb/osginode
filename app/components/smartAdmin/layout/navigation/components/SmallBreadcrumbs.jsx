@@ -35,9 +35,11 @@ let SmallBreadcrumbs = React.createClass({
     },
 
     render: function () {
+        const { naviContents } = this.props;
+
         return (
             <ol className="breadcrumb">
-                <li>Home</li>
+                <li>{ naviContents.item.title }</li>
                 {this.state.items.map(function(item, idx){
                     return <li key={idx}>{item}</li>
                 })}

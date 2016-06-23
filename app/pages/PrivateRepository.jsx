@@ -98,7 +98,7 @@ class PrivateRepository extends Component {
     this.state = {
       uploadProgress: 0
     };
-    
+
     // this.pluginlist = {};
   }
 
@@ -765,11 +765,8 @@ class PrivateRepository extends Component {
 
     return (
       <div id="content">
-        <div className="row">
-          <BigBreadcrumbs items={['插件开发', '私有插件仓库']} icon="fa fa-fw fa-database"
-            className="col-xs-12 col-sm-7 col-md-7 col-lg-4"/>
-          {/*<SubHeader />*/}
-        </div>
+
+        {/*<SubHeader />*/}
 
         <WidgetGrid>
           <RepositoryChangeWizard />

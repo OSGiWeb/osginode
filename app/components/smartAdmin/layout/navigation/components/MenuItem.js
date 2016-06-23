@@ -15,6 +15,7 @@ export default class MenuItem {
     this.icon = data.icon;
     this.badge = data.badge;
     this.counter = data.counter;
+    this.isHome = data.isHome;
 
     this.parent = parent;
 

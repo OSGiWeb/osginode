@@ -116,11 +116,6 @@ class PluginCodeGenerator extends Component {
 	render() {
 		return (
 			<div id="content">
-				<div className="row">
-					<BigBreadcrumbs items={['插件开发', '插件代码生成工具']} icon="table"
-						className="col-xs-12 col-sm-7 col-md-7 col-lg-4"/>
-				</div>
-
 				<WidgetGrid>
 					<JarvisWidget togglebutton={false} sortable={false} colorbutton={false} editbutton={false} deletebutton={false}
 						fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={false} color="blueDark">

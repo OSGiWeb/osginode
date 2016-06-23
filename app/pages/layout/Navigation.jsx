@@ -16,7 +16,8 @@ const rawItems = {
     {
       "title": "主页",
       "icon": "fa fa-lg fa-fw fa-home",
-      "route": "/home"
+      "route": "/home",
+      "isHome": true
     },
     {
       "title": "插件开发",
@@ -150,14 +151,14 @@ class Navigation extends Component {
   }
 
   render() {
-    const { data } = this.props.navigation;
+    const { naviContents } = this.props.navigation;
     const { userFullname } = this.props.user;
 
     return (
       <aside id="left-panel">
         <LoginInfo userFullname={userFullname}/>
         <nav>
-          <SmartMenuList data={data} items={data.items}
+          <SmartMenuList data={naviContents} items={naviContents.items}
                          onMenuItemClick={this.onMenuItemClick}
                          onMenuItemOpen={this.onMenuItemOpen}
                          onMenuItemClose={this.onMenuItemClose}
