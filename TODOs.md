@@ -33,6 +33,7 @@
 - 私有插件仓库只显示该登录用户提交的插件
 - 公共插件仓库 UI 改造
 - Check 插件发布流程的validation,出现了不上传附件无法发布插件的情况
+- 使用 React-Boostrap UI 库修改所有 Modal UI / Boostrap 布局相关的 UI 
 
 
 ## Features
