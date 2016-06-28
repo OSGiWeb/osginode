@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Tab, Row, Col, Nav, NavItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import JarvisWidget from '../layout/widgets/JarvisWidget.jsx'
 
 /**
@@ -45,46 +45,37 @@ class ShopElement extends Component {
           <Modal.Title style={{ fontWeight: 'bold' }} > <i className="fa fa-puzzle-piece"/> { item.pluginname } </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <JarvisWidget colorbutton={false} editbutton={false} togglebutton={false}
-            deletebutton={false} fullscreenbutton={false}
-            custombutton={false} sortable={false}>
-            <header>
-              <span className="widget-icon"> <i className="fa fa-list-alt"/> </span>
-              <h2> 基本信息 </h2>
-            </header>
-            <div>
-              <div className="widget-body">
-                <div className="tabs-left">
-                  <ul className="nav nav-tabs tabs-left" id="demo-pill-nav">
-                    <li className="active">
-                      <a href="#tab-r1" data-toggle="tab"><i className="fa fa-info fa-fw"/> 插件介绍 </a>
-                    </li>
-                    <li>
-                      <a href="#tab-r2" data-toggle="tab"><i className="fa fa-gavel fa-fw"/> 安装指南</a>
-                    </li>
-                    <li>
-                      <a href="#tab-r3" data-toggle="tab"><i className="fa fa-tasks fa-fw"/> 编译指南</a>
-                    </li>
-                  </ul>
-                  <div className="tab-content">
-                    <div className="tab-pane active" id="tab-r1">
-                      { item.pluginintrod }
-                    </div>
-                    <div className="tab-pane" id="tab-r2">
-                      { item.installmanual }
-                    </div>
-                    <div className="tab-pane" id="tab-r3">
-                      { item.compilemanual }
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </JarvisWidget>
+          <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Row>
+              <Col sm={4}>
+                <Nav bsStyle="pills" stacked>
+                  <NavItem eventKey="first">
+                    插件介绍
+                  </NavItem>
+                  <NavItem eventKey="second">
+                    安装指南
+                  </NavItem>
+                  <NavItem eventKey="third">
+                    编译指南
+                  </NavItem>
+                </Nav>
+              </Col>
+              <Col sm={8}>
+                <Tab.Content animation>
+                  <Tab.Pane eventKey="first">
+                      <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="second">
+                    <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.installmanual }/>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="third">
+                    <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.compilemanual }/>
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.onModalClose}>关闭</Button>
-        </Modal.Footer>
       </Modal>
     );
   }
@@ -244,3 +235,41 @@ export default ShopElement;
   //       </div>
   //     </div>
   //   )
+
+
+// <JarvisWidget colorbutton={false} editbutton={false} togglebutton={false}
+// deletebutton={false} fullscreenbutton={false}
+// custombutton={false} sortable={false}>
+// <header>
+//   <span className="widget-icon"> <i className="fa fa-list-alt"/> </span>
+//   <h2> 基本信息 </h2>
+// </header>
+// <div>
+//   <div className="widget-body">
+//     <div className="tabs-left">
+//       <ul className="nav nav-tabs tabs-left" id="demo-pill-nav">
+//         <li className="active">
+//           <a href="#tab-r1" data-toggle="tab"><i className="fa fa-info fa-fw"/> 插件介绍 </a>
+//         </li>
+//         <li>
+//           <a href="#tab-r2" data-toggle="tab"><i className="fa fa-gavel fa-fw"/> 安装指南</a>
+//         </li>
+//         <li>
+//           <a href="#tab-r3" data-toggle="tab"><i className="fa fa-tasks fa-fw"/> 编译指南</a>
+//         </li>
+//       </ul>
+//       <div className="tab-content">
+//         <div className="tab-pane active" id="tab-r1">
+//           { item.pluginintrod }
+//         </div>
+//         <div className="tab-pane" id="tab-r2">
+//           { item.installmanual }
+//         </div>
+//         <div className="tab-pane" id="tab-r3">
+//           { item.compilemanual }
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// </JarvisWidget>
