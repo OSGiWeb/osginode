@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, Tab, Row, Col, Nav, NavItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
-import JarvisWidget from '../layout/widgets/JarvisWidget.jsx'
+import { DatePicker } from 'material-ui';
+import { TextField } from 'material-ui';
+import { AppBar, IconButton, IconMenu, MenuItem } from 'material-ui';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 /**
  * Styles for React component
@@ -63,7 +67,7 @@ class ShopElement extends Component {
               <Col sm={8}>
                 <Tab.Content animation>
                   <Tab.Pane eventKey="first">
-                      <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
+                    <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
                   </Tab.Pane>
                   <Tab.Pane eventKey="second">
                     <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.installmanual }/>
@@ -75,6 +79,47 @@ class ShopElement extends Component {
               </Col>
             </Row>
           </Tab.Container>
+
+          <Row className="show-grid">
+            <Col xs={12} md={6}>
+              <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
+            </Col>
+            <Col xs={12} md={6}>
+              <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col xs={12} md={6}>
+              <TextField hintText="Hint text" floatingLabelText="输入文字"></TextField>
+            </Col>
+            <Col xs={12} md={6}>
+              <TextField hintText="Hint text" floatingLabelText="Floating Label Text"></TextField>
+            </Col>
+          </Row>
+
+          <Row className="show-grid">
+            <Col xs={12} md={12}>
+              <AppBar
+                title="Title"
+                iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+                iconElementRight={
+                  <IconMenu
+                    iconButtonElement={
+                      <IconButton><MoreVertIcon /></IconButton>
+                    }
+                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                    >
+                    <MenuItem style={{ fontWeight: 'bold' }} primaryText="更新" />
+                    <MenuItem primaryText="Help" />
+                    <MenuItem primaryText="Sign out" />
+                  </IconMenu>
+                }
+                />
+
+            </Col>
+          </Row>
+
         </Modal.Body>
       </Modal>
     );
