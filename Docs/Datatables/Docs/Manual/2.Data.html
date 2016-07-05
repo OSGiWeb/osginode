@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://datatables.net/manual/data/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Data</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./2.Data_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./2.Data_files/ga.js"></script><script type="text/javascript" src="./2.Data_files/site.js"></script>
+		<script type="text/javascript" src="./2.Data_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./2.Data_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./2.Data_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./2.Data_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class="active sub"><a href="https://datatables.net/manual/data">Data</a><ul><li class=""><a href="https://datatables.net/manual/data/orthogonal-data">Orthogonal data</a></li><li class=""><a href="https://datatables.net/manual/data/renderers">Renderers</a></li></ul></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Data</h1>
+
+					<p>Data is complex, and all data is different. Accordingly, DataTables has a wealth of options which can be used to configure how it will obtain the data to display in the table, and how it processes that data.</p>
+
+<p>There are three core concepts in how DataTables handles data, which are discussed in detail on this page:</p>
+
+<ul class="markdown">
+<li>Processing mode</li>
+<li>Data types</li>
+<li>Data sources</li>
+</ul>
+
+<a name="Processing-modes"></a><h2 data-anchor="Processing-modes">Processing modes</h2>
+
+<p>DataTables has two different modes of processing data (ordering, searching, etc. of data):</p>
+
+<ul class="markdown">
+<li>Client-side processing - the full data set is loaded up-front and data processing is done in the browser.</li>
+<li>Server-side processing - an Ajax request is made for every table redraw, with only the data required for each display returned. The data processing is performed on the server.</li>
+</ul>
+
+<aside>
+  <a name="Client-side-processing:"></a><h1 data-anchor="Client-side-processing:">Client-side processing:</h1>
+  
+  <ul class="markdown">
+  <li>Full dataset is loaded up-front</li>
+  <li>Data can be read from DOM, JS data source or via Ajax</li>
+  <li>Data processing is performed in the browser</li>
+  <li>For small to medium data sets</li>
+  </ul>
+  
+  <a name="Points-to-consider:"></a><h1 data-anchor="Points-to-consider:">Points to consider:</h1>
+  
+  <ul class="markdown">
+  <li>Time to download the full dataset</li>
+  <li>Complex ordering on large data sets can slow the browser down</li>
+  </ul>
+</aside>
+
+<p>Each has its own advantages and disadvantages, but the key indicator for which mode you should select is based on the number of rows in your table. As a rule of thumb, if you are working with less than 10,000 rows use client-side processing, for greater than 100,000 rows use server-side processing. In-between is a grey area where you will need to make a decision based upon the nature of your app and the data you wish to display!</p>
+
+<p>Please note that the two processing modes are mutually exclusive - they cannot be used at the same time, nor is it possible to dynamically change from one mode to the other.</p>
+
+<a name="Client-side-processing"></a><h3 data-anchor="Client-side-processing">Client-side processing</h3>
+
+<p>Client-side processing is the default operating mode of DataTables as it is easy to use and requires no additional code to be written. In client-side processing mode, the ordering of the data in the table, searching, paging and all other data processing operations that DataTables performs are done in the browser by DataTables itself.</p>
+
+<a name="Server-side-processing"></a><h3 data-anchor="Server-side-processing">Server-side processing</h3>
+
+<aside>
+  <a name="Server-side-processing:"></a><h1 data-anchor="Server-side-processing:">Server-side processing:</h1>
+  
+  <ul class="markdown">
+  <li>Ajax request made for every redraw</li>
+  <li>Only the data needed is loaded</li>
+  <li>Server performs the processing</li>
+  <li>Ideal for large data sets</li>
+  </ul>
+  
+  <a name="Points-to-consider:"></a><h1 data-anchor="Points-to-consider:">Points to consider:</h1>
+  
+  <ul class="markdown">
+  <li>Latency of Ajax requests</li>
+  <li>Can your server handle the load of lots of requests?</li>
+  </ul>
+</aside>
+
+<p>Where server-side processing comes into play is when you have very large quantities of data that you wish to display in the table (millions of rows for example). At these levels, sending the data to the client, and then having Javascript process the data can involve noticeable overhead, will result in poor performance of the end application. In server-side processing mode, all ordering, searching, etc. of the data is handed off to the server which can make use of the database engines available there, which are highly tuned for exactly these kinds of operations. Each page of data (referred to as a <em>draw</em> in DataTables terminology) involves making an Ajax request to the server. Although each Ajax request might take a fraction of a second to complete, this approach might be preferable to a large wait up-front as all data loads.</p>
+
+<p>Server-side processing is enabled by the <a href="https://datatables.net/reference/option/serverSide"><code class="option" title="DataTables initialisation option">serverSide</code></a> option, and full documentation for how server-side processing operates is available in <a href="https://datatables.net/manual/server-side">its section of this manual</a>.</p>
+
+<a name="Data-source-types"></a><h2 data-anchor="Data-source-types">Data source types</h2>
+
+<p>The main data source used for a DataTable must always be an array (it is created automatically when using DOM sourced data). Each item in that array will define a row to be displayed and DataTables can use three basic Javascript data types as the data source for the rows:</p>
+
+<ul class="markdown">
+<li>Arrays - <code>[]</code></li>
+<li>Objects - <code>{}</code></li>
+<li>Instances - <code>new MyClass()</code></li>
+</ul>
+
+<p>DataTables can consume data from any of these options using the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> and <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> options. The default mode of operation is an array, but objects and instances can be useful as they are typically more intuitive when working with complex data.</p>
+
+<a name="Arrays"></a><h3 data-anchor="Arrays">Arrays</h3>
+
+<p>Arrays are easy to work with in a DataTable as the mapping between array elements to the column the data appears in is performed simply by the column index reading the array element value in that position. For example, the first table column maps to the first array element for the row's data source, etc.</p>
+
+<p>Due to this, when using arrays as your data source, the number of elements in each array must be equal to the number of columns in the table. For example, for a 6 column table you might have:</p>
+
+<pre><div><div id="highlighter_837326" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">data = [</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"Tiger Nixon"</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"System Architect"</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"Edinburgh"</code><code class="js plain">,</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"5421"</code><code class="js plain">,</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"2011/04/25"</code><code class="js plain">,</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"$3,120"</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">],</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"Garrett Winters"</code><code class="js plain">,</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"Director"</code><code class="js plain">,</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"Edinburgh"</code><code class="js plain">,</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"8422"</code><code class="js plain">,</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"2011/07/25"</code><code class="js plain">,</code></div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"$5,300"</code></div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">]</code></div><div class="line number18 index17 alt1"><code class="js plain">]</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>And the table initialisation:</p>
+
+<pre><div><div id="highlighter_574707" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: data</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Which would result in a table such as:</p>
+
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="basic markdown display dataTable no-footer" id="DataTables_Table_0" role="grid">
+<thead>
+<tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 95px;">Name</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 106px;">Position</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 60px;">Office</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 44px;">Extn.</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">Start date</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 54px;">Salary</th></tr>
+</thead>
+<tbody>
+
+
+<tr role="row" class="odd">
+  <td>Tiger Nixon</td>
+  <td>System Architect</td>
+  <td>Edinburgh</td>
+  <td>5421</td>
+  <td>2011/04/25</td>
+  <td>$3,120</td>
+</tr><tr role="row" class="even">
+  <td>Garrett Winters</td>
+  <td>Director</td>
+  <td>Edinburgh</td>
+  <td>8422</td>
+  <td>2011/07/25</td>
+  <td>$5,300</td>
+</tr></tbody>
+</table></div>
+
+<a name="Objects"></a><h3 data-anchor="Objects">Objects</h3>
+
+<p>Objects are great for intuitive use in a slightly different way from arrays. If you are actively working with the data through <a href="https://datatables.net/manual/api">the API</a>, objects can make obtaining a particular piece of data very easy as you need only use a propery name, rather than remembering which array index that data is in (for example <code>data.name</code>, rather than <code>data[0]</code>).</p>
+
+<p>Objects can also contain more information than is required for the DataTable display, which can be very useful for operating on the data (for example including a database primary key which is not visible to the end user).</p>
+
+<p>The down side of using objects is that you need to explicitly tell DataTables which property it should use from the object for each column. This is done using the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> and / or <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> options.</p>
+
+<p>Object based data may look like:</p>
+
+<pre><div><div id="highlighter_941465" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">[</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"name"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Tiger Nixon"</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"position"</code><code class="js plain">:&nbsp;&nbsp; </code><code class="js string">"System Architect"</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"salary"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"$3,120"</code><code class="js plain">,</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"start_date"</code><code class="js plain">: </code><code class="js string">"2011/04/25"</code><code class="js plain">,</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"office"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Edinburgh"</code><code class="js plain">,</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"extn"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"5421"</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">},</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"name"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Garrett Winters"</code><code class="js plain">,</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"position"</code><code class="js plain">:&nbsp;&nbsp; </code><code class="js string">"Director"</code><code class="js plain">,</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"salary"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"$5,300"</code><code class="js plain">,</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"start_date"</code><code class="js plain">: </code><code class="js string">"2011/07/25"</code><code class="js plain">,</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"office"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Edinburgh"</code><code class="js plain">,</code></div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"extn"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"8422"</code></div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number18 index17 alt1"><code class="js plain">]</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>And the table initialisation (note that only 4 columns are defined and that data displayed in each column is easily defined by changing where each property is used, rather than needing to reorder the source objects as would be the case with an array data source):</p>
+
+<pre><div><div id="highlighter_861893" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: data,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">columns: [</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'name'</code> <code class="js plain">},</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'position'</code> <code class="js plain">},</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'salary'</code> <code class="js plain">},</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'office'</code> <code class="js plain">}</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">]</code></div><div class="line number9 index8 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Which would result in a table such as:</p>
+
+<div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="basic markdown display dataTable no-footer" id="DataTables_Table_1" role="grid">
+<thead>
+<tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 151px;">Name</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 167px;">Position</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 91px;">Salary</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 102px;">Office</th></tr>
+</thead>
+<tbody>
+
+
+<tr role="row" class="odd">
+  <td>Tiger Nixon</td>
+  <td>System Architect</td>
+  <td>$3,120</td>
+  <td>Edinburgh</td>
+</tr><tr role="row" class="even">
+  <td>Garrett Winters</td>
+  <td>Director</td>
+  <td>$5,300</td>
+  <td>Edinburgh</td>
+</tr></tbody>
+</table></div>
+
+<a name="Instances"></a><h3 data-anchor="Instances">Instances</h3>
+
+<p>It can be quite useful to have DataTables display information from Javascript object instances, as these instances define abstract methods which can be used to update data. For example you might have an <code>Employee</code> class, or a <code>Car</code> class, etc. depending on the data you are modelling. Instances can be used in DataTables in much the same way as objects - simply pass in your object and give the method or property name to <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> for the data for each column.</p>
+
+<pre><div><div id="highlighter_728979" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">function</code> <code class="js plain">Employee ( name, position, salary, office ) {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">this</code><code class="js plain">.name = name;</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">this</code><code class="js plain">.position = position;</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">this</code><code class="js plain">.salary = salary;</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">this</code><code class="js plain">._office = office;</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">this</code><code class="js plain">.office = </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js keyword">this</code><code class="js plain">._office;</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number10 index9 alt1"><code class="js plain">};</code></div><div class="line number11 index10 alt2">&nbsp;</div><div class="line number12 index11 alt1"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: [</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">new</code> <code class="js plain">Employee( </code><code class="js string">"Tiger Nixon"</code><code class="js plain">, </code><code class="js string">"System Architect"</code><code class="js plain">, </code><code class="js string">"$3,120"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code> <code class="js plain">),</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">new</code> <code class="js plain">Employee( </code><code class="js string">"Garrett Winters"</code><code class="js plain">, </code><code class="js string">"Director"</code><code class="js plain">, </code><code class="js string">"$5,300"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code> <code class="js plain">)</code></div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">],</code></div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">columns: [</code></div><div class="line number18 index17 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'name'</code> <code class="js plain">},</code></div><div class="line number19 index18 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'salary'</code> <code class="js plain">},</code></div><div class="line number20 index19 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'office'</code> <code class="js plain">},</code></div><div class="line number21 index20 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ data: </code><code class="js string">'position'</code> <code class="js plain">}</code></div><div class="line number22 index21 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">]</code></div><div class="line number23 index22 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note that <code>office</code> is a method of the class above, while <code>name</code>, <code>position</code> and <code>salary</code> are properties. DataTables will automatically realise that there is a function, execute it and use the returned value for the cell (note you could also use the syntax <code>office()</code> to be explicit that a function is used - see <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> for further information).</p>
+
+<p>Like the object based data source method above, although in this case the <code>Position</code> column is shown at the end of the table to show that the properties can be read in any order, this would result in a table such as:</p>
+
+<div id="DataTables_Table_2_wrapper" class="dataTables_wrapper no-footer"><table class="basic markdown display dataTable no-footer" id="DataTables_Table_2" role="grid">
+<thead>
+<tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 151px;">Name</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 91px;">Salary</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 101px;">Office</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 168px;">Position</th></tr>
+</thead>
+<tbody>
+
+
+<tr role="row" class="odd">
+  <td>Tiger Nixon</td>
+  <td>$3,120</td>
+  <td>Edinburgh</td>
+  <td>System Architect</td>
+</tr><tr role="row" class="even">
+  <td>Garrett Winters</td>
+  <td>$5,300</td>
+  <td>Edinburgh</td>
+  <td>Director</td>
+</tr></tbody>
+</table></div>
+
+<a name="Data-sources"></a><h2 data-anchor="Data-sources">Data sources</h2>
+
+<p>With the concepts of the processing mode and data types now defined, we can consider how DataTables actually gets the data it is to operate with. There are three basic sources for the data that DataTables will display in the table:</p>
+
+<ul class="markdown">
+<li>DOM (i.e. the plain HTML of the document)</li>
+<li>Javascript</li>
+<li>Ajax sourced data</li>
+</ul>
+
+<a name="DOM"></a><h3 data-anchor="DOM">DOM</h3>
+
+<p>When DataTables starts up, it will automatically check the table it is operating on for data that already exists inside it and use it for the table (note that it will throw this data away if you pass in data using <a href="https://datatables.net/reference/option/data"><code class="option" title="DataTables initialisation option">data</code></a> or <a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> to get new data!). This is the simplest method of using DataTables - working with a regular HTML table.</p>
+
+<p>Note that when using a DOM sourced table, DataTables will use arrays as the data source (see above) by default, although you could use the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> option to have it construct objects for the row data instead.</p>
+
+<h4>HTML5</h4>
+
+<p>DataTables can also make use of HTML5 <code>data-*</code> attributes, which can provide DataTables with additional information for ordering and search data. For example you might have a column with a date formatted such as "21st November 2016". Browsers will struggle to sort that, but you could provide a <code>data-order</code> attribute as part of the HTML for the cell which contains a timestamp that can be easily sorted upon. Extending that, search data can be provided using <code>data-search</code>. For example:</p>
+
+<pre><div><div id="highlighter_184745" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/manual/data/#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">td</code> <code class="html color1">data-search</code><code class="html plain">=</code><code class="html string">"21st November 2016 21/11/2016"</code> <code class="html color1">data-order</code><code class="html plain">=</code><code class="html string">"1479686400"</code><code class="html plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">21st November 2016</code></div><div class="line number3 index2 alt2"><code class="html plain">&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>DataTables will automatically detect:</p>
+
+<ul class="markdown">
+<li>Ordering data: <code>data-order</code> and <code>data-sort</code> attributes</li>
+<li>Search data: <code>data-search</code> and <code>data-filter</code> attributes.</li>
+</ul>
+
+<p>See the manual entry for <a href="https://datatables.net/manual/orthogonal-data#HTML-5">orthogonal data</a> for further information.</p>
+
+<a name="Javascript"></a><h3 data-anchor="Javascript">Javascript</h3>
+
+<p>You can instruct DataTables to use data given to it using the <a href="https://datatables.net/reference/option/data"><code class="option" title="DataTables initialisation option">data</code></a> initialisation option. This data can be in the form of arrays, objects or instances (see above) and can be sourced form anywhere you want! As long as Javascript can access the data, you can send it to DataTables (be it from a custom Ajax call, a WebSocket or just a good old fashioned array of data).</p>
+
+<p>This method can be particularly useful when working extensively with the <a href="https://datatables.net/manual/api">DataTables API</a>, in particular the <a href="https://datatables.net/reference/api/row.add()"><code class="api" title="DataTables API method">row.add()</code></a> and <a href="https://datatables.net/reference/api/row().remove()"><code class="api" title="DataTables API method">row().remove()</code></a> methods can be used to add and remove data from the table dynamically, again from whatever source you wish to choose.</p>
+
+<a name="Ajax"></a><h3 data-anchor="Ajax">Ajax</h3>
+
+<p>Ajax sourced data is much like Javascript sourced data, but DataTables will make an Ajax call to get the data for you. It can often be very useful to source table data from a specific script, separating the logic for retrieving the data from the display. Ajax sourced data in DataTables is controlled by the <a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> option. In its simplest form, you set the property value as a string, pointing at the URL you want to load data from.</p>
+
+<p>Like Javascript sourced data, Ajax sourced data can be in the form of objects or arrays (see above), but not, in this case, instances (since they cannot be represented in JSON).</p>
+
+<p><a href="https://datatables.net/manual/server-side">Server-side processing</a> as discussed above is a special form of Ajax sourced data, whereby the data to be shown for each page in the DataTable is retrieved by an Ajax request only when that page is required for display to the user. This allows the power of the database engine on servers to be utilised for large data sets. For more information about server-side processing, and how it can be implemented, please refer to <a href="https://datatables.net/manual/server-side">its documentation in this manual</a>.</p>
+
+<p>Ajax loading of data is <a href="https://datatables.net/manual/ajax">discussed in detail</a> in the next section of this manual.</p>
+
+<a name="Where-to-go-next"></a><h2 data-anchor="Where-to-go-next">Where to go next</h2>
+
+<p>Data is of course at the core of DataTables and it is impossible to cover the topic fully in a single page. This page gives a general overview of how DataTables handles data, but other topics include:</p>
+
+<ul class="markdown">
+<li><a href="https://datatables.net/manual/data/orthogonal-data">Orthogonal data</a></li>
+<li><a href="https://datatables.net/manual/data/renderers">Renderers</a></li>
+<li><a href="https://datatables.net/manual/ajax">Ajax sourced data</a></li>
+<li><a href="https://datatables.net/manual/api">API access to the data</a>.</li>
+</ul>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fdata%2F">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fdata%2F">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/data/#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/data/#Processing-modes">Processing modes</a><ul><li><a href="https://datatables.net/manual/data/#Client-side-processing">Client-side processing</a></li><li><a href="https://datatables.net/manual/data/#Server-side-processing">Server-side processing</a></li></ul></li><li><a href="https://datatables.net/manual/data/#Data-source-types">Data source types</a><ul><li><a href="https://datatables.net/manual/data/#Arrays">Arrays</a></li><li><a href="https://datatables.net/manual/data/#Objects">Objects</a></li><li><a href="https://datatables.net/manual/data/#Instances">Instances</a></li></ul></li><li><a href="https://datatables.net/manual/data/#Data-sources">Data sources</a><ul><li><a href="https://datatables.net/manual/data/#DOM">DOM</a></li><li><a href="https://datatables.net/manual/data/#Javascript">Javascript</a></li><li><a href="https://datatables.net/manual/data/#Ajax">Ajax</a></li></ul></li><li><a href="https://datatables.net/manual/data/#Where-to-go-next">Where to go next</a></li><li><a href="https://datatables.net/manual/data/#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/data/#"></a><a id="lbNextLink" href="https://datatables.net/manual/data/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/data/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

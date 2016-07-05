@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://datatables.net/manual/data/orthogonal-data -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Orthogonal data</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./2.1Orthogonal data_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./2.1Orthogonal data_files/ga.js"></script><script type="text/javascript" src="./2.1Orthogonal data_files/site.js"></script>
+		<script type="text/javascript" src="./2.1Orthogonal data_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./2.1Orthogonal data_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./2.1Orthogonal data_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./2.1Orthogonal data_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/data">Data</a><ul><li class="active"><a href="https://datatables.net/manual/data/orthogonal-data">Orthogonal data</a></li><li class=""><a href="https://datatables.net/manual/data/renderers">Renderers</a></li></ul></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Orthogonal data</h1>
+
+					<p>Data is complex. Not only will the data displayed in your tables have rules relating to how each data point corresponds to the others in your table, but also each data point itself can take multiple forms. Consider for example currency data; for display it might be shown formatted with a currency sign and thousand separators, while sorting should happen numerically and searching on the data will accept either form.</p>
+
+<p>In DataTables we term this <em>orthogonal data</em>.</p>
+
+<p>DataTables has four built-in data operations, each of which can potentially use an orthogonal (independent) data source. These four operations are:</p>
+
+<ul class="markdown">
+<li><code class="string" title="String">display</code> - Display data</li>
+<li><code class="string" title="String">sort</code> - Data used for ordering</li>
+<li><code class="string" title="String">filter</code> - Data used for searching</li>
+<li><code class="string" title="String">type</code> - Type detection data</li>
+</ul>
+
+<p>By default DataTables will use the same data for all four operations, but this can easily be modified using the <a href="https://datatables.net/reference/option/data"><code class="option" title="DataTables initialisation option">data</code></a> and <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> initialisation option, or HTML 5 <code>data-*</code> attributes.</p>
+
+<a name="Data-source"></a><h2 data-anchor="Data-source">Data source</h2>
+
+<p>Orthogonal data for a table can be provided through the data source array / object (note, objects are <em>much</em> easier to work with, since you don't need to remember array indexes!) as predefined values (typically this is done with <a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> loaded data or a Javascript provided data source), or they can be computed on-the-fly as they are needed.</p>
+
+<a name="Predefined-values"></a><h3 data-anchor="Predefined-values">Predefined values</h3>
+
+<p>If your data source has the orthogonal data that you wish to display already available in it, DataTables can make use of this directly by providing the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> and / or <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> options as objects.</p>
+
+<p>Consider for example the following date structure - note that the <code>start_date</code> object has a nicely formatted <code>display</code> property which will be used for display of the data in the table, but also a <code>timestamp</code> property. This is useful in this case since the format selected for the date display is not easily sortable:</p>
+
+<pre><div><div id="highlighter_788932" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/orthogonal-data#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"name"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Tiger Nixon"</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"position"</code><code class="js plain">:&nbsp;&nbsp; </code><code class="js string">"System Architect"</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"start_date"</code><code class="js plain">: {</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"display"</code><code class="js plain">: </code><code class="js string">"Mon 25th Apr 11"</code><code class="js plain">,</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"timestamp"</code><code class="js plain">: </code><code class="js string">"1303682400"</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">},</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"office"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Edinburgh"</code></div><div class="line number9 index8 alt2"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>To use the data in this format in the table we might use the following options for a <a href="https://datatables.net/reference/option/columns"><code class="option" title="DataTables initialisation option">columns</code></a> or <a href="https://datatables.net/reference/option/columnDefs"><code class="option" title="DataTables initialisation option">columnDefs</code></a> column description:</p>
+
+<pre><div><div id="highlighter_215063" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/orthogonal-data#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'start_date'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">_: </code><code class="js string">'display'</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">sort: </code><code class="js string">'timestamp'</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number7 index6 alt2"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note that the <code>_</code> property <strong>must</strong> be defined when using <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> or <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> as an object. The <code>_</code> property is the 'fallback' if a data option has not been defined (there is no <code>display</code> option in the above object for example).</p>
+
+<p><a href="https://datatables.net/examples/ajax/orthogonal-data">See this example in action</a>.</p>
+
+<a name="Computed-values"></a><h3 data-anchor="Computed-values">Computed values</h3>
+
+<p>If your data source does not contain pre-formatted orthogonal data, the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> and <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> options can be provided as functions. These functions would be used to compute the data required for display.</p>
+
+<p>For example, consider the following data structure:</p>
+
+<pre><div><div id="highlighter_561267" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/orthogonal-data#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"name"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Tiger Nixon"</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"position"</code><code class="js plain">:&nbsp;&nbsp; </code><code class="js string">"System Architect"</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"start_date"</code><code class="js plain">: </code><code class="js string">"1303682400"</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"office"</code><code class="js plain">:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Edinburgh"</code></div><div class="line number6 index5 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Although the start date is in a nice format for the computer to use, it is virtually useless for humans. To resolve this we can compute the value to be displayed using <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> as a function - the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> option tells the renderer what data to use:</p>
+
+<pre><div><div id="highlighter_725364" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/orthogonal-data#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'start_date'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: </code><code class="js keyword">function</code> <code class="js plain">( data, type, row ) {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// If display or filter data is requested, format the date</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">if</code> <code class="js plain">( type === </code><code class="js string">'display'</code> <code class="js plain">|| type === </code><code class="js string">'filter'</code> <code class="js plain">) {</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">d = </code><code class="js keyword">new</code> <code class="js plain">Date( data * 1000 );</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js plain">d.getDate() +</code><code class="js string">'-'</code><code class="js plain">+ (d.getMonth()+1) +</code><code class="js string">'-'</code><code class="js plain">+ d.getFullYear();</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// Otherwise the data type requested (`type`) is type detection or</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// sorting data, for which we want to use the integer, so just return</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// that, unaltered</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js plain">data;</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number15 index14 alt2"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>For further information on using renderers with DataTables, please refer to the <a href="https://datatables.net/manual/data/renderers">renderer's manual page</a> and the <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> reference documentation.</p>
+
+<a name="HTML-5"></a><h2 data-anchor="HTML-5">HTML 5</h2>
+
+<p>The above approach of using orthogonal data from a data source is great if you are <a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> loading the data, but it isn't so useful if your table already exists in HTML. For this, DataTables supports <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#data-*"><code>data-*</code> attributes</a>, which can be used to hold information visible in the DOM, but not to the end user.</p>
+
+<p>DataTables will automatically detect the following attributes on HTML cells:</p>
+
+<ul class="markdown">
+<li><code>data-sort</code> and <code>data-order</code> - for ordering data</li>
+<li><code>data-filter</code> or <code>data-search</code> - for search data</li>
+</ul>
+
+<p>For example, consider the following HTML table row:</p>
+
+<pre><div><div id="highlighter_486095" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/manual/data/orthogonal-data#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code> <code class="html color1">data-search</code><code class="html plain">=</code><code class="html string">"Tiger Nixon"</code><code class="html plain">&gt;T. Nixon&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;System Architect&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number4 index3 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;Edinburgh&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number5 index4 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;61&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code> <code class="html color1">data-order</code><code class="html plain">=</code><code class="html string">"1303682400"</code><code class="html plain">&gt;Mon 25th Apr 11&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number7 index6 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code> <code class="html color1">data-order</code><code class="html plain">=</code><code class="html string">"3120"</code><code class="html plain">&gt;$3,120/m&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number8 index7 alt1"><code class="html plain">&lt;/</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note that:</p>
+
+<ul class="markdown">
+<li>The first column has a <code>data-search</code> attribute, allowing for a full name search in this case, while the display shows an abbreviated form.</li>
+<li>The fifth column has a date which is not directly sortable, so <code>data-order</code> is used to provide the unix time representation for ordering.</li>
+<li>The sixth column also uses <code>data-order</code>, in this case to provide a numeric form of a formatted number.</li>
+</ul>
+
+<p>In order for the HTML 5 <code>data-*</code> attribute detection and processing to work correctly, all cells in a column must have the same attribute available. Without this, DataTables will give a warning.</p>
+
+<p><a href="https://datatables.net/examples/advanced_init/html5-data-attributes.html">See this example in action</a></p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fdata%2Forthogonal-data">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fdata%2Forthogonal-data">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/data/orthogonal-data#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/data/orthogonal-data#Data-source">Data source</a><ul><li><a href="https://datatables.net/manual/data/orthogonal-data#Predefined-values">Predefined values</a></li><li><a href="https://datatables.net/manual/data/orthogonal-data#Computed-values">Computed values</a></li></ul></li><li><a href="https://datatables.net/manual/data/orthogonal-data#HTML-5">HTML 5</a></li><li><a href="https://datatables.net/manual/data/orthogonal-data#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/data/orthogonal-data#"></a><a id="lbNextLink" href="https://datatables.net/manual/data/orthogonal-data#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/data/orthogonal-data#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

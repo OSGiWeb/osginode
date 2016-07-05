@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://datatables.net/manual/installation -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Installation</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./1.Installation_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./1.Installation_files/ga.js"></script><script type="text/javascript" src="./1.Installation_files/site.js"></script>
+		<script type="text/javascript" src="./1.Installation_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./1.Installation_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./1.Installation_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./1.Installation_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class="active"><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Installation</h1>
+
+					<p>DataTables is a powerful Javascript library for adding interaction features to HTML tables, and while simplicity is a core design principle for the project as a whole, it can appear quite daunting to get started. However, taking those first steps and getting DataTables running on your web-site is actually quite straight forward as you need only include two files additional in your page:</p>
+
+<ul class="markdown">
+<li>The DataTables Javascript file</li>
+<li>The DataTables CSS file</li>
+</ul>
+
+<p>There are other files available such as <a href="https://editor.datatables.net/">Editor</a> for adding editing abilities, and <a href="https://datatables.net/extras">other plug-ins</a>, which can be used to extend the feature set of DataTables, but basically, all you need to do is include these two files to get up and running!</p>
+
+<a name="Requirements"></a><h2 data-anchor="Requirements">Requirements</h2>
+
+<p>Before we get started, we need to consider the requirements DataTables has in order to operate.</p>
+
+<a name="Dependencies"></a><h3 data-anchor="Dependencies">Dependencies</h3>
+
+<p>DataTables has only one library dependency (other software upon which it relies in order to work) - <a href="https://jquery.com/">jQuery</a>. Being a jQuery plug-in, DataTables makes use of many of the excellent features that jQuery provides, and hooks into the jQuery plug-in system, in the same way as <a href="https://plugins.jquery.com/">all other jQuery plug-ins</a>. jQuery 1.7 or newer will work with DataTables, although typically you will want to use the latest version. DataTables includes everything else that it requires to operate.</p>
+
+<a name="HTML"></a><h3 data-anchor="HTML">HTML</h3>
+
+<p>For DataTables to be able to enhance an HTML table, the table must be valid, well formatted HTML, with a header (<code class="tag" title="HTML tag">thead</code>) and a body (<code class="tag" title="HTML tag">tbody</code>). An optional footer (<code class="tag" title="HTML tag">tfoot</code>) can also be used.</p>
+
+<pre><div><div id="highlighter_683993" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">table</code> <code class="html color1">id</code><code class="html plain">=</code><code class="html string">"table_id"</code> <code class="html color1">class</code><code class="html plain">=</code><code class="html string">"display"</code><code class="html plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">thead</code><code class="html plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number4 index3 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Column 1&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number5 index4 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Column 2&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number7 index6 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">thead</code><code class="html plain">&gt;</code></div><div class="line number8 index7 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">tbody</code><code class="html plain">&gt;</code></div><div class="line number9 index8 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number10 index9 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;Row 1 Data 1&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number11 index10 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;Row 1 Data 2&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number12 index11 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number13 index12 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number14 index13 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;Row 2 Data 1&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number15 index14 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">td</code><code class="html plain">&gt;Row 2 Data 2&lt;/</code><code class="html keyword">td</code><code class="html plain">&gt;</code></div><div class="line number16 index15 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number17 index16 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">tbody</code><code class="html plain">&gt;</code></div><div class="line number18 index17 alt1"><code class="html plain">&lt;/</code><code class="html keyword">table</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>If you are generating your HTML document using a server-side program, such as a PHP script, a Ruby script, a C# program or anything else - all they need to do is output your table like this. This is exactly what you would have for a normal HTML table, although sometimes you might need to add the <code class="tag" title="HTML tag">thead</code> and <code class="tag" title="HTML tag">tbody</code> tags, as these aren't always used (they allow DataTables to know what should be used for the column headers and the click-to-order controls).</p>
+
+<p>Note that DataTables can actually generate the <code class="tag" title="HTML tag">thead</code> and <code class="tag" title="HTML tag">tbody</code> for you, along with all of the rows and cells of the table, if you are using Ajax sourced data, but for the moment we'll focus on a plain HTML. For more information about the different data sources DataTables can use, please see the <a href="https://datatables.net/manual/data">data sources</a> section of this manual.</p>
+
+<a name="Installing-Javascript-/-CSS"></a><h2 data-anchor="Installing-Javascript-/-CSS">Installing Javascript / CSS</h2>
+
+<p>The key part of the installation of DataTables is including the DataTables source files on your page. As noted at the top of this page, this simply involves including the DataTables Javascript and CSS files. The CSS file is actually optional, but it provides default styling for your table to make it look good with minimum effort. See the <a href="https://datatables.net/manual/styling/theme-creator">style theme creator</a> if you want to customise the colours of the default DataTables CSS.</p>
+
+<p>The required files can be installed in a number of different ways:</p>
+
+<ul class="markdown">
+<li>Using the <a href="https://cdn.datatables.net/">DataTables CDN</a></li>
+<li>Locally</li>
+<li>With a package manager such as <a href="https://www.npmjs.com/">NPM</a> or <a href="http://bower.io/">Bower</a>.</li>
+</ul>
+
+<a name="CDN"></a><h3 data-anchor="CDN">CDN</h3>
+
+<aside>
+  <a name="Download-builder"></a><h2 data-anchor="Download-builder">Download builder</h2>
+  
+  <p>A <a href="https://datatables.net/download">download builder</a> is available which will build a customised package for you - based on the features and styling you want for your DataTable. The resulting files are available on the DataTables CDN, or can be downloaded locally (see below).</p>
+</aside>
+
+<p>A CDN is a <a href="https://en.wikipedia.org/wiki/Content_delivery_network">Content Delivery Network</a> which has edge servers that are tuned to provide media files with very low latency to web-browsers, and as a user receives a file from the CDN the browser will cache it for reuse. This means that different sites using the same Javascript library can share a large performance improvement since the browser does not need to download the same file from different servers for each site.</p>
+
+<p>The DataTables CDN is powered by <a href="https://www.cloudflare.com/">CloudFlare</a> which has edge servers all around the world, ensuring that the Javascript and CSS for DataTables can be loaded as quickly as possible by your visitor's browsers.</p>
+
+<p>To include DataTables on your page simply include the following HTML (remember to include <a href="https://jquery.com/">jQuery as well</a>:</p>
+
+<pre><div><div id="highlighter_612163" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">link</code> <code class="html color1">rel</code><code class="html plain">=</code><code class="html string">"stylesheet"</code> <code class="html color1">type</code><code class="html plain">=</code><code class="html string">"text/css"</code> <code class="html color1">href</code><code class="html plain">=</code><code class="html string">"//cdn.datatables.net/1.10.11/css/jquery.dataTables.css"</code><code class="html plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="html spaces">&nbsp;</code>&nbsp;</div><div class="line number3 index2 alt2"><code class="html plain">&lt;</code><code class="html keyword">script</code> <code class="html color1">type</code><code class="html plain">=</code><code class="html string">"text/javascript"</code> <code class="html color1">charset</code><code class="html plain">=</code><code class="html string">"utf8"</code> <code class="html color1">src</code><code class="html plain">=</code><code class="html string">"//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"</code><code class="html plain">&gt;&lt;/</code><code class="html keyword">script</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Local-installation"></a><h3 data-anchor="Local-installation">Local installation</h3>
+
+<p>If you prefer not to use a CDN, and instead have the files hosted on your own server, or if you want to modify the files at all, it is just as simple to get going with DataTables.</p>
+
+<p>Simply <a href="https://datatables.net/download">use the download builder</a> to download the latest version of DataTables, select any additionally software and styling you want and download the customised package. Then unzip and upload to your web-server. You will then have a directory called <code class="path" title="File path">DataTables</code> available on your server. Then include DataTables on your page using the following HTML:</p>
+
+<pre><div><div id="highlighter_764484" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">link</code> <code class="html color1">rel</code><code class="html plain">=</code><code class="html string">"stylesheet"</code> <code class="html color1">type</code><code class="html plain">=</code><code class="html string">"text/css"</code> <code class="html color1">href</code><code class="html plain">=</code><code class="html string">"/DataTables/datatables.css"</code><code class="html plain">&gt;</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="html plain">&lt;</code><code class="html keyword">script</code> <code class="html color1">type</code><code class="html plain">=</code><code class="html string">"text/javascript"</code> <code class="html color1">charset</code><code class="html plain">=</code><code class="html string">"utf8"</code> <code class="html color1">src</code><code class="html plain">=</code><code class="html string">"/DataTables/datatables.js"</code><code class="html plain">&gt;&lt;/</code><code class="html keyword">script</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="NPM"></a><h3 data-anchor="NPM">NPM</h3>
+
+<p>DataTables and its extensions are available as <a href="https://www.npmjs.com/">NPM</a> packages. The package base name is <code>datatables.net</code> and the extensions and styling integration options are available as individual packages - see the <a href="https://datatables.net/download/npm">NPM install guide</a> for full details on the available packages.</p>
+
+<p>For example the following can be used to install DataTables and its default styling:</p>
+
+<pre><div><div id="highlighter_933004" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">npm install datatables.net</code>&nbsp;&nbsp;&nbsp; <code class="js preprocessor"># Core library</code></div><div class="line number2 index1 alt1"><code class="js plain">npm install datatables.net-dt</code> <code class="js preprocessor"># Styling</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>The DataTables packages all export a factory function that can be executed with two optional arguments - the <code>window</code> and jQuery object to use  - again see the <a href="https://datatables.net/download/npm">NPM install guide</a> for details on these parameters. When using <a href="http://browserify.org/">Browserify</a> you can simply execute the function without any parameters - e.g.:</p>
+
+<pre><div><div id="highlighter_936849" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">$&nbsp; = require( </code><code class="js string">'jquery'</code> <code class="js plain">);</code></div><div class="line number2 index1 alt1"><code class="js keyword">var</code> <code class="js plain">dt = require( </code><code class="js string">'datatables.net'</code> <code class="js plain">)();</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Bower"></a><h3 data-anchor="Bower">Bower</h3>
+
+<p>DataTables, its extensions and styling options are also available as <a href="http://bower.io/">Bower</a> packages. The package names are identical to the NPM packages with <code>datatables.net</code> as the base name. To install DataTables and its default styling via bower use:</p>
+
+<pre><div><div id="highlighter_983984" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">bower install --save datatables.net</code></div><div class="line number2 index1 alt1"><code class="js plain">bower install --save datatables.net-dt</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Initialising-DataTables"></a><h2 data-anchor="Initialising-DataTables">Initialising DataTables</h2>
+
+<p>That's almost it! We've got the HTML table we want to enhance, and we've got all the software and styles we need. All that is now required is to to tell DataTables to actually work its magic on the table. This is done with a few lines of Javascript:</p>
+
+<pre><div><div id="highlighter_224417" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/installation#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(document).ready( </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#table_id'</code><code class="js plain">).DataTable();</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<aside>
+  <a name="Upgrade-note:"></a><h1 data-anchor="Upgrade-note:">Upgrade note:</h1>
+  
+  <p>If you are upgrading from DataTables 1.9 or earlier, you might notice that a capital <code>D</code> is used to initialise the DataTable here. <code>$().DataTable()</code> returns a <a href="https://datatables.net/reference/type/DataTables.Api">DataTables API instance</a>, while <code>$().dataTable()</code> will also initialise a DataTable, but returns a <a href="https://datatables.net/reference/type/jQuery">jQuery object</a>.</p>
+  
+  <p>Please refer to the <a href="https://datatables.net/manual/api">API manual</a> for further information.</p>
+</aside>
+
+<p>If you've used jQuery before, you will recognise the form of this script: we wait for the document to be fully ready, and then select the table we want, and run the DataTables function on it.</p>
+
+<p>That's it! DataTables will add ordering, searching, paging and information to your table by default, giving your end users the ability to find the information they want as quickly as possible.</p>
+
+<p>If you want to customise your DataTable, this can be done by specifying configuration parameters in an object passed to the <code>DataTable()</code> function. For information on how to use these configuration parameter, please refer to the <a href="https://datatables.net/manual/options">options manual page</a>.</p>
+
+<a name="Next-steps"></a><h2 data-anchor="Next-steps">Next steps</h2>
+
+<p>With the basics of how to get DataTables going under your belt, you might now want to explore some of the other options to enhance your tables further:</p>
+
+<ul class="markdown">
+<li><a href="https://datatables.net/manual/options">Customise the DataTables options</a> to suit your needs.</li>
+<li><a href="https://datatables.net/manual/api">Use the API</a> to access and control the table programmatically.</li>
+<li><a href="https://datatables.net/manual/styling/theme-creator">Style the table</a> to match the theme of your web-site.</li>
+<li><a href="https://datatables.net/examples">Explore the DataTables examples</a>.</li>
+<li><a href="https://datatables.net/forums">Take part in the DataTables community</a>. Ask questions, answer others, make suggestions or simply say "Hi"!</li>
+</ul>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Finstallation">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Finstallation">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/installation#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/installation#Requirements">Requirements</a><ul><li><a href="https://datatables.net/manual/installation#Dependencies">Dependencies</a></li><li><a href="https://datatables.net/manual/installation#HTML">HTML</a></li></ul></li><li><a href="https://datatables.net/manual/installation#Installing-Javascript-/-CSS">Installing Javascript / CSS</a><ul><li><a href="https://datatables.net/manual/installation#CDN">CDN</a></li><li><a href="https://datatables.net/manual/installation#Local-installation">Local installation</a></li><li><a href="https://datatables.net/manual/installation#NPM">NPM</a></li><li><a href="https://datatables.net/manual/installation#Bower">Bower</a></li></ul></li><li><a href="https://datatables.net/manual/installation#Initialising-DataTables">Initialising DataTables</a></li><li><a href="https://datatables.net/manual/installation#Next-steps">Next steps</a></li><li><a href="https://datatables.net/manual/installation#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/installation#"></a><a id="lbNextLink" href="https://datatables.net/manual/installation#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/installation#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

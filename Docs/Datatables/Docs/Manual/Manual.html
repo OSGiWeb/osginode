@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://datatables.net/manual/index -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Manual</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./Manual_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./Manual_files/ga.js"></script><script type="text/javascript" src="./Manual_files/site.js"></script>
+		<script type="text/javascript" src="./Manual_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./Manual_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./Manual_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./Manual_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Manual</h1>
+
+					<aside>
+  <a name="Version-information:"></a><h1 data-anchor="Version-information:">Version information:</h1>
+  
+  <p>The documentation here is for DataTables 1.10 and newer. Documentation for earlier versions of DataTables is available on the <a href="http://legacy.datatables.net/">legacy site</a>, although it is recommended you upgrade where possible.</p>
+  
+  <a name="Compatibility-information:"></a><h1 data-anchor="Compatibility-information:">Compatibility information:</h1>
+  
+  <p>DataTables 1.10+ and its extensions require with <a href="https://jquery.com/">jQuery</a> 1.7 or newer.</p>
+  
+  <p>DataTables 1.10 is compatible with IE6 and newer. The extensions require IE8 or newer. All other <em>evergreen</em> browsers (Chrome, Firefox, Safari, Opera) are fully supported.</p>
+</aside>
+
+<p>The stated goal of DataTables is "To enhance the accessibility of data in HTML tables". In order to achieve this we recognise that DataTables has two categories of users that interact with the interfaces the software has:</p>
+
+<ul class="markdown">
+<li>End users - those who use the interface in the browser that you create with DataTables</li>
+<li>Developers - yourself and the other developers working with DataTables to create your apps, sites, services, etc.</li>
+</ul>
+
+<p>End users need to be able to obtain useful information from the table as quickly as possible and for this DataTables has built in features such as ordering, searching and paging. This documentation doesn't detail how that interface can be used by end users, under the assumption that these controls are self-evident (type into search input box and you search the table, for example).</p>
+
+<p>What this documentation does focus on is giving you, the developers using DataTables, the information you need to be able to use DataTables in your applications, customising it to match your exact requirements, to allow your end users to benefit from the features DataTables can present them. As such, this documentation covers details from how to install DataTables on your site in the first instance, explaining how it can source data for the tables it creates and detailing how its end user interface can be customised, right the way through to more advanced topics such as creating your own plug-ins for DataTables to further enhance its abilities and interface seamlessly with your application.</p>
+
+<p>Although the end user and developer interfaces that DataTables presents are of course completely disparate, each is of equal importance to DataTables meeting its goal of ensuring data in HTML tables can be accessed and consumed as quickly and as efficiently as possible.</p>
+
+<a name="DataTables-Manual"></a><h2 data-anchor="DataTables-Manual">DataTables Manual</h2>
+
+<p></p><div class="category-items"><div class="category-item"><a name="Installation"></a><h3 class="title" data-anchor="Installation"><a href="https://datatables.net/manual/installation">Installation</a></h3><div class="summary"><p>How to get DataTables up and running on your web-site. This section details the requirements DataTables has of your HTML tables, what files you need to include to have DataTables enhance your tables, how to include them and how to run DataTables. You'll be up and running in less than two minutes! <a href="https://datatables.net/manual/installation">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Data"></a><h3 class="title" data-anchor="Data"><a href="https://datatables.net/manual/data">Data</a></h3><div class="summary"><p>Data is complex, and all data is different. Accordingly, DataTables has a wealth of options which can be used to configure how it will obtain the data to display in the table, and how it processes that data. This section of the manual describes the options to configure DataTables to read data from your data source. <a href="https://datatables.net/manual/data">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Ajax"></a><h3 class="title" data-anchor="Ajax"><a href="https://datatables.net/manual/ajax">Ajax</a></h3><div class="summary"><p>This section of the manual looks in detail at how to load Ajax sourced data into your DataTables with a JSON data source. This is comprised primarily of two tasks - where the array for the rows of data is in the JSON and the data point to be used for each column. <a href="https://datatables.net/manual/ajax">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Options"></a><h3 class="title" data-anchor="Options"><a href="https://datatables.net/manual/options">Options</a></h3><div class="summary"><p>DataTables' huge range of options can be used to customise the way that it will present its interface, and the features available, to the end user. This section of the manual details how this configuration can be performed. A full list of the options available is shown in the <a href="https://datatables.net/reference/option">options reference</a> section of this web-site. <a href="https://datatables.net/manual/options">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="API"></a><h3 class="title" data-anchor="API"><a href="https://datatables.net/manual/api">API</a></h3><div class="summary"><p>The DataTables API presents a wealth of options for accessing the data contained in a table, and otherwise manipulating the table programmatically. These functions range from selecting rows, columns and cells to get and set their data, to changing column visibility and applying search terms to the table dynamically. <a href="https://datatables.net/manual/api">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Styling"></a><h3 class="title" data-anchor="Styling"><a href="https://datatables.net/manual/styling">Styling</a></h3><div class="summary"><p>It is important to style the DataTables enhanced tables in a manner which suits your design, so the tables fit in seamlessly with the rest of your site / app. To this end, DataTables provides a number of options for styling the tables, including its own customisable CSS, integration with CSS frameworks such Bootstrap and Foundation and pre-built themes. <a href="https://datatables.net/manual/styling">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Events"></a><h3 class="title" data-anchor="Events"><a href="https://datatables.net/manual/events">Events</a></h3><div class="summary"><p>Knowing when DataTables has performed an operation can often play an important role in a complex and dynamic web-application. For this reason, DataTables will fire custom DOM events, which can be listened for using <a href="http://api.jquery.com/on/">jQuery's on()</a> method, and the <code>dt</code> namespace. <a href="https://datatables.net/manual/events">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Server-side processing"></a><h3 class="title" data-anchor="Server-side processing"><a href="https://datatables.net/manual/server-side">Server-side processing</a></h3><div class="summary"><p>Server-side processing allows DataTables to leverage the abilities and sheer power of database engines directly, to allow them to do the heavy work of ordering, searching and paging data. This is done by making an Ajax call for each page to be displayed by DataTables and is suited for very large datasets. <a href="https://datatables.net/manual/server-side">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Internationalisation"></a><h3 class="title" data-anchor="Internationalisation"><a href="https://datatables.net/manual/i18n">Internationalisation</a></h3><div class="summary"><p>DataTables adds several controls to a document when it enhances a table, many of which utilise language strings in one way or another to convey the usage to the end user. These default strings are in English, but can easily be translated into another language, or the strings customised. There are over 50 translations provided by the community ready to be used. <a href="https://datatables.net/manual/i18n">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Security"></a><h3 class="title" data-anchor="Security"><a href="https://datatables.net/manual/security">Security</a></h3><div class="summary"><p>Security is a fundamental topic in web-development and is a topic that should not be overlooked by any developer, from interns to CTOs. High profile hacking cases are frequently in headlines around the world, but with some careful thinking and planning you can quickly create secure applications. This page discusses web security attacks that are directly relevant to DataTables, along with methods for how you can combat them. <a href="https://datatables.net/manual/security">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Plug-in development"></a><h3 class="title" data-anchor="Plug-in development"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></h3><div class="summary"><p>As flexible as DataTables is, there may be times when you wish to customise certain aspects to your specific needs. DataTables has a number of plug-in and extension options which are detailed in this section. <a href="https://datatables.net/manual/plug-ins">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Technical notes"></a><h3 class="title" data-anchor="Technical notes"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></h3><div class="summary"><p>Technical notes contain information about DataTables that doesn't quite fit into the flow of the rest of the documentation, explaining error messages, technical decisions regarding the implementation of DataTables and detailed explanations of other general topics of interest when working with DataTables. <a href="https://datatables.net/manual/tech-notes">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Development"></a><h3 class="title" data-anchor="Development"><a href="https://datatables.net/manual/development">Development</a></h3><div class="summary"><p>As open source software, DataTables is free for you to investigate its source, and I would very much encourage you to do so and contribute any changes you make back to the project soothers can also benefit. This section of the manual describes how you can built DataTables from source, contribute code and the planned road map for DataTables. <a href="https://datatables.net/manual/development">Read more »</a>
+</p></div></div></div><p></p>
+
+				</div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/index#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/index#DataTables-Manual">DataTables Manual</a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/index#"></a><a id="lbNextLink" href="https://datatables.net/manual/index#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/index#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

@@ -1,11 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Tab, Row, Col, Nav, NavItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+
+//import { Button, Modal, Tab, Row, Col, Nav, NavItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import {Button, Modal, Row, Col } from 'react-bootstrap'
+
 import { DatePicker } from 'material-ui';
 import { TextField } from 'material-ui';
+
 import { AppBar, IconButton, IconMenu, MenuItem } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+
+import { Tabs, Tab } from 'material-ui/Tabs';
+import { Paper, Divider } from 'material-ui';
+import FontIcon from 'material-ui/FontIcon';
+import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+
+import { Dialog, FlatButton, RaisedButton } from 'material-ui';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+
+// Icons
+import FileCloudDownload from 'material-ui/svg-icons/file/cloud-download';
 
 /**
  * Styles for React component
@@ -18,110 +33,201 @@ var styles = {
     // paddingTop: 4,
     height: 180,
   },
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+  textArea: {
+    fontSize: 14,
+    marginTop: 10,
+    marginBottom: 20,
+    marginLeft: 5,
+    marginRight: 5,
+    padding: '0 10px',
+  },
+  dialogStyle: {
+    position: 'absolute',
+    left: '50%',
+    top: '5%',
+    transform: 'translate(-50%, 0)'
+  },
+  smallIcon: {
+    width: 25,
+    height: 25,
+  },
+
 }
 
 class ShopElement extends Component {
+
   constructor(props) {
     super(props);
 
     // Initialize local storage for class 
     this.state = {
-      showModal: false,
+      open: false,
+      tableData: []
     };
 
     // Binding functions to class
-    this.onModalShow = this.onModalShow.bind(this);
-    this.onModalClose = this.onModalClose.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.onTableRowClick = this.onTableRowClick.bind(this);
+
   }
 
-  onModalShow() {
-    this.setState({ showModal: true });
+  handleOpen() {
+    let data = this.processTableData();
+    this.setState({
+      open: true,
+      tableData: data
+    });
   }
 
-  onModalClose() {
-    this.setState({ showModal: false });
+  handleClose() {
+    this.setState({
+      open: false,
+      tableData: []
+    });
+  }
+
+  // Process row data from database to table format 
+  processTableData() {
+
+    const { item } = this.props;
+    // Process dowloadable data to table format
+    let id = 1;
+    let downloadFiles = [];
+    // let file = {
+    //   id: '',
+    //   mongoId: '',
+    //   name: '',
+    //   type: '',
+    //   downloadIcon: ''
+    // };
+
+    let sourcecode = item.filemeta.sourcecode;
+    let documents = item.filemeta.docs;
+    let libraries = item.filemeta.libs;
+
+    // Store files data in array
+    downloadFiles.push({
+      id: id++,
+      mongoId: sourcecode.id,
+      name: sourcecode.name,
+      type: '源代码',
+      downloadIcon: ''
+    }); // sourcecode
+
+    documents.forEach(function (doc) {
+      downloadFiles.push({
+        id: id++,
+        mongoId: doc.id,
+        name: doc.name,
+        type: '文档',
+        downloadIcon: ''
+      });
+    }); // documents
+
+    libraries.forEach(function (lib) {
+      downloadFiles.push({
+        id: id++,
+        mongoId: lib.id,
+        name: lib.name,
+        type: '库文件',
+        downloadIcon: ''
+      });
+    }); // libraries
+
+    return downloadFiles;
+  }
+
+  onTableRowClick(row, column) {
+    // Column for download icon click
+    if (column === 4) {
+      let mongoId = this.state.tableData[row].mongoId;
+      let url = '/pluginRepository/download/' + mongoId;
+      window.location = url;
+      window.open(url, '_self');
+    }
+  }
+
+  renderDownloadTable(item) {
+    const { tableData } = this.state;
+
+    return (
+      <Table onCellClick={this.onTableRowClick}>
+        <TableHeader displayRowCheckbox={false} displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>ID</TableHeaderColumn>
+            <TableHeaderColumn>文件名称</TableHeaderColumn>
+            <TableHeaderColumn>类型</TableHeaderColumn>
+            <TableHeaderColumn>下载</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false} showRowHover={true}>
+          { tableData.map(function (row) {
+            if (tableData.length > 0)
+              return (
+                <TableRow>
+                  <TableRowColumn>{ row.id }</TableRowColumn>
+                  <TableRowColumn>{ row.name }</TableRowColumn>
+                  <TableRowColumn>{ row.type }</TableRowColumn>
+                  <TableRowColumn><IconButton iconStyle={styles.smallIcon}>
+                    <FileCloudDownload />
+                  </IconButton></TableRowColumn>
+                </TableRow>
+              )
+          }) }
+        </TableBody>
+      </Table>
+    );
   }
 
   renderModal(item) {
+    const actions = [
+      <FlatButton
+        label="关闭"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleClose}
+        />,
+    ];
+
     return (
-      <Modal show={this.state.showModal} onHide={this.onModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title style={{ fontWeight: 'bold' }} > <i className="fa fa-puzzle-piece"/> { item.pluginname } </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-            <Row>
-              <Col sm={4}>
-                <Nav bsStyle="pills" stacked>
-                  <NavItem eventKey="first">
-                    插件介绍
-                  </NavItem>
-                  <NavItem eventKey="second">
-                    安装指南
-                  </NavItem>
-                  <NavItem eventKey="third">
-                    编译指南
-                  </NavItem>
-                </Nav>
-              </Col>
-              <Col sm={8}>
-                <Tab.Content animation>
-                  <Tab.Pane eventKey="first">
-                    <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
-                  </Tab.Pane>
-                  <Tab.Pane eventKey="second">
-                    <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.installmanual }/>
-                  </Tab.Pane>
-                  <Tab.Pane eventKey="third">
-                    <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.compilemanual }/>
-                  </Tab.Pane>
-                </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
-
-          <Row className="show-grid">
-            <Col xs={12} md={6}>
-              <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
-            </Col>
-            <Col xs={12} md={6}>
-              <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
-            </Col>
-          </Row>
-          <Row className="show-grid">
-            <Col xs={12} md={6}>
-              <TextField hintText="Hint text" floatingLabelText="输入文字"></TextField>
-            </Col>
-            <Col xs={12} md={6}>
-              <TextField hintText="Hint text" floatingLabelText="Floating Label Text"></TextField>
-            </Col>
-          </Row>
-
+      <div>
+        <Dialog
+          title={item.pluginname}
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          contentStyle={styles.dialogStyle}>
           <Row className="show-grid">
             <Col xs={12} md={12}>
-              <AppBar
-                title="Title"
-                iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-                iconElementRight={
-                  <IconMenu
-                    iconButtonElement={
-                      <IconButton><MoreVertIcon /></IconButton>
-                    }
-                    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    >
-                    <MenuItem style={{ fontWeight: 'bold' }} primaryText="更新" />
-                    <MenuItem primaryText="Help" />
-                    <MenuItem primaryText="Sign out" />
-                  </IconMenu>
-                }
-                />
-
+              <Tabs>
+                <Tab label="插件介绍" >
+                  <TextField id='pluginintrod' style={styles.textArea} multiLine={true} fullWidth={true}
+                    underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
+                </Tab>
+                <Tab label="安装指南" >
+                  <TextField id='installmanual' style={styles.textArea} multiLine={true} fullWidth={true}
+                    underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
+                </Tab>
+                <Tab label="编译指南" >
+                  <TextField id='compilemanual'style={styles.textArea} multiLine={true} fullWidth={true}
+                    underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
+                </Tab>
+                <Tab label="下载" >
+                  {this.renderDownloadTable(item) }
+                </Tab>
+              </Tabs>
             </Col>
           </Row>
-
-        </Modal.Body>
-      </Modal>
+        </Dialog>
+      </div>
     );
   }
 
@@ -156,7 +262,7 @@ class ShopElement extends Component {
             </div>
             <div className="panel-footer text-align-center" >
               <a href-void="" className="btn btn-primary btn-block" role="button" href="#"> 下载 </a>
-              <div> <a className="font-sm" onClick={this.onModalShow} > 详情 </a>
+              <div> <a className="font-sm" onClick={this.handleOpen} > 详情 </a>
                 或 <a className="font-sm" href-void="" href="#"> 评分 </a>
               </div>
             </div>
@@ -318,3 +424,126 @@ export default ShopElement;
 //   </div>
 // </div>
 // </JarvisWidget>
+
+
+
+
+
+      // <Modal show={this.state.showModal} onHide={this.onModalClose}>
+      //   <Modal.Header closeButton>
+      //     <Modal.Title style={{ fontWeight: 'bold' }} > <i className="fa fa-puzzle-piece"/> { item.pluginname } </Modal.Title>
+      //   </Modal.Header>
+      //   <Modal.Body>
+      //     {/*
+      //     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+      //       <Row>
+      //         <Col sm={4}>
+      //           <Nav bsStyle="pills" stacked>
+      //             <NavItem eventKey="first">
+      //               插件介绍
+      //             </NavItem>
+      //             <NavItem eventKey="second">
+      //               安装指南
+      //             </NavItem>
+      //             <NavItem eventKey="third">
+      //               编译指南
+      //             </NavItem>
+      //           </Nav>
+      //         </Col>
+      //         <Col sm={8}>
+      //           <Tab.Content animation>
+      //             <Tab.Pane eventKey="first">
+      //               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
+      //             </Tab.Pane>
+      //             <Tab.Pane eventKey="second">
+      //               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.installmanual }/>
+      //             </Tab.Pane>
+      //             <Tab.Pane eventKey="third">
+      //               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.compilemanual }/>
+      //             </Tab.Pane>
+      //           </Tab.Content>
+      //         </Col>
+      //       </Row>
+      //     </Tab.Container>
+      //     */}
+
+      //     {/*
+      //     <Row className="show-grid">
+      //       <Col xs={12} md={6}>
+      //         <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
+      //       </Col>
+      //       <Col xs={12} md={6}>
+      //         <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
+      //       </Col>
+      //     </Row>
+      //     <Row className="show-grid">
+      //       <Col xs={12} md={6}>
+      //         <TextField hintText="Hint text" floatingLabelText="输入文字"></TextField>
+      //       </Col>
+      //       <Col xs={12} md={6}>
+      //         <TextField hintText="Hint text" floatingLabelText="Floating Label Text"></TextField>
+      //       </Col>
+      //     </Row>
+      //     */}
+
+      //     {/*
+      //     <Row className="show-grid">
+      //       <Col xs={12} md={12}>
+      //         <AppBar
+      //           title="Title"
+      //           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+      //           iconElementRight={
+      //             <IconMenu
+      //               iconButtonElement={
+      //                 <IconButton><MoreVertIcon /></IconButton>
+      //               }
+      //               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+      //               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      //               >
+      //               <MenuItem style={{ fontWeight: 'bold' }} primaryText="更新" />
+      //               <MenuItem primaryText="Help" />
+      //               <MenuItem primaryText="Sign out" />
+      //             </IconMenu>
+      //           }
+      //           />
+      //       </Col>
+      //     </Row>
+      //     */}
+
+      //     <Row className="show-grid">
+      //       <Col xs={12} md={12}>
+      //         <Tabs>
+      //           <Tab label="插件介绍" >
+      //             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
+      //           </Tab>
+      //           <Tab label="安装指南" >
+      //             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
+      //           </Tab>
+      //           <Tab label="编译指南" >
+      //             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
+      //           </Tab>
+      //         </Tabs>
+      //       </Col>
+      //     </Row>
+
+      //     <Row className="show-grid">
+      //       <Col xs={12} md={12}>
+      //         <Tabs>
+      //           <Tab
+      //             icon={<FontIcon className="material-icons">phone</FontIcon>}
+      //             label="RECENTS"
+      //             />
+      //           <Tab
+      //             icon={<FontIcon className="material-icons">favorite</FontIcon>}
+      //             label="FAVORITES"
+      //             />
+      //           <Tab
+      //             icon={<MapsPersonPin />}
+      //             label="NEARBY"
+      //             />
+      //         </Tabs>
+      //       </Col>
+      //     </Row>
+
+      //   </Modal.Body>
+      // </Modal>

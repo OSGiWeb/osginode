@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://datatables.net/reference/event/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Events</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./3.Events_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./3.Events_files/ga.js"></script><script type="text/javascript" src="./3.Events_files/site.js"></script>
+		<script type="text/javascript" src="./3.Events_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="wide">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./3.Events_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./3.Events_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./3.Events_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class=" sub"><a href="https://datatables.net/manual/index">Manual</a></li><li class="sub-active sub"><a href="https://datatables.net/reference/index">Reference</a><ul><li class=""><a href="https://datatables.net/reference/option">Options</a></li><li class=""><a href="https://datatables.net/reference/api">API</a></li><li class="active"><a href="https://datatables.net/reference/event">Events</a></li><li class=""><a href="https://datatables.net/reference/button">Buttons</a></li><li class=""><a href="https://datatables.net/reference/type">Types</a></li></ul></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Events</h1>
+
+					<p>DataTables and its extensions will emit custom DOM events when they performs particular operations, providing the ability to listen for these events and take action on them when they occur, for example updating display information about a table when a table is redrawn.</p>
+
+<p>The events DataTables emits can all be listened for using the <a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a> method, or the <a href="http://api.jquery.com/on/"><code>jQuery.on()</code></a> method with the <code>dt</code> namespace (all events are triggered with the <code>dt</code> namespace to ensure they do not conflict with custom events from other libraries!). The example below shows how the <a href="https://datatables.net/reference/event/draw"><code class="event" title="DataTables event">draw</code></a> event can be listened for:</p>
+
+<pre><div><div id="highlighter_926496" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/reference/event/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#myTable'</code><code class="js plain">).on( </code><code class="js string">'draw.dt'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">alert( </code><code class="js string">'Table redrawn'</code> <code class="js plain">);</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>For further general information about DataTables' custom events, please refer to the <a href="https://datatables.net/manual/events">events manual</a>.</p>
+
+<div class="ref_search">
+    <div class="ref_field">
+        <div class="ref_label">Search:</div>
+        <div class="ref_input"><input type="text"></div>
+     </div>
+<div class="ref_field"><div class="ref_label">Group:</div><div class="ref_input"><a class="site-btn small">DataTables</a><a class="site-btn small">AutoFill</a><a class="site-btn small">Buttons</a><a class="site-btn small">ColReorder</a><a class="site-btn small">KeyTable</a><a class="site-btn small">Responsive</a><a class="site-btn small">RowReorder</a><a class="site-btn small">Select</a></div></div></div>
+
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="reference row-border hover dataTable no-footer" id="DataTables_Table_0" role="grid" style="width: 883px;">
+    <thead>
+        <tr role="row"><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 173px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Summary: activate to sort column ascending" style="width: 638px;">Summary</th></tr>
+    </thead>
+    <tbody>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr class="group"><td colspan="3">DataTables</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/column-sizing"><code class="event" title="DataTables event">column-sizing</code></a></p>
+</td><td><p>Column sizing event - fired when the column widths are recalculated.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/column-visibility"><code class="event" title="DataTables event">column-visibility</code></a></p>
+</td><td><p>Column visibility event - fired when the visibility of a column changes.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/destroy"><code class="event" title="DataTables event">destroy</code></a></p>
+</td><td><p>Table destroy event - fired when a table is destroyed.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/draw"><code class="event" title="DataTables event">draw</code></a></p>
+</td><td><p>Draw event - fired once the table has completed a draw.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/error"><code class="event" title="DataTables event">error</code></a></p>
+</td><td><p>Error event - An error has occurred during DataTables' processing of data.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/init"><code class="event" title="DataTables event">init</code></a></p>
+</td><td><p>Initialisation complete event - fired when DataTables has been fully initialised and data loaded.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/length"><code class="event" title="DataTables event">length</code></a></p>
+</td><td><p>Page length change event - fired when the page length is changed.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/order"><code class="event" title="DataTables event">order</code></a></p>
+</td><td><p>order event - fired when the data contained in the table is ordered.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/page"><code class="event" title="DataTables event">page</code></a></p>
+</td><td><p>Page change event - fired when the table's paging is updated.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/preInit"><code class="event" title="DataTables event">preInit</code></a></p>
+</td><td><p>Initialisation started event - triggered immediately before data load.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/preXhr"><code class="event" title="DataTables event">preXhr</code></a></p>
+</td><td><p>Ajax event - fired before an Ajax request is made</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/processing"><code class="event" title="DataTables event">processing</code></a></p>
+</td><td><p>Processing event - fired when DataTables is processing data</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/search"><code class="event" title="DataTables event">search</code></a></p>
+</td><td><p>Search event - fired when the table is filtered.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/stateLoaded"><code class="event" title="DataTables event">stateLoaded</code></a></p>
+</td><td><p>State loaded event - fired once state has been loaded and applied.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/stateLoadParams"><code class="event" title="DataTables event">stateLoadParams</code></a></p>
+</td><td><p>State load event - fired when loading state from storage.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/stateSaveParams"><code class="event" title="DataTables event">stateSaveParams</code></a></p>
+</td><td><p>State save event - fired when saving table state information.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/xhr"><code class="event" title="DataTables event">xhr</code></a></p>
+</td><td><p>Ajax event - fired when an Ajax request is completed</p>
+</td></tr><tr class="group"><td colspan="3">AutoFill</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/autoFill"><code class="event" title="DataTables event">autoFill</code></a></p>
+</td><td><p>An auto fill action has been completed</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/preAutoFill"><code class="event" title="DataTables event">preAutoFill</code></a></p>
+</td><td><p>An auto fill action is about to be applied to the table</p>
+</td></tr><tr class="group"><td colspan="3">Buttons</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/button-action"><code class="event" title="DataTables event">button-action</code></a></p>
+</td><td><p>A button's action method has been triggered</p>
+</td></tr><tr class="group"><td colspan="3">ColReorder</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/column-reorder"><code class="event" title="DataTables event">column-reorder</code></a></p>
+</td><td><p>Columns have been reordered by the end user or API</p>
+</td></tr><tr class="group"><td colspan="3">KeyTable</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/key-blur"><code class="event" title="DataTables event">key-blur</code></a></p>
+</td><td><p>KeyTable has blurred focus from a cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/key-focus"><code class="event" title="DataTables event">key-focus</code></a></p>
+</td><td><p>KeyTable has focused a cell</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/key"><code class="event" title="DataTables event">key</code></a></p>
+</td><td><p>A key event has been detected on the table and is <em>not</em> handled by KeyTable</p>
+</td></tr><tr class="group"><td colspan="3">Responsive</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/responsive-display"><code class="event" title="DataTables event">responsive-display</code></a></p>
+</td><td><p>The details for a row have been displayed, updated or hidden</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/responsive-resize"><code class="event" title="DataTables event">responsive-resize</code></a></p>
+</td><td><p>The columns displayed by Responsive has changed due to a resize</p>
+</td></tr><tr class="group"><td colspan="3">RowReorder</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/row-reorder"><code class="event" title="DataTables event">row-reorder</code></a></p>
+</td><td><p>Rows have been reordered by the end user</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/row-reordered"><code class="event" title="DataTables event">row-reordered</code></a></p>
+</td><td><p>After rows have been reordered by the end user</p>
+</td></tr><tr class="group"><td colspan="3">Select</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/deselect"><code class="event" title="DataTables event">deselect</code></a></p>
+</td><td><p>Items (rows, columns or cells) have been deselected</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/select"><code class="event" title="DataTables event">select</code></a></p>
+</td><td><p>Items (rows, columns or cells) have been selected</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/event/selectItems"><code class="event" title="DataTables event">selectItems</code></a></p>
+</td><td><p>Select items type change event.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/event/selectStyle"><code class="event" title="DataTables event">selectStyle</code></a></p>
+</td><td><p>Select style change event.</p>
+</td></tr></tbody>
+</table></div>
+
+				</div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/reference/event/#top" class="active">Top</a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/reference/event/#"></a><a id="lbNextLink" href="https://datatables.net/reference/event/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/reference/event/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

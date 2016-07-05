@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://datatables.net/reference/button/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Buttons</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./4.Buttons_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./4.Buttons_files/ga.js"></script><script type="text/javascript" src="./4.Buttons_files/site.js"></script>
+		<script type="text/javascript" src="./4.Buttons_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="wide">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./4.Buttons_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./4.Buttons_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./4.Buttons_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class=" sub"><a href="https://datatables.net/manual/index">Manual</a></li><li class="sub-active sub"><a href="https://datatables.net/reference/index">Reference</a><ul><li class=""><a href="https://datatables.net/reference/option">Options</a></li><li class=""><a href="https://datatables.net/reference/api">API</a></li><li class=""><a href="https://datatables.net/reference/event">Events</a></li><li class="active"><a href="https://datatables.net/reference/button">Buttons</a></li><li class=""><a href="https://datatables.net/reference/type">Types</a></li></ul></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Buttons</h1>
+
+					<p>When working with a complex DataTable it is not uncommon to wish to present options that the end user can activate to effect the table, or the data contained within the table in some manner. Displaying buttons that can be clicked, tapped or accessed with keys with one method of doing this and the <a href="https://datatables.net/extensions/buttons">Buttons extension</a> provides exactly that ability.</p>
+
+<p>The various <a href="https://datatables.net/extensions">DataTables extensions</a> provide buttons that can be used to access the functionality of that extension, <a href="https://editor.datatables.net/">Editor</a> for example provides add, edit and delete buttons for a table. The buttons that are available are documented here. Furthermore, custom buttons can also be created to perform actions that are specific to your use case.</p>
+
+<p>Buttons can be used through the <a href="https://datatables.net/reference/option/buttons"><code class="option" title="Buttons initialisation option">buttons</code></a> configuration object with <a href="https://datatables.net/reference/option/dom"><code class="option" title="DataTables initialisation option">dom</code></a> used to specify where the buttons should be placed:</p>
+
+<pre><div><div id="highlighter_113721" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/reference/button/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#myTable'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">dom: </code><code class="js string">'Bfrtip'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">buttons: [</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">'colvis'</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">'excel'</code><code class="js plain">,</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">'print'</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">]</code></div><div class="line number8 index7 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>For further information about Buttons custom events, please refer to the <a href="https://datatables.net/extensions/buttons">Buttons extension documentation</a>. Please note that DataTables core does not itself provide any buttons and the Buttons extension must be loaded in order to be able to use the buttons from the extensions.</p>
+
+<div class="ref_search">
+    <div class="ref_field">
+        <div class="ref_label">Search:</div>
+        <div class="ref_input"><input type="text"></div>
+     </div>
+<div class="ref_field"><div class="ref_label">Group:</div><div class="ref_input"><a class="site-btn small">Buttons</a><a class="site-btn small">Editor</a><a class="site-btn small">Select</a></div></div></div>
+
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="reference row-border hover dataTable no-footer" id="DataTables_Table_0" role="grid" style="width: 883px;">
+    <thead>
+        <tr role="row"><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 183px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Summary: activate to sort column ascending" style="width: 628px;">Summary</th></tr>
+    </thead>
+    <tbody>
+
+
+
+
+
+
+    <tr class="group"><td colspan="3">Buttons</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/collection"><code class="button" title="DataTables button type">collection</code></a></p>
+</td><td><p>A button which triggers a drop down with another set of buttons</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/columnsToggle"><code class="button" title="DataTables button type">columnsToggle</code></a></p>
+</td><td><p>A set of Buttons to toggle the visibility of individual columns</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/columnsVisibility"><code class="button" title="DataTables button type">columnsVisibility</code></a></p>
+</td><td><p>A set of Buttons to set the visibility of individual columns</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/columnToggle"><code class="button" title="DataTables button type">columnToggle</code></a></p>
+</td><td><p>A single button that will toggle the visibility of one or more columns</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/columnVisibility"><code class="button" title="DataTables button type">columnVisibility</code></a></p>
+</td><td><p>A single button that controls the visibility of one or more columns</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/colvis"><code class="button" title="DataTables button type">colvis</code></a></p>
+</td><td><p>A button collection that provides column visibility control</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/colvisGroup"><code class="button" title="DataTables button type">colvisGroup</code></a></p>
+</td><td><p>Show and hide multiple columns</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/colvisRestore"><code class="button" title="DataTables button type">colvisRestore</code></a></p>
+</td><td><p>Restore the visibility of column to their original state</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/copy"><code class="button" title="DataTables button type">copy</code></a></p>
+</td><td><p>Copy table data to clipboard button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/copyFlash"><code class="button" title="DataTables button type">copyFlash</code></a></p>
+</td><td><p>Click to copy table data to clipboard button (Adobe Flash)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/copyHtml5"><code class="button" title="DataTables button type">copyHtml5</code></a></p>
+</td><td><p>Copy table data to clipboard button (HTML)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/csv"><code class="button" title="DataTables button type">csv</code></a></p>
+</td><td><p>Create and save a CSV file that contains the data from the table</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/csvFlash"><code class="button" title="DataTables button type">csvFlash</code></a></p>
+</td><td><p>Create and save a CSV file that contains the data from the table (Adobe Flash)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/csvHtml5"><code class="button" title="DataTables button type">csvHtml5</code></a></p>
+</td><td><p>Create and save a CSV file that contains the data from the table (HTML5)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/excel"><code class="button" title="DataTables button type">excel</code></a></p>
+</td><td><p>Create and save an Excel CSV file that contains the data from the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/excelFlash"><code class="button" title="DataTables button type">excelFlash</code></a></p>
+</td><td><p>Create and save an Excel XLSX file that contains the data from the table (Adobe Flash)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/excelHtml5"><code class="button" title="DataTables button type">excelHtml5</code></a></p>
+</td><td><p>Create and save an Excel XLSX file that contains the data from the table (HTML5)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/pageLength"><code class="button" title="DataTables button type">pageLength</code></a></p>
+</td><td><p>Button collection that will control the DataTables' page length</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/pdf"><code class="button" title="DataTables button type">pdf</code></a></p>
+</td><td><p>Create and save a PDF file that contains the data from the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/pdfFlash"><code class="button" title="DataTables button type">pdfFlash</code></a></p>
+</td><td><p>Create and save a PDF file that contains the data from the table (Adobe Flash)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/pdfHtml5"><code class="button" title="DataTables button type">pdfHtml5</code></a></p>
+</td><td><p>Create and save a PDF file that contains the data from the table (HTML5)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/print"><code class="button" title="DataTables button type">print</code></a></p>
+</td><td><p>Button show a printable view of the table's data</p>
+</td></tr><tr class="group"><td colspan="3">Editor</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/create"><code class="button" title="DataTables button type">create</code></a></p>
+</td><td><p>A button that will create a new row using <em>Editor</em></p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/edit"><code class="button" title="DataTables button type">edit</code></a></p>
+</td><td><p>A button that will edit an existing row using <em>Editor</em></p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/remove"><code class="button" title="DataTables button type">remove</code></a></p>
+</td><td><p>A button that will remove one or more rows using <em>Editor</em></p>
+</td></tr><tr class="group"><td colspan="3">Select</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/selectAll"><code class="button" title="DataTables button type">selectAll</code></a></p>
+</td><td><p>Select all items in the table based on the current item select mode</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/selectCells"><code class="button" title="DataTables button type">selectCells</code></a></p>
+</td><td><p>Change the item selection mode to <code>cell</code>.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/selectColumns"><code class="button" title="DataTables button type">selectColumns</code></a></p>
+</td><td><p>Change the item selection mode to <code>column</code>.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/selected"><code class="button" title="DataTables button type">selected</code></a></p>
+</td><td><p>Button that is enabled when one or more items are selected in the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/selectedSingle"><code class="button" title="DataTables button type">selectedSingle</code></a></p>
+</td><td><p>Button that is enabled when a single item is selected in the table</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/button/selectNone"><code class="button" title="DataTables button type">selectNone</code></a></p>
+</td><td><p>Deselect all selected items in the table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/button/selectRows"><code class="button" title="DataTables button type">selectRows</code></a></p>
+</td><td><p>Change the item selection mode to <code>row</code>.</p>
+</td></tr></tbody>
+</table></div>
+
+				</div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/reference/button/#top" class="active">Top</a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/reference/button/#"></a><a id="lbNextLink" href="https://datatables.net/reference/button/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/reference/button/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

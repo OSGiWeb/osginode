@@ -1,6 +1,0 @@
-/* module-key = 'ch.bitvoodoo.confluence.plugins.panelbox:panelbox-styles', location = 'ch/bitvoodoo/confluence/plugins/panelbox/templates/css/box.css' */
-.bvPB_panelHeader{background:#F0F0F0 none repeat scroll 0 0;border-style:solid;border-width:1px;overflow:hidden;line-height:2;padding:0 12px;text-align:center;}
-.bvPB_panelContent{background:#F0F0F0 none repeat scroll 0 0;border-style:solid;border-width:1px;overflow:hidden;font-size:.95em;text-align:left;padding:10px;}
-.panelbox{border-radius:0;}
-.panelbox.legacy .bvPB_panelContent{padding:1px 12px;}
-.panelbox.legacy .bvPB_panelContent p:last-child{margin-bottom:10px;}

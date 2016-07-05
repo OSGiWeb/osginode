@@ -1,4 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+/* custom font */
+/*@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);*/
+@import "../fonts/Roboto+400+300+500.css";
+
+/* custom font icons */
+@import "font-icons/style.css";
+@import "font-icons/material-font.css";
 
 body{
     font-family: 'Roboto', sans-serif;

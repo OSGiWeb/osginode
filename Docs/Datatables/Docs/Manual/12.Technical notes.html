@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://datatables.net/manual/tech-notes/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Technical notes</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./12.Technical notes_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./12.Technical notes_files/ga.js"></script><script type="text/javascript" src="./12.Technical notes_files/site.js"></script>
+		<script type="text/javascript" src="./12.Technical notes_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./12.Technical notes_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./12.Technical notes_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./12.Technical notes_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class="active sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a><ul><li class=""><a href="https://datatables.net/manual/tech-notes/1">1. Warning: Invalid JSON response</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/2">2. Warning: Non-table node initialisation</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/3">3. Warning: Cannot reinitialise DataTable</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/4">4. Warning: Requested unknown parameter</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/5">5. Warning: Unknown paging action</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/6">6. Warning: Possible column misalignment</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/7">7. Warning: Ajax error</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/8">8. DataTables Markdown</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/9">9. JS Bin</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/10">10. Asking for help</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/11">11. Editor: Unable to automatically determine field from source.</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/13">13. JS/CSS file name structure</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/12">12. Editor: A system error has occurred.</a></li><li class=""><a href="https://datatables.net/manual/tech-notes/14">14. Editor: Unable to find row identifier</a></li></ul></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Technical notes</h1>
+
+					<p>The following collection of technical notes contains information about the errors that DataTables can report, additional information about error states which are not directly reported by the Javascript (such as CSS rendering issues) and general topics of interest when working with DataTables (often extensions to forum discussion answers).</p>
+
+<p>If you have encountered an issue that you think would benefit from a detailed explanation, please post a request in the <a href="https://datatables.net/forums">forums</a>, or <a href="https://datatables.net/contact">send me a message</a>.</p>
+
+<a name="Technical-notes"></a><h2 data-anchor="Technical-notes">Technical notes</h2>
+
+<p></p><div class="category-items"><div class="category-item"><a name="1. Warning: Invalid JSON response"></a><h3 class="title" data-anchor="1. Warning: Invalid JSON response"><a href="https://datatables.net/manual/tech-notes/1">1. Warning: Invalid JSON response</a></h3><div class="summary"><p>A warning from DataTables stating "Invalid JSON response" is one of the most common errors that can occur with DataTables. This tech note explains exactly that it means and how to diagnose what is causing the problem. <a href="https://datatables.net/manual/tech-notes/1">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="2. Warning: Non-table node initialisation"></a><h3 class="title" data-anchor="2. Warning: Non-table node initialisation"><a href="https://datatables.net/manual/tech-notes/2">2. Warning: Non-table node initialisation</a></h3><div class="summary"><p>DataTables will initialise only on an HTML <code class="tag" title="HTML tag">table</code> element. Running DataTables on any other element type will result in an error, as detailed here. <a href="https://datatables.net/manual/tech-notes/2">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="3. Warning: Cannot reinitialise DataTable"></a><h3 class="title" data-anchor="3. Warning: Cannot reinitialise DataTable"><a href="https://datatables.net/manual/tech-notes/3">3. Warning: Cannot reinitialise DataTable</a></h3><div class="summary"><p>DataTables cannot have their features dynamically altered by passing in additional options to the DataTables constructor. Once the table has been created it can be manipulated only through the <a href="https://datatables.net/reference/api">API</a>. Passing in new parameters will result in an error. <a href="https://datatables.net/manual/tech-notes/3">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="4. Warning: Requested unknown parameter"></a><h3 class="title" data-anchor="4. Warning: Requested unknown parameter"><a href="https://datatables.net/manual/tech-notes/4">4. Warning: Requested unknown parameter</a></h3><div class="summary"><p>When DataTables tries to obtain data from a data source and is unable to do so, it will trigger this warning, telling you that data is not available where it was expected to be. <a href="https://datatables.net/manual/tech-notes/4">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="5. Warning: Unknown paging action"></a><h3 class="title" data-anchor="5. Warning: Unknown paging action"><a href="https://datatables.net/manual/tech-notes/5">5. Warning: Unknown paging action</a></h3><div class="summary"><p>This warning will occur if the <a href="https://datatables.net/reference/api/page()"><code class="api" title="DataTables API method">page()</code></a> method is called with an action that is not known to DataTables. <a href="https://datatables.net/manual/tech-notes/5">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="6. Warning: Possible column misalignment"></a><h3 class="title" data-anchor="6. Warning: Possible column misalignment"><a href="https://datatables.net/manual/tech-notes/6">6. Warning: Possible column misalignment</a></h3><div class="summary"><p>DataTables splits a table into two separate <code class="tag" title="HTML tag">table</code> elements when scrolling is enabled, and then attempts to match the column widths between the two tables. This warning can occur when DataTables is unable to match the column widths between the two tables. <a href="https://datatables.net/manual/tech-notes/6">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="7. Warning: Ajax error"></a><h3 class="title" data-anchor="7. Warning: Ajax error"><a href="https://datatables.net/manual/tech-notes/7">7. Warning: Ajax error</a></h3><div class="summary"><p>When DataTables encounters a general or unknown error when making an Ajax request, this warning message is show. It requires digging into information about the Ajax request to understand why it failed, as detailed in this tech note. <a href="https://datatables.net/manual/tech-notes/7">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="8. DataTables Markdown"></a><h3 class="title" data-anchor="8. DataTables Markdown"><a href="https://datatables.net/manual/tech-notes/8">8. DataTables Markdown</a></h3><div class="summary"><p><a href="http://en.wikipedia.org/wiki/Markdown">Markdown</a> is a plain text formatting syntax, initially created by <a href="http://daringfireball.net/projects/markdown/">John Gruber</a> and now widely used on the web. It is designed to provide an easy to use set of formatting rules which can be applied to a document, converting it from an easily readable and editable plain text format to HTML. The DataTables project uses Markdown in an number of areas. <a href="https://datatables.net/manual/tech-notes/8">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="9. JS Bin"></a><h3 class="title" data-anchor="9. JS Bin"><a href="https://datatables.net/manual/tech-notes/9">9. JS Bin</a></h3><div class="summary"><p>DataTables.net has a custom install of <a href="http://jsbin.com/">JS Bin</a> available at <a href="http://live.datatables.net/"></a><a href="http://live.datatables.net/">http://live.datatables.net</a> which is customised to meet the needs of rapidly developing and testing code for DataTables. With JS Bin you can easily try out a option or API method and provide test cases when submitting issues. <a href="https://datatables.net/manual/tech-notes/9">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="10. Asking for help"></a><h3 class="title" data-anchor="10. Asking for help"><a href="https://datatables.net/manual/tech-notes/10">10. Asking for help</a></h3><div class="summary"><p>If you run into a problem when using DataTables, or any of its extensions, you will want to ask for some help. We have a fantastic community here, fully of very helpful and knowledgeable people, however, it is important that you ask your question in a way that it provides enough information that it can be answered. This tech note provides guidelines on asking for help. <a href="https://datatables.net/manual/tech-notes/10">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="11. Editor: Unable to automatically determine field from source."></a><h3 class="title" data-anchor="11. Editor: Unable to automatically determine field from source."><a href="https://datatables.net/manual/tech-notes/11">11. Editor: Unable to automatically determine field from source.</a></h3><div class="summary"><p>Editor's <a href="https://editor.datatables.net/reference/api/bubble()"><code class="api" title="Editor API method">bubble()</code></a> and <a href="https://editor.datatables.net/reference/api/inline()"><code class="api" title="Editor API method">inline()</code></a> methods, when activated, will automatically attempt to discover which field the element that has been given to the function as the first argument relates to in the field. If it is unable to do so, Editor will emit the following error: <em>Unable to automatically determine field from source. Please specify the field name</em>. This tech note describes the reason for the error and how to resolve it. <a href="https://datatables.net/manual/tech-notes/11">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="13. JS/CSS file name structure"></a><h3 class="title" data-anchor="13. JS/CSS file name structure"><a href="https://datatables.net/manual/tech-notes/13">13. JS/CSS file name structure</a></h3><div class="summary"><p>This tech note serves to formalise the file naming conventions used by the DataTables project. The details are on the dry side, but it can be useful if you are working with automated tools and DataTables. <a href="https://datatables.net/manual/tech-notes/13">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="12. Editor: A system error has occurred."></a><h3 class="title" data-anchor="12. Editor: A system error has occurred."><a href="https://datatables.net/manual/tech-notes/12">12. Editor: A system error has occurred.</a></h3><div class="summary"><p>When an Editor request is made and the returned data is not in the expected format (JSON), Editor will show an error message stating that an error has occurred. This tech note explains in detail how to resolve the underlying problem that causes this general error to be displayed. <a href="https://datatables.net/manual/tech-notes/12">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="14. Editor: Unable to find row identifier"></a><h3 class="title" data-anchor="14. Editor: Unable to find row identifier"><a href="https://datatables.net/manual/tech-notes/14">14. Editor: Unable to find row identifier</a></h3><div class="summary"><p>Editor requires that each row in a DataTable have a value that will uniquely identify that row. This is used when Editor submits edit and delete requests to the server so the server knows which row should be submitted. An "Unable to find row identifier" error will occur if it can't find that information. <a href="https://datatables.net/manual/tech-notes/14">Read more »</a>
+</p></div></div></div><p></p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Ftech-notes%2F">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Ftech-notes%2F">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/tech-notes/#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/tech-notes/#Technical-notes">Technical notes</a></li><li><a href="https://datatables.net/manual/tech-notes/#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/tech-notes/#"></a><a id="lbNextLink" href="https://datatables.net/manual/tech-notes/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/tech-notes/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

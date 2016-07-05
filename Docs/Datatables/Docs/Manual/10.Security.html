@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://datatables.net/manual/security -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Security</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./10.Security_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./10.Security_files/ga.js"></script><script type="text/javascript" src="./10.Security_files/site.js"></script>
+		<script type="text/javascript" src="./10.Security_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./10.Security_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./10.Security_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./10.Security_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class="active"><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Security</h1>
+
+					<p>Security is a fundamental topic in web-development and is a topic that should not be overlooked by any developer, from interns to CTOs. High profile hacking cases are frequently in headlines around the world, but with some careful thinking and planning you can quickly create secure applications.</p>
+
+<a name="Overview"></a><h2 data-anchor="Overview">Overview</h2>
+
+<p>This page will discuss web security attacks that are directly relevant to DataTables, along with methods for how you can combat them. Web security is a very wide ranging topic and it would be impossible to cover all topics here. For more general information about web and software security, refer to the excellent <a href="https://www.owasp.org/">OWASP</a> site.</p>
+
+<a name="Software-versions"></a><h3 data-anchor="Software-versions">Software versions</h3>
+
+<p>The first thing to do when considering software security is always to run the latest version of the software that is available. The latest versions will contain fixes for known issues, while those issues may be present in older versions. For DataTables the latest version is always available on <a href="https://datatables.net/download">the download page</a>.</p>
+
+<a name="Attack-types"></a><h3 data-anchor="Attack-types">Attack types</h3>
+
+<p>There are typically two attack types that are important to consider when working with DataTables:</p>
+
+<ul class="markdown">
+<li>Cross-Site Scripting (XSS)</li>
+<li>Cross-Site Request Forgery (CSRF)</li>
+</ul>
+
+<p>There are other forms of data leaks which can also occur, such as allowing non-logged in users to access sensitive data, allowing privilege escalation (viewing data someone shouldn't be allowed to) and SQL injection attacks. These are primarily issues for the application being created which uses DataTables.</p>
+
+<a name="Cross-Site-Scripting"></a><h2 data-anchor="Cross-Site-Scripting">Cross-Site Scripting</h2>
+
+<p>An XSS attack can be performed by allowing arbitrary Javascript or HTML to be executed on your own site. The injected Javascript could then perform actions with the current user's account or steal information. In the case of DataTables, an XSS attack could potentially be performed if you allow editing of your table's content or other input of data into your table by a user.</p>
+
+<p>Consider for example if you allow editing for a cell in a table and the user were to enter: <code>&lt;script&gt;alert('Hi');&lt;/script&gt;</code>. When the cell is displayed in the table, the <code>alert()</code> would be triggered if the data is not encoded. Although an exceptionally simple example, if this were successful, a much more potent attack would also be possible.</p>
+
+<a name="Prevention"></a><h3 data-anchor="Prevention">Prevention</h3>
+
+<p>There are two options to stop this type of attack from being successful in your application:</p>
+
+<ol class="markdown">
+<li>Disallow any harmful data from being submitted</li>
+<li>Encode all untrusted output using a <a href="https://datatables.net/manual/data/renderers">rendering function</a>.</li>
+</ol>
+
+<p>For the first option your server-side script would actively block all data writes (i.e. input) that contain harmful data. You could elect to simply disallow all data that contains any HTML, or use an HTML parser to allow "safe" tags. It is <strong>strongly</strong> recommended that you use a known and proven security library if you take this approach - do not write your own!</p>
+
+<p>The second option to use a <a href="https://datatables.net/manual/data/renderers">rendering function</a> will protect against attacks when displaying the data (i.e. output). DataTables has two built in rendering functions that can be used to prevent against XSS attacks; <code>$.fn.dataTable.render.text</code> and <code>$.fn.dataTable.render.number</code>.</p>
+
+<p>The rendering functions can be used simply by assigning them to <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> when creating your table - e.g.:</p>
+
+<pre><div><div id="highlighter_404393" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/security#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'product'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: $.fn.dataTable.render.text()</code></div><div class="line number4 index3 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Please see the <a href="https://datatables.net/manual/data/renderers">data rendering</a> documentation for further details.</p>
+
+<a name="Cross-Site-Request-Forgery"></a><h2 data-anchor="Cross-Site-Request-Forgery">Cross-Site Request Forgery</h2>
+
+<p>A CSRF attack will force an end user (typically without their knowledge - it all happens in the background!) into executing unwanted actions on a site or application on which they are currently authenticated. For example, consider if you are logged into your online banking and then visit another, apparently harmless, page. If that page were to execute a transaction on your bank account, in a hidden <code class="tag" title="HTML tag">iframe</code>, the bank would accept the transaction thinking it came from you!</p>
+
+<a name="Prevention"></a><h3 data-anchor="Prevention">Prevention</h3>
+
+<p>To protect again this type of attack most systems will use a <a href="https://www.owasp.org/index.php/CSRF_Prevention_Cheat_Sheet#General_Recommendation:_Synchronizer_Token_Pattern">token</a> that will be submitted on each data request in order to ensure that the end user is who they claim to be.</p>
+
+<p>Generation and handling of the token is outside the scope of this documentation (please refer to the framework documentation if you are using a framework, or to the <a href="https://www.owasp.org/index.php/CSRF_Prevention_Cheat_Sheet">OWASP guide</a> if you are creating your own system). However, we do need to detail how the CSRF token is transmitted to the server, which is particularly important when using <a href="https://datatables.net/manual/ajax">Ajax sourced data</a>.</p>
+
+<p>The DataTables <a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> configuration object can be used as an <a href="https://datatables.net/reference/type/object"><code class="type" title="Javascript parameter type">object</code></a> which accepts all of the same options as the <a href="http://api.jquery.com/jquery.ajax/"><code>$.ajax</code> method</a>, including the ability to submit headers and data. Depending on how your application excepts the CSRF token, you can use one of a number of methods:</p>
+
+<p>Setting a global header (this ensures that all Ajax requests from the page have the CSRF token):</p>
+
+<pre><div><div id="highlighter_419253" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/security#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$.ajaxSetup( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">headers: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">'CSRFToken'</code><code class="js plain">: TOKEN</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Submitting the token as a header value from the <a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> configuration:</p>
+
+<pre><div><div id="highlighter_745565" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/security#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#myTable'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">ajax: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">url: </code><code class="js string">'...'</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">headers: {</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">'CSRFToken'</code><code class="js plain">: TOKEN</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number8 index7 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Submitting the token as part of the request data:</p>
+
+<pre><div><div id="highlighter_426754" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/security#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#myTable'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">ajax: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">url: </code><code class="js string">'...'</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js keyword">function</code> <code class="js plain">( d ) {</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">d.CSRFToken = TOKEN;</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number8 index7 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>where in all cases <code>TOKEN</code> is the CSRF token (again, how you get this token is a matter for the application or framework you are using).</p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fsecurity">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fsecurity">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/security#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/security#Overview">Overview</a><ul><li><a href="https://datatables.net/manual/security#Software-versions">Software versions</a></li><li><a href="https://datatables.net/manual/security#Attack-types">Attack types</a></li></ul></li><li><a href="https://datatables.net/manual/security#Cross-Site-Scripting">Cross-Site Scripting</a><ul><li><a href="https://datatables.net/manual/security#Prevention">Prevention</a></li></ul></li><li><a href="https://datatables.net/manual/security#Cross-Site-Request-Forgery">Cross-Site Request Forgery</a><ul><li><a href="https://datatables.net/manual/security#Prevention">Prevention</a></li></ul></li><li><a href="https://datatables.net/manual/security#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/security#"></a><a id="lbNextLink" href="https://datatables.net/manual/security#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/security#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

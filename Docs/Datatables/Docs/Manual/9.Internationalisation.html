@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)https://datatables.net/manual/i18n -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Internationalisation</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./9.Internationalisation_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./9.Internationalisation_files/ga.js"></script><script type="text/javascript" src="./9.Internationalisation_files/site.js"></script>
+		<script type="text/javascript" src="./9.Internationalisation_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./9.Internationalisation_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./9.Internationalisation_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./9.Internationalisation_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class="active"><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Internationalisation</h1>
+
+					<p>DataTables adds several controls to a document when it enhances a table, many of which utilise language strings in one way or another to convey the usage to the end user. These default strings are in English, but can easily be translated into another language, or customised to suit the exact styling of the data represented by your table.</p>
+
+<p>There are over 50 translations provided by the community <a href="https://datatables.net/plug-ins/i18n">ready to be used</a> making integration of DataTables into your native language super easy!</p>
+
+<a name="Configuration"></a><h2 data-anchor="Configuration">Configuration</h2>
+
+<p>The language options used by DataTables are configured through the <a href="https://datatables.net/reference/option/language"><code class="option" title="DataTables initialisation option">language</code></a> configuration option. This is an object with the strings used by each part of DataTables described by a parameter. The full list of language options is available in the <a href="https://datatables.net/reference/option/language"><code class="option" title="DataTables initialisation option">language</code></a> documentation reference.</p>
+
+<p>The language options are configured in exactly the same way as the <a href="https://datatables.net/manual/options">other configuration options</a> in DataTables, as part of the initialisation object. This example shows how the search string can be altered:</p>
+
+<pre><div><div id="highlighter_375946" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/i18n#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">language: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">search: </code><code class="js string">"Search in table:"</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>As with the other initialisation options, you can change as many or as few of the options as you wish. Those you don't provide a value for will use the DataTables defaults. This example shows every language option used to display the DataTables interface in French:</p>
+
+<pre><div><div id="highlighter_926649" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/i18n#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">language: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">processing:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Traitement en cours..."</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">search:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Rechercher&amp;nbsp;:"</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">lengthMenu:&nbsp;&nbsp;&nbsp; </code><code class="js string">"Afficher _MENU_ &amp;eacute;l&amp;eacute;ments"</code><code class="js plain">,</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">info:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Affichage de l'&amp;eacute;lement _START_ &amp;agrave; _END_ sur _TOTAL_ &amp;eacute;l&amp;eacute;ments"</code><code class="js plain">,</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">infoEmpty:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Affichage de l'&amp;eacute;lement 0 &amp;agrave; 0 sur 0 &amp;eacute;l&amp;eacute;ments"</code><code class="js plain">,</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">infoFiltered:&nbsp;&nbsp; </code><code class="js string">"(filtr&amp;eacute; de _MAX_ &amp;eacute;l&amp;eacute;ments au total)"</code><code class="js plain">,</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">infoPostFix:&nbsp;&nbsp;&nbsp; </code><code class="js string">""</code><code class="js plain">,</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">loadingRecords: </code><code class="js string">"Chargement en cours..."</code><code class="js plain">,</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">zeroRecords:&nbsp;&nbsp;&nbsp; </code><code class="js string">"Aucun &amp;eacute;l&amp;eacute;ment &amp;agrave; afficher"</code><code class="js plain">,</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">emptyTable:&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Aucune donnée disponible dans le tableau"</code><code class="js plain">,</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">paginate: {</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">first:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Premier"</code><code class="js plain">,</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">previous:&nbsp;&nbsp; </code><code class="js string">"Pr&amp;eacute;c&amp;eacute;dent"</code><code class="js plain">,</code></div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">next:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Suivant"</code><code class="js plain">,</code></div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">last:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="js string">"Dernier"</code></div><div class="line number18 index17 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">},</code></div><div class="line number19 index18 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">aria: {</code></div><div class="line number20 index19 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">sortAscending:&nbsp; </code><code class="js string">": activer pour trier la colonne par ordre croissant"</code><code class="js plain">,</code></div><div class="line number21 index20 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">sortDescending: </code><code class="js string">": activer pour trier la colonne par ordre décroissant"</code></div><div class="line number22 index21 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number23 index22 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number24 index23 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Ajax-loading-a-translation"></a><h3 data-anchor="Ajax-loading-a-translation">Ajax loading a translation</h3>
+
+<p>For convenience, DataTables provides the option of loading language information from a remote file via Ajax. This is configured through the <a href="https://datatables.net/reference/option/language.url"><code class="option" title="DataTables initialisation option">language.url</code></a> option. For example we might have:</p>
+
+<pre><div><div id="highlighter_315024" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/i18n#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">language: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">url: </code><code class="js string">'/localisation/fr_FR.json'</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>As with the other options in <a href="https://datatables.net/reference/option/language"><code class="option" title="DataTables initialisation option">language</code></a> the file loaded by Ajax can specify as many or as few options as you require for the DataTables language option. Any options which are not specified will use the DataTables default values.</p>
+
+<a name="Ordering-of-numeric-data"></a><h2 data-anchor="Ordering-of-numeric-data">Ordering of numeric data</h2>
+
+<p>Numeric data is often presented formatted according to certain rules, such as a given  character for a decimal place, a thousands separator and an identification of the numeric type such as a currency symbol. DataTables will automatically detect numeric data types such as currency, percentage values, and values with thousands separators, but by default these all work with a dot (<code>.</code>) as the decimal place, as this is how numbers are represented in Javascript.</p>
+
+<p>DataTables has the ability to use any character as the decimal place for numeric data through the <a href="https://datatables.net/reference/option/language.decimal"><code class="option" title="DataTables initialisation option">language.decimal</code></a> option, providing full numeric type detection and ordering for any form of numeric data. For example,<a href="http://en.wikipedia.org/wiki/Decimal_mark"> many parts of the world use a comma</a> (<code>,</code>) as the decimal place, Unicode defines the decimal separator character (<code>⎖</code>), and a dash (<code>-</code>) is sometimes used in financial documents, etc.</p>
+
+<p>By using the <a href="https://datatables.net/reference/option/language.decimal"><code class="option" title="DataTables initialisation option">language.decimal</code></a> option you can tell DataTables what character to look for as the decimal place in the data in your table, so ordering of that data can occur correctly.</p>
+
+<p>As with all language parameters in DataTables, <a href="https://datatables.net/reference/option/language.decimal"><code class="option" title="DataTables initialisation option">language.decimal</code></a> can be defined in the initialisation of the table or in a language file which is loaded by Ajax (shown above).</p>
+
+<pre><div><div id="highlighter_884512" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/i18n#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">language: {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">decimal: </code><code class="js string">","</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Available-translations"></a><h2 data-anchor="Available-translations">Available translations</h2>
+
+<p>The DataTables community have collectively submitted more than 50 translations of the default English language strings, which are readily available for you to use in your project. These are available in the <a href="https://datatables.net/plug-ins/i18n">plug-ins section of this site</a>.</p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fi18n">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fi18n">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/i18n#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/i18n#Configuration">Configuration</a><ul><li><a href="https://datatables.net/manual/i18n#Ajax-loading-a-translation">Ajax loading a translation</a></li></ul></li><li><a href="https://datatables.net/manual/i18n#Ordering-of-numeric-data">Ordering of numeric data</a></li><li><a href="https://datatables.net/manual/i18n#Available-translations">Available translations</a></li><li><a href="https://datatables.net/manual/i18n#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/i18n#"></a><a id="lbNextLink" href="https://datatables.net/manual/i18n#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/i18n#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

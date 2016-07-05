@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)https://datatables.net/manual/api -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>API</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./5.API_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./5.API_files/ga.js"></script><script type="text/javascript" src="./5.API_files/site.js"></script>
+		<script type="text/javascript" src="./5.API_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./5.API_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./5.API_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./5.API_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class="active"><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">API</h1>
+
+					<p>DataTables and its extensions have an extensive API which can be used to access the data contained in the table and otherwise manipulate the table after initialisation has completed. The DataTables API is designed to reflect the structure of the data in the table, and the ways that you will typically want to interact with the table. As such the API is composed of six key areas for working with the table and its data:</p>
+
+<ul class="markdown">
+<li>Tables</li>
+<li>Columns</li>
+<li>Rows</li>
+<li>Cells</li>
+<li>Core</li>
+<li>Utilities</li>
+</ul>
+
+<p><a href="https://datatables.net/extensions">Extensions</a> and <a href="https://datatables.net/manual/plug-ins/api">plug-ins</a> may also add additional methods to the API exposing the features and functionality that they add to the DataTable.</p>
+
+<p>For a full list of the methods that are available in the API, please refer to the <a href="https://datatables.net/reference/api">API reference section</a>.</p>
+
+<a name="Terminology"></a><h2 data-anchor="Terminology">Terminology</h2>
+
+<p>In order to keep the documentation of the API succinct, a number of terms are used to describe, or refer to, aspects of the API. These are defined here:</p>
+
+<ul class="markdown">
+<li>Instance - an instance of the API is a single object instance which refers to a specific set of DataTable tables (i.e. is the the result of <code>new Api()</code>).</li>
+<li>Result set - the data held by the API instance. DataTables API instances are "array like" in that they hold data in the same way as a plain Javascript array (and thus can be accessed using array <code>[]</code> notation) and have many of the same methods available (<a href="https://datatables.net/reference/api/sort()"><code class="api" title="DataTables API method">sort()</code></a> and <a href="https://datatables.net/reference/api/push()"><code class="api" title="DataTables API method">push()</code></a> for example). This is much in the same way as jQuery is array like in nature.</li>
+<li>Context - the context of an API instance describes the DataTables that the API instance has a link to. Each API instance can refer to one or more DataTables tables, with the ability to act upon those tables (see below for further information).</li>
+</ul>
+
+<a name="Accessing-the-API"></a><h2 data-anchor="Accessing-the-API">Accessing the API</h2>
+
+<aside>
+  <a name="Upgrade-note:"></a><h1 data-anchor="Upgrade-note:">Upgrade note:</h1>
+  
+  <p>The DataTables API in v1.9 and earlier was be accessed using <code>$().dataTable().<i>method</i>()</code>. This was done by extending the jQuery object with the DataTables API methods.</p>
+  
+  <p>The old API is <a href="https://legacy.datatables.net/api">still available</a> in DataTables 1.10 for backwards compatibility, but the new API (see left) is now preferred as it presents much greater flexibility and improved functionality.</p>
+</aside>
+
+<p>A new DataTables API instance can be obtained for one or more tables in one of three different ways:</p>
+
+<ul class="markdown">
+<li><code>$( selector ).DataTable();</code></li>
+<li><code>$( selector ).dataTable().api();</code></li>
+<li><code>new $.fn.dataTable.Api( selector );</code></li>
+</ul>
+
+<p>The result from each is an instance of the DataTables API object which has the tables found by the selector in its context.</p>
+
+<p>It is important to note the difference between <code>$( selector ).DataTable()</code> and <code>$( selector ).dataTable()</code>. The former returns a DataTables API instance, while the latter returns a <a href="https://datatables.net/reference/type/jQuery"><code class="type" title="Javascript parameter type">jQuery</code></a> object. An <code>api()</code> method is added to the jQuery object so you can easily access the API, but the jQuery object can be useful for manipulating the table node, as you would with any other jQuery instance (such as using <code>addClass()</code>, etc.).</p>
+
+<a name="Chaining"></a><h2 data-anchor="Chaining">Chaining</h2>
+
+<p>Like jQuery, the DataTables API makes extensive use of chaining, with many, but not all, of the DataTables methods returning the API instance itself, so you can immediately call another API method. For example:</p>
+
+<pre><div><div id="highlighter_601983" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/api#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">table = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="js plain">table.search( </code><code class="js string">'Fiona'</code> <code class="js plain">).draw();</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This makes use of two different API methods, <a href="https://datatables.net/reference/api/search()"><code class="api" title="DataTables API method">search()</code></a> and <a href="https://datatables.net/reference/api/draw()"><code class="api" title="DataTables API method">draw()</code></a>, on a single line. It could equally be written as:</p>
+
+<pre><div><div id="highlighter_662543" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/api#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">table = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="js plain">table.search( </code><code class="js string">'Fiona'</code> <code class="js plain">);</code></div><div class="line number4 index3 alt1"><code class="js plain">table.draw();</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>The functionality is identical in this case, but chaining can allow for more succinct and expressive code.</p>
+
+<p>Where the DataTables API departs from jQuery's chaining method is that DataTables makes use of nested methods and properties. For example the <a href="https://datatables.net/reference/api/ajax.json()"><code class="api" title="DataTables API method">ajax.json()</code></a> method gives you access to the latest JSON data from an Ajax call DataTables has made - in this case the <code>json()</code> method is a child of the <code>ajax</code> property. Likewise, the <a href="https://datatables.net/reference/api/columns()"><code class="api" title="DataTables API method">columns()</code></a> (and other data manipulation methods) provide their own chaining child methods. For example <a href="https://datatables.net/reference/api/columns().visible()"><code class="api" title="DataTables API method">columns().visible()</code></a>. This allows the API to be very expressive in terms of how you access data, with methods relating to what has been called before.</p>
+
+<p>All top level methods of the API will always be available, at all levels of nesting of the API. For example <a href="https://datatables.net/reference/api/draw()"><code class="api" title="DataTables API method">draw()</code></a> is a top level method, but it can be called after a row is removed from the table: <code>table.row( selector ).remove().draw();</code>.</p>
+
+<p>Please note that not all methods will return an API instance for chaining. In some cases, returning the API instance for chaining wouldn't be appropriate, such as <a href="https://datatables.net/reference/api/cell().node()"><code class="api" title="DataTables API method">cell().node()</code></a> to get a <code class="tag" title="HTML tag">td</code> / <code class="tag" title="HTML tag">th</code> element. The <a href="https://datatables.net/reference/api">API reference documentation</a> contains full details for each method and what it will return.</p>
+
+<a name="Multiple-tables"></a><h2 data-anchor="Multiple-tables">Multiple tables</h2>
+
+<p>DataTables API instances can refer to multiple tables in their context. The API treats each table in a context as the same. For example:</p>
+
+<pre><div><div id="highlighter_216465" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/api#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">tables = $(</code><code class="js string">'.dataTable'</code><code class="js plain">).DataTable();</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="js plain">tables.page( </code><code class="js string">'next'</code> <code class="js plain">).draw( </code><code class="js keyword">false</code> <code class="js plain">);</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This code will select all tables in the document with the class <code>dataTable</code> and jump them all to their next page of data display (using <a href="https://datatables.net/reference/api/page()"><code class="api" title="DataTables API method">page()</code></a>).</p>
+
+<p>Equally, an API instance can refer to a single table if required, simply by altering the jQuery selector used to create the API instance: <code>$('#myTable').DataTable();</code> will create an API instance with a single table in its context for example.</p>
+
+<a name="Plural-/-Singular"></a><h2 data-anchor="Plural-/-Singular">Plural / Singular</h2>
+
+<p>When working with the API you will notice that the methods make extensive use of plural and singular terminology. Although this is relatively unusual in an API, it is done to reflect the way that you access the data in the table - for example <a href="https://datatables.net/reference/api/rows().data()"><code class="api" title="DataTables API method">rows().data()</code></a> will return an API instance with the data for the selected rows in its result set (i.e. like an array), while <a href="https://datatables.net/reference/api/row().data()"><code class="api" title="DataTables API method">row().data()</code></a> will return the data for just that row. This makes working with the API much more intuitive as you will always get the result you expect.</p>
+
+<p>To be clear, in English (for our international users):</p>
+
+<ul class="markdown">
+<li>Singular === 1</li>
+<li>Plural &gt; 1</li>
+</ul>
+
+<p>So if you want to use one of the selector methods to select multiple items, use the plural form of the method. If you want to select a single specific item, use the singular form.</p>
+
+<a name="Example---column-filter"></a><h2 data-anchor="Example---column-filter">Example - column filter</h2>
+
+<p><a href="https://datatables.net/reference/api">API reference documentation</a> contains an example for each API method, along with a detailed description of what it does, what it returns and what parameters it will accept; but let's form the concepts described above into a detailed, line-by-line example of how the DataTables API can be used. In this case we create a <code class="tag" title="HTML tag">select</code> element in the footer cell of each column in the table, which contains the data from that column and will be used for searching the table.</p>
+
+<pre><div><div id="highlighter_900891" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/api#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">table = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="js plain">table.columns().flatten().each( </code><code class="js keyword">function</code> <code class="js plain">( colIdx ) {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// Create the select list and search operation</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">select = $(</code><code class="js string">'&lt;select /&gt;'</code><code class="js plain">)</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.appendTo(</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">table.column(colIdx).footer()</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">)</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.on( </code><code class="js string">'change'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">table</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.column( colIdx )</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.search( $(</code><code class="js keyword">this</code><code class="js plain">).val() )</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.draw();</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// Get the search data for the first column and add to the select list</code></div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">table</code></div><div class="line number18 index17 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.column( colIdx )</code></div><div class="line number19 index18 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.cache( </code><code class="js string">'search'</code> <code class="js plain">)</code></div><div class="line number20 index19 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.sort()</code></div><div class="line number21 index20 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.unique()</code></div><div class="line number22 index21 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">.each( </code><code class="js keyword">function</code> <code class="js plain">( d ) {</code></div><div class="line number23 index22 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">select.append( $(</code><code class="js string">'&lt;option value="'</code><code class="js plain">+d+</code><code class="js string">'"&gt;'</code><code class="js plain">+d+</code><code class="js string">'&lt;/option&gt;'</code><code class="js plain">) );</code></div><div class="line number24 index23 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number25 index24 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<ul class="markdown">
+<li>Line 1 - Get an instance of the DataTables API with a single table in its context</li>
+<li>Line 3 - Select all columns in the table with the <a href="https://datatables.net/reference/api/columns()"><code class="api" title="DataTables API method">columns()</code></a> method. <a href="https://datatables.net/reference/api/flatten()"><code class="api" title="DataTables API method">flatten()</code></a> is used to reduce the 2D array return of <a href="https://datatables.net/reference/api/columns()"><code class="api" title="DataTables API method">columns()</code></a> to a 1D array of column indexes, and the utility method <a href="https://datatables.net/reference/api/each()"><code class="api" title="DataTables API method">each()</code></a> is used to perform an action on each of the selected columns.</li>
+<li>Line 5 - The <code class="tag" title="HTML tag">select</code> element for the column's filter is created</li>
+<li>Line 7 - Using the <a href="https://datatables.net/reference/api/column().footer()"><code class="api" title="DataTables API method">column().footer()</code></a> method to get the footer cell element into which to insert the select input.</li>
+<li>Line 9 - Use the <a href="https://api.jquery.com/on/">jQuery on()</a> method to perform an action when the <code class="tag" title="HTML tag">select</code> element's value changes - in this case searching the table.</li>
+<li>Lines 10 - 13 - Use <a href="https://datatables.net/reference/api/column().search()"><code class="api" title="DataTables API method">column().search()</code></a> to queue up the search, and <a href="https://datatables.net/reference/api/draw()"><code class="api" title="DataTables API method">draw()</code></a> chaining to the result to update the table's display.</li>
+<li>Lines 17 - 19 - Get the data from the column that DataTables uses to search the table using the <a href="https://datatables.net/reference/api/column().cache()"><code class="api" title="DataTables API method">column().cache()</code></a> method.</li>
+<li>Lines 20 - 21 - The utility methods <a href="https://datatables.net/reference/api/sort()"><code class="api" title="DataTables API method">sort()</code></a> and <a href="https://datatables.net/reference/api/unique()"><code class="api" title="DataTables API method">unique()</code></a> are used to reduce the data to a nicely ordered list that you would want to present to your end users.</li>
+<li>Lines 22 - 24 - A search term option is added to our <code class="tag" title="HTML tag">select</code> list, ready for use.</li>
+</ul>
+
+<p>As you can see, the DataTables API is extremely flexible, and provides a wide range of options for accessing and manipulating the table. Please see the <a href="https://datatables.net/reference/api">API reference documentation</a> for a full list of the methods that are available. Furthermore, plug-ins such as <a href="https://editor.datatables.net/">Editor</a> can extend the API with custom methods such as <code>row().edit()</code> and <code>cell().edit()</code> among other options.</p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fapi">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fapi">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav" style="left: 1293.5px; width: 228px;">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/api#top" class="active">Top</a></li><li class=""><a href="https://datatables.net/manual/api#Terminology">Terminology</a></li><li class=""><a href="https://datatables.net/manual/api#Accessing-the-API">Accessing the API</a></li><li class=""><a href="https://datatables.net/manual/api#Chaining">Chaining</a></li><li><a href="https://datatables.net/manual/api#Multiple-tables">Multiple tables</a></li><li><a href="https://datatables.net/manual/api#Plural-/-Singular">Plural / Singular</a></li><li><a href="https://datatables.net/manual/api#Example---column-filter">Example - column filter</a></li><li><a href="https://datatables.net/manual/api#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/api#"></a><a id="lbNextLink" href="https://datatables.net/manual/api#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/api#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

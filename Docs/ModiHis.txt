@@ -1,0 +1,63 @@
+C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;E:\Program Files\Eclipse-Che-3.12\tools\apache-maven\bin;E:\Program Files\Eclipse-Che-3.12\tools\jre\bin;C:\Users\pc\AppData\Local\Programs\Eclipse-Che-3.12\tools\apache-maven\bin;C:\Users\pc\AppData\Local\Programs\Eclipse-Che-3.12\tools\jre\bin;C:\Program Files\TortoiseSVN\bin;E:\Program Files\nodejs\;C:\Program Files\MongoDB\Server\3.2\bin;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;E:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\Program Files (x86)\CMake\bin;E:\QtSDK\Desktop\Qt\4.8.0\mingw\bin;E:\QtSDK\mingw\bin
+
+
+6217 8563 0001 4742 962
+
+npm ERR! peerinvalid Peer material-ui@0.15.0 wants react@^15.0.0
+
+npm ERR! peerinvalid Peer react-bootstrap@0.28.3 wants react@>=0.14.0
+npm ERR! peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+npm ERR! peerinvalid Peer react-redux@4.4.1 wants react@^0.14.0 || ^15.0.0-rc.1
+npm ERR! peerinvalid Peer react-tap-event-plugin@0.2.2 wants react@^0.14.0
+npm ERR! peerinvalid Peer redux-devtools@3.1.1 wants react@^0.14.0
+npm ERR! peerinvalid Peer reflux@0.3.1 wants react@>=0.12.2 <0.15.0
+npm ERR! peerinvalid Peer react-addons-test-utils@0.14.7 wants react@^0.14.7
+
+"dependencies": {
+	"react-helmet": "2.3.1",
+    "react-hot-loader": "^1.3.0",
+    "react-router": "^2.0.1",
+    "react-router-redux": "^4.0.0",
+    "react-transform-hmr": "^1.0.4",
+    "redux": "^3.3.1",
+
+	
+	"redux": "^3.3.1",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.0.1",
+	redux-mock-store?
+	
+	"webpack": "^1.12.14",
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-hot-middleware": "^2.10.0"
+	}
+	
+	
+"devDependencies": {
+	"react-stateless-wrapper": "^1.0.2",
+    "react-transform-catch-errors": "^1.0.2",
+    "redux-mock-store": "1.0.2",
+	}
+	
+	
+	
+	"babel": "^6.5.2",
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-plugin-transform-react-constant-elements": "^6.5.0",
+    "babel-plugin-transform-react-inline-elements": "^6.6.5",
+    "babel-plugin-transform-react-remove-prop-types": "^0.2.3",
+    "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.5.0",
+	
+	
+	
+	calendar
+	chat 
+	Lauguageselecter
+	demostyleswitcher
+	todowidget

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)https://datatables.net/examples/data_sources/js_array.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>DataTables example - Javascript sourced data</title>
+	<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+	<link rel="stylesheet" type="text/css" href="./4.2.2DataTables example - Javascript sourced data_files/site-examples.css">
+	<link rel="stylesheet" type="text/css" href="./4.2.2DataTables example - Javascript sourced data_files/jquery.dataTables.min.css">
+	<style type="text/css" class="init">
+	
+	</style>
+	<script type="text/javascript" async="" src="./4.2.2DataTables example - Javascript sourced data_files/ga.js"></script><script type="text/javascript" src="./4.2.2DataTables example - Javascript sourced data_files/site.js">
+	</script>
+	<script type="text/javascript" src="./4.2.2DataTables example - Javascript sourced data_files/dynamic.php" async="">
+	</script>
+	<script type="text/javascript" language="javascript" src="./4.2.2DataTables example - Javascript sourced data_files/jquery-1.12.0.min.js">
+	</script>
+	<script type="text/javascript" language="javascript" src="./4.2.2DataTables example - Javascript sourced data_files/jquery.dataTables.min.js">
+	</script>
+	<script type="text/javascript" language="javascript" src="./4.2.2DataTables example - Javascript sourced data_files/demo.js">
+	</script>
+	<script type="text/javascript" class="init">
+	
+
+var dataSet = [
+    [ "Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800" ],
+    [ "Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750" ],
+    [ "Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000" ],
+    [ "Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "6224", "2012/03/29", "$433,060" ],
+    [ "Airi Satou", "Accountant", "Tokyo", "5407", "2008/11/28", "$162,700" ],
+    [ "Brielle Williamson", "Integration Specialist", "New York", "4804", "2012/12/02", "$372,000" ],
+    [ "Herrod Chandler", "Sales Assistant", "San Francisco", "9608", "2012/08/06", "$137,500" ],
+    [ "Rhona Davidson", "Integration Specialist", "Tokyo", "6200", "2010/10/14", "$327,900" ],
+    [ "Colleen Hurst", "Javascript Developer", "San Francisco", "2360", "2009/09/15", "$205,500" ],
+    [ "Sonya Frost", "Software Engineer", "Edinburgh", "1667", "2008/12/13", "$103,600" ],
+    [ "Jena Gaines", "Office Manager", "London", "3814", "2008/12/19", "$90,560" ],
+    [ "Quinn Flynn", "Support Lead", "Edinburgh", "9497", "2013/03/03", "$342,000" ],
+    [ "Charde Marshall", "Regional Director", "San Francisco", "6741", "2008/10/16", "$470,600" ],
+    [ "Haley Kennedy", "Senior Marketing Designer", "London", "3597", "2012/12/18", "$313,500" ],
+    [ "Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750" ],
+    [ "Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500" ],
+    [ "Paul Byrd", "Chief Financial Officer (CFO)", "New York", "3059", "2010/06/09", "$725,000" ],
+    [ "Gloria Little", "Systems Administrator", "New York", "1721", "2009/04/10", "$237,500" ],
+    [ "Bradley Greer", "Software Engineer", "London", "2558", "2012/10/13", "$132,000" ],
+    [ "Dai Rios", "Personnel Lead", "Edinburgh", "2290", "2012/09/26", "$217,500" ],
+    [ "Jenette Caldwell", "Development Lead", "New York", "1937", "2011/09/03", "$345,000" ],
+    [ "Yuri Berry", "Chief Marketing Officer (CMO)", "New York", "6154", "2009/06/25", "$675,000" ],
+    [ "Caesar Vance", "Pre-Sales Support", "New York", "8330", "2011/12/12", "$106,450" ],
+    [ "Doris Wilder", "Sales Assistant", "Sidney", "3023", "2010/09/20", "$85,600" ],
+    [ "Angelica Ramos", "Chief Executive Officer (CEO)", "London", "5797", "2009/10/09", "$1,200,000" ],
+    [ "Gavin Joyce", "Developer", "Edinburgh", "8822", "2010/12/22", "$92,575" ],
+    [ "Jennifer Chang", "Regional Director", "Singapore", "9239", "2010/11/14", "$357,650" ],
+    [ "Brenden Wagner", "Software Engineer", "San Francisco", "1314", "2011/06/07", "$206,850" ],
+    [ "Fiona Green", "Chief Operating Officer (COO)", "San Francisco", "2947", "2010/03/11", "$850,000" ],
+    [ "Shou Itou", "Regional Marketing", "Tokyo", "8899", "2011/08/14", "$163,000" ],
+    [ "Michelle House", "Integration Specialist", "Sidney", "2769", "2011/06/02", "$95,400" ],
+    [ "Suki Burks", "Developer", "London", "6832", "2009/10/22", "$114,500" ],
+    [ "Prescott Bartlett", "Technical Author", "London", "3606", "2011/05/07", "$145,000" ],
+    [ "Gavin Cortez", "Team Leader", "San Francisco", "2860", "2008/10/26", "$235,500" ],
+    [ "Martena Mccray", "Post-Sales support", "Edinburgh", "8240", "2011/03/09", "$324,050" ],
+    [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
+];
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		data: dataSet,
+		columns: [
+			{ title: "Name" },
+			{ title: "Position" },
+			{ title: "Office" },
+			{ title: "Extn." },
+			{ title: "Start date" },
+			{ title: "Salary" }
+		]
+	} );
+} );
+
+
+	</script>
+</head>
+<body class="wide comments example">
+	<a name="top" id="top"></a>
+	<div class="fw-container">
+		<div class="fw-header">
+			<img src="./4.2.2DataTables example - Javascript sourced data_files/logo-fade.png" class="logo">
+			<div class="nav-master">
+				<ul>
+					<li class="active">
+						<a href="https://datatables.net/"><img src="./4.2.2DataTables example - Javascript sourced data_files/nav-dt.png" alt="DataTables logo"> DataTables</a>
+					</li>
+					<li>
+						<a href="https://editor.datatables.net/"><img src="./4.2.2DataTables example - Javascript sourced data_files/nav-e.png" alt="Editor logo"> Editor</a>
+					</li>
+				</ul>
+				<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+			</div>
+			<div id="ad"></div>
+		</div>
+		<div class="fw-nav">
+			<div class="nav-main">
+				<ul><li class="sub-active sub"><a href="https://datatables.net/examples/index">Examples</a><ul><li class=""><a href="https://datatables.net/examples/basic_init">Basic initialisation</a></li><li class=""><a href="https://datatables.net/examples/advanced_init">Advanced initialisation</a></li><li class=""><a href="https://datatables.net/examples/styling">Styling</a></li><li class="active"><a href="https://datatables.net/examples/data_sources">Data sources</a></li><li class=""><a href="https://datatables.net/examples/api">API</a></li><li class=""><a href="https://datatables.net/examples/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/examples/server_side">Server-side</a></li><li class=""><a href="https://datatables.net/examples/plug-ins">Plug-ins</a></li></ul></li><li class=" sub"><a href="https://datatables.net/manual/index">Manual</a></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+				<div class="nav-search">
+					<form action="https://datatables.net/search" id="cse-search-box" name="cse-search-box">
+						<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4"> <input type="hidden" name="cof" value="FORID:9"> <input type="hidden" name="ie" value="UTF-8"> <input type="text" name="q" size="31"> <input type="submit" name="sa" value="Search" class="site-btn">
+					</form>
+				</div>
+			</div>
+			<div class="mobile-show">
+				<a><i>Show site navigation</i></a>
+			</div>
+		</div>
+		<div class="fw-body">
+			<div class="content">
+				<h1 class="page_title">Javascript sourced data</h1>
+				<div class="info">
+					<p>At times you will wish to be able to create a table from dynamic information passed directly to DataTables, rather than having it read from the document.
+					This is achieved using the <a href="https://datatables.net/reference/option/data"><code class="option" title="DataTables initialisation option">data</code></a>
+					option in the initialisation object, passing in an array of data to be used (like all other DataTables handled data, this can be arrays or objects using the
+					<a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> option).</p>
+					<p>A <code class="tag" title="HTML tag">table</code> must be available on the page for DataTables to use. This examples shows an empty <code class="tag" title="HTML tag">table</code> element being initialising as a DataTable with a set of data from a Javascript array. The columns in the table are dynamically created
+					based on the <a href="https://datatables.net/reference/option/columns.title"><code class="option" title="DataTables initialisation option">columns.title</code></a>
+					configuration option.</p>
+				</div>
+				<div id="example_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="example_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="example"></label></div><table id="example" class="display dataTable no-footer" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;"><thead><tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 134px;">Name</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 213px;">Position</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 100px;">Office</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Extn.: activate to sort column ascending" style="width: 52px;">Extn.</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 91px;">Start date</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 77px;">Salary</th></tr></thead><tbody><tr role="row" class="odd"><td class="sorting_1">Airi Satou</td><td>Accountant</td><td>Tokyo</td><td>5407</td><td>2008/11/28</td><td>$162,700</td></tr><tr role="row" class="even"><td class="sorting_1">Angelica Ramos</td><td>Chief Executive Officer (CEO)</td><td>London</td><td>5797</td><td>2009/10/09</td><td>$1,200,000</td></tr><tr role="row" class="odd"><td class="sorting_1">Ashton Cox</td><td>Junior Technical Author</td><td>San Francisco</td><td>1562</td><td>2009/01/12</td><td>$86,000</td></tr><tr role="row" class="even"><td class="sorting_1">Bradley Greer</td><td>Software Engineer</td><td>London</td><td>2558</td><td>2012/10/13</td><td>$132,000</td></tr><tr role="row" class="odd"><td class="sorting_1">Brenden Wagner</td><td>Software Engineer</td><td>San Francisco</td><td>1314</td><td>2011/06/07</td><td>$206,850</td></tr><tr role="row" class="even"><td class="sorting_1">Brielle Williamson</td><td>Integration Specialist</td><td>New York</td><td>4804</td><td>2012/12/02</td><td>$372,000</td></tr><tr role="row" class="odd"><td class="sorting_1">Caesar Vance</td><td>Pre-Sales Support</td><td>New York</td><td>8330</td><td>2011/12/12</td><td>$106,450</td></tr><tr role="row" class="even"><td class="sorting_1">Cedric Kelly</td><td>Senior Javascript Developer</td><td>Edinburgh</td><td>6224</td><td>2012/03/29</td><td>$433,060</td></tr><tr role="row" class="odd"><td class="sorting_1">Charde Marshall</td><td>Regional Director</td><td>San Francisco</td><td>6741</td><td>2008/10/16</td><td>$470,600</td></tr><tr role="row" class="even"><td class="sorting_1">Colleen Hurst</td><td>Javascript Developer</td><td>San Francisco</td><td>2360</td><td>2009/09/15</td><td>$205,500</td></tr></tbody></table><div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing 1 to 10 of 36 entries</div><div class="dataTables_paginate paging_simple_numbers" id="example_paginate"><a class="paginate_button previous disabled" aria-controls="example" data-dt-idx="0" tabindex="0" id="example_previous">Previous</a><span><a class="paginate_button current" aria-controls="example" data-dt-idx="1" tabindex="0">1</a><a class="paginate_button " aria-controls="example" data-dt-idx="2" tabindex="0">2</a><a class="paginate_button " aria-controls="example" data-dt-idx="3" tabindex="0">3</a><a class="paginate_button " aria-controls="example" data-dt-idx="4" tabindex="0">4</a></span><a class="paginate_button next" aria-controls="example" data-dt-idx="5" tabindex="0" id="example_next">Next</a></div></div>
+				<ul class="tabs">
+					<li class="">Javascript</li>
+					<li class="active">HTML</li>
+					<li class="">CSS</li>
+					<li style="display: none;">Ajax</li>
+					<li style="display: none;">Server-side script</li>
+					<li class="comment-count">Comments <span class="comment_count">(0)</span></li>
+				</ul>
+				<div class="tabs">
+					<div class="js" style="display: none;">
+						<p>The Javascript shown below is used to initialise the table shown in this example:</p><div><div id="highlighter_114983" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/examples/data_sources/js_array.html#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">dataSet = [</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Tiger Nixon"</code><code class="js plain">, </code><code class="js string">"System Architect"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"5421"</code><code class="js plain">, </code><code class="js string">"2011/04/25"</code><code class="js plain">, </code><code class="js string">"$320,800"</code> <code class="js plain">],</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Garrett Winters"</code><code class="js plain">, </code><code class="js string">"Accountant"</code><code class="js plain">, </code><code class="js string">"Tokyo"</code><code class="js plain">, </code><code class="js string">"8422"</code><code class="js plain">, </code><code class="js string">"2011/07/25"</code><code class="js plain">, </code><code class="js string">"$170,750"</code> <code class="js plain">],</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Ashton Cox"</code><code class="js plain">, </code><code class="js string">"Junior Technical Author"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"1562"</code><code class="js plain">, </code><code class="js string">"2009/01/12"</code><code class="js plain">, </code><code class="js string">"$86,000"</code> <code class="js plain">],</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Cedric Kelly"</code><code class="js plain">, </code><code class="js string">"Senior Javascript Developer"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"6224"</code><code class="js plain">, </code><code class="js string">"2012/03/29"</code><code class="js plain">, </code><code class="js string">"$433,060"</code> <code class="js plain">],</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Airi Satou"</code><code class="js plain">, </code><code class="js string">"Accountant"</code><code class="js plain">, </code><code class="js string">"Tokyo"</code><code class="js plain">, </code><code class="js string">"5407"</code><code class="js plain">, </code><code class="js string">"2008/11/28"</code><code class="js plain">, </code><code class="js string">"$162,700"</code> <code class="js plain">],</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Brielle Williamson"</code><code class="js plain">, </code><code class="js string">"Integration Specialist"</code><code class="js plain">, </code><code class="js string">"New York"</code><code class="js plain">, </code><code class="js string">"4804"</code><code class="js plain">, </code><code class="js string">"2012/12/02"</code><code class="js plain">, </code><code class="js string">"$372,000"</code> <code class="js plain">],</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Herrod Chandler"</code><code class="js plain">, </code><code class="js string">"Sales Assistant"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"9608"</code><code class="js plain">, </code><code class="js string">"2012/08/06"</code><code class="js plain">, </code><code class="js string">"$137,500"</code> <code class="js plain">],</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Rhona Davidson"</code><code class="js plain">, </code><code class="js string">"Integration Specialist"</code><code class="js plain">, </code><code class="js string">"Tokyo"</code><code class="js plain">, </code><code class="js string">"6200"</code><code class="js plain">, </code><code class="js string">"2010/10/14"</code><code class="js plain">, </code><code class="js string">"$327,900"</code> <code class="js plain">],</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Colleen Hurst"</code><code class="js plain">, </code><code class="js string">"Javascript Developer"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"2360"</code><code class="js plain">, </code><code class="js string">"2009/09/15"</code><code class="js plain">, </code><code class="js string">"$205,500"</code> <code class="js plain">],</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Sonya Frost"</code><code class="js plain">, </code><code class="js string">"Software Engineer"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"1667"</code><code class="js plain">, </code><code class="js string">"2008/12/13"</code><code class="js plain">, </code><code class="js string">"$103,600"</code> <code class="js plain">],</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Jena Gaines"</code><code class="js plain">, </code><code class="js string">"Office Manager"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"3814"</code><code class="js plain">, </code><code class="js string">"2008/12/19"</code><code class="js plain">, </code><code class="js string">"$90,560"</code> <code class="js plain">],</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Quinn Flynn"</code><code class="js plain">, </code><code class="js string">"Support Lead"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"9497"</code><code class="js plain">, </code><code class="js string">"2013/03/03"</code><code class="js plain">, </code><code class="js string">"$342,000"</code> <code class="js plain">],</code></div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Charde Marshall"</code><code class="js plain">, </code><code class="js string">"Regional Director"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"6741"</code><code class="js plain">, </code><code class="js string">"2008/10/16"</code><code class="js plain">, </code><code class="js string">"$470,600"</code> <code class="js plain">],</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Haley Kennedy"</code><code class="js plain">, </code><code class="js string">"Senior Marketing Designer"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"3597"</code><code class="js plain">, </code><code class="js string">"2012/12/18"</code><code class="js plain">, </code><code class="js string">"$313,500"</code> <code class="js plain">],</code></div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Tatyana Fitzpatrick"</code><code class="js plain">, </code><code class="js string">"Regional Director"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"1965"</code><code class="js plain">, </code><code class="js string">"2010/03/17"</code><code class="js plain">, </code><code class="js string">"$385,750"</code> <code class="js plain">],</code></div><div class="line number17 index16 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Michael Silva"</code><code class="js plain">, </code><code class="js string">"Marketing Designer"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"1581"</code><code class="js plain">, </code><code class="js string">"2012/11/27"</code><code class="js plain">, </code><code class="js string">"$198,500"</code> <code class="js plain">],</code></div><div class="line number18 index17 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Paul Byrd"</code><code class="js plain">, </code><code class="js string">"Chief Financial Officer (CFO)"</code><code class="js plain">, </code><code class="js string">"New York"</code><code class="js plain">, </code><code class="js string">"3059"</code><code class="js plain">, </code><code class="js string">"2010/06/09"</code><code class="js plain">, </code><code class="js string">"$725,000"</code> <code class="js plain">],</code></div><div class="line number19 index18 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Gloria Little"</code><code class="js plain">, </code><code class="js string">"Systems Administrator"</code><code class="js plain">, </code><code class="js string">"New York"</code><code class="js plain">, </code><code class="js string">"1721"</code><code class="js plain">, </code><code class="js string">"2009/04/10"</code><code class="js plain">, </code><code class="js string">"$237,500"</code> <code class="js plain">],</code></div><div class="line number20 index19 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Bradley Greer"</code><code class="js plain">, </code><code class="js string">"Software Engineer"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"2558"</code><code class="js plain">, </code><code class="js string">"2012/10/13"</code><code class="js plain">, </code><code class="js string">"$132,000"</code> <code class="js plain">],</code></div><div class="line number21 index20 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Dai Rios"</code><code class="js plain">, </code><code class="js string">"Personnel Lead"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"2290"</code><code class="js plain">, </code><code class="js string">"2012/09/26"</code><code class="js plain">, </code><code class="js string">"$217,500"</code> <code class="js plain">],</code></div><div class="line number22 index21 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Jenette Caldwell"</code><code class="js plain">, </code><code class="js string">"Development Lead"</code><code class="js plain">, </code><code class="js string">"New York"</code><code class="js plain">, </code><code class="js string">"1937"</code><code class="js plain">, </code><code class="js string">"2011/09/03"</code><code class="js plain">, </code><code class="js string">"$345,000"</code> <code class="js plain">],</code></div><div class="line number23 index22 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Yuri Berry"</code><code class="js plain">, </code><code class="js string">"Chief Marketing Officer (CMO)"</code><code class="js plain">, </code><code class="js string">"New York"</code><code class="js plain">, </code><code class="js string">"6154"</code><code class="js plain">, </code><code class="js string">"2009/06/25"</code><code class="js plain">, </code><code class="js string">"$675,000"</code> <code class="js plain">],</code></div><div class="line number24 index23 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Caesar Vance"</code><code class="js plain">, </code><code class="js string">"Pre-Sales Support"</code><code class="js plain">, </code><code class="js string">"New York"</code><code class="js plain">, </code><code class="js string">"8330"</code><code class="js plain">, </code><code class="js string">"2011/12/12"</code><code class="js plain">, </code><code class="js string">"$106,450"</code> <code class="js plain">],</code></div><div class="line number25 index24 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Doris Wilder"</code><code class="js plain">, </code><code class="js string">"Sales Assistant"</code><code class="js plain">, </code><code class="js string">"Sidney"</code><code class="js plain">, </code><code class="js string">"3023"</code><code class="js plain">, </code><code class="js string">"2010/09/20"</code><code class="js plain">, </code><code class="js string">"$85,600"</code> <code class="js plain">],</code></div><div class="line number26 index25 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Angelica Ramos"</code><code class="js plain">, </code><code class="js string">"Chief Executive Officer (CEO)"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"5797"</code><code class="js plain">, </code><code class="js string">"2009/10/09"</code><code class="js plain">, </code><code class="js string">"$1,200,000"</code> <code class="js plain">],</code></div><div class="line number27 index26 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Gavin Joyce"</code><code class="js plain">, </code><code class="js string">"Developer"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"8822"</code><code class="js plain">, </code><code class="js string">"2010/12/22"</code><code class="js plain">, </code><code class="js string">"$92,575"</code> <code class="js plain">],</code></div><div class="line number28 index27 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Jennifer Chang"</code><code class="js plain">, </code><code class="js string">"Regional Director"</code><code class="js plain">, </code><code class="js string">"Singapore"</code><code class="js plain">, </code><code class="js string">"9239"</code><code class="js plain">, </code><code class="js string">"2010/11/14"</code><code class="js plain">, </code><code class="js string">"$357,650"</code> <code class="js plain">],</code></div><div class="line number29 index28 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Brenden Wagner"</code><code class="js plain">, </code><code class="js string">"Software Engineer"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"1314"</code><code class="js plain">, </code><code class="js string">"2011/06/07"</code><code class="js plain">, </code><code class="js string">"$206,850"</code> <code class="js plain">],</code></div><div class="line number30 index29 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Fiona Green"</code><code class="js plain">, </code><code class="js string">"Chief Operating Officer (COO)"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"2947"</code><code class="js plain">, </code><code class="js string">"2010/03/11"</code><code class="js plain">, </code><code class="js string">"$850,000"</code> <code class="js plain">],</code></div><div class="line number31 index30 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Shou Itou"</code><code class="js plain">, </code><code class="js string">"Regional Marketing"</code><code class="js plain">, </code><code class="js string">"Tokyo"</code><code class="js plain">, </code><code class="js string">"8899"</code><code class="js plain">, </code><code class="js string">"2011/08/14"</code><code class="js plain">, </code><code class="js string">"$163,000"</code> <code class="js plain">],</code></div><div class="line number32 index31 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Michelle House"</code><code class="js plain">, </code><code class="js string">"Integration Specialist"</code><code class="js plain">, </code><code class="js string">"Sidney"</code><code class="js plain">, </code><code class="js string">"2769"</code><code class="js plain">, </code><code class="js string">"2011/06/02"</code><code class="js plain">, </code><code class="js string">"$95,400"</code> <code class="js plain">],</code></div><div class="line number33 index32 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Suki Burks"</code><code class="js plain">, </code><code class="js string">"Developer"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"6832"</code><code class="js plain">, </code><code class="js string">"2009/10/22"</code><code class="js plain">, </code><code class="js string">"$114,500"</code> <code class="js plain">],</code></div><div class="line number34 index33 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Prescott Bartlett"</code><code class="js plain">, </code><code class="js string">"Technical Author"</code><code class="js plain">, </code><code class="js string">"London"</code><code class="js plain">, </code><code class="js string">"3606"</code><code class="js plain">, </code><code class="js string">"2011/05/07"</code><code class="js plain">, </code><code class="js string">"$145,000"</code> <code class="js plain">],</code></div><div class="line number35 index34 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Gavin Cortez"</code><code class="js plain">, </code><code class="js string">"Team Leader"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"2860"</code><code class="js plain">, </code><code class="js string">"2008/10/26"</code><code class="js plain">, </code><code class="js string">"$235,500"</code> <code class="js plain">],</code></div><div class="line number36 index35 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Martena Mccray"</code><code class="js plain">, </code><code class="js string">"Post-Sales support"</code><code class="js plain">, </code><code class="js string">"Edinburgh"</code><code class="js plain">, </code><code class="js string">"8240"</code><code class="js plain">, </code><code class="js string">"2011/03/09"</code><code class="js plain">, </code><code class="js string">"$324,050"</code> <code class="js plain">],</code></div><div class="line number37 index36 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">[ </code><code class="js string">"Unity Butler"</code><code class="js plain">, </code><code class="js string">"Marketing Designer"</code><code class="js plain">, </code><code class="js string">"San Francisco"</code><code class="js plain">, </code><code class="js string">"5384"</code><code class="js plain">, </code><code class="js string">"2009/12/09"</code><code class="js plain">, </code><code class="js string">"$85,675"</code> <code class="js plain">]</code></div><div class="line number38 index37 alt1"><code class="js plain">];</code></div><div class="line number39 index38 alt2">&nbsp;</div><div class="line number40 index39 alt1"><code class="js plain">$(document).ready(</code><code class="js keyword">function</code><code class="js plain">() {</code></div><div class="line number41 index40 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number42 index41 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: dataSet,</code></div><div class="line number43 index42 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">columns: [</code></div><div class="line number44 index43 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ title: </code><code class="js string">"Name"</code> <code class="js plain">},</code></div><div class="line number45 index44 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ title: </code><code class="js string">"Position"</code> <code class="js plain">},</code></div><div class="line number46 index45 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ title: </code><code class="js string">"Office"</code> <code class="js plain">},</code></div><div class="line number47 index46 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ title: </code><code class="js string">"Extn."</code> <code class="js plain">},</code></div><div class="line number48 index47 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ title: </code><code class="js string">"Start date"</code> <code class="js plain">},</code></div><div class="line number49 index48 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">{ title: </code><code class="js string">"Salary"</code> <code class="js plain">}</code></div><div class="line number50 index49 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">]</code></div><div class="line number51 index50 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number52 index51 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div>
+						<p>In addition to the above code, the following Javascript library files are loaded for use in this example:</p>
+						<ul>
+							<li>
+								<a href="./4.2.2DataTables example - Javascript sourced data_files/jquery-1.12.0.min.js">//code.jquery.com/jquery-1.12.0.min.js</a>
+							</li>
+							<li>
+								<a href="./4.2.2DataTables example - Javascript sourced data_files/jquery.dataTables.min.js">https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js</a>
+							</li>
+						</ul>
+					</div>
+					<div class="table" style="display: block;">
+						<p>The HTML shown below is the raw HTML table element, before it has been enhanced by DataTables:</p>
+					<div><div id="highlighter_986562" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/examples/data_sources/js_array.html#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">table</code> <code class="html color1">id</code><code class="html plain">=</code><code class="html string">"example"</code> <code class="html color1">class</code><code class="html plain">=</code><code class="html string">"display"</code> <code class="html color1">width</code><code class="html plain">=</code><code class="html string">"100%"</code><code class="html plain">&gt;&lt;/</code><code class="html keyword">table</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></div>
+					<div class="css" style="display: none;">
+						<div style="display: none;">
+							<p style="display: none;">This example uses a little bit of additional CSS beyond what is loaded from the library files (below), in order to correctly display the table. The
+							additional CSS used is shown below:</p><div><div id="highlighter_176228" class="syntaxhighlighter  css"><div class="toolbar"><span><a href="https://datatables.net/examples/data_sources/js_array.html#" class="toolbar_item command_lang lang">CSS</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2">&nbsp;</div></div></td></tr></tbody></table></div></div>
+						</div>
+						<p>The following CSS library files are loaded for use in this example to provide the styling of the table:</p>
+						<ul>
+							<li>
+								<a href="./4.2.2DataTables example - Javascript sourced data_files/jquery.dataTables.min.css">https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css</a>
+							</li>
+						</ul>
+					</div>
+					<div class="ajax" style="display: none;">
+						<p>This table loads data by Ajax. The latest data that has been loaded is shown below. This data will update automatically as any additional data is
+						loaded.</p>
+					</div>
+					<div class="php" style="display: none;">
+						<p>The script used to perform the server-side processing for this table is shown below. Please note that this is just an example script using PHP.
+						Server-side processing scripts can be written in any language, using <a href="https://datatables.net/manual/server-side">the protocol described in the DataTables
+						documentation</a>.</p>
+					</div>
+					<div class="comments" style="display: none;">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fexamples%2Fdata_sources%2Fjs_array.html">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fexamples%2Fdata_sources%2Fjs_array.html">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div>
+				</div>
+				<h2>Other examples</h2>
+				<div class="toc">
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/basic_init/index.html">Basic initialisation</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/basic_init/zero_configuration.html">Zero configuration</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/filter_only.html">Feature enable / disable</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/table_sorting.html">Default ordering (sorting)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/multi_col_sort.html">Multi-column ordering</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/multiple_tables.html">Multiple tables</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/hidden_columns.html">Hidden columns</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/complex_header.html">Complex headers (rowspan and colspan)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/dom.html">DOM positioning</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/flexible_width.html">Flexible table width</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/state_save.html">State saving</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/alt_pagination.html">Alternative pagination</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/scroll_y.html">Scroll - vertical</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/scroll_y_dynamic.html">Scroll - vertical, dynamic height</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/scroll_x.html">Scroll - horizontal</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/scroll_xy.html">Scroll - horizontal and vertical</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/comma-decimal.html">Language - Comma decimal place</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/basic_init/language.html">Language options</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/advanced_init/index.html">Advanced initialisation</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/events_live.html">DOM / jQuery events</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/dt_events.html">DataTables events</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/column_render.html">Column rendering</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/length_menu.html">Page length options</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/dom_multiple_elements.html">Multiple table control elements</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/complex_header.html">Complex headers with column visibility</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/object_dom_read.html">Read HTML to data objects</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/html5-data-options.html">HTML5 data-* attributes - table options</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/html5-data-attributes.html">HTML5 data-* attributes - cell data</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/language_file.html">Language file</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/defaults.html">Setting defaults</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/row_callback.html">Row created callback</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/row_grouping.html">Row grouping</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/footer_callback.html">Footer callback</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/dom_toolbar.html">Custom toolbar elements</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/advanced_init/sort_direction_control.html">Order direction sequence control</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/styling/index.html">Styling</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/styling/display.html">Base style</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/no-classes.html">Base style - no styling classes</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/cell-border.html">Base style - cell borders</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/compact.html">Base style - compact</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/hover.html">Base style - hover</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/order-column.html">Base style - order-column</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/row-border.html">Base style - row borders</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/stripe.html">Base style - stripe</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/bootstrap.html">Bootstrap 3</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/foundation.html">Foundation</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/jqueryUI.html">jQuery UI ThemeRoller</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/bootstrap4.html">Bootstrap 4 (Tech. preview)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/semanticui.html">Semantic UI (Tech. preview)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/material.html">Material Design (Tech. preview)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/styling/uikit.html">UIKit (Tech. preview)</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/data_sources/index.html">Data sources</a></h3>
+						<ul class="toc active">
+							<li>
+								<a href="https://datatables.net/examples/data_sources/dom.html">HTML (DOM) sourced data</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/data_sources/ajax.html">Ajax sourced data</a>
+							</li>
+							<li class="active">
+								<a href="https://datatables.net/examples/data_sources/js_array.html">Javascript sourced data</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/data_sources/server_side.html">Server-side processing</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/api/index.html">API</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/api/add_row.html">Add rows</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/multi_filter.html">Individual column searching (text inputs)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/multi_filter_select.html">Individual column searching (select inputs)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/highlight.html">Highlighting rows and columns</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/row_details.html">Child rows (show extra / detailed information)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/select_row.html">Row selection (multiple rows)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/select_single_row.html">Row selection and deletion (single row)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/form.html">Form inputs</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/counter_columns.html">Index column</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/show_hide.html">Show / hide columns dynamically</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/api_in_init.html">Using API in callbacks</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/tabs_and_scrolling.html">Scrolling and Bootstrap tabs</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/api/regex.html">Search API (regular expressions)</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/ajax/index.html">Ajax</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/ajax/simple.html">Ajax data source (arrays)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/objects.html">Ajax data source (objects)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/deep.html">Nested object data (objects)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/objects_subarrays.html">Nested object data (arrays)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/orthogonal-data.html">Orthogonal data</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/null_data_source.html">Generated content for a column</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/custom_data_property.html">Custom data source property</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/custom_data_flat.html">Flat array data source</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/ajax/defer_render.html">Deferred rendering for speed</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/server_side/index.html">Server-side</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/server_side/simple.html">Server-side processing</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/custom_vars.html">Custom HTTP variables</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/post.html">POST data</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/ids.html">Automatic addition of row ID attributes</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/object_data.html">Object data source</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/row_details.html">Row details</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/select_rows.html">Row selection</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/jsonp.html">JSONP data source for remote domains</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/defer_loading.html">Deferred loading of data</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/server_side/pipeline.html">Pipelining data to reduce Ajax calls for paging</a>
+							</li>
+						</ul>
+					</div>
+					<div class="toc-group">
+						<h3><a href="https://datatables.net/examples/plug-ins/index.html">Plug-ins</a></h3>
+						<ul class="toc">
+							<li>
+								<a href="https://datatables.net/examples/plug-ins/api.html">API plug-in methods</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/plug-ins/sorting_auto.html">Ordering plug-ins (with type detection)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/plug-ins/sorting_manual.html">Ordering plug-ins (no type detection)</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/plug-ins/range_filtering.html">Custom filtering - range search</a>
+							</li>
+							<li>
+								<a href="https://datatables.net/examples/plug-ins/dom_sort.html">Live DOM ordering</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fw-footer">
+			<div class="copyright">
+				DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+				SpryMedia Ltd is registered in Scotland, company no. SC456502.
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+				  var _gaq = _gaq || [];
+				  _gaq.push(['_setAccount', 'UA-365466-5']);
+				  _gaq.push(['_trackPageview']);
+
+				  (function() {
+					var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+	</script>
+
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/examples/data_sources/js_array.html#"></a><a id="lbNextLink" href="https://datatables.net/examples/data_sources/js_array.html#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/examples/data_sources/js_array.html#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://datatables.net/manual/plug-ins/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Plug-in development</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./11.Plug-in development_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./11.Plug-in development_files/ga.js"></script><script type="text/javascript" src="./11.Plug-in development_files/site.js"></script>
+		<script type="text/javascript" src="./11.Plug-in development_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./11.Plug-in development_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./11.Plug-in development_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./11.Plug-in development_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class="active sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a><ul><li class=""><a href="https://datatables.net/manual/plug-ins/api">API plug-in development</a></li><li class=""><a href="https://datatables.net/manual/plug-ins/features">Feature plug-in development</a></li><li class=""><a href="https://datatables.net/manual/plug-ins/search">Search plug-in development</a></li><li class=""><a href="https://datatables.net/manual/plug-ins/paging">Paging plug-in development</a></li><li class=""><a href="https://datatables.net/manual/plug-ins/sorting">Ordering plug-in development</a></li><li class=""><a href="https://datatables.net/manual/plug-ins/type-detection">Type detection plug-in development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Plug-in development</h1>
+
+					<p>As flexible as DataTables is, there may be times when you wish to customise certain aspects to your specific needs. DataTables has a number of plug-in and extension options which are detailed in this section.</p>
+
+<p>If you do take the time to create a plug-in for DataTables and wish to share it with others, please <a href="https://datatables.net/contact">get in touch</a>.</p>
+
+<p></p><div class="category-items"><div class="category-item"><a name="API plug-in development"></a><h3 class="title" data-anchor="API plug-in development"><a href="https://datatables.net/manual/plug-ins/api">API plug-in development</a></h3><div class="summary"><p>The <a href="https://datatables.net/manual/api">DataTable's API</a> provides a <a href="https://datatables.net/reference/api">large number of methods</a> that can be used to manipulate the table and gather data from it. Many of the methods that you will need are built-in, but you might also find it useful to be able to create a plug-in API method to extend the built-in functionality. This page discusses how to create a plug-in API method for DataTables. <a href="https://datatables.net/manual/plug-ins/api">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Feature plug-in development"></a><h3 class="title" data-anchor="Feature plug-in development"><a href="https://datatables.net/manual/plug-ins/features">Feature plug-in development</a></h3><div class="summary"><p>DataTables' core abilities add a lot of flexibility to a plain HTML table, but there is a lot of room left for extensions to provide enhancements that might be specific to your use case or to add functionality that is not available in DataTables. For this, DataTables provides a number of APIs that can be used to create feature plug-ins. This page discusses these APIs and the standard code patterns used to create DataTables feature plug-ins. <a href="https://datatables.net/manual/plug-ins/features">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Search plug-in development"></a><h3 class="title" data-anchor="Search plug-in development"><a href="https://datatables.net/manual/plug-ins/search">Search plug-in development</a></h3><div class="summary"><p>The custom search options in DataTables provide the ability to extend the search abilities of any DataTable using virtually any logic you wish to apply to the data set. This is done by simply providing a search function that is called by DataTables for each row in the table whenever it needs to search the data. The search function then simply returns a value to indicate if the row in question should be included in the result set or not. <a href="https://datatables.net/manual/plug-ins/search">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Paging plug-in development"></a><h3 class="title" data-anchor="Paging plug-in development"><a href="https://datatables.net/manual/plug-ins/paging">Paging plug-in development</a></h3><div class="summary"><p>Update for 1.10 still in progress. Apologies for the delay. <a href="https://datatables.net/manual/plug-ins/paging">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Ordering plug-in development"></a><h3 class="title" data-anchor="Ordering plug-in development"><a href="https://datatables.net/manual/plug-ins/sorting">Ordering plug-in development</a></h3><div class="summary"><p>DataTables has built in support to correctly order the most common data types that are displayed in a table, but there will still be times when you find you have data that is not orders as you might expect. One option is to use <a href="https://datatables.net/manual/orthogonal-data">orthogonal data</a> so data that DataTables understands is used for ordering (for example a date might be given as an integer timestamp rather than a formatted string). Another option is to use an ordering plug-in, as discussed on this page. <a href="https://datatables.net/manual/plug-ins/sorting">Read more »</a>
+</p></div></div>
+
+<div class="category-item"><a name="Type detection plug-in development"></a><h3 class="title" data-anchor="Type detection plug-in development"><a href="https://datatables.net/manual/plug-ins/type-detection">Type detection plug-in development</a></h3><div class="summary"><p><a href="https://datatables.net/manual/plug-ins/sorting">Ordering plug-ins</a> can be very useful for ordering arbitrary data types, however to be truly useful they need a companion type detection plug-in that will automatically scan a column's data and determine if the ordering plug-in can order the data in the column. Ordering plug-ins can be used without a type detection plug-in through the <a href="https://datatables.net/reference/option/columns.type"><code class="option" title="DataTables initialisation option">columns.type</code></a> option, but their utility is greatly increased if this just happens for you automatically! <a href="https://datatables.net/manual/plug-ins/type-detection">Read more »</a>
+</p></div></div></div><p></p>
+
+				</div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/plug-ins/#top" class="active">Top</a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/plug-ins/#"></a><a id="lbNextLink" href="https://datatables.net/manual/plug-ins/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/plug-ins/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

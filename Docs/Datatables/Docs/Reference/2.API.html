@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://datatables.net/reference/api/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>API</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./2.API_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./2.API_files/ga.js"></script><script type="text/javascript" src="./2.API_files/site.js"></script>
+		<script type="text/javascript" src="./2.API_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="wide">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./2.API_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./2.API_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./2.API_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class=" sub"><a href="https://datatables.net/manual/index">Manual</a></li><li class="sub-active sub"><a href="https://datatables.net/reference/index">Reference</a><ul><li class=""><a href="https://datatables.net/reference/option">Options</a></li><li class="active"><a href="https://datatables.net/reference/api">API</a></li><li class=""><a href="https://datatables.net/reference/event">Events</a></li><li class=""><a href="https://datatables.net/reference/button">Buttons</a></li><li class=""><a href="https://datatables.net/reference/type">Types</a></li></ul></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">API</h1>
+
+					<p>DataTables has an extensive API which can be used to access the data contained in a table and otherwise manipulate the table after the table initialisation has completed. The DataTables API is designed to reflect the structure of the data in the table and how you will typically interact with the table through the API. It can also be extended by the <a href="https://datatables.net/extensions">extensions</a> and <a href="https://datatables.net/plug-ins/api">plug-ins</a> providing additional features and operations.</p>
+
+<p>The API can be accessed through the following methods:</p>
+
+<ul class="markdown">
+<li><code>$( selector ).DataTable();</code></li>
+<li><code>$( selector ).dataTable().api();</code></li>
+<li><code>new $.fn.dataTable.Api( selector );</code></li>
+</ul>
+
+<p>The result from each is an instance of the DataTables API object which has the tables found by the selector in its context. It is important to note the difference between <code>$( selector ).DataTable()</code> and <code>$( selector ).dataTable()</code>. The former returns a DataTables API instance, while the latter returns a jQuery object.</p>
+
+<p>For general information on how the DataTables API operates, including its chaining, how to work with multiple tables and definitions of the terminology used in this reference, please prefer to the <a href="https://datatables.net/manual/api">API manual</a>.</p>
+
+<div class="ref_search">
+    <div class="ref_field">
+        <div class="ref_label">Search:</div>
+        <div class="ref_input"><input type="text"></div>
+     </div>
+<div class="ref_field"><div class="ref_label">Group:</div><div class="ref_input"><a class="site-btn small">DataTables - Core</a><a class="site-btn small">DataTables - Cells</a><a class="site-btn small">DataTables - Columns</a><a class="site-btn small">DataTables - Rows</a><a class="site-btn small">DataTables - Tables</a><a class="site-btn small">DataTables - Utility</a><a class="site-btn small">DataTables - Static</a><a class="site-btn small">Buttons</a><a class="site-btn small">ColReorder</a><a class="site-btn small">Editor</a><a class="site-btn small">FixedColumns</a><a class="site-btn small">FixedHeader</a><a class="site-btn small">KeyTable</a><a class="site-btn small">Responsive</a><a class="site-btn small">Scroller</a><a class="site-btn small">Select</a></div></div></div>
+
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="reference row-border hover dataTable no-footer" id="DataTables_Table_0" role="grid" style="width: 883px;">
+    <thead>
+        <tr role="row"><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 241px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Summary: activate to sort column ascending" style="width: 570px;">Summary</th></tr>
+    </thead>
+    <tbody>
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr class="group"><td colspan="3">DataTables - Core</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/%24()"><code class="api" title="DataTables API method">$()</code></a></p>
+</td><td><p>Perform a jQuery selection action on the full table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/ajax.json()"><code class="api" title="DataTables API method">ajax.json()</code></a></p>
+</td><td><p>Get the latest JSON data obtained from the last Ajax request DataTables made</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/ajax.params()"><code class="api" title="DataTables API method">ajax.params()</code></a></p>
+</td><td><p>Get the data submitted by DataTables to the server in the last Ajax request</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/ajax.reload()"><code class="api" title="DataTables API method">ajax.reload()</code></a></p>
+</td><td><p>Reload the table data from the Ajax data source</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/ajax.url().load()"><code class="api" title="DataTables API method">ajax.url().load()</code></a></p>
+</td><td><p>Load data from the newly set data source URL</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/ajax.url()"><code class="api" title="DataTables API method">ajax.url()</code></a></p>
+</td><td><p>Get / set the URL that DataTables uses to Ajax fetch data</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/ajax"><code class="api" title="DataTables API method">ajax</code></a></p>
+</td><td><p>Namespace for Ajax methods</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/clear()"><code class="api" title="DataTables API method">clear()</code></a></p>
+</td><td><p>Clear the table of all data.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/data()"><code class="api" title="DataTables API method">data()</code></a></p>
+</td><td><p>Get the data for the whole table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/destroy()"><code class="api" title="DataTables API method">destroy()</code></a></p>
+</td><td><p>Destroy the DataTables in the current context.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/draw()"><code class="api" title="DataTables API method">draw()</code></a></p>
+</td><td><p>Redraw the table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/i18n()"><code class="api" title="DataTables API method">i18n()</code></a></p>
+</td><td><p>Internationalisation token lookup.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/init()"><code class="api" title="DataTables API method">init()</code></a></p>
+</td><td><p>Get the initialisation options used for the table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/off()"><code class="api" title="DataTables API method">off()</code></a></p>
+</td><td><p>Table events removal.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a></p>
+</td><td><p>Table events listener.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/one()"><code class="api" title="DataTables API method">one()</code></a></p>
+</td><td><p>Listen for a table event once and then remove the listener.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/order()"><code class="api" title="DataTables API method">order()</code></a></p>
+</td><td><p>Get / set the ordering applied to the table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/order.fixed()"><code class="api" title="DataTables API method">order.fixed()</code></a></p>
+</td><td><p>Get / set the fixed ordering applied to the table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/order.listener()"><code class="api" title="DataTables API method">order.listener()</code></a></p>
+</td><td><p>Add an ordering listener to an element, for a given column.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/page()"><code class="api" title="DataTables API method">page()</code></a></p>
+</td><td><p>Get / set the current page of the table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/page.info()"><code class="api" title="DataTables API method">page.info()</code></a></p>
+</td><td><p>Get paging information about the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/page.len()"><code class="api" title="DataTables API method">page.len()</code></a></p>
+</td><td><p>Get / set the table's page length.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/search()"><code class="api" title="DataTables API method">search()</code></a></p>
+</td><td><p>Search for data in the table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/settings()"><code class="api" title="DataTables API method">settings()</code></a></p>
+</td><td><p>Obtain the table's settings object</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/state()"><code class="api" title="DataTables API method">state()</code></a></p>
+</td><td><p>Get the last saved state of the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/state.clear()"><code class="api" title="DataTables API method">state.clear()</code></a></p>
+</td><td><p>Clear the saved state of the table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/state.loaded()"><code class="api" title="DataTables API method">state.loaded()</code></a></p>
+</td><td><p>Get the table state that was loaded during initialisation.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/state.save()"><code class="api" title="DataTables API method">state.save()</code></a></p>
+</td><td><p>Trigger a state save.</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Cells</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell().cache()"><code class="api" title="DataTables API method">cell().cache()</code></a></p>
+</td><td><p>Get the DataTables cached data for the selected cell</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cell().data()"><code class="api" title="DataTables API method">cell().data()</code></a></p>
+</td><td><p>Get / set data for the selected cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell().index()"><code class="api" title="DataTables API method">cell().index()</code></a></p>
+</td><td><p>Get index information about the selected cell</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cell().invalidate()"><code class="api" title="DataTables API method">cell().invalidate()</code></a></p>
+</td><td><p>Invalidate the data held in DataTables for the selected cells</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell().node()"><code class="api" title="DataTables API method">cell().node()</code></a></p>
+</td><td><p>Get the DOM element for the selected cell</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cell().render()"><code class="api" title="DataTables API method">cell().render()</code></a></p>
+</td><td><p>Get rendered data for a cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell()"><code class="api" title="DataTables API method">cell()</code></a></p>
+</td><td><p>Select a single cell from a table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cells().cache()"><code class="api" title="DataTables API method">cells().cache()</code></a></p>
+</td><td><p>Get the DataTables cached data for the selected cells</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cells().data()"><code class="api" title="DataTables API method">cells().data()</code></a></p>
+</td><td><p>Get data for the selected cells</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cells().every()"><code class="api" title="DataTables API method">cells().every()</code></a></p>
+</td><td><p>Iterate over each selected cell, with the function context set to be the cell in question.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cells().indexes()"><code class="api" title="DataTables API method">cells().indexes()</code></a></p>
+</td><td><p>Get index information about the selected cells</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cells().invalidate()"><code class="api" title="DataTables API method">cells().invalidate()</code></a></p>
+</td><td><p>Invalidate the data held in DataTables for the selected cells</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cells().nodes()"><code class="api" title="DataTables API method">cells().nodes()</code></a></p>
+</td><td><p>Get the DOM elements for the selected cells</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cells().render()"><code class="api" title="DataTables API method">cells().render()</code></a></p>
+</td><td><p>Get rendered data for a collection of cells</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cells()"><code class="api" title="DataTables API method">cells()</code></a></p>
+</td><td><p>Select multiple cells from a table.</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Columns</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column().cache()"><code class="api" title="DataTables API method">column().cache()</code></a></p>
+</td><td><p>Get the DataTables cached data for the selected column.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column().data()"><code class="api" title="DataTables API method">column().data()</code></a></p>
+</td><td><p>Get the data for the cells in the selected column.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column().dataSrc()"><code class="api" title="DataTables API method">column().dataSrc()</code></a></p>
+</td><td><p>Get the data source property for the selected column.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column().footer()"><code class="api" title="DataTables API method">column().footer()</code></a></p>
+</td><td><p>Get the footer node for the selected column.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column().header()"><code class="api" title="DataTables API method">column().header()</code></a></p>
+</td><td><p>Get the header node for the selected column.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column().index()"><code class="api" title="DataTables API method">column().index()</code></a></p>
+</td><td><p>Get the column index of the selected column.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column().nodes()"><code class="api" title="DataTables API method">column().nodes()</code></a></p>
+</td><td><p>Get the cell nodes for the selected column.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column().order()"><code class="api" title="DataTables API method">column().order()</code></a></p>
+</td><td><p>Order the table by the selected column.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column().search()"><code class="api" title="DataTables API method">column().search()</code></a></p>
+</td><td><p>Search for data in the selected column.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column().visible()"><code class="api" title="DataTables API method">column().visible()</code></a></p>
+</td><td><p>Get / set the visibility of a single selected column.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column()"><code class="api" title="DataTables API method">column()</code></a></p>
+</td><td><p>Select a single column from a table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column.index()"><code class="api" title="DataTables API method">column.index()</code></a></p>
+</td><td><p>Convert between column index formats</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().cache()"><code class="api" title="DataTables API method">columns().cache()</code></a></p>
+</td><td><p>Get the DataTables cached data for the selected columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns().data()"><code class="api" title="DataTables API method">columns().data()</code></a></p>
+</td><td><p>Get the data for the cells in the selected columns.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().dataSrc()"><code class="api" title="DataTables API method">columns().dataSrc()</code></a></p>
+</td><td><p>Get the data source property for the selected columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns().every()"><code class="api" title="DataTables API method">columns().every()</code></a></p>
+</td><td><p>Iterate over each selected column, with the function context set to be the column in question.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().footer()"><code class="api" title="DataTables API method">columns().footer()</code></a></p>
+</td><td><p>Get the footer nodes for the selected columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns().header()"><code class="api" title="DataTables API method">columns().header()</code></a></p>
+</td><td><p>Get the header node for the selected columns.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().indexes()"><code class="api" title="DataTables API method">columns().indexes()</code></a></p>
+</td><td><p>Get the column indexes of the selected columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns().nodes()"><code class="api" title="DataTables API method">columns().nodes()</code></a></p>
+</td><td><p>Get the cell nodes for the selected columns.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().order()"><code class="api" title="DataTables API method">columns().order()</code></a></p>
+</td><td><p>Order the table by the selected columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns().search()"><code class="api" title="DataTables API method">columns().search()</code></a></p>
+</td><td><p>Search for data in the selected columns.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().visible()"><code class="api" title="DataTables API method">columns().visible()</code></a></p>
+</td><td><p>Get / set the visibility of the selected columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns()"><code class="api" title="DataTables API method">columns()</code></a></p>
+</td><td><p>Select multiple columns from a table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns.adjust()"><code class="api" title="DataTables API method">columns.adjust()</code></a></p>
+</td><td><p>Recalculate the column widths</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Rows</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().cache()"><code class="api" title="DataTables API method">row().cache()</code></a></p>
+</td><td><p>Get the DataTables cached data for the selected row.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().child().hide()"><code class="api" title="DataTables API method">row().child().hide()</code></a></p>
+</td><td><p>Hide child rows after creating new child rows</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().child().remove()"><code class="api" title="DataTables API method">row().child().remove()</code></a></p>
+</td><td><p>Destroy child row(s) for the selected parent row</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().child().show()"><code class="api" title="DataTables API method">row().child().show()</code></a></p>
+</td><td><p>Make newly defined child rows visible</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().child()"><code class="api" title="DataTables API method">row().child()</code></a></p>
+</td><td><p>Get / set the child rows of the selected main table row</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().child.hide()"><code class="api" title="DataTables API method">row().child.hide()</code></a></p>
+</td><td><p>Hide the child row(s) of a parent row</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().child.isShown()"><code class="api" title="DataTables API method">row().child.isShown()</code></a></p>
+</td><td><p>Check if the child rows of a parent row are visible</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().child.remove()"><code class="api" title="DataTables API method">row().child.remove()</code></a></p>
+</td><td><p>Destroy child row(s) for the selected parent row</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().child.show()"><code class="api" title="DataTables API method">row().child.show()</code></a></p>
+</td><td><p>Make the child row(s) of a parent row visible</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().child"><code class="api" title="DataTables API method">row().child</code></a></p>
+</td><td><p>Row child method namespace</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().data()"><code class="api" title="DataTables API method">row().data()</code></a></p>
+</td><td><p>Get / set the data for the selected row.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().id()"><code class="api" title="DataTables API method">row().id()</code></a></p>
+</td><td><p>Get the id of the selected row.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().index()"><code class="api" title="DataTables API method">row().index()</code></a></p>
+</td><td><p>Get the row index of the selected row.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().invalidate()"><code class="api" title="DataTables API method">row().invalidate()</code></a></p>
+</td><td><p>Invalidate the data held in DataTables for the selected row</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().node()"><code class="api" title="DataTables API method">row().node()</code></a></p>
+</td><td><p>Get the row <code class="tag" title="HTML tag">TR</code> node for the selected row.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().remove()"><code class="api" title="DataTables API method">row().remove()</code></a></p>
+</td><td><p>Delete the selected row from the DataTable.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row()"><code class="api" title="DataTables API method">row()</code></a></p>
+</td><td><p>Select a single row from a table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row.add()"><code class="api" title="DataTables API method">row.add()</code></a></p>
+</td><td><p>Add a new row to the table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows().cache()"><code class="api" title="DataTables API method">rows().cache()</code></a></p>
+</td><td><p>Get the DataTables cached data for the selected rows.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().data()"><code class="api" title="DataTables API method">rows().data()</code></a></p>
+</td><td><p>Get the data for the selected rows.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows().every()"><code class="api" title="DataTables API method">rows().every()</code></a></p>
+</td><td><p>Iterate over each selected row, with the function context set to be the row in question.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().ids()"><code class="api" title="DataTables API method">rows().ids()</code></a></p>
+</td><td><p>Get the ids of the selected rows.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows().indexes()"><code class="api" title="DataTables API method">rows().indexes()</code></a></p>
+</td><td><p>Get the row indexes of the selected rows.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().invalidate()"><code class="api" title="DataTables API method">rows().invalidate()</code></a></p>
+</td><td><p>Invalidate the data held in DataTables for the selected rows</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows().nodes()"><code class="api" title="DataTables API method">rows().nodes()</code></a></p>
+</td><td><p>Get the row <code class="tag" title="HTML tag">TR</code> nodes for the selected rows.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().remove()"><code class="api" title="DataTables API method">rows().remove()</code></a></p>
+</td><td><p>Delete the selected rows from the DataTable.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows()"><code class="api" title="DataTables API method">rows()</code></a></p>
+</td><td><p>Select multiple rows from a table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows.add()"><code class="api" title="DataTables API method">rows.add()</code></a></p>
+</td><td><p>Add multiple new rows to the table.</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Tables</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/table().body()"><code class="api" title="DataTables API method">table().body()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">tbody</code> node for the table in the API's context</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/table().container()"><code class="api" title="DataTables API method">table().container()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">div</code> container node for the table in the API's context</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/table().footer()"><code class="api" title="DataTables API method">table().footer()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">tfoot</code> node for the table in the API's context</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/table().header()"><code class="api" title="DataTables API method">table().header()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">thead</code> node for the table in the API's context</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/table().node()"><code class="api" title="DataTables API method">table().node()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">table</code> node for the table in the API's context</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/table()"><code class="api" title="DataTables API method">table()</code></a></p>
+</td><td><p>Select a table based on a selector from the API's context</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/tables().body()"><code class="api" title="DataTables API method">tables().body()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">tbody</code> nodes for the tables in the API's context</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/tables().containers()"><code class="api" title="DataTables API method">tables().containers()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">div</code> container nodes for the tables in the API's context</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/tables().footer()"><code class="api" title="DataTables API method">tables().footer()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">tfoot</code> nodes for the tables in the API's context</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/tables().header()"><code class="api" title="DataTables API method">tables().header()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">thead</code> nodes for the tables in the API's context</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/tables().nodes()"><code class="api" title="DataTables API method">tables().nodes()</code></a></p>
+</td><td><p>Get the <code class="tag" title="HTML tag">table</code> nodes for the tables in the API's context</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/tables()"><code class="api" title="DataTables API method">tables()</code></a></p>
+</td><td><p>Select tables based on a selector from the API's context</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Utility</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/any()"><code class="api" title="DataTables API method">any()</code></a></p>
+</td><td><p>Determine if there are any entries in the result set</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/concat()"><code class="api" title="DataTables API method">concat()</code></a></p>
+</td><td><p>Combine multiple API instances to create a single new instance.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/count()"><code class="api" title="DataTables API method">count()</code></a></p>
+</td><td><p>Get the number of elements that are contained in an API instance</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/each()"><code class="api" title="DataTables API method">each()</code></a></p>
+</td><td><p>Iterate over the contents of the API result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/eq()"><code class="api" title="DataTables API method">eq()</code></a></p>
+</td><td><p>Reduce an Api instance to a single context and result set.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/filter()"><code class="api" title="DataTables API method">filter()</code></a></p>
+</td><td><p>Create a new API instance with all elements from the result set which pass a given test.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/flatten()"><code class="api" title="DataTables API method">flatten()</code></a></p>
+</td><td><p>Flatten a 2D array structured API instance to a 1D array structure.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/indexOf()"><code class="api" title="DataTables API method">indexOf()</code></a></p>
+</td><td><p>Find the first instance of a value in the API instance's result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/iterator()"><code class="api" title="DataTables API method">iterator()</code></a></p>
+</td><td><p>Iterate over a result set of table, row, column or cell indexes</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/join()"><code class="api" title="DataTables API method">join()</code></a></p>
+</td><td><p>Join the elements in the result set into a string.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/lastIndexOf()"><code class="api" title="DataTables API method">lastIndexOf()</code></a></p>
+</td><td><p>Find the last instance of a value in the API instance's result set.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/length"><code class="api" title="DataTables API method">length</code></a></p>
+</td><td><p>Number of elements in an API instance's result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/map()"><code class="api" title="DataTables API method">map()</code></a></p>
+</td><td><p>Create a new API instance with the result set defined by the values returned from the callback function.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/pluck()"><code class="api" title="DataTables API method">pluck()</code></a></p>
+</td><td><p>Create a new API instance with the value of a property from the objects in the current result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/pop()"><code class="api" title="DataTables API method">pop()</code></a></p>
+</td><td><p>Remove the last item from an API instance's result set.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/push()"><code class="api" title="DataTables API method">push()</code></a></p>
+</td><td><p>Add one or more items to the end of an API instance's result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/reduce()"><code class="api" title="DataTables API method">reduce()</code></a></p>
+</td><td><p>Apply a callback function against and accumulator and each element in the Api's result set (left-to-right).</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/reduceRight()"><code class="api" title="DataTables API method">reduceRight()</code></a></p>
+</td><td><p>Apply a callback function against and accumulator and each element in the Api's result set (right-to-left).</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/reverse()"><code class="api" title="DataTables API method">reverse()</code></a></p>
+</td><td><p>Reverse the result set of the API instance.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/shift()"><code class="api" title="DataTables API method">shift()</code></a></p>
+</td><td><p>Remove the first item from an API instance's result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/sort()"><code class="api" title="DataTables API method">sort()</code></a></p>
+</td><td><p>Sort the elements of the API instance's result set.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/splice()"><code class="api" title="DataTables API method">splice()</code></a></p>
+</td><td><p>Modify the contents of an Api instance's result set, adding or removing items from it as required.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/to%24()"><code class="api" title="DataTables API method">to$()</code></a></p>
+</td><td><p>Convert the API instance to a jQuery object, with the objects from the instance's result set in the jQuery result set.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/toArray()"><code class="api" title="DataTables API method">toArray()</code></a></p>
+</td><td><p>Create a native Javascript array object from an API instance.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/toJQuery()"><code class="api" title="DataTables API method">toJQuery()</code></a></p>
+</td><td><p>Convert the API instance to a jQuery object, with the objects from the instance's result set in the jQuery result set.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/unique()"><code class="api" title="DataTables API method">unique()</code></a></p>
+</td><td><p>Create a new API instance containing only the unique items from a the elements in an instance's result set.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/unshift()"><code class="api" title="DataTables API method">unshift()</code></a></p>
+</td><td><p>Add one or more items to the start of an API instance's result set.</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Static</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/%24.fn.dataTable.isDataTable()"><code class="api" title="DataTables API method">$.fn.dataTable.isDataTable()</code></a></p>
+</td><td><p>Check is a table node is a DataTable or not</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/%24.fn.dataTable.tables()"><code class="api" title="DataTables API method">$.fn.dataTable.tables()</code></a></p>
+</td><td><p>Get all DataTables on the page</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/%24.fn.dataTable.util.escapeRegex()"><code class="api" title="DataTables API method">$.fn.dataTable.util.escapeRegex()</code></a></p>
+</td><td><p>Escape special characters in a regular expression string</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/%24.fn.dataTable.util.throttle()"><code class="api" title="DataTables API method">$.fn.dataTable.util.throttle()</code></a></p>
+</td><td><p>Throttle the calls to a method to reduce call frequency</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/%24.fn.dataTable.versionCheck()"><code class="api" title="DataTables API method">$.fn.dataTable.versionCheck()</code></a></p>
+</td><td><p>Version number compatibility check function</p>
+</td></tr><tr class="group"><td colspan="3">Buttons</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/button().action()"><code class="api" title="DataTables API method">button().action()</code></a></p>
+</td><td><p>Get / set the action function for the selected button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/button().active()"><code class="api" title="DataTables API method">button().active()</code></a></p>
+</td><td><p>Get / set the active state of the selected button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/button().add()"><code class="api" title="DataTables API method">button().add()</code></a></p>
+</td><td><p>Create a new button and add it to the document</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/button().disable()"><code class="api" title="DataTables API method">button().disable()</code></a></p>
+</td><td><p>Disable the selected buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/button().enable()"><code class="api" title="DataTables API method">button().enable()</code></a></p>
+</td><td><p>Enable / disable the selected button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/button().node()"><code class="api" title="DataTables API method">button().node()</code></a></p>
+</td><td><p>Get the button node for the selected button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/button().remove()"><code class="api" title="DataTables API method">button().remove()</code></a></p>
+</td><td><p>Remove and delete the selected button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/button().text()"><code class="api" title="DataTables API method">button().text()</code></a></p>
+</td><td><p>Get / set the text for the selected button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/button().trigger()"><code class="api" title="DataTables API method">button().trigger()</code></a></p>
+</td><td><p>Trigger the action of the selected button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/button()"><code class="api" title="DataTables API method">button()</code></a></p>
+</td><td><p>Select a single button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons().action()"><code class="api" title="DataTables API method">buttons().action()</code></a></p>
+</td><td><p>Get / set the action functions for the selected buttons</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons().active()"><code class="api" title="DataTables API method">buttons().active()</code></a></p>
+</td><td><p>Set the active state for the selected buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons().container()"><code class="api" title="DataTables API method">buttons().container()</code></a></p>
+</td><td><p>Get the container element for a single Buttons instance</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons().containers()"><code class="api" title="DataTables API method">buttons().containers()</code></a></p>
+</td><td><p>Get the container elements for one or more button instances</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons().destroy()"><code class="api" title="DataTables API method">buttons().destroy()</code></a></p>
+</td><td><p>Destroy one or more button instances and remove from the document</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons().disable()"><code class="api" title="DataTables API method">buttons().disable()</code></a></p>
+</td><td><p>Disable the selected buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons().enable()"><code class="api" title="DataTables API method">buttons().enable()</code></a></p>
+</td><td><p>Enable / disable the selected buttons</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons().nodes()"><code class="api" title="DataTables API method">buttons().nodes()</code></a></p>
+</td><td><p>Get the button nodes for the selected buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons().remove()"><code class="api" title="DataTables API method">buttons().remove()</code></a></p>
+</td><td><p>Remove and delete the selected buttons</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons().text()"><code class="api" title="DataTables API method">buttons().text()</code></a></p>
+</td><td><p>Get / set the text for the selected buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons().trigger()"><code class="api" title="DataTables API method">buttons().trigger()</code></a></p>
+</td><td><p>Trigger the action of the selected buttons</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons()"><code class="api" title="DataTables API method">buttons()</code></a></p>
+</td><td><p>Select one or more buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons.exportData()"><code class="api" title="DataTables API method">buttons.exportData()</code></a></p>
+</td><td><p>Obtain data from the DataTable that is suitable for exporting</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/buttons.info()"><code class="api" title="DataTables API method">buttons.info()</code></a></p>
+</td><td><p>Display and hide an information for the end user in a modal box</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/buttons.resize()"><code class="api" title="DataTables API method">buttons.resize()</code></a></p>
+</td><td><p>Resize all Flash buttons once a table has been made visible</p>
+</td></tr><tr class="group"><td colspan="3">ColReorder</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/colReorder.order()"><code class="api" title="DataTables API method">colReorder.order()</code></a></p>
+</td><td><p>Get / set column order</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/colReorder.reset()"><code class="api" title="DataTables API method">colReorder.reset()</code></a></p>
+</td><td><p>Restore the loaded column order</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/colReorder.transpose()"><code class="api" title="DataTables API method">colReorder.transpose()</code></a></p>
+</td><td><p>Convert one or more column indexes to and from current and original indexes</p>
+</td></tr><tr class="group"><td colspan="3">Editor</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell().edit()"><code class="api" title="DataTables API method">cell().edit()</code></a></p>
+</td><td><p>Edit a cell with inline or bubble editing</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cells().edit()"><code class="api" title="DataTables API method">cells().edit()</code></a></p>
+</td><td><p>Edit cells with bubble editing</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/editor()"><code class="api" title="DataTables API method">editor()</code></a></p>
+</td><td><p>Get the Editor instance associated with this table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/file()"><code class="api" title="DataTables API method">file()</code></a></p>
+</td><td><p>Get information about a previously uploaded file</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/files()"><code class="api" title="DataTables API method">files()</code></a></p>
+</td><td><p>Get information about multiple uploaded files</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().delete()"><code class="api" title="DataTables API method">row().delete()</code></a></p>
+</td><td><p>Delete an existing row</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().edit()"><code class="api" title="DataTables API method">row().edit()</code></a></p>
+</td><td><p>Edit an existing row</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row.create()"><code class="api" title="DataTables API method">row.create()</code></a></p>
+</td><td><p>Create a new row</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows().delete()"><code class="api" title="DataTables API method">rows().delete()</code></a></p>
+</td><td><p>Delete multiple existing rows</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().edit()"><code class="api" title="DataTables API method">rows().edit()</code></a></p>
+</td><td><p>Edit multiple existing rows</p>
+</td></tr><tr class="group"><td colspan="3">FixedColumns</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/fixedColumns().cellIndex()"><code class="api" title="DataTables API method">fixedColumns().cellIndex()</code></a></p>
+</td><td><p>Get the cell index of a cell in a fixed column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/fixedColumns().relayout()"><code class="api" title="DataTables API method">fixedColumns().relayout()</code></a></p>
+</td><td><p>Redraw the fixed columns based on new table size</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/fixedColumns().rowIndex()"><code class="api" title="DataTables API method">fixedColumns().rowIndex()</code></a></p>
+</td><td><p>Get the row index of a row in a fixed column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/fixedColumns().update()"><code class="api" title="DataTables API method">fixedColumns().update()</code></a></p>
+</td><td><p>Update the data shown in the FixedColumns</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/fixedColumns()"><code class="api" title="DataTables API method">fixedColumns()</code></a></p>
+</td><td><p>Namespace for FixedColumns methods</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().recalcHeight()"><code class="api" title="DataTables API method">rows().recalcHeight()</code></a></p>
+</td><td><p>Recalculate the height of one or more rows after a data change</p>
+</td></tr><tr class="group"><td colspan="3">FixedHeader</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/fixedHeader.adjust()"><code class="api" title="DataTables API method">fixedHeader.adjust()</code></a></p>
+</td><td><p>Recalculate the position of the table and redraw the fixed elements</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/fixedHeader.disable()"><code class="api" title="DataTables API method">fixedHeader.disable()</code></a></p>
+</td><td><p>Disable the fixed elements</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/fixedHeader.enable()"><code class="api" title="DataTables API method">fixedHeader.enable()</code></a></p>
+</td><td><p>Enable / disable the fixed elements</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/fixedHeader.footerOffset()"><code class="api" title="DataTables API method">fixedHeader.footerOffset()</code></a></p>
+</td><td><p>Get / set the fixed footer's offset</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/fixedHeader.headerOffset()"><code class="api" title="DataTables API method">fixedHeader.headerOffset()</code></a></p>
+</td><td><p>Get / set the fixed header's offset</p>
+</td></tr><tr class="group"><td colspan="3">KeyTable</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cell().focus()"><code class="api" title="DataTables API method">cell().focus()</code></a></p>
+</td><td><p>Focus on a cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell.blur()"><code class="api" title="DataTables API method">cell.blur()</code></a></p>
+</td><td><p>Blur focus from the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/keys.disable()"><code class="api" title="DataTables API method">keys.disable()</code></a></p>
+</td><td><p>Disable KeyTable's interactions (mouse and keyboard)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/keys.enable()"><code class="api" title="DataTables API method">keys.enable()</code></a></p>
+</td><td><p>Enable or disable KeyTable's interactions (mouse and keyboard)</p>
+</td></tr><tr class="group"><td colspan="3">Responsive</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/responsive.index()"><code class="api" title="DataTables API method">responsive.index()</code></a></p>
+</td><td><p>Obtain the cell index from a <code class="tag" title="HTML tag">li</code> details element</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/responsive.rebuild()"><code class="api" title="DataTables API method">responsive.rebuild()</code></a></p>
+</td><td><p>Recalculate the column breakpoints based on the class information of the column header cells</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/responsive.recalc()"><code class="api" title="DataTables API method">responsive.recalc()</code></a></p>
+</td><td><p>Recalculate the widths used by responsive after a change in the display</p>
+</td></tr><tr class="group"><td colspan="3">Scroller</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().scrollTo()"><code class="api" title="DataTables API method">row().scrollTo()</code></a></p>
+</td><td><p>Scroll to a specific row</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/scroller.measure()"><code class="api" title="DataTables API method">scroller.measure()</code></a></p>
+</td><td><p>Recalculate the cached measurements that Scroller uses</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/scroller.page()"><code class="api" title="DataTables API method">scroller.page()</code></a></p>
+</td><td><p>Get information about the rows that are currently being displayed</p>
+</td></tr><tr class="group"><td colspan="3">Select</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cell().deselect()"><code class="api" title="DataTables API method">cell().deselect()</code></a></p>
+</td><td><p>Deselect a single cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cell().select()"><code class="api" title="DataTables API method">cell().select()</code></a></p>
+</td><td><p>Select a single cell</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/cells().deselect()"><code class="api" title="DataTables API method">cells().deselect()</code></a></p>
+</td><td><p>Deselect cells</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/cells().select()"><code class="api" title="DataTables API method">cells().select()</code></a></p>
+</td><td><p>Select cells</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/column().deselect()"><code class="api" title="DataTables API method">column().deselect()</code></a></p>
+</td><td><p>Deselect a single column</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/column().select()"><code class="api" title="DataTables API method">column().select()</code></a></p>
+</td><td><p>Select a single column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/columns().deselect()"><code class="api" title="DataTables API method">columns().deselect()</code></a></p>
+</td><td><p>Deselect columns</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/columns().select()"><code class="api" title="DataTables API method">columns().select()</code></a></p>
+</td><td><p>Select columns</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/row().deselect()"><code class="api" title="DataTables API method">row().deselect()</code></a></p>
+</td><td><p>Deselect a single row</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/row().select()"><code class="api" title="DataTables API method">row().select()</code></a></p>
+</td><td><p>Select a single row</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/rows().deselect()"><code class="api" title="DataTables API method">rows().deselect()</code></a></p>
+</td><td><p>Deselect rows</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/rows().select()"><code class="api" title="DataTables API method">rows().select()</code></a></p>
+</td><td><p>Select rows</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/select()"><code class="api" title="DataTables API method">select()</code></a></p>
+</td><td><p>Initialise Select from outside of the constructor</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/select.blurable()"><code class="api" title="DataTables API method">select.blurable()</code></a></p>
+</td><td><p>Get / set the blurable state of the table's item selection options</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/select.info()"><code class="api" title="DataTables API method">select.info()</code></a></p>
+</td><td><p>Get / set the information summary display state</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/select.items()"><code class="api" title="DataTables API method">select.items()</code></a></p>
+</td><td><p>Get / set the items that Select will select based on user interaction (rows, columns or cells)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/api/select.selector()"><code class="api" title="DataTables API method">select.selector()</code></a></p>
+</td><td><p>Get / set the item selector for mouse event capture</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/api/select.style()"><code class="api" title="DataTables API method">select.style()</code></a></p>
+</td><td><p>Get / set the style by which the end user can select items in the table</p>
+</td></tr></tbody>
+</table></div>
+
+				</div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/reference/api/#top" class="active">Top</a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/reference/api/#"></a><a id="lbNextLink" href="https://datatables.net/reference/api/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/reference/api/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

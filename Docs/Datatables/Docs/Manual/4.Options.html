@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://datatables.net/manual/options -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Options</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./4.Options_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./4.Options_files/ga.js"></script><script type="text/javascript" src="./4.Options_files/site.js"></script>
+		<script type="text/javascript" src="./4.Options_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./4.Options_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./4.Options_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./4.Options_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class="active"><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Options</h1>
+
+					<p>DataTables' <a href="https://datatables.net/reference/option">huge range of options</a> can be used to customise the way that it will present its interface, and the features available, to the end user. This is done through its configuration options, which are set at initialisation time.</p>
+
+<p>The <a href="https://datatables.net/extensions">DataTables extensions</a> also each provide their own options that can be set in the DataTables configuration object.</p>
+
+<a name="Setting-options"></a><h2 data-anchor="Setting-options">Setting options</h2>
+
+<p>Configuration of DataTables is done by passing the options you want defined into the DataTables constructor as an object. For example:</p>
+
+<pre><div><div id="highlighter_60154" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/options#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">paging: </code><code class="js keyword">false</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This uses the <a href="https://datatables.net/reference/option/paging"><code class="option" title="DataTables initialisation option">paging</code></a> option to disable paging for the table.</p>
+
+<p>Let's say you want to enable scrolling in the table - you would use the <a href="https://datatables.net/reference/option/scrollY"><code class="option" title="DataTables initialisation option">scrollY</code></a> option:</p>
+
+<pre><div><div id="highlighter_942968" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/options#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">scrollY: 400</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Extending that, you can combine multiple options into a single object. In this case we enable scrolling and disable paging:</p>
+
+<pre><div><div id="highlighter_909546" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/options#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">paging: </code><code class="js keyword">false</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">scrollY: 400</code></div><div class="line number4 index3 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>The object being passed in is just a standard Javascript object and can be treated as such. Add as many options as you wish!</p>
+
+<p>For the full range of configuration options available for DataTables, please refer to the <a href="https://datatables.net/reference/option">options reference</a> section of this web-site.</p>
+
+<a name="HTML-5-data-attributes"></a><h3 data-anchor="HTML-5-data-attributes">HTML 5 data attributes</h3>
+
+<p>As of <span class="since">v1.10.5</span> DataTables can also use initialisation options read from HTML5 <code>data-*</code> attributes. This provides a mechanism for setting options directly in your HTML, rather than using Javascript (as above). Consider for example the following table:</p>
+
+<pre><div><div id="highlighter_422515" class="syntaxhighlighter  html"><div class="toolbar"><span><a href="https://datatables.net/manual/options#" class="toolbar_item command_lang lang">HTML</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="html plain">&lt;</code><code class="html keyword">table</code> <code class="html color1">data-order</code><code class="html plain">=</code><code class="html string">'[[ 1, "asc" ]]'</code> <code class="html color1">data-page-length</code><code class="html plain">=</code><code class="html string">'25'</code><code class="html plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">thead</code><code class="html plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number4 index3 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Name&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number5 index4 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Position&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Office&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number7 index6 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Age&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number8 index7 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code><code class="html plain">&gt;Start date&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number9 index8 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;</code><code class="html keyword">th</code> <code class="html color1">data-class-name</code><code class="html plain">=</code><code class="html string">"priority"</code><code class="html plain">&gt;Salary&lt;/</code><code class="html keyword">th</code><code class="html plain">&gt;</code></div><div class="line number10 index9 alt1"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">tr</code><code class="html plain">&gt;</code></div><div class="line number11 index10 alt2"><code class="html spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="html plain">&lt;/</code><code class="html keyword">thead</code><code class="html plain">&gt;</code></div><div class="line number12 index11 alt1"><code class="html plain">&lt;/</code><code class="html keyword">table</code><code class="html plain">&gt;</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>When DataTables is initialised on this table it will set <a href="https://datatables.net/reference/option/pageLength"><code class="option" title="DataTables initialisation option">pageLength</code></a> to 25, order by the second column automatically (<a href="https://datatables.net/reference/option/order"><code class="option" title="DataTables initialisation option">order</code></a>) and set a class name on the final column of the table (<a href="https://datatables.net/reference/option/columns.className"><code class="option" title="DataTables initialisation option">columns.className</code></a>).</p>
+
+<p>There are two important points to consider when using <code>data-*</code> attributes as initialisation options:</p>
+
+<ul class="markdown">
+<li>jQuery will automatically convert from dashed strings to the camel case notation used by DataTables (e.g. use <code>data-page-length</code> for <a href="https://datatables.net/reference/option/pageLength"><code class="option" title="DataTables initialisation option">pageLength</code></a>).</li>
+<li>If using a string inside the attribute it <strong>must</strong> be in double quotes (and therefore the attribute as a whole in single quotes). This is another requirement of jQuery's due to the processing of JSON data data.</li>
+</ul>
+
+<a name="Common-options"></a><h2 data-anchor="Common-options">Common options</h2>
+
+<p>Some of the options you might find particularly useful are:</p>
+
+<ul class="markdown">
+<li><a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a> - Ajax data source configuration</li>
+<li><a href="https://datatables.net/reference/option/data"><code class="option" title="DataTables initialisation option">data</code></a> - Javascript sourced data</li>
+<li><a href="https://datatables.net/reference/option/serverSide"><code class="option" title="DataTables initialisation option">serverSide</code></a> - Enable server-side processing</li>
+<li><a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> - Data source options for a column</li>
+<li><a href="https://datatables.net/reference/option/scrollX"><code class="option" title="DataTables initialisation option">scrollX</code></a> - Horizontal scrolling</li>
+<li><a href="https://datatables.net/reference/option/scrollY"><code class="option" title="DataTables initialisation option">scrollY</code></a> - Vertical scrolling</li>
+<li><a href="https://datatables.net/reference/option">Full list of options</a></li>
+</ul>
+
+<a name="Setting-defaults"></a><h2 data-anchor="Setting-defaults">Setting defaults</h2>
+
+<p>When on projects that use multiple DataTables it is often useful to set the initialisation defaults to common values (for example you might want to set the <a href="https://datatables.net/reference/option/dom"><code class="option" title="DataTables initialisation option">dom</code></a> option to a common value so all tables get the same layout). This can be done using the <code>$.fn.dataTable.defaults</code> object. This object takes all of the same parameters as the DataTables initialisation object, but in this case you are setting the default for all future initialisations of DataTables.</p>
+
+<p>In this example we disable the searching and ordering features of DataTables by default, but when the table is initialised, it is initialised with ordering enabled (overriding the default).</p>
+
+<pre><div><div id="highlighter_203544" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/options#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js comments">// Disable search and ordering by default</code></div><div class="line number2 index1 alt1"><code class="js plain">$.extend( $.fn.dataTable.defaults, {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">searching: </code><code class="js keyword">false</code><code class="js plain">,</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">ordering:&nbsp; </code><code class="js keyword">false</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="js comments">// For this specific table we are going to enable ordering</code></div><div class="line number8 index7 alt1"><code class="js comments">// (searching is still disabled)</code></div><div class="line number9 index8 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).DataTable( {</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">ordering: </code><code class="js keyword">true</code></div><div class="line number11 index10 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Extensions"></a><h2 data-anchor="Extensions">Extensions</h2>
+
+<p>Many of DataTables <a href="https://datatables.net/extensions">extensions</a> can also be configured through the DataTables configuration object, initialising the extension and configuring it as required. The properties available depend upon the extensions used, and the extension Javascript must be loaded in order for those options to operate.</p>
+
+<p>For example, consider the <a href="https://datatables.net/extensions/select">Select extension</a> which provides the end user with the ability to dynamically select rows, columns and cells in the table. It presents the <a href="https://datatables.net/reference/option/select"><code class="option" title="Select initialisation option">select</code></a> option which can be set to <code>true</code> to enable selection:</p>
+
+<pre><div><div id="highlighter_453760" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/options#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#myTable'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">select: </code><code class="js keyword">true</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>The <a href="https://datatables.net/reference/option/select"><code class="option" title="Select initialisation option">select</code></a> option can also be given as an object to give fine grained control over the selection options and of course can be combined with the other DataTables options.</p>
+
+<p>The <a href="https://datatables.net/reference/option">options reference</a> provides a searchable list of all options from DataTables and the extensions.</p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Foptions">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Foptions">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/options#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/options#Setting-options">Setting options</a><ul><li><a href="https://datatables.net/manual/options#HTML-5-data-attributes">HTML 5 data attributes</a></li></ul></li><li><a href="https://datatables.net/manual/options#Common-options">Common options</a></li><li><a href="https://datatables.net/manual/options#Setting-defaults">Setting defaults</a></li><li><a href="https://datatables.net/manual/options#Extensions">Extensions</a></li><li><a href="https://datatables.net/manual/options#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/options#"></a><a id="lbNextLink" href="https://datatables.net/manual/options#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/options#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

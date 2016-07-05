@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://datatables.net/manual/data/renderers -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Renderers</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./2.2Renderers_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./2.2Renderers_files/ga.js"></script><script type="text/javascript" src="./2.2Renderers_files/site.js"></script>
+		<script type="text/javascript" src="./2.2Renderers_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./2.2Renderers_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./2.2Renderers_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./2.2Renderers_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/data">Data</a><ul><li class=""><a href="https://datatables.net/manual/data/orthogonal-data">Orthogonal data</a></li><li class="active"><a href="https://datatables.net/manual/data/renderers">Renderers</a></li></ul></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class=""><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Renderers</h1>
+
+					<p>There are occasions when working with tables that the data source for rows in the table do not contain the value that you wish to show directly in the table. You may wish to transform it to a different representation (a time stamp into a human readable format), combine data points (first and last names) or perform some computation on the value (calculating margin from turnover and expense values).</p>
+
+<p>This transformation of the original data into the value that will be shown in the DataTable is called <em>rendering</em> in DataTables' terminology and is performed using the <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> option.</p>
+
+<a name="Data-rendering"></a><h2 data-anchor="Data-rendering">Data rendering</h2>
+
+<p>The primary advantage of using a data renderer in DataTables is that you can modify the output data without modifying the original data. The <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> method can be used to get and set data, but the set operation adds significant complexity and it is recommended that the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> option be used simply to point to the original representation of the data and allow a renderer (<a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a>), which is read only, to transform the data.</p>
+
+<p><a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> can be utilised in a number of different ways:</p>
+
+<ul class="markdown">
+<li>As a function to transform data</li>
+<li>As a string to select data from an object</li>
+</ul>
+
+<a name="Functions"></a><h3 data-anchor="Functions">Functions</h3>
+
+<p>Using <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> is the most common method as it provides absolute control over the data that will be displayed to the end user (this is a regular Javascript function, so you can do virtually anything you wish with the data).</p>
+
+<p>The function is passed in three parameters:</p>
+
+<ol class="markdown">
+<li>The data that is pointed to by <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a>. If <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> is <code>null</code>, <code>null</code> will be the value given here.</li>
+<li>The data type being requested by DataTables - this allows the function to support <a href="https://datatables.net/manual/data/orthogonal-data">orthogonal data</a>.</li>
+<li>The original and full data object or array for the row.</li>
+</ol>
+
+<p>The value that is returned from the function is whatever DataTables will use for the data being requested (display, ordering, search, etc).</p>
+
+<p>Consider for example the following data structure which contains the data for a row:</p>
+
+<pre><div><div id="highlighter_997080" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"product"</code><code class="js plain">: </code><code class="js string">"Toy car"</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"creator"</code><code class="js plain">: {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"firstName"</code><code class="js plain">: </code><code class="js string">"Fiona"</code><code class="js plain">,</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"lastName"</code><code class="js plain">: </code><code class="js string">"White"</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">},</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"created"</code><code class="js plain">: </code><code class="js string">"2015-11-01"</code><code class="js plain">,</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"price"</code><code class="js plain">: 19.99,</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js string">"cost"</code><code class="js plain">: 12.53</code></div><div class="line number10 index9 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h4>Adding formatting</h4>
+
+<p>In our DataTable, if we wish to have a column that shows the price, it is relatively common to wish to prefix it with a currency sign. In this case we use a dollar sign (see also the built-in number renderer below which provides advanced formatting options):</p>
+
+<pre><div><div id="highlighter_593352" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'price'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: </code><code class="js keyword">function</code> <code class="js plain">( data, type, row ) {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js string">'$'</code><code class="js plain">+ data;</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number6 index5 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h4>Joining strings</h4>
+
+<p>In our DataTable if we wish to have a single column that shows the full name of the creator we can concatenate strings using the following <a href="https://datatables.net/reference/option/columns"><code class="option" title="DataTables initialisation option">columns</code></a> definition (note in particular how the <code>create</code> object is passed in as the first parameter due to its assignment using the <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> option):</p>
+
+<pre><div><div id="highlighter_756233" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'creator'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: </code><code class="js keyword">function</code> <code class="js plain">( data, type, row ) {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js plain">data.firstName +</code><code class="js string">' '</code><code class="js plain">+ data.lastName;</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number6 index5 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h4>Transforming data</h4>
+
+<p>For another column we wish to display the <code>created</code> value, but formatted using the US standard MM-DD-YYYY formatting. This can be done simply by splitting the string and rearranging the component parts. We also wish for the date to be sortable, and since DataTables has built in support for ISO8601 formatted string (the original format), we wish to perform the transformation only for the <code class="string" title="String">display</code> and <code class="string" title="String">search</code> data type - see <a href="https://datatables.net/manual/data/orthogonal-data">orthogonal data</a> for more):</p>
+
+<pre><div><div id="highlighter_614584" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'created'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: </code><code class="js keyword">function</code> <code class="js plain">( data, type, row ) {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">dateSplit = data.split(</code><code class="js string">'-'</code><code class="js plain">);</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js plain">type === </code><code class="js string">"display"</code> <code class="js plain">|| type === </code><code class="js string">"search"</code> <code class="js plain">?</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">dateSplit[1] +</code><code class="js string">'-'</code><code class="js plain">+ dateSplit[2] +</code><code class="js string">'-'</code><code class="js plain">+ dateSplit[0] :</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data;</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number9 index8 alt2"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<h4>Computing values</h4>
+
+<p>Finally, to create a margin column from the <code>price</code> and <code>cost</code> fields we can use a function to compute the required values - note that in this case <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> is <code>null</code> - as a result the first parameter passed into the <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> method is also <code>null</code>, but the third parameter provides access to the original data source object, so we can continue use the data from there:</p>
+
+<pre><div><div id="highlighter_628558" class="syntaxhighlighter  text"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Plain text</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="text plain">{</code></div><div class="line number2 index1 alt1"><code class="text spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="text plain">data: null,</code></div><div class="line number3 index2 alt2"><code class="text spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="text plain">render: function ( data, type, row ) {</code></div><div class="line number4 index3 alt1"><code class="text spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="text plain">return Math.round( ( row.price - row.cost ) / row.price * 100 )+'%';</code></div><div class="line number5 index4 alt2"><code class="text spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="text plain">}</code></div><div class="line number6 index5 alt1"><code class="text plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Strings"></a><h3 data-anchor="Strings">Strings</h3>
+
+<p>A less common option for formatters is as a string to simply point at the data that should be used in the table. This is similar to the way that <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> is often used, although keep in mind that the renderer will only have access to the data pointed to by <a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a> rather than the full row.</p>
+
+<p>Continuing the examples using the JSON data structure from above, consider a column that should show the first name of the creator:</p>
+
+<pre><div><div id="highlighter_119926" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'creator'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: </code><code class="js string">'firstName'</code></div><div class="line number4 index3 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>There is no advantage to this method over simply using <code>data: 'creator.firstName'</code> in the example presented here, but if you have complex data with orthogonal data included in the data source object, this can sometimes be useful.</p>
+
+<a name="Built-in-helpers"></a><h2 data-anchor="Built-in-helpers">Built-in helpers</h2>
+
+<p>DataTables has two built in rendering helpers that can be used to easily format data - more can be added using plug-ins (see below):</p>
+
+<ul class="markdown">
+<li><code>number</code> - for formatting numbers</li>
+<li><code>text</code> - to securely display text from a potentially unsafe source (HTML entities are escaped).</li>
+</ul>
+
+<p>The built in rendering helpers can be accessed under the object <code>$.fn.dataTable.render</code>. They are functions (allowing options to be passed into them) which should be immediately executed and their result assigned to the <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> method. This might sound a little complicated, but it simply means you would use something like the following:</p>
+
+<pre><div><div id="highlighter_322779" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'price'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: $.fn.dataTable.render.number( ... )</code></div><div class="line number4 index3 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Number-helper"></a><h3 data-anchor="Number-helper">Number helper</h3>
+
+<p>The <code>number</code> helper provides the ability to easily format, you guessed it, numbers! When dealing with numbers, you may often wish to add formatting such as prefix and postfix characters (currency indicators for example), use a thousands separator and specify a precision for the number. This is all possible with the <code>number</code> helper.</p>
+
+<p>The helper function takes up to five optional parameters:</p>
+
+<ol class="markdown">
+<li>The thousands separator (required)</li>
+<li>Decimal separator (required)</li>
+<li>Floating point precision - 0 for integers, 1 for a single decimal place, etc (optional)</li>
+<li>A prefix string (optional)</li>
+<li>A postfix string (optional).</li>
+</ol>
+
+<p>For example, to display the <code>price</code> data point from the data structure shown above in the format <code>$19.99</code> we would use:</p>
+
+<pre><div><div id="highlighter_627228" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'price'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: $.fn.dataTable.render.number( </code><code class="js string">','</code><code class="js plain">, </code><code class="js string">'.'</code><code class="js plain">, 2, </code><code class="js string">'$'</code> <code class="js plain">)</code></div><div class="line number4 index3 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This example doesn't require the thousands separator, but for larger values such as <code>1000</code> they would be formatted as <code>$1,000.00</code>.</p>
+
+<p>Note that if the <code>number</code> helper encounters a value which is not a valid number (either <a href="https://datatables.net/reference/type/number"><code class="type" title="Javascript parameter type">number</code></a> or <a href="https://datatables.net/reference/type/string"><code class="type" title="Javascript parameter type">string</code></a> that contains a number) it will return the value after escaping any HTML entities in it (to help protect against potential security attacks).</p>
+
+<a name="Text-helper"></a><h3 data-anchor="Text-helper">Text helper</h3>
+
+<p>The <code>text</code> helper will ensure that any potentially dangerous HTML in the source data will not be executed by escaping the HTML entities. This can be useful if the data being loaded may come from a potentially untrusted data source and can help mitigate <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)">XSS attacks</a>.</p>
+
+<p>The <code>text</code> helper doesn't take any parameters making its use simply:</p>
+
+<pre><div><div id="highlighter_886980" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">{</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'product'</code><code class="js plain">,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: $.fn.dataTable.render.text()</code></div><div class="line number4 index3 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<a name="Custom-helpers"></a><h2 data-anchor="Custom-helpers">Custom helpers</h2>
+
+<p>Rendering helpers are simply functions which are attached to <code>$.fn.dataTable.render</code> to make them easily accessible from a single location. These functions must return a function that will operate with the <a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a> method.</p>
+
+<p>Consider for example the following simple plug-in that will truncate text after a given number of characters and show ellipsis if the string is longer that the number of characters allowed:</p>
+
+<pre><div><div id="highlighter_83932" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/data/renderers#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$.fn.dataTable.render.ellipsis = </code><code class="js keyword">function</code> <code class="js plain">( cutoff ) {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js keyword">function</code> <code class="js plain">( data, type, row ) {</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">if</code> <code class="js plain">( type === </code><code class="js string">'display'</code> <code class="js plain">) {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">str = data.toString(); </code><code class="js comments">// cast numbers</code></div><div class="line number5 index4 alt2">&nbsp;</div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js plain">str.length &lt; cutoff ?</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">str :</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">str.substr(0, cutoff-1) +</code><code class="js string">'&amp;#8230;'</code><code class="js plain">;</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js comments">// Search, order and type can use the original data</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">return</code> <code class="js plain">data;</code></div><div class="line number13 index12 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">};</code></div><div class="line number14 index13 alt1"><code class="js plain">};</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="js plain">We can then use that </code><code class="js keyword">in</code> <code class="js plain">our DataTables column definitions:</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="js plain">```js</code></div><div class="line number19 index18 alt2"><code class="js plain">{</code></div><div class="line number20 index19 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">data: </code><code class="js string">'description'</code><code class="js plain">,</code></div><div class="line number21 index20 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">render: $.fn.dataTable.render.ellipsis( 10 )</code></div><div class="line number22 index21 alt1"><code class="js plain">}</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>A more comprehensive ellipsis rendering helper is available in the <a href="https://github.com/DataTables/Plugins/tree/master/dataRender">DataTables plug-ins repository</a> with word break and HTML escaping control. Others will be available in the same repository as they are developed.</p>
+
+<a name="Contributing"></a><h3 data-anchor="Contributing">Contributing</h3>
+
+<p>If you have written a rendering helper that you would like to share with the DataTables community, first of all, thank you! Rendering helpers can be committed to the <a href="https://github.com/DataTables/Plugins/tree/master/dataRender">Plug-ins repository</a> and pull requests are very welcome. Alternatively, if you don't have a GitHub account, post your code in the <a href="https://datatables.net/forums">DataTables forums</a>.</p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fdata%2Frenderers">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fdata%2Frenderers">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/data/renderers#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/data/renderers#Data-rendering">Data rendering</a><ul><li><a href="https://datatables.net/manual/data/renderers#Functions">Functions</a></li><li><a href="https://datatables.net/manual/data/renderers#Strings">Strings</a></li></ul></li><li><a href="https://datatables.net/manual/data/renderers#Built-in-helpers">Built-in helpers</a><ul><li><a href="https://datatables.net/manual/data/renderers#Number-helper">Number helper</a></li><li><a href="https://datatables.net/manual/data/renderers#Text-helper">Text helper</a></li></ul></li><li><a href="https://datatables.net/manual/data/renderers#Custom-helpers">Custom helpers</a><ul><li><a href="https://datatables.net/manual/data/renderers#Contributing">Contributing</a></li></ul></li><li><a href="https://datatables.net/manual/data/renderers#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/data/renderers#"></a><a id="lbNextLink" href="https://datatables.net/manual/data/renderers#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/data/renderers#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

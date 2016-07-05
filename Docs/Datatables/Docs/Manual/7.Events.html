@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)https://datatables.net/manual/events -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Events</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./7.Events_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./7.Events_files/ga.js"></script><script type="text/javascript" src="./7.Events_files/site.js"></script>
+		<script type="text/javascript" src="./7.Events_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="comments">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./7.Events_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./7.Events_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./7.Events_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class="sub-active sub"><a href="https://datatables.net/manual/index">Manual</a><ul><li class=""><a href="https://datatables.net/manual/installation">Installation</a></li><li class=" sub"><a href="https://datatables.net/manual/data">Data</a></li><li class=""><a href="https://datatables.net/manual/ajax">Ajax</a></li><li class=""><a href="https://datatables.net/manual/options">Options</a></li><li class=""><a href="https://datatables.net/manual/api">API</a></li><li class=" sub"><a href="https://datatables.net/manual/styling">Styling</a></li><li class="active"><a href="https://datatables.net/manual/events">Events</a></li><li class=""><a href="https://datatables.net/manual/server-side">Server-side processing</a></li><li class=""><a href="https://datatables.net/manual/i18n">Internationalisation</a></li><li class=""><a href="https://datatables.net/manual/security">Security</a></li><li class=" sub"><a href="https://datatables.net/manual/plug-ins">Plug-in development</a></li><li class=" sub"><a href="https://datatables.net/manual/tech-notes">Technical notes</a></li><li class=" sub"><a href="https://datatables.net/manual/development">Development</a></li></ul></li><li class=" sub"><a href="https://datatables.net/reference/index">Reference</a></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Events</h1>
+
+					<p>It can often be useful to know when DataTables or one of its extensions has performed a particular operation, for example a page draw, so other dependent elements can be updated to take account of the change. To provide this ability, DataTables will fire custom DOM events which can be listened for, and then acted upon, using either the <a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a> method or <a href="http://api.jquery.com/on/">jQuery's <code>on()</code></a> method. DataTables's custom events work in exactly the same way as standard DOM events, and allow event driven actions, which is particularly useful for plug-ins.</p>
+
+<p>For a full list of the events that DataTables and its extensions will trigger, please refer to the <a href="https://datatables.net/reference/event">event reference documentation</a>.</p>
+
+<a name="Listening-for-events"></a><h2 data-anchor="Listening-for-events">Listening for events</h2>
+
+<p>As noted above, you can use either the <a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a> or <a href="http://api.jquery.com/on/">jQuery's <code>on()</code></a> method to listen for events. <a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a> works in exactly the same way as <code>$().on()</code>, with provision for namespaces and multiple events.</p>
+
+<p><strong>Please be aware that all DataTables events are triggered with the <code>dt</code> namespace.</strong> This namespacing of events is to prevent clashes with custom events triggered by other Javascript libraries. As such, you should append <code>.dt</code> to the name of the event(s) that you are listening for (when using <a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a> the namespace is automatically appended if required). Because of the way namespaces work in jQuery, you can use the <code>dt</code> namespace and your own custom namespace(s) if you wish to use a namespace.</p>
+
+<p>For example, to listen for the draw event in a DataTable:</p>
+
+<pre><div><div id="highlighter_661967" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/events#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js keyword">var</code> <code class="js plain">table = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="js plain">table.on( </code><code class="js string">'draw'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">alert( </code><code class="js string">'Table redrawn'</code> <code class="js plain">);</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>This could also be written as:</p>
+
+<pre><div><div id="highlighter_373761" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/events#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#example'</code><code class="js plain">).on( </code><code class="js string">'draw.dt'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">alert( </code><code class="js string">'Table redraw'</code> <code class="js plain">);</code></div><div class="line number3 index2 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Note the use of the <code>dt</code> namespace when using the jQuery <code>on()</code> method, while the <a href="https://datatables.net/reference/api/on()"><code class="api" title="DataTables API method">on()</code></a> method will automatically append the namespace for you.</p>
+
+<a name="Removing-events"></a><h2 data-anchor="Removing-events">Removing events</h2>
+
+<p>As with <code>$().on()</code> DataTables events can be removed with <a href="https://datatables.net/reference/api/off()"><code class="api" title="DataTables API method">off()</code></a> and <a href="http://api.jquery.com/off/"><code>$().off()</code></a>. It is important to remove events from objects which no longer exist (before they are destroyed) to allow the Javascript engine's garbage collector to release the memory allocated for the events and the objects it has attached to.</p>
+
+<p>Further to this, a single event can be listened for with <a href="https://datatables.net/reference/api/one()"><code class="api" title="DataTables API method">one()</code></a> or <a href="http://api.jquery.com/one/"><code>$().one()</code></a>, where the event handler will be removed immediately after the event has been triggered for the first time.</p>
+
+<a name="Bubbling"></a><h2 data-anchor="Bubbling">Bubbling</h2>
+
+<p>As with typical DOM events, the DataTables custom events bubble up through the document, so you can listen for events using the delegate form of <code>$().on()</code> or on other elements which are higher up the DOM tree.</p>
+
+<p>This can be useful, for example, to know when a new DataTable has been created, which can be listened for using the <a href="https://datatables.net/reference/event/init"><code class="event" title="DataTables event">init</code></a> event thus:</p>
+
+<pre><div><div id="highlighter_286419" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/manual/events#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(document).on( </code><code class="js string">'init.dt'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">( e, settings ) {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">api = </code><code class="js keyword">new</code> <code class="js plain">$.fn.dataTable.Api( settings );</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">console.log( </code><code class="js string">'New DataTable created:'</code><code class="js plain">, api.table().node() );</code></div><div class="line number5 index4 alt2"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>Similarly, this method could also be useful with the <a href="https://datatables.net/reference/event/xhr"><code class="event" title="DataTables event">xhr</code></a> event which will let you know what JSON data was returned from the server from the last DataTables initiated Ajax query.</p>
+
+<p>A full list of the events that DataTables and its extensions can trigger is available in the <a href="https://datatables.net/reference/event">event reference documentation</a>.</p>
+
+				<a name="Comments"></a><h2 class="comments_title" data-anchor="Comments">Comments <span class="comment_count">(0)</span></h2><div class="comments">No comments posted for this page yet. Be the first to contribute!<div class="comment_add"><h3>Post new comment</h3><p>Contributions in the form of tips, code snippets and suggestions for the above material are very welcome. To post a comment, please use the form below. Text is formatted by <a href="https://datatables.net/tn/8">Markdown</a>.</p><p>To post comments, please sign in to your DataTables account, or register:</p><p></p><ul class="formatting"><li><a href="https://datatables.net/forums/entry/signin?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fevents">Sign in</a></li><li><a href="https://datatables.net/forums/entry/register?Target=https%3A%2F%2Fdatatables.net%2Fmanual%2Fevents">Register</a></li></ul><p><b>Any questions posted here will be deleted without being published.</b><br>Please post questions in the <a href="https://datatables.net/forums">Forums</a>. Comments are moderated.</p></div></div></div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/manual/events#top" class="active">Top</a></li><li><a href="https://datatables.net/manual/events#Listening-for-events">Listening for events</a></li><li><a href="https://datatables.net/manual/events#Removing-events">Removing events</a></li><li><a href="https://datatables.net/manual/events#Bubbling">Bubbling</a></li><li><a href="https://datatables.net/manual/events#Comments">Comments <span class="comment_count">(0)</span></a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/manual/events#"></a><a id="lbNextLink" href="https://datatables.net/manual/events#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/manual/events#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>

@@ -240,11 +240,11 @@ class RepositoryChangeWizard extends Component {
 
         processResults: function (data, params) {
           // Initialize variables
-          var plugin = {
+          let plugin = {
             id: '',
             text: ''
           };
-          var pluginList = [];
+          let pluginList = [];
 
           // Remove private plugins, only the public plugins can be selected as depended plugin
           _.remove(data, function (n) {

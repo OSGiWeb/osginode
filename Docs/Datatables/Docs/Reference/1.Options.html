@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://datatables.net/reference/option/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		<title>Options</title>
+		
+		<link rel="shortcut icon" type="image/png" href="https://datatables.net/media/images/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+		
+		<link rel="stylesheet" type="text/css" href="./1.Options_files/site.css">
+		
+		<style type="text/css">
+			
+		</style>
+
+		<script type="text/javascript" async="" src="./1.Options_files/ga.js"></script><script type="text/javascript" src="./1.Options_files/site.js"></script>
+		<script type="text/javascript" src="./1.Options_files/dynamic.php" async=""></script>
+		
+		<script type="text/javascript">
+			
+		</script>
+	</head>
+	<body class="wide">
+
+		<a name="top"></a>
+		<div class="fw-container">
+			<div class="fw-header">
+				<img src="./1.Options_files/logo-fade.png" class="logo">
+
+				<div class="nav-master">
+					<ul>
+						<li class="active"><a href="https://datatables.net/">
+							<img src="./1.Options_files/nav-dt.png" alt="DataTables logo">
+							DataTables
+						</a></li>
+						<li><a href="https://editor.datatables.net/">
+							<img src="./1.Options_files/nav-e.png" alt="Editor logo">
+							Editor
+						</a></li>
+					</ul>
+
+					<div class="account">Your account: <a href="" class="register-action follow-link login">Login / Register</a></div>
+				</div>
+
+				<div id="ad"></div>
+			</div>
+
+			<div class="fw-nav">
+				<div class="nav-main">
+					<ul><li class=" sub"><a href="https://datatables.net/examples/index">Examples</a></li><li class=" sub"><a href="https://datatables.net/manual/index">Manual</a></li><li class="sub-active sub"><a href="https://datatables.net/reference/index">Reference</a><ul><li class="active"><a href="https://datatables.net/reference/option">Options</a></li><li class=""><a href="https://datatables.net/reference/api">API</a></li><li class=""><a href="https://datatables.net/reference/event">Events</a></li><li class=""><a href="https://datatables.net/reference/button">Buttons</a></li><li class=""><a href="https://datatables.net/reference/type">Types</a></li></ul></li><li class=" sub"><a href="https://datatables.net/extensions/index">Extensions</a></li><li class=" sub"><a href="https://datatables.net/plug-ins/index">Plug-ins</a></li><li class=""><a href="https://datatables.net/blog/index">Blog</a></li><li class=""><a href="https://datatables.net/forums/index">Forums</a></li><li class=""><a href="https://datatables.net/support/index">Support</a></li><li class=""><a href="https://datatables.net/faqs/index">FAQs</a></li><li class=""><a href="https://datatables.net/download/index">Download</a></li><li class=""><a href="https://datatables.net/purchase/index">Purchase</a></li></ul>
+
+					<div class="nav-search">
+						<form action="https://datatables.net/search" id="cse-search-box">
+							<input type="hidden" name="cx" value="004673356914326163298:bcgejkcchl4">
+							<input type="hidden" name="cof" value="FORID:9">
+							<input type="hidden" name="ie" value="UTF-8">
+							<input type="text" name="q" size="31">
+							<input type="submit" name="sa" value="Search" class="site-btn">
+						</form>
+					</div>
+				</div>
+
+				<div class="mobile-show">
+					<a><i>Show site navigation</i></a>
+				</div>
+			</div>
+
+			<div class="fw-body">
+				<div class="content">
+					
+					<h1 class="page_title">Options</h1>
+
+					<p>DataTables and its extensions are extremely configurable libraries and almost every aspect of the enhancements they make to HTML tables can be customised. Features can be enabled, disabled or customised to meet your exact needs for your table implementations. Customisation of these options are performed by defining options in the <code>$().DataTable()</code> constructor - for example, in the following code the <a href="https://datatables.net/reference/option/scrollY"><code class="option" title="DataTables initialisation option">scrollY</code></a> and <a href="https://datatables.net/reference/option/paging"><code class="option" title="DataTables initialisation option">paging</code></a> options are used to enable scrolling and disable pagination:</p>
+
+<pre><div><div id="highlighter_854715" class="syntaxhighlighter  js"><div class="toolbar"><span><a href="https://datatables.net/reference/option/#" class="toolbar_item command_lang lang">Javascript</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="js plain">$(</code><code class="js string">'#myTable'</code><code class="js plain">).DataTable( {</code></div><div class="line number2 index1 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">scrollY: 300,</code></div><div class="line number3 index2 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">paging: </code><code class="js keyword">false</code></div><div class="line number4 index3 alt1"><code class="js plain">} );</code></div></div></td></tr></tbody></table></div></div></pre>
+
+<p>There are a huge range of options to customise your tables, which are all fully documented below. For general information about how DataTables' initialisation options can be used, please refer to the <a href="https://datatables.net/manual/options">options manual</a>.</p>
+
+<div class="ref_search">
+    <div class="ref_field">
+        <div class="ref_label">Search:</div>
+        <div class="ref_input"><input type="text"></div>
+     </div>
+<div class="ref_field"><div class="ref_label">Group:</div><div class="ref_input"><a class="site-btn small">DataTables - Features</a><a class="site-btn small">DataTables - Data</a><a class="site-btn small">DataTables - Callbacks</a><a class="site-btn small">DataTables - Options</a><a class="site-btn small">DataTables - Columns</a><a class="site-btn small">DataTables - Internationalisation</a><a class="site-btn small">DataTables - Static</a><a class="site-btn small">AutoFill</a><a class="site-btn small">Buttons</a><a class="site-btn small">ColReorder</a><a class="site-btn small">Editor</a><a class="site-btn small">FixedColumns</a><a class="site-btn small">FixedHeader</a><a class="site-btn small">KeyTable</a><a class="site-btn small">Responsive</a><a class="site-btn small">RowReorder</a><a class="site-btn small">Scroller</a><a class="site-btn small">Select</a></div></div></div>
+
+<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="reference row-border hover dataTable no-footer" id="DataTables_Table_0" role="grid" style="width: 883px;">
+    <thead>
+        <tr role="row"><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 265px;">Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Summary: activate to sort column ascending" style="width: 546px;">Summary</th></tr>
+    </thead>
+    <tbody>
+        
+        
+        
+        
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr class="group"><td colspan="3">DataTables - Features</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/autoWidth"><code class="option" title="DataTables initialisation option">autoWidth</code></a></p>
+</td><td><p>Feature control DataTables' smart column width handling</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/deferRender"><code class="option" title="DataTables initialisation option">deferRender</code></a></p>
+</td><td><p>Feature control deferred rendering for additional speed of initialisation.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/info"><code class="option" title="DataTables initialisation option">info</code></a></p>
+</td><td><p>Feature control table information display field</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/jQueryUI"><code class="option" title="DataTables initialisation option">jQueryUI</code></a></p>
+</td><td><p>Use markup and classes for the table to be themed by jQuery UI ThemeRoller.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/lengthChange"><code class="option" title="DataTables initialisation option">lengthChange</code></a></p>
+</td><td><p>Feature control the end user's ability to change the paging display length of the table.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/ordering"><code class="option" title="DataTables initialisation option">ordering</code></a></p>
+</td><td><p>Feature control ordering (sorting) abilities in DataTables.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/paging"><code class="option" title="DataTables initialisation option">paging</code></a></p>
+</td><td><p>Enable or disable table pagination.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/processing"><code class="option" title="DataTables initialisation option">processing</code></a></p>
+</td><td><p>Feature control the processing indicator.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/scrollX"><code class="option" title="DataTables initialisation option">scrollX</code></a></p>
+</td><td><p>Horizontal scrolling</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/scrollY"><code class="option" title="DataTables initialisation option">scrollY</code></a></p>
+</td><td><p>Vertical scrolling</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/searching"><code class="option" title="DataTables initialisation option">searching</code></a></p>
+</td><td><p>Feature control search (filtering) abilities</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/serverSide"><code class="option" title="DataTables initialisation option">serverSide</code></a></p>
+</td><td><p>Feature control DataTables' server-side processing mode.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/stateSave"><code class="option" title="DataTables initialisation option">stateSave</code></a></p>
+</td><td><p>State saving - restore table state on page reload</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Data</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/ajax.data"><code class="option" title="DataTables initialisation option">ajax.data</code></a></p>
+</td><td><p>Add or modify data submitted to the server upon an Ajax request</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/ajax.dataSrc"><code class="option" title="DataTables initialisation option">ajax.dataSrc</code></a></p>
+</td><td><p>Data property or manipulation method for table data</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/ajax"><code class="option" title="DataTables initialisation option">ajax</code></a></p>
+</td><td><p>Load data for the table's content from an Ajax source</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/data"><code class="option" title="DataTables initialisation option">data</code></a></p>
+</td><td><p>Data to use as the display data for the table.</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Callbacks</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/createdRow"><code class="option" title="DataTables initialisation option">createdRow</code></a></p>
+</td><td><p>Callback for whenever a TR element is created for the table's body.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/drawCallback"><code class="option" title="DataTables initialisation option">drawCallback</code></a></p>
+</td><td><p>Function that is called every time DataTables performs a draw.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/footerCallback"><code class="option" title="DataTables initialisation option">footerCallback</code></a></p>
+</td><td><p>Footer display callback function.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/formatNumber"><code class="option" title="DataTables initialisation option">formatNumber</code></a></p>
+</td><td><p>Number formatting callback function.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/headerCallback"><code class="option" title="DataTables initialisation option">headerCallback</code></a></p>
+</td><td><p>Header display callback function.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/infoCallback"><code class="option" title="DataTables initialisation option">infoCallback</code></a></p>
+</td><td><p>Table summary information display callback.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/initComplete"><code class="option" title="DataTables initialisation option">initComplete</code></a></p>
+</td><td><p>Initialisation complete callback.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/preDrawCallback"><code class="option" title="DataTables initialisation option">preDrawCallback</code></a></p>
+</td><td><p>Pre-draw callback.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/rowCallback"><code class="option" title="DataTables initialisation option">rowCallback</code></a></p>
+</td><td><p>Row draw callback.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/stateLoadCallback"><code class="option" title="DataTables initialisation option">stateLoadCallback</code></a></p>
+</td><td><p>Callback that defines where and how a saved state should be loaded.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/stateLoaded"><code class="option" title="DataTables initialisation option">stateLoaded</code></a></p>
+</td><td><p>State loaded callback.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/stateLoadParams"><code class="option" title="DataTables initialisation option">stateLoadParams</code></a></p>
+</td><td><p>State loaded - data manipulation callback</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/stateSaveCallback"><code class="option" title="DataTables initialisation option">stateSaveCallback</code></a></p>
+</td><td><p>Callback that defines how the table state is stored and where.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/stateSaveParams"><code class="option" title="DataTables initialisation option">stateSaveParams</code></a></p>
+</td><td><p>State save - data manipulation callback</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Options</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/deferLoading"><code class="option" title="DataTables initialisation option">deferLoading</code></a></p>
+</td><td><p>Delay the loading of server-side data until second draw</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/destroy"><code class="option" title="DataTables initialisation option">destroy</code></a></p>
+</td><td><p>Destroy any existing table matching the selector and replace with the new options.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/displayStart"><code class="option" title="DataTables initialisation option">displayStart</code></a></p>
+</td><td><p>Initial paging start point</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/dom"><code class="option" title="DataTables initialisation option">dom</code></a></p>
+</td><td><p>Define the table control elements to appear on the page and in what order</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/lengthMenu"><code class="option" title="DataTables initialisation option">lengthMenu</code></a></p>
+</td><td><p>Change the options in the page length <code>select</code> list.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/order"><code class="option" title="DataTables initialisation option">order</code></a></p>
+</td><td><p>Initial order (sort) to apply to the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/orderCellsTop"><code class="option" title="DataTables initialisation option">orderCellsTop</code></a></p>
+</td><td><p>Control which cell the order event handler will be applied to in a column</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/orderClasses"><code class="option" title="DataTables initialisation option">orderClasses</code></a></p>
+</td><td><p>Highlight the columns being ordered in the table's body</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/orderFixed"><code class="option" title="DataTables initialisation option">orderFixed</code></a></p>
+</td><td><p>Ordering to always be applied to the table</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/orderMulti"><code class="option" title="DataTables initialisation option">orderMulti</code></a></p>
+</td><td><p>Multiple column ordering ability control.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/pageLength"><code class="option" title="DataTables initialisation option">pageLength</code></a></p>
+</td><td><p>Change the initial page length (number of rows per page)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/pagingType"><code class="option" title="DataTables initialisation option">pagingType</code></a></p>
+</td><td><p>Pagination button display options</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/renderer"><code class="option" title="DataTables initialisation option">renderer</code></a></p>
+</td><td><p>Display component renderer types</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/retrieve"><code class="option" title="DataTables initialisation option">retrieve</code></a></p>
+</td><td><p>Retrieve an existing DataTables instance</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/rowId"><code class="option" title="DataTables initialisation option">rowId</code></a></p>
+</td><td><p>Data property name that DataTables will use to set <code class="tag" title="HTML tag">tr</code> element DOM IDs</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/scrollCollapse"><code class="option" title="DataTables initialisation option">scrollCollapse</code></a></p>
+</td><td><p>Allow the table to reduce in height when a limited number of rows are shown.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/search.caseInsensitive"><code class="option" title="DataTables initialisation option">search.caseInsensitive</code></a></p>
+</td><td><p>Control case-sensitive filtering option.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/search.regex"><code class="option" title="DataTables initialisation option">search.regex</code></a></p>
+</td><td><p>Enable / disable escaping of regular expression characters in the search term.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/search.search"><code class="option" title="DataTables initialisation option">search.search</code></a></p>
+</td><td><p>Set an initial filtering condition on the table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/search.smart"><code class="option" title="DataTables initialisation option">search.smart</code></a></p>
+</td><td><p>Enable / disable DataTables' smart filtering</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/search"><code class="option" title="DataTables initialisation option">search</code></a></p>
+</td><td><p>Set an initial filter in DataTables and / or filtering options.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/searchCols"><code class="option" title="DataTables initialisation option">searchCols</code></a></p>
+</td><td><p>Define an initial search for individual columns.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/searchDelay"><code class="option" title="DataTables initialisation option">searchDelay</code></a></p>
+</td><td><p>Set a throttle frequency for searching</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/stateDuration"><code class="option" title="DataTables initialisation option">stateDuration</code></a></p>
+</td><td><p>Saved state validity duration</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/stripeClasses"><code class="option" title="DataTables initialisation option">stripeClasses</code></a></p>
+</td><td><p>Set the zebra stripe class names for the rows in the table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/tabIndex"><code class="option" title="DataTables initialisation option">tabIndex</code></a></p>
+</td><td><p>Tab index control for keyboard navigation</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Columns</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columnDefs.targets"><code class="option" title="DataTables initialisation option">columnDefs.targets</code></a></p>
+</td><td><p>Assign a column definition to one or more columns.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columnDefs"><code class="option" title="DataTables initialisation option">columnDefs</code></a></p>
+</td><td><p>Set column definition initialisation properties.</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.cellType"><code class="option" title="DataTables initialisation option">columns.cellType</code></a></p>
+</td><td><p>Cell type to be created for a column</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.className"><code class="option" title="DataTables initialisation option">columns.className</code></a></p>
+</td><td><p>Class to assign to each cell in the column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.contentPadding"><code class="option" title="DataTables initialisation option">columns.contentPadding</code></a></p>
+</td><td><p>Add padding to the text content used when calculating the optimal with for a table.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.createdCell"><code class="option" title="DataTables initialisation option">columns.createdCell</code></a></p>
+</td><td><p>Cell created callback to allow DOM manipulation</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.data"><code class="option" title="DataTables initialisation option">columns.data</code></a></p>
+</td><td><p>Set the data source for the column from the rows data object / array</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.defaultContent"><code class="option" title="DataTables initialisation option">columns.defaultContent</code></a></p>
+</td><td><p>Set default, static, content for a column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.name"><code class="option" title="DataTables initialisation option">columns.name</code></a></p>
+</td><td><p>Set a descriptive name for a column</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.orderable"><code class="option" title="DataTables initialisation option">columns.orderable</code></a></p>
+</td><td><p>Enable or disable ordering on this column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.orderData"><code class="option" title="DataTables initialisation option">columns.orderData</code></a></p>
+</td><td><p>Define multiple column ordering as the default order for a column</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.orderDataType"><code class="option" title="DataTables initialisation option">columns.orderDataType</code></a></p>
+</td><td><p>Live DOM sorting type assignment</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.orderSequence"><code class="option" title="DataTables initialisation option">columns.orderSequence</code></a></p>
+</td><td><p>Order direction application sequence</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.render"><code class="option" title="DataTables initialisation option">columns.render</code></a></p>
+</td><td><p>Render (process) the data for use in the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.searchable"><code class="option" title="DataTables initialisation option">columns.searchable</code></a></p>
+</td><td><p>Enable or disable filtering on the data in this column</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.title"><code class="option" title="DataTables initialisation option">columns.title</code></a></p>
+</td><td><p>Set the column title</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.type"><code class="option" title="DataTables initialisation option">columns.type</code></a></p>
+</td><td><p>Set the column type - used for filtering and sorting string processing</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.visible"><code class="option" title="DataTables initialisation option">columns.visible</code></a></p>
+</td><td><p>Enable or disable the display of this column</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/columns.width"><code class="option" title="DataTables initialisation option">columns.width</code></a></p>
+</td><td><p>Column width assignment</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns"><code class="option" title="DataTables initialisation option">columns</code></a></p>
+</td><td><p>Set column specific initialisation properties.</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Internationalisation</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.aria.paginate.first"><code class="option" title="DataTables initialisation option">language.aria.paginate.first</code></a></p>
+</td><td><p>WAI-ARIA label for the <em>first</em> pagination button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.aria.paginate.last"><code class="option" title="DataTables initialisation option">language.aria.paginate.last</code></a></p>
+</td><td><p>WAI-ARIA label for the <em>last</em> pagination button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.aria.paginate.next"><code class="option" title="DataTables initialisation option">language.aria.paginate.next</code></a></p>
+</td><td><p>WAI-ARIA label for the <em>next</em> pagination button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.aria.paginate.previous"><code class="option" title="DataTables initialisation option">language.aria.paginate.previous</code></a></p>
+</td><td><p>WAI-ARIA label for the <em>previous</em> pagination button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.aria.paginate"><code class="option" title="DataTables initialisation option">language.aria.paginate</code></a></p>
+</td><td><p>WAI-ARIA labels for pagination buttons</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.aria.sortAscending"><code class="option" title="DataTables initialisation option">language.aria.sortAscending</code></a></p>
+</td><td><p>Language strings used for WAI-ARIA specific attributes</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.aria.sortDescending"><code class="option" title="DataTables initialisation option">language.aria.sortDescending</code></a></p>
+</td><td><p>Language strings used for WAI-ARIA specific attributes</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.aria"><code class="option" title="DataTables initialisation option">language.aria</code></a></p>
+</td><td><p>Language strings used for WAI-ARIA specific attributes</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.decimal"><code class="option" title="DataTables initialisation option">language.decimal</code></a></p>
+</td><td><p>Decimal place character</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.emptyTable"><code class="option" title="DataTables initialisation option">language.emptyTable</code></a></p>
+</td><td><p>Table has no records string</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.info"><code class="option" title="DataTables initialisation option">language.info</code></a></p>
+</td><td><p>Table summary information display string</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.infoEmpty"><code class="option" title="DataTables initialisation option">language.infoEmpty</code></a></p>
+</td><td><p>Table summary information string used when the table is empty or records</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.infoFiltered"><code class="option" title="DataTables initialisation option">language.infoFiltered</code></a></p>
+</td><td><p>Appended string to the summary information when the table is filtered</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.infoPostFix"><code class="option" title="DataTables initialisation option">language.infoPostFix</code></a></p>
+</td><td><p>String to append to all other summary information strings</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.lengthMenu"><code class="option" title="DataTables initialisation option">language.lengthMenu</code></a></p>
+</td><td><p>Page length options string</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.loadingRecords"><code class="option" title="DataTables initialisation option">language.loadingRecords</code></a></p>
+</td><td><p>Loading information display string - shown when Ajax loading data</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.paginate.first"><code class="option" title="DataTables initialisation option">language.paginate.first</code></a></p>
+</td><td><p>Pagination 'first' button string</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.paginate.last"><code class="option" title="DataTables initialisation option">language.paginate.last</code></a></p>
+</td><td><p>Pagination 'last' button string</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.paginate.next"><code class="option" title="DataTables initialisation option">language.paginate.next</code></a></p>
+</td><td><p>Pagination 'next' button string</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.paginate.previous"><code class="option" title="DataTables initialisation option">language.paginate.previous</code></a></p>
+</td><td><p>Pagination 'previous' button string</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.paginate"><code class="option" title="DataTables initialisation option">language.paginate</code></a></p>
+</td><td><p>Pagination specific language strings</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.processing"><code class="option" title="DataTables initialisation option">language.processing</code></a></p>
+</td><td><p>Processing indicator string</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.search"><code class="option" title="DataTables initialisation option">language.search</code></a></p>
+</td><td><p>Search input string</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.searchPlaceholder"><code class="option" title="DataTables initialisation option">language.searchPlaceholder</code></a></p>
+</td><td><p>Search input element placeholder attribute</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.thousands"><code class="option" title="DataTables initialisation option">language.thousands</code></a></p>
+</td><td><p>Thousands separator</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.url"><code class="option" title="DataTables initialisation option">language.url</code></a></p>
+</td><td><p>Load language information from remote file</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language"><code class="option" title="DataTables initialisation option">language</code></a></p>
+</td><td><p>Language configuration options for DataTables</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.zeroRecords"><code class="option" title="DataTables initialisation option">language.zeroRecords</code></a></p>
+</td><td><p>Table empty as a result of filtering string</p>
+</td></tr><tr class="group"><td colspan="3">DataTables - Static</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/%24.fn.dataTable.ext.errMode"><code class="option" title="DataTables initialisation option">$.fn.dataTable.ext.errMode</code></a></p>
+</td><td><p>Set how DataTables will report detected errors</p>
+</td></tr><tr class="group"><td colspan="3">AutoFill</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/autoFill.alwaysAsk"><code class="option" title="DataTables initialisation option">autoFill.alwaysAsk</code></a></p>
+</td><td><p>Always ask the end user if an action should be taken or not</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/autoFill.columns"><code class="option" title="DataTables initialisation option">autoFill.columns</code></a></p>
+</td><td><p>Select the columns that can be auto filled</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/autoFill.editor"><code class="option" title="DataTables initialisation option">autoFill.editor</code></a></p>
+</td><td><p>Attach an Editor instance for database updating</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/autoFill.focus"><code class="option" title="DataTables initialisation option">autoFill.focus</code></a></p>
+</td><td><p>Action that will cause the auto fill drag handle to appear in a cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/autoFill.update"><code class="option" title="DataTables initialisation option">autoFill.update</code></a></p>
+</td><td><p>Control automatic of data when a fill drag is completed</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/autoFill"><code class="option" title="DataTables initialisation option">autoFill</code></a></p>
+</td><td><p>Enable and configure the AutoFill extension for DataTables</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.autoFill.button"><code class="option" title="DataTables initialisation option">language.autoFill.button</code></a></p>
+</td><td><p>Multi-fill selector button text</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.autoFill.cancel"><code class="option" title="DataTables initialisation option">language.autoFill.cancel</code></a></p>
+</td><td><p>Multi-fill selector cancel option message</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.autoFill.fill"><code class="option" title="DataTables initialisation option">language.autoFill.fill</code></a></p>
+</td><td><p>Multi-fill selector message for the <em>full fill</em> fill type</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.autoFill.fillHorizontal"><code class="option" title="DataTables initialisation option">language.autoFill.fillHorizontal</code></a></p>
+</td><td><p>Multi-fill selector message for the <em>horizontal fill</em> fill type</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.autoFill.fillVertical"><code class="option" title="DataTables initialisation option">language.autoFill.fillVertical</code></a></p>
+</td><td><p>Multi-fill selector message for the <em>vertical fill</em> fill type</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.autoFill.increment"><code class="option" title="DataTables initialisation option">language.autoFill.increment</code></a></p>
+</td><td><p>Multi-fill selector message for the <em>increment</em> fill type</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.autoFill.info"><code class="option" title="DataTables initialisation option">language.autoFill.info</code></a></p>
+</td><td><p>Information message shown at the top of the fill type selector</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.autoFill"><code class="option" title="DataTables initialisation option">language.autoFill</code></a></p>
+</td><td><p>Container object for language strings used by AutoFill</p>
+</td></tr><tr class="group"><td colspan="3">Buttons</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.action"><code class="option" title="DataTables initialisation option">buttons.buttons.action</code></a></p>
+</td><td><p>Action to take when the button is activated</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.available"><code class="option" title="DataTables initialisation option">buttons.buttons.available</code></a></p>
+</td><td><p>Ensure that any requirements have been satisfied before initialising a button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.className"><code class="option" title="DataTables initialisation option">buttons.buttons.className</code></a></p>
+</td><td><p>Set the class name for the button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.destroy"><code class="option" title="DataTables initialisation option">buttons.buttons.destroy</code></a></p>
+</td><td><p>Function that is called when the button is destroyed</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.enabled"><code class="option" title="DataTables initialisation option">buttons.buttons.enabled</code></a></p>
+</td><td><p>Set a button's initial enabled state</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.extend"><code class="option" title="DataTables initialisation option">buttons.buttons.extend</code></a></p>
+</td><td><p>Define which button type the button should be based on</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.init"><code class="option" title="DataTables initialisation option">buttons.buttons.init</code></a></p>
+</td><td><p>Initialisation function that can be used to add events specific to this button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.key"><code class="option" title="DataTables initialisation option">buttons.buttons.key</code></a></p>
+</td><td><p>Define an activation key for a button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.name"><code class="option" title="DataTables initialisation option">buttons.buttons.name</code></a></p>
+</td><td><p>Set a name for each selection</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.namespace"><code class="option" title="DataTables initialisation option">buttons.buttons.namespace</code></a></p>
+</td><td><p>Unique namespace for every button</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.text"><code class="option" title="DataTables initialisation option">buttons.buttons.text</code></a></p>
+</td><td><p>The text to show in the button</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.buttons.titleAttr"><code class="option" title="DataTables initialisation option">buttons.buttons.titleAttr</code></a></p>
+</td><td><p>Button <code>title</code> attribute text</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.buttons"><code class="option" title="DataTables initialisation option">buttons.buttons</code></a></p>
+</td><td><p>List of buttons to be created</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.dom.button"><code class="option" title="DataTables initialisation option">buttons.dom.button</code></a></p>
+</td><td><p>DOM configuration for individual button elements</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.dom.buttonContainer"><code class="option" title="DataTables initialisation option">buttons.dom.buttonContainer</code></a></p>
+</td><td><p>DOM configuration of a button container element</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.dom.buttonLiner"><code class="option" title="DataTables initialisation option">buttons.dom.buttonLiner</code></a></p>
+</td><td><p>DOM configuration of a button liner element</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.dom.collection"><code class="option" title="DataTables initialisation option">buttons.dom.collection</code></a></p>
+</td><td><p>DOM configuration of the collection display</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.dom.container"><code class="option" title="DataTables initialisation option">buttons.dom.container</code></a></p>
+</td><td><p>DOM configuration of the Buttons container element</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons.dom"><code class="option" title="DataTables initialisation option">buttons.dom</code></a></p>
+</td><td><p>Options to control the DOM structure Buttons creates</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/buttons.name"><code class="option" title="DataTables initialisation option">buttons.name</code></a></p>
+</td><td><p>Set a name for the instance for the group selector</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/buttons"><code class="option" title="DataTables initialisation option">buttons</code></a></p>
+</td><td><p>Buttons configuration object</p>
+</td></tr><tr class="group"><td colspan="3">ColReorder</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/colReorder.fixedColumnsLeft"><code class="option" title="DataTables initialisation option">colReorder.fixedColumnsLeft</code></a></p>
+</td><td><p>Disallow <em>x</em> columns from reordering (counting from the left)</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/colReorder.fixedColumnsRight"><code class="option" title="DataTables initialisation option">colReorder.fixedColumnsRight</code></a></p>
+</td><td><p>Disallow <em>x</em> columns from reordering (counting from the right)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/colReorder.order"><code class="option" title="DataTables initialisation option">colReorder.order</code></a></p>
+</td><td><p>Set a default order for the columns in the table</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/colReorder.realtime"><code class="option" title="DataTables initialisation option">colReorder.realtime</code></a></p>
+</td><td><p>Enable / disable live reordering of columns during a drag</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/colReorder"><code class="option" title="DataTables initialisation option">colReorder</code></a></p>
+</td><td><p>Enable and configure the ColReorder extension for DataTables</p>
+</td></tr><tr class="group"><td colspan="3">Editor</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.editField"><code class="option" title="DataTables initialisation option">columns.editField</code></a></p>
+</td><td><p>Define which field a column should trigger editing on</p>
+</td></tr><tr class="group"><td colspan="3">FixedColumns</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/fixedColumns.heightMatch"><code class="option" title="DataTables initialisation option">fixedColumns.heightMatch</code></a></p>
+</td><td><p>Row height matching algorithm to use</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/fixedColumns.leftColumns"><code class="option" title="DataTables initialisation option">fixedColumns.leftColumns</code></a></p>
+</td><td><p>Number of columns to fix to the left of the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/fixedColumns.rightColumns"><code class="option" title="DataTables initialisation option">fixedColumns.rightColumns</code></a></p>
+</td><td><p>Number of columns to fix to the right of the table</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/fixedColumns"><code class="option" title="DataTables initialisation option">fixedColumns</code></a></p>
+</td><td><p>Enable and configure the FixedColumns extension for DataTables</p>
+</td></tr><tr class="group"><td colspan="3">FixedHeader</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/fixedHeader.footer"><code class="option" title="DataTables initialisation option">fixedHeader.footer</code></a></p>
+</td><td><p>Enable / disable fixed footer</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/fixedHeader.footerOffset"><code class="option" title="DataTables initialisation option">fixedHeader.footerOffset</code></a></p>
+</td><td><p>Offset the table's fixed footer</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/fixedHeader.header"><code class="option" title="DataTables initialisation option">fixedHeader.header</code></a></p>
+</td><td><p>Enable / disable fixed header</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/fixedHeader.headerOffset"><code class="option" title="DataTables initialisation option">fixedHeader.headerOffset</code></a></p>
+</td><td><p>Offset the table's fixed header</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/fixedHeader"><code class="option" title="DataTables initialisation option">fixedHeader</code></a></p>
+</td><td><p>FixedHeader configuration object</p>
+</td></tr><tr class="group"><td colspan="3">KeyTable</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/keys.blurable"><code class="option" title="DataTables initialisation option">keys.blurable</code></a></p>
+</td><td><p>Allow KeyTable's focus to be blurred (removed) from a table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/keys.className"><code class="option" title="DataTables initialisation option">keys.className</code></a></p>
+</td><td><p>Set the class name used for the focused cell</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/keys.columns"><code class="option" title="DataTables initialisation option">keys.columns</code></a></p>
+</td><td><p>Select the columns that can gain focus</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/keys.editor"><code class="option" title="DataTables initialisation option">keys.editor</code></a></p>
+</td><td><p>Attach an Editor instance for Excel like editing</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/keys.focus"><code class="option" title="DataTables initialisation option">keys.focus</code></a></p>
+</td><td><p>Cell to receive initial focus in the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/keys.keys"><code class="option" title="DataTables initialisation option">keys.keys</code></a></p>
+</td><td><p>Limit the keys that KeyTable will listen for and take action on</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/keys.tabIndex"><code class="option" title="DataTables initialisation option">keys.tabIndex</code></a></p>
+</td><td><p>Set the table's tab index for when it will receive focus</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/keys"><code class="option" title="DataTables initialisation option">keys</code></a></p>
+</td><td><p>Enable and configure the KeyTable extension for DataTables</p>
+</td></tr><tr class="group"><td colspan="3">Responsive</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/columns.responsivePriority"><code class="option" title="DataTables initialisation option">columns.responsivePriority</code></a></p>
+</td><td><p>Set column's visibility priority</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/responsive.breakpoints"><code class="option" title="DataTables initialisation option">responsive.breakpoints</code></a></p>
+</td><td><p>Set the breakpoints for a Responsive instance</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/responsive.details.display"><code class="option" title="DataTables initialisation option">responsive.details.display</code></a></p>
+</td><td><p>Define how the hidden information should be displayed to the end user</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/responsive.details.renderer"><code class="option" title="DataTables initialisation option">responsive.details.renderer</code></a></p>
+</td><td><p>Define the renderer used to display the child rows</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/responsive.details.target"><code class="option" title="DataTables initialisation option">responsive.details.target</code></a></p>
+</td><td><p>Column / selector for child row display control when using <code>column</code> details type</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/responsive.details.type"><code class="option" title="DataTables initialisation option">responsive.details.type</code></a></p>
+</td><td><p>Set the child row display control type</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/responsive.details"><code class="option" title="DataTables initialisation option">responsive.details</code></a></p>
+</td><td><p>Enable and configure the child rows shown by Responsive for collapsed tables</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/responsive.orthogonal"><code class="option" title="DataTables initialisation option">responsive.orthogonal</code></a></p>
+</td><td><p>Set the orthogonal data request type for the hidden information display</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/responsive"><code class="option" title="DataTables initialisation option">responsive</code></a></p>
+</td><td><p>Enable and configure the Responsive extension for DataTables</p>
+</td></tr><tr class="group"><td colspan="3">RowReorder</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/rowReorder.dataSrc"><code class="option" title="DataTables initialisation option">rowReorder.dataSrc</code></a></p>
+</td><td><p>Configure the data point that will be used for the reordering data</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/rowReorder.editor"><code class="option" title="DataTables initialisation option">rowReorder.editor</code></a></p>
+</td><td><p>Attach an Editor instance for database updating</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/rowReorder.selector"><code class="option" title="DataTables initialisation option">rowReorder.selector</code></a></p>
+</td><td><p>Define the selector used to pick the elements that will start a drag</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/rowReorder.snapX"><code class="option" title="DataTables initialisation option">rowReorder.snapX</code></a></p>
+</td><td><p>Horizontal position control of the row being dragged</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/rowReorder.update"><code class="option" title="DataTables initialisation option">rowReorder.update</code></a></p>
+</td><td><p>Control automatic of data when a row is dropped</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/rowReorder"><code class="option" title="DataTables initialisation option">rowReorder</code></a></p>
+</td><td><p>Enable and configure the RowReorder extension for DataTables</p>
+</td></tr><tr class="group"><td colspan="3">Scroller</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/scroller.boundaryScale"><code class="option" title="DataTables initialisation option">scroller.boundaryScale</code></a></p>
+</td><td><p>Set the point at which new data will be loaded and drawn</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/scroller.displayBuffer"><code class="option" title="DataTables initialisation option">scroller.displayBuffer</code></a></p>
+</td><td><p>The amount of data that Scroller should pre-buffer to ensure smooth scrolling</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/scroller.loadingIndicator"><code class="option" title="DataTables initialisation option">scroller.loadingIndicator</code></a></p>
+</td><td><p>Display a <em>loading</em> message while Scroller is loading additional data</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/scroller.rowHeight"><code class="option" title="DataTables initialisation option">scroller.rowHeight</code></a></p>
+</td><td><p>Set the row height, or how the row height is calculated</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/scroller.serverWait"><code class="option" title="DataTables initialisation option">scroller.serverWait</code></a></p>
+</td><td><p>Time delay before new data is requested when server-side processing is enabled</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/scroller"><code class="option" title="DataTables initialisation option">scroller</code></a></p>
+</td><td><p>Enable and configure the Scroller extension for DataTables</p>
+</td></tr><tr class="group"><td colspan="3">Select</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.select.cells"><code class="option" title="DataTables initialisation option">language.select.cells</code></a></p>
+</td><td><p>Table information summary string for the number of cells selected</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.select.columns"><code class="option" title="DataTables initialisation option">language.select.columns</code></a></p>
+</td><td><p>Table information summary string for the number of columns selected</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/language.select.rows"><code class="option" title="DataTables initialisation option">language.select.rows</code></a></p>
+</td><td><p>Table information summary string for the number of rows selected</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/language.select"><code class="option" title="DataTables initialisation option">language.select</code></a></p>
+</td><td><p>Container object for language strings used by Select</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/select.blurable"><code class="option" title="DataTables initialisation option">select.blurable</code></a></p>
+</td><td><p>Indicate if the selected items will be removed when clicking outside of the table</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/select.className"><code class="option" title="DataTables initialisation option">select.className</code></a></p>
+</td><td><p>Set the class name that will be applied to selected items</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/select.info"><code class="option" title="DataTables initialisation option">select.info</code></a></p>
+</td><td><p>Enable / disable the display for item selection information in the table summary.</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/select.items"><code class="option" title="DataTables initialisation option">select.items</code></a></p>
+</td><td><p>Set which table items to select (rows, columns or cells)</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/select.selector"><code class="option" title="DataTables initialisation option">select.selector</code></a></p>
+</td><td><p>Set the element selector used for mouse event capture to select items</p>
+</td></tr><tr role="row" class="odd"><td><p><a href="https://datatables.net/reference/option/select.style"><code class="option" title="DataTables initialisation option">select.style</code></a></p>
+</td><td><p>Set the selection style for end user interaction with the table</p>
+</td></tr><tr role="row" class="even"><td><p><a href="https://datatables.net/reference/option/select"><code class="option" title="DataTables initialisation option">select</code></a></p>
+</td><td><p>Select configuration object</p>
+</td></tr></tbody>
+</table></div>
+
+				</div>
+			</div>
+
+			<div class="fw-page-nav">
+				<div class="page-nav" style="left: 0px; width: 228px;">
+					<div class="page-nav-title">Page navigation</div>
+				<ul><li class="active"><a href="https://datatables.net/reference/option/#top" class="active">Top</a></li></ul></div>
+			</div>
+
+			<div class="fw-footer">
+				<div class="copyright">
+					DataTables designed and created by <a href="https://sprymedia.co.uk/">SpryMedia Ltd</a> © 2007-2016. <a href="https://datatables.net/license/mit">MIT licensed</a>. Our <a href="https://datatables.net/supporters">Supporters</a><br>
+					SpryMedia Ltd is registered in Scotland, company no. SC456502.
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-365466-5']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+<div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="https://datatables.net/reference/option/#"></a><a id="lbNextLink" href="https://datatables.net/reference/option/#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="https://datatables.net/reference/option/#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>
