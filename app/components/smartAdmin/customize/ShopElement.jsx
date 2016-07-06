@@ -14,13 +14,29 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Paper, Divider } from 'material-ui';
 import FontIcon from 'material-ui/FontIcon';
-import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
 
 import { Dialog, FlatButton, RaisedButton } from 'material-ui';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
+// List
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
 
 // Icons
 import FileCloudDownload from 'material-ui/svg-icons/file/cloud-download';
+import ActionGrade from 'material-ui/svg-icons/action/grade';
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
+import ContentDrafts from 'material-ui/svg-icons/content/drafts';
+import ContentSend from 'material-ui/svg-icons/content/send';
+import ActionInfo from 'material-ui/svg-icons/action/info';
+import MapsPersonPin from 'material-ui/svg-icons/maps/person-pin';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+
+// Colors
+import {green300, blue500, grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import {pinkA200, transparent} from 'material-ui/styles/colors';
+
 
 /**
  * Styles for React component
@@ -53,10 +69,20 @@ var styles = {
     top: '5%',
     transform: 'translate(-50%, 0)'
   },
-  smallIcon: {
+  smallTableIcon: {
     width: 25,
     height: 25,
   },
+  cardListIcon: {
+    width: 20,
+    height: 20,
+    left: "35px",
+  },
+  cardListItem: {
+    fontSize: 14,
+    left: "-30px",
+    marginBottom: "-20px"
+  }
 
 }
 
@@ -72,13 +98,14 @@ class ShopElement extends Component {
     };
 
     // Binding functions to class
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.onDetailDialogOpen = this.onDetailDialogOpen.bind(this);
+    this.onDetailDialogClose = this.onDetailDialogClose.bind(this);
     this.onTableRowClick = this.onTableRowClick.bind(this);
+    this.onSoucecodeDownload = this.onSoucecodeDownload.bind(this);
 
   }
 
-  handleOpen() {
+  onDetailDialogOpen() {
     let data = this.processTableData();
     this.setState({
       open: true,
@@ -86,27 +113,39 @@ class ShopElement extends Component {
     });
   }
 
-  handleClose() {
+  onDetailDialogClose() {
     this.setState({
       open: false,
       tableData: []
     });
   }
 
+  onTableRowClick(row, column) {
+    // Column for download icon click
+    if (column === 4) {
+      let mongoId = this.state.tableData[row].mongoId;
+      let url = '/pluginRepository/download/' + mongoId;
+      window.location = url;
+      window.open(url, '_self');
+    }
+  }
+
+  onSoucecodeDownload() {
+    const { item } = this.props;
+    let mongoId = item.filemeta.sourcecode.id;
+    let url = '/pluginRepository/download/' + mongoId;
+    window.location = url;
+    window.open(url, '_self');
+  }
+
+
   // Process row data from database to table format 
   processTableData() {
-
     const { item } = this.props;
+
     // Process dowloadable data to table format
     let id = 1;
     let downloadFiles = [];
-    // let file = {
-    //   id: '',
-    //   mongoId: '',
-    //   name: '',
-    //   type: '',
-    //   downloadIcon: ''
-    // };
 
     let sourcecode = item.filemeta.sourcecode;
     let documents = item.filemeta.docs;
@@ -144,27 +183,18 @@ class ShopElement extends Component {
     return downloadFiles;
   }
 
-  onTableRowClick(row, column) {
-    // Column for download icon click
-    if (column === 4) {
-      let mongoId = this.state.tableData[row].mongoId;
-      let url = '/pluginRepository/download/' + mongoId;
-      window.location = url;
-      window.open(url, '_self');
-    }
-  }
-
+  /* Render file download table */
   renderDownloadTable(item) {
     const { tableData } = this.state;
 
     return (
-      <Table onCellClick={this.onTableRowClick}>
+      <Table height='300px' onCellClick={this.onTableRowClick}>
         <TableHeader displayRowCheckbox={false} displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
-            <TableHeaderColumn>ID</TableHeaderColumn>
-            <TableHeaderColumn>文件名称</TableHeaderColumn>
-            <TableHeaderColumn>类型</TableHeaderColumn>
-            <TableHeaderColumn>下载</TableHeaderColumn>
+            <TableHeaderColumn style={{ width: 50 }}>ID</TableHeaderColumn>
+            <TableHeaderColumn style={{ width: 200 }}>文件名称</TableHeaderColumn>
+            <TableHeaderColumn style={{ width: 100 }}>类型</TableHeaderColumn>
+            <TableHeaderColumn style={{ width: 50 }}>下载</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} showRowHover={true}>
@@ -172,10 +202,10 @@ class ShopElement extends Component {
             if (tableData.length > 0)
               return (
                 <TableRow>
-                  <TableRowColumn>{ row.id }</TableRowColumn>
-                  <TableRowColumn>{ row.name }</TableRowColumn>
-                  <TableRowColumn>{ row.type }</TableRowColumn>
-                  <TableRowColumn><IconButton iconStyle={styles.smallIcon}>
+                  <TableRowColumn style={{ width: 50 }}>{ row.id }</TableRowColumn>
+                  <TableRowColumn style={{ width: 200 }}>{ row.name }</TableRowColumn>
+                  <TableRowColumn style={{ width: 100 }}>{ row.type }</TableRowColumn>
+                  <TableRowColumn style={{ width: 50 }}><IconButton iconStyle={styles.smallTableIcon}>
                     <FileCloudDownload />
                   </IconButton></TableRowColumn>
                 </TableRow>
@@ -186,13 +216,14 @@ class ShopElement extends Component {
     );
   }
 
-  renderModal(item) {
+  /* Render detail dialog */
+  renderDetailDialog(item) {
     const actions = [
       <FlatButton
         label="关闭"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={this.onDetailDialogClose}
         />,
     ];
 
@@ -203,7 +234,7 @@ class ShopElement extends Component {
           actions={actions}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleClose}
+          onRequestClose={this.onDetailDialogClose}
           contentStyle={styles.dialogStyle}>
           <Row className="show-grid">
             <Col xs={12} md={12}>
@@ -231,12 +262,44 @@ class ShopElement extends Component {
     );
   }
 
+  renderElementCard(item) {
+
+    return (
+      <Card>
+        <CardHeader
+          title={ item.symbolicname }
+          subtitle={ item.author }
+          avatar="./styles/img/nature+100.jpg"
+          actAsExpander={true}
+          showExpandableButton={true}
+          />
+        <CardTitle title={ item.pluginname } />
+        <CardText expandable={true}>
+          {item.description}
+        </CardText>
+        <List>
+          <ListItem style={styles.cardListItem} primaryText={"Stable (" + item.version + ")"} disabled={true} leftIcon={<ActionAssignment style={styles.cardListIcon} color={pinkA200}/>} />
+          <ListItem style={styles.cardListItem} primaryText={item.releasedate} disabled={true} leftIcon={<ContentDrafts style={styles.cardListIcon} />} />
+        </List>
+        <Divider style={{ marginTop: "10px" }}/>
+        <CardActions>
+          <Row style={{ marginLeft: '2%', }}>
+            <Col xs={12} sm={8} md={4}><RaisedButton label="15" labelPosition="after" primary={true} icon={<ActionGrade />} /></Col>
+            <Col xs={12} sm={8} md={4}><RaisedButton label="详情" primary={true} onTouchTap={this.onDetailDialogOpen}/></Col>
+            <Col xs={12} sm={8} md={4}><RaisedButton label="35" labelPosition="after" primary={true} icon={<FileCloudDownload />} onTouchTap={this.onSoucecodeDownload} /></Col>
+          </Row>
+        </CardActions>
+      </Card>
+    )
+  }
+
   render() {
     const { item } = this.props;
 
     return (
-      <div class="row">
-        <div className="col-xs-12 col-sm-4 col-md-2">
+      <div>
+        <Col xs={12} sm={6} md={3}>
+          {/*
           <div className="panel panel-primary pricing-big">
             <img src="styles/img/ribbon.png" className="ribbon" alt=""/>
             <div className="panel-heading">
@@ -262,13 +325,15 @@ class ShopElement extends Component {
             </div>
             <div className="panel-footer text-align-center" >
               <a href-void="" className="btn btn-primary btn-block" role="button" href="#"> 下载 </a>
-              <div> <a className="font-sm" onClick={this.handleOpen} > 详情 </a>
+              <div> <a className="font-sm" onClick={this.onDetailDialogOpen} > 详情 </a>
                 或 <a className="font-sm" href-void="" href="#"> 评分 </a>
               </div>
             </div>
           </div>
-        </div>
-        { this.renderModal(item) }
+          */}
+          { this.renderElementCard(item) }
+        </Col>
+        { this.renderDetailDialog(item) }
       </div>
     )
 
