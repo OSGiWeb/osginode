@@ -501,9 +501,6 @@ class RepositoryChangeWizard extends Component {
 																</div>
 															</div>
 														</div>
-
-
-
                         </div>
 
                         <div className="tab-pane" data-smart-wizard-pane="4">

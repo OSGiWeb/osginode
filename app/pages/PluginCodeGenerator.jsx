@@ -10,6 +10,18 @@ import Wizard from '../components/smartAdmin/forms/wizards/Wizard.jsx'
 
 import { generatePluginWithTemplate } from '../actions/generators'
 
+// Test react-grid-layout system
+var WidthProvider = require('react-grid-layout').WidthProvider;
+var ReactGridLayout = require('react-grid-layout');
+ReactGridLayout = WidthProvider(ReactGridLayout);
+
+
+import RaisedButton from 'material-ui/RaisedButton';
+
+import Title from 'react-title-component';
+import Container from '../components/materialDesign/Container';
+
+
 /**
  * Styles for React component
  */
@@ -47,7 +59,7 @@ class PluginCodeGenerator extends Component {
 		this.onDownloadPlugin = this.onDownloadPlugin.bind(this);
 		this.onChangePluginName = this.onChangePluginName.bind(this);
 		this.onCurruntStepChange = this.onCurruntStepChange.bind(this);
-		
+
 		// Initialize react state variables
     this.state = {
       pluginname: ''
@@ -55,7 +67,7 @@ class PluginCodeGenerator extends Component {
 	}
 
 	componentDidMount() {
-		
+
 	}
 
 	// Deconstructor
@@ -88,11 +100,11 @@ class PluginCodeGenerator extends Component {
 		// 	});
 
 	}
-	
+
 	onCurruntStepChange(step) {
 		// this.currentStep = step;
 		const { dispatch } = this.props;
-		
+
 		// Before download step, send data to server-side to generate downloadable plugin code
 		if (step === 3) {
 			dispatch(generatePluginWithTemplate({
@@ -114,276 +126,317 @@ class PluginCodeGenerator extends Component {
 	}
 
 	render() {
+		const layout_1 = [
+      { i: 'a', x: 0, y: 0, w: 1, h: 2, static: true },
+      { i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
+      { i: 'c', x: 4, y: 0, w: 1, h: 2 }
+    ];
+
+		const layout_static = [
+      { i: 'a', x: 0, y: 0, w: 1, h: 1 },
+      { i: 'b', x: 1, y: 0, w: 1, h: 1 },
+      { i: 'c', x: 2, y: 0, w: 1, h: 1 },
+			{ i: 'd', x: 3, y: 0, w: 1, h: 1 },
+			{ i: 'e', x: 4, y: 0, w: 1, h: 1 },
+			{ i: 'f', x: 5, y: 0, w: 1, h: 1 },
+    ];
+
 		return (
+
+
+
 			<div id="content">
-				<WidgetGrid>
-					<JarvisWidget togglebutton={false} sortable={false} colorbutton={false} editbutton={false} deletebutton={false}
-						fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={false} color="blueDark">
-						<header>
-							<span className="widget-icon"> <i className="fa fa-cloud-upload"/> </span>
-							<h2> 插件代码生成流程 </h2>
-						</header>
-						{/* widget div*/}
-						<div>
-							{/* widget content */}
-							<div className="widget-body">
+				<div>
+					<Title render={'Test'} />
 
-								<div className="row">
-									<UiValidate options={validateOptions}>
-										<form noValidate="novalidate">
-											<Wizard className="col-sm-12" ref="generatorwizard"  onCurruntStepChange={this.onCurruntStepChange} onComplete={this.onDownloadPlugin}>
-												<div className="form-bootstrapWizard clearfix">
-													<ul className="bootstrapWizard">
-														<li data-smart-wizard-tab="1">
-															<a href="#"> <span className="step">1</span> <span
-																className="title">基本信息</span>
-															</a>
-														</li>
-														<li data-smart-wizard-tab="2">
-															<a href="#"> <span className="step">2</span> <span
-																className="title">插件依赖库配置</span> </a>
-														</li>
-														<li data-smart-wizard-tab="3">
-															<a href="#"> <span className="step">3</span> <span
-																className="title">插件下载</span> </a>
-														</li>
-													</ul>
-												</div>
+					<Container title="Examples">
+						<WidgetGrid>
+							<JarvisWidget togglebutton={false} sortable={false} colorbutton={false} editbutton={false} deletebutton={false}
+								fullscreenbutton={false} deletebutton={false} editbutton={false} collapsed={false} color="blueDark">
+								<header>
+									<span className="widget-icon"> <i className="fa fa-cloud-upload"/> </span>
+									<h2> 插件代码生成流程 </h2>
+								</header>
+								{/* widget div*/}
+								<div>
+									{/* widget content */}
+									<div className="widget-body">
 
-												<div className="tab-content">
-													<div className="tab-pane" data-smart-wizard-pane="1">
-														<br/>
-														<h3><strong> 步骤 1 </strong> - 基本信息 </h3>
-														
-														<div className="row">
-															<div className="col-sm-12">
-																<legend style={styles.legendFont}> 插件生成设置 </legend>
-																<div className="col-sm-6">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
-																				<input className="form-control"
-																					placeholder="插件简称" type="text" ref="pluginname"
-																					data-smart-validate-input="" data-required=""
-																					data-message="请填写插件简称" onChange={this.onChangePluginName}/>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-																<div className="col-sm-6">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-file fa-fw"/></span>
-																				<select className="form-control"
-																					data-smart-validate-input="" data-required=""
-																					ref="plugintype" defaultValue={"插件类型"} data-message="请选择插件类型">
-																					<option defaultValue="插件类型" disabled={true}> 插件类型 </option>
-																					<option defaultValue="核心插件">核心插件</option>
-																					<option defaultValue="显示插件">显示插件</option>
-																					<option defaultValue="通信插件">通信插件</option>
-																					<option defaultValue="辅助插件">辅助插件</option>
-																				</select>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-															</div>
+										<div className="row">
+											<UiValidate options={validateOptions}>
+												<form noValidate="novalidate">
+													<Wizard className="col-sm-12" ref="generatorwizard"  onCurruntStepChange={this.onCurruntStepChange} onComplete={this.onDownloadPlugin}>
+														<div className="form-bootstrapWizard clearfix">
+															<ul className="bootstrapWizard">
+																<li data-smart-wizard-tab="1">
+																	<a href="#"> <span className="step">1</span> <span
+																		className="title">基本信息</span>
+																	</a>
+																</li>
+																<li data-smart-wizard-tab="2">
+																	<a href="#"> <span className="step">2</span> <span
+																		className="title">插件依赖库配置</span> </a>
+																</li>
+																<li data-smart-wizard-tab="3">
+																	<a href="#"> <span className="step">3</span> <span
+																		className="title">插件下载</span> </a>
+																</li>
+															</ul>
 														</div>
 
-														<div className="row">
-															<div className="col-sm-12">
-																<legend style={styles.legendFont}> 插件信息 </legend>
-																<div className="col-sm-3">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-tag fa-fw"/></span>
-																				<input className="form-control"
-																					placeholder="插件全称" type="text" ref="pluginsymblicname"
-																					data-smart-validate-input="" data-required="" readOnly={true}
-																					data-message="请填写插件简称" value={'com.plugins.' + this.state.pluginname}/>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-																<div className="col-sm-3">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-file-excel-o fa-fw"/></span>
-																				<input className="form-control"
-																					placeholder="插件版本" type="text" ref="pluginversion"
-																					data-smart-validate-input="" data-required=""
-																					defaultValue="0.0.1" data-message="请填写插件版本"/>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-																<div className="col-sm-3">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-user fa-fw"/></span>
-																				<input className="form-control"
-																					placeholder="插件作者" type="text" ref="pluginauthor"
-																					data-smart-validate-input="" data-required=""
-																					defaultValue="许昀" data-message="请填写插件作者"/>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-																<div className="col-sm-3">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-wordpress fa-fw"/></span>
-																				<input className="form-control"
-																					placeholder="插件网站" type="text" ref="pluginwebsite"
-																					data-smart-validate-input="" data-required=""
-																					defaultValue="http://localhost:3000/" data-message="请填写插件网站"/>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-																<div className="col-sm-12">
-																	<fieldset>
-																		<div className="form-group">
-																			<div className="input-group">
-																				<span className="input-group-addon"><i className="fa fa-comment fa-fw"/></span>
-																				<textarea rows="2" className="form-control"
-																					placeholder="插件简介" type="text" ref="pluginintrod"
-																					data-smart-validate-input="" data-required=""
-																					defaultValue="该插件由插件模板创建" data-message="请填写插件简介"/>
-																			</div>
-																		</div>
-																	</fieldset>
-																</div>
-															</div>
-														</div>
+														<div className="tab-content">
+															<div className="tab-pane" data-smart-wizard-pane="1">
+																<br/>
+																<h3><strong> 步骤 1 </strong> - 基本信息 </h3>
 
-													</div>
-													<div className="tab-pane" data-smart-wizard-pane="2">
-														<br/>
-
-														<h3><strong> 步骤 2 </strong> - 插件依赖配置 </h3>
-
-														<div className="row">
-															<div className="col-sm-12">
-																<legend style={styles.legendFont}> 插件依赖 </legend>
-																<fieldset>
-																	<div className="form-group">
-																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="pluginframework"  defaultValue="插件框架"/> 插件框架 </label>
-																			</div>
+																<div className="row">
+																	<div className="col-sm-12">
+																		<legend style={styles.legendFont}> 插件生成设置 </legend>
+																		<div className="col-sm-6">
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-info fa-fw"/></span>
+																						<input className="form-control"
+																							placeholder="插件简称" type="text" ref="pluginname"
+																							data-smart-validate-input="" data-required=""
+																							data-message="请填写插件简称" onChange={this.onChangePluginName}/>
+																					</div>
+																				</div>
+																			</fieldset>
 																		</div>
-																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="plugincore" defaultValue="核心插件"/> 核心插件 </label>
-																			</div>
-																		</div>
-																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="plugincomm" defaultValue="数据通信插件"/> 数据通信插件 </label>
-																			</div>
-																		</div>
-																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="plugindatabase" defaultValue="数据库管理插件"/> 数据库管理插件 </label>
-																			</div>
+																		<div className="col-sm-6">
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-file fa-fw"/></span>
+																						<select className="form-control"
+																							data-smart-validate-input="" data-required=""
+																							ref="plugintype" defaultValue={"插件类型"} data-message="请选择插件类型">
+																							<option defaultValue="插件类型" disabled={true}> 插件类型 </option>
+																							<option defaultValue="核心插件">核心插件</option>
+																							<option defaultValue="显示插件">显示插件</option>
+																							<option defaultValue="通信插件">通信插件</option>
+																							<option defaultValue="辅助插件">辅助插件</option>
+																						</select>
+																					</div>
+																				</div>
+																			</fieldset>
 																		</div>
 																	</div>
-																</fieldset>
-															</div>
-														</div>
+																</div>
 
-														<div className="row">
-															<div className="col-sm-12">
-																<legend style={styles.legendFont}> 第三方库依赖 </legend>
-																<fieldset>
-																	<div className="form-group">
+																<div className="row">
+																	<div className="col-sm-12">
+																		<legend style={styles.legendFont}> 插件信息 </legend>
 																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="libqwt" defaultValue="QWT"/> QWT </label>
-																			</div>
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-tag fa-fw"/></span>
+																						<input className="form-control"
+																							placeholder="插件全称" type="text" ref="pluginsymblicname"
+																							data-smart-validate-input="" data-required="" readOnly={true}
+																							data-message="请填写插件简称" value={'com.plugins.' + this.state.pluginname}/>
+																					</div>
+																				</div>
+																			</fieldset>
 																		</div>
 																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="libboost" defaultValue="Boost"/> Boost </label>
-																			</div>
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-file-excel-o fa-fw"/></span>
+																						<input className="form-control"
+																							placeholder="插件版本" type="text" ref="pluginversion"
+																							data-smart-validate-input="" data-required=""
+																							defaultValue="0.0.1" data-message="请填写插件版本"/>
+																					</div>
+																				</div>
+																			</fieldset>
 																		</div>
 																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="libgdal" defaultValue="GDAL"/> GDAL </label>
-																			</div>
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-user fa-fw"/></span>
+																						<input className="form-control"
+																							placeholder="插件作者" type="text" ref="pluginauthor"
+																							data-smart-validate-input="" data-required=""
+																							defaultValue="许昀" data-message="请填写插件作者"/>
+																					</div>
+																				</div>
+																			</fieldset>
 																		</div>
 																		<div className="col-sm-3">
-																			<div className="checkbox">
-																				<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
-																					type="checkbox" ref="libopengl" defaultValue="OpenGL"/> OpenGL </label>
-																			</div>
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-wordpress fa-fw"/></span>
+																						<input className="form-control"
+																							placeholder="插件网站" type="text" ref="pluginwebsite"
+																							data-smart-validate-input="" data-required=""
+																							defaultValue="http://localhost:3000/" data-message="请填写插件网站"/>
+																					</div>
+																				</div>
+																			</fieldset>
+																		</div>
+																		<div className="col-sm-12">
+																			<fieldset>
+																				<div className="form-group">
+																					<div className="input-group">
+																						<span className="input-group-addon"><i className="fa fa-comment fa-fw"/></span>
+																						<textarea rows="2" className="form-control"
+																							placeholder="插件简介" type="text" ref="pluginintrod"
+																							data-smart-validate-input="" data-required=""
+																							defaultValue="该插件由插件模板创建" data-message="请填写插件简介"/>
+																					</div>
+																				</div>
+																			</fieldset>
 																		</div>
 																	</div>
+																</div>
 
-																</fieldset>
 															</div>
-														</div>
-													</div>
+															<div className="tab-pane" data-smart-wizard-pane="2">
+																<br/>
 
-													<div className="tab-pane" data-smart-wizard-pane="3">
-														<br/>
+																<h3><strong> 步骤 2 </strong> - 插件依赖配置 </h3>
 
-														<h3><strong> 步骤 3 </strong> - 插件下载 </h3>
-														<br/>
+																<div className="row">
+																	<div className="col-sm-12">
+																		<legend style={styles.legendFont}> 插件依赖 </legend>
+																		<fieldset>
+																			<div className="form-group">
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="pluginframework"  defaultValue="插件框架"/> 插件框架 </label>
+																					</div>
+																				</div>
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="plugincore" defaultValue="核心插件"/> 核心插件 </label>
+																					</div>
+																				</div>
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="plugincomm" defaultValue="数据通信插件"/> 数据通信插件 </label>
+																					</div>
+																				</div>
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="plugindatabase" defaultValue="数据库管理插件"/> 数据库管理插件 </label>
+																					</div>
+																				</div>
+																			</div>
+																		</fieldset>
+																	</div>
+																</div>
 
-														<h1 className="text-center text-success"><strong><i
-															className="fa fa-check fa-lg"/> 完成！</strong></h1>
-														<h4 className="text-center"> 点击 “下一步” 下载插件 </h4>
-														<br/>
-														<br/>
-													</div>
+																<div className="row">
+																	<div className="col-sm-12">
+																		<legend style={styles.legendFont}> 第三方库依赖 </legend>
+																		<fieldset>
+																			<div className="form-group">
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="libqwt" defaultValue="QWT"/> QWT </label>
+																					</div>
+																				</div>
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="libboost" defaultValue="Boost"/> Boost </label>
+																					</div>
+																				</div>
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="libgdal" defaultValue="GDAL"/> GDAL </label>
+																					</div>
+																				</div>
+																				<div className="col-sm-3">
+																					<div className="checkbox">
+																						<label style={{ fontSize: 15 }}> <input style={{ width: 15, height: 15 }}
+																							type="checkbox" ref="libopengl" defaultValue="OpenGL"/> OpenGL </label>
+																					</div>
+																				</div>
+																			</div>
 
-													<div className="form-actions">
-														<div className="row">
-															<div className="col-sm-12">
-																<ul className="pager wizard no-margin">
-																	<li className="previous" data-smart-wizard-prev="">
-																		<a href="#" className="btn btn-sm btn-default">
-																			上一步 </a>
-																	</li>
-																	<li className="next" data-smart-wizard-next="">
-																		<a href="#" className="btn btn-sm txt-color-darken">
-																			下一步 </a>
-																	</li>
-																</ul>
+																		</fieldset>
+																	</div>
+																</div>
 															</div>
-														</div>
-													</div>
 
-												</div>
-											</Wizard>
-										</form>
-									</UiValidate>
+															<div className="tab-pane" data-smart-wizard-pane="3">
+																<br/>
+
+																<h3><strong> 步骤 3 </strong> - 插件下载 </h3>
+																<br/>
+
+																<h1 className="text-center text-success"><strong><i
+																	className="fa fa-check fa-lg"/> 完成！</strong></h1>
+																<h4 className="text-center"> 点击 “下一步” 下载插件 </h4>
+																<br/>
+																<br/>
+															</div>
+
+															<div className="form-actions">
+																<div className="row">
+																	<div className="col-sm-12">
+																		<ul className="pager wizard no-margin">
+																			<li className="previous" data-smart-wizard-prev="">
+																				<a href="#" className="btn btn-sm btn-default">
+																					上一步 </a>
+																			</li>
+																			<li className="next" data-smart-wizard-next="">
+																				<a href="#" className="btn btn-sm txt-color-darken">
+																					下一步 </a>
+																			</li>
+																		</ul>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+													</Wizard>
+												</form>
+											</UiValidate>
+										</div>
+
+									</div>
+									{/* end widget content */}
 								</div>
+								{/* end widget div */}
+							</JarvisWidget>
+						</WidgetGrid>
 
-							</div>
-							{/* end widget content */}
+
+						<div className="row well well-light">
+							{/*
+					<ReactGridLayout className="layout" layout={layout_static} cols={12} rowHeight={40} width={1200}>
+						<div key={'a'}><RaisedButton label="Primary" primary={true} /></div>
+						<div key={'b'}><RaisedButton label="Primary" primary={true} /></div>
+						<div key={'c'}><RaisedButton label="Primary" primary={true} /></div>
+						<div key={'d'}><RaisedButton label="Primary" primary={true} /></div>
+						<div key={'e'}><RaisedButton label="Primary" primary={true} /></div>
+						<div key={'f'}><RaisedButton label="Primary" primary={true} /></div>
+					</ReactGridLayout>
+				*/}
+							<ReactGridLayout className="layout" cols={12} rowHeight={40} width={1200}>
+								<div key="1" _grid={{ x: 0, y: 0, w: 1, h: 1 }}><RaisedButton label="Primary" primary={true} /></div>
+								<div key="2" _grid={{ x: 1, y: 0, w: 1, h: 1 }}><RaisedButton label="Primary" primary={true} /></div>
+								<div key="3" _grid={{ x: 2, y: 0, w: 1, h: 1 }}><RaisedButton label="Primary" primary={true} /></div>
+							</ReactGridLayout>
 						</div>
-						{/* end widget div */}
-					</JarvisWidget>
-				</WidgetGrid>
+					</Container>
 
-
-
+				</div>
 			</div>
 
 				)

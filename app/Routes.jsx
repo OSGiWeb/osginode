@@ -5,7 +5,7 @@ import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 
 import Application from './pages/Application.jsx'
-import Layout from './pages/layout/Layout.jsx'
+import Layout from './layout/Layout.jsx'
 import Home from './pages/Home.jsx'
 import LoginOrRegister from './pages/LoginOrRegister.jsx'
 import PrivateRepository from './pages/PrivateRepository.jsx'

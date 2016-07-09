@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-//import { Button, Modal, Tab, Row, Col, Nav, NavItem, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
-import {Button, Modal, Row, Col } from 'react-bootstrap'
-
 import { DatePicker } from 'material-ui';
 import { TextField } from 'material-ui';
 
@@ -37,6 +34,13 @@ import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import {green300, blue500, grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 import {pinkA200, transparent} from 'material-ui/styles/colors';
 
+// React-Grid-Layout
+// var WidthProvider = require('react-grid-layout').WidthProvider;
+// var ReactGridLayout = require('react-grid-layout');
+// ReactGridLayout = WidthProvider(ReactGridLayout);
+
+import {Responsive, WidthProvider} from 'react-grid-layout';
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 /**
  * Styles for React component
@@ -236,27 +240,23 @@ class ShopElement extends Component {
           open={this.state.open}
           onRequestClose={this.onDetailDialogClose}
           contentStyle={styles.dialogStyle}>
-          <Row className="show-grid">
-            <Col xs={12} md={12}>
-              <Tabs>
-                <Tab label="插件介绍" >
-                  <TextField id='pluginintrod' style={styles.textArea} multiLine={true} fullWidth={true}
-                    underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
-                </Tab>
-                <Tab label="安装指南" >
-                  <TextField id='installmanual' style={styles.textArea} multiLine={true} fullWidth={true}
-                    underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
-                </Tab>
-                <Tab label="编译指南" >
-                  <TextField id='compilemanual'style={styles.textArea} multiLine={true} fullWidth={true}
-                    underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
-                </Tab>
-                <Tab label="下载" >
-                  {this.renderDownloadTable(item) }
-                </Tab>
-              </Tabs>
-            </Col>
-          </Row>
+          <Tabs>
+            <Tab label="插件介绍" >
+              <TextField id='pluginintrod' style={styles.textArea} multiLine={true} fullWidth={true}
+                underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
+            </Tab>
+            <Tab label="安装指南" >
+              <TextField id='installmanual' style={styles.textArea} multiLine={true} fullWidth={true}
+                underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
+            </Tab>
+            <Tab label="编译指南" >
+              <TextField id='compilemanual'style={styles.textArea} multiLine={true} fullWidth={true}
+                underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
+            </Tab>
+            <Tab label="下载" >
+              {this.renderDownloadTable(item) }
+            </Tab>
+          </Tabs>
         </Dialog>
       </div>
     );
@@ -269,25 +269,20 @@ class ShopElement extends Component {
         <CardHeader
           title={ item.symbolicname }
           subtitle={ item.author }
-          avatar="./styles/img/nature+100.jpg"
-          actAsExpander={true}
-          showExpandableButton={true}
-          />
+          avatar="./styles/img/nature+100.jpg"/>
         <CardTitle title={ item.pluginname } />
-        <CardText expandable={true}>
-          {item.description}
+        <CardText >
+          {/*item.description*/}
         </CardText>
         <List>
           <ListItem style={styles.cardListItem} primaryText={"Stable (" + item.version + ")"} disabled={true} leftIcon={<ActionAssignment style={styles.cardListIcon} color={pinkA200}/>} />
           <ListItem style={styles.cardListItem} primaryText={item.releasedate} disabled={true} leftIcon={<ContentDrafts style={styles.cardListIcon} />} />
         </List>
         <Divider style={{ marginTop: "10px" }}/>
-        <CardActions>
-          <Row style={{ marginLeft: '2%', }}>
-            <Col xs={12} sm={8} md={4}><RaisedButton label="15" labelPosition="after" primary={true} icon={<ActionGrade />} /></Col>
-            <Col xs={12} sm={8} md={4}><RaisedButton label="详情" primary={true} onTouchTap={this.onDetailDialogOpen}/></Col>
-            <Col xs={12} sm={8} md={4}><RaisedButton label="35" labelPosition="after" primary={true} icon={<FileCloudDownload />} onTouchTap={this.onSoucecodeDownload} /></Col>
-          </Row>
+        <CardActions style={{ marginLeft: "5%" }}>
+          <RaisedButton style={{ width: "30%" }} label="15" labelPosition="after" primary={true} icon={<ActionGrade />} />
+          <RaisedButton style={{ width: "30%" }} label="详情" primary={true} onTouchTap={this.onDetailDialogOpen}/>
+          <RaisedButton style={{ width: "30%" }} label="35" labelPosition="after" primary={true} icon={<FileCloudDownload />} onTouchTap={this.onSoucecodeDownload} />
         </CardActions>
       </Card>
     )
@@ -298,41 +293,8 @@ class ShopElement extends Component {
 
     return (
       <div>
-        <Col xs={12} sm={6} md={3}>
-          {/*
-          <div className="panel panel-primary pricing-big">
-            <img src="styles/img/ribbon.png" className="ribbon" alt=""/>
-            <div className="panel-heading">
-              <h3 className="panel-title"> { item.pluginname } </h3>
-            </div>
-            <div className="panel-body no-padding text-align-center" style={styles.itemList}>
-              <div className="price-features">
-                <ul className="list-unstyled text-left">
-                  <li><i className="fa fa-user"></i> <strong> 开发者： </strong> { item.author } </li>
-                  <li><i className="fa fa-file-excel-o"></i> <strong> 最新版本： </strong> { item.version } </li>
-                  <li><i className="fa fa-calendar"></i> <strong> 更新日期： </strong> { item.releasedate }  </li>
-                  <li><i className="fa fa-download"></i> <strong> 下载次数： </strong> 84 </li>
-                  <li><i className="fa fa-star-half-full"></i> <strong> 星级： </strong>
-                    <i className="fa fa-star text-primary"></i>
-                    <i className="fa fa-star text-primary"></i>
-                    <i className="fa fa-star text-primary"></i>
-                    <i className="fa fa-star text-primary"></i>
-                    <i className="fa fa-star text-muted"></i>
-                    <span className="fa font-sm"> (109) 评分 </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="panel-footer text-align-center" >
-              <a href-void="" className="btn btn-primary btn-block" role="button" href="#"> 下载 </a>
-              <div> <a className="font-sm" onClick={this.onDetailDialogOpen} > 详情 </a>
-                或 <a className="font-sm" href-void="" href="#"> 评分 </a>
-              </div>
-            </div>
-          </div>
-          */}
-          { this.renderElementCard(item) }
-        </Col>
+        { this.renderElementCard(item) }
+        <br/>
         { this.renderDetailDialog(item) }
       </div>
     )
@@ -344,113 +306,113 @@ export default ShopElement;
 
 // onMouseOver={this.onShowDetailClick}
 
-   // const { item } = this.state;
+// const { item } = this.state;
 
-    // return (
-    //   <div className="modal fade" id="showDetailModal" tabIndex="-1" role="dialog"
-    //     aria-labelledby="showDetailModalLabel" aria-hidden="true">
-    //     <div className="modal-dialog">
-    //       <div className="modal-content">
-    //         <div className="modal-header">
-    //           <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
-    //             &times;
-    //           </button>
-    //           <h2 className="row-seperator-header" id="showDetailModalLabel" style={{ fontWeight: 'bold' }}>
-    //             <i className="fa fa-puzzle-piece"/> { item.pluginname } </h2>
-    //         </div>
+// return (
+//   <div className="modal fade" id="showDetailModal" tabIndex="-1" role="dialog"
+//     aria-labelledby="showDetailModalLabel" aria-hidden="true">
+//     <div className="modal-dialog">
+//       <div className="modal-content">
+//         <div className="modal-header">
+//           <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+//             &times;
+//           </button>
+//           <h2 className="row-seperator-header" id="showDetailModalLabel" style={{ fontWeight: 'bold' }}>
+//             <i className="fa fa-puzzle-piece"/> { item.pluginname } </h2>
+//         </div>
 
-    //         <div className="modal-body">
-    //           <JarvisWidget colorbutton={false} editbutton={false} togglebutton={false}
-    //             deletebutton={false} fullscreenbutton={false}
-    //             custombutton={false} sortable={false}>
-    //             <header>
-    //               <span className="widget-icon"> <i className="fa fa-list-alt"/> </span>
-    //               <h2> 基本信息 </h2>
-    //             </header>
-    //             <div>
+//         <div className="modal-body">
+//           <JarvisWidget colorbutton={false} editbutton={false} togglebutton={false}
+//             deletebutton={false} fullscreenbutton={false}
+//             custombutton={false} sortable={false}>
+//             <header>
+//               <span className="widget-icon"> <i className="fa fa-list-alt"/> </span>
+//               <h2> 基本信息 </h2>
+//             </header>
+//             <div>
 
-    //               <div className="widget-body">                  
-    //                 <div className="tabs-left">
-    //                   <ul className="nav nav-tabs tabs-left" id="demo-pill-nav">
-    //                     <li className="active">
-    //                       <a href="#tab-r1" data-toggle="tab"><i className="fa fa-info fa-fw"/> 插件介绍 </a>
-    //                     </li>
-    //                     <li>
-    //                       <a href="#tab-r2" data-toggle="tab"><i className="fa fa-gavel fa-fw"/> 安装指南</a>
-    //                     </li>
-    //                     <li>
-    //                       <a href="#tab-r3" data-toggle="tab"><i className="fa fa-tasks fa-fw"/> 编译指南</a>
-    //                     </li>
-    //                   </ul>
-    //                   <div className="tab-content">
-    //                     <div className="tab-pane active" id="tab-r1">
-    //                       { item.pluginintrod }
-    //                     </div>
-    //                     <div className="tab-pane" id="tab-r2">
-    //                       { item.installmanual }
-    //                     </div>
-    //                     <div className="tab-pane" id="tab-r3">
-    //                       { item.compilemanual }
-    //                     </div>
-    //                   </div>
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </JarvisWidget>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // )
+//               <div className="widget-body">                  
+//                 <div className="tabs-left">
+//                   <ul className="nav nav-tabs tabs-left" id="demo-pill-nav">
+//                     <li className="active">
+//                       <a href="#tab-r1" data-toggle="tab"><i className="fa fa-info fa-fw"/> 插件介绍 </a>
+//                     </li>
+//                     <li>
+//                       <a href="#tab-r2" data-toggle="tab"><i className="fa fa-gavel fa-fw"/> 安装指南</a>
+//                     </li>
+//                     <li>
+//                       <a href="#tab-r3" data-toggle="tab"><i className="fa fa-tasks fa-fw"/> 编译指南</a>
+//                     </li>
+//                   </ul>
+//                   <div className="tab-content">
+//                     <div className="tab-pane active" id="tab-r1">
+//                       { item.pluginintrod }
+//                     </div>
+//                     <div className="tab-pane" id="tab-r2">
+//                       { item.installmanual }
+//                     </div>
+//                     <div className="tab-pane" id="tab-r3">
+//                       { item.compilemanual }
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </JarvisWidget>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// )
 
-  //   return (
-  //     <div className="modal fade" id="showDetailModal" tabIndex="-1" role="dialog"
-  //       aria-labelledby="showDetailModalLabel" aria-hidden="true">
-  //       <div className="modal-dialog">
-  //         <div className="modal-content">
-  //           <div className="modal-header">
-  //             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
-  //               &times;
-  //             </button>
-  //             <h2 className="row-seperator-header" id="showDetailModalLabel" >
-  //               <i className="fa fa-reorder"/> 编辑插件 </h2>
-  //           </div>
-  //           <div className="modal-body">
+//   return (
+//     <div className="modal fade" id="showDetailModal" tabIndex="-1" role="dialog"
+//       aria-labelledby="showDetailModalLabel" aria-hidden="true">
+//       <div className="modal-dialog">
+//         <div className="modal-content">
+//           <div className="modal-header">
+//             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+//               &times;
+//             </button>
+//             <h2 className="row-seperator-header" id="showDetailModalLabel" >
+//               <i className="fa fa-reorder"/> 编辑插件 </h2>
+//           </div>
+//           <div className="modal-body">
 
-  //             <div>
-  //               <div className="widget-body no-padding">
+//             <div>
+//               <div className="widget-body no-padding">
 
-  //                 <form id="editplugin-form" className="smart-form" noValidate="novalidate">
-  //                   <fieldset>
-  //                     <div className="row">
-  //                       <section className="col col-6">
-  //                         <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-  //                           <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={g_item.pluginname}/>
-  //                         </label>
-  //                       </section>
-  //                     </div>
-  //                   </fieldset>
+//                 <form id="editplugin-form" className="smart-form" noValidate="novalidate">
+//                   <fieldset>
+//                     <div className="row">
+//                       <section className="col col-6">
+//                         <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
+//                           <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={g_item.pluginname}/>
+//                         </label>
+//                       </section>
+//                     </div>
+//                   </fieldset>
 
 
-  //                 </form>
+//                 </form>
 
-  //               </div>
-  //             </div>
+//               </div>
+//             </div>
 
-  //           </div>
-  //           <div className="modal-footer">
-  //             <button type="button" className="btn btn-default" data-dismiss="modal">
-  //               取消
-  //             </button>
-  //             <button type="button" className="btn btn-primary" data-dismiss="modal"
-  //               onClick={this.onEditPluginSubmit}>
-  //               更新插件
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
+//           </div>
+//           <div className="modal-footer">
+//             <button type="button" className="btn btn-default" data-dismiss="modal">
+//               取消
+//             </button>
+//             <button type="button" className="btn btn-primary" data-dismiss="modal"
+//               onClick={this.onEditPluginSubmit}>
+//               更新插件
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )
 
 
 // <JarvisWidget colorbutton={false} editbutton={false} togglebutton={false}
@@ -494,121 +456,153 @@ export default ShopElement;
 
 
 
-      // <Modal show={this.state.showModal} onHide={this.onModalClose}>
-      //   <Modal.Header closeButton>
-      //     <Modal.Title style={{ fontWeight: 'bold' }} > <i className="fa fa-puzzle-piece"/> { item.pluginname } </Modal.Title>
-      //   </Modal.Header>
-      //   <Modal.Body>
-      //     {/*
-      //     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-      //       <Row>
-      //         <Col sm={4}>
-      //           <Nav bsStyle="pills" stacked>
-      //             <NavItem eventKey="first">
-      //               插件介绍
-      //             </NavItem>
-      //             <NavItem eventKey="second">
-      //               安装指南
-      //             </NavItem>
-      //             <NavItem eventKey="third">
-      //               编译指南
-      //             </NavItem>
-      //           </Nav>
-      //         </Col>
-      //         <Col sm={8}>
-      //           <Tab.Content animation>
-      //             <Tab.Pane eventKey="first">
-      //               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
-      //             </Tab.Pane>
-      //             <Tab.Pane eventKey="second">
-      //               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.installmanual }/>
-      //             </Tab.Pane>
-      //             <Tab.Pane eventKey="third">
-      //               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.compilemanual }/>
-      //             </Tab.Pane>
-      //           </Tab.Content>
-      //         </Col>
-      //       </Row>
-      //     </Tab.Container>
-      //     */}
+// <Modal show={this.state.showModal} onHide={this.onModalClose}>
+//   <Modal.Header closeButton>
+//     <Modal.Title style={{ fontWeight: 'bold' }} > <i className="fa fa-puzzle-piece"/> { item.pluginname } </Modal.Title>
+//   </Modal.Header>
+//   <Modal.Body>
+//     {/*
+//     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+//       <Row>
+//         <Col sm={4}>
+//           <Nav bsStyle="pills" stacked>
+//             <NavItem eventKey="first">
+//               插件介绍
+//             </NavItem>
+//             <NavItem eventKey="second">
+//               安装指南
+//             </NavItem>
+//             <NavItem eventKey="third">
+//               编译指南
+//             </NavItem>
+//           </Nav>
+//         </Col>
+//         <Col sm={8}>
+//           <Tab.Content animation>
+//             <Tab.Pane eventKey="first">
+//               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.pluginintrod }/>
+//             </Tab.Pane>
+//             <Tab.Pane eventKey="second">
+//               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.installmanual }/>
+//             </Tab.Pane>
+//             <Tab.Pane eventKey="third">
+//               <FormControl rows="16" componentClass="textarea" placeholder="textarea" defaultValue={ item.compilemanual }/>
+//             </Tab.Pane>
+//           </Tab.Content>
+//         </Col>
+//       </Row>
+//     </Tab.Container>
+//     */}
 
-      //     {/*
-      //     <Row className="show-grid">
-      //       <Col xs={12} md={6}>
-      //         <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
-      //       </Col>
-      //       <Col xs={12} md={6}>
-      //         <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
-      //       </Col>
-      //     </Row>
-      //     <Row className="show-grid">
-      //       <Col xs={12} md={6}>
-      //         <TextField hintText="Hint text" floatingLabelText="输入文字"></TextField>
-      //       </Col>
-      //       <Col xs={12} md={6}>
-      //         <TextField hintText="Hint text" floatingLabelText="Floating Label Text"></TextField>
-      //       </Col>
-      //     </Row>
-      //     */}
+//     {/*
+//     <Row className="show-grid">
+//       <Col xs={12} md={6}>
+//         <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
+//       </Col>
+//       <Col xs={12} md={6}>
+//         <DatePicker hintText="Landscape Dialog" mode="landscape"></DatePicker>
+//       </Col>
+//     </Row>
+//     <Row className="show-grid">
+//       <Col xs={12} md={6}>
+//         <TextField hintText="Hint text" floatingLabelText="输入文字"></TextField>
+//       </Col>
+//       <Col xs={12} md={6}>
+//         <TextField hintText="Hint text" floatingLabelText="Floating Label Text"></TextField>
+//       </Col>
+//     </Row>
+//     */}
 
-      //     {/*
-      //     <Row className="show-grid">
-      //       <Col xs={12} md={12}>
-      //         <AppBar
-      //           title="Title"
-      //           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-      //           iconElementRight={
-      //             <IconMenu
-      //               iconButtonElement={
-      //                 <IconButton><MoreVertIcon /></IconButton>
-      //               }
-      //               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-      //               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      //               >
-      //               <MenuItem style={{ fontWeight: 'bold' }} primaryText="更新" />
-      //               <MenuItem primaryText="Help" />
-      //               <MenuItem primaryText="Sign out" />
-      //             </IconMenu>
-      //           }
-      //           />
-      //       </Col>
-      //     </Row>
-      //     */}
+//     {/*
+//     <Row className="show-grid">
+//       <Col xs={12} md={12}>
+//         <AppBar
+//           title="Title"
+//           iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+//           iconElementRight={
+//             <IconMenu
+//               iconButtonElement={
+//                 <IconButton><MoreVertIcon /></IconButton>
+//               }
+//               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+//               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+//               >
+//               <MenuItem style={{ fontWeight: 'bold' }} primaryText="更新" />
+//               <MenuItem primaryText="Help" />
+//               <MenuItem primaryText="Sign out" />
+//             </IconMenu>
+//           }
+//           />
+//       </Col>
+//     </Row>
+//     */}
 
-      //     <Row className="show-grid">
-      //       <Col xs={12} md={12}>
-      //         <Tabs>
-      //           <Tab label="插件介绍" >
-      //             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
-      //           </Tab>
-      //           <Tab label="安装指南" >
-      //             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
-      //           </Tab>
-      //           <Tab label="编译指南" >
-      //             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
-      //           </Tab>
-      //         </Tabs>
-      //       </Col>
-      //     </Row>
+//     <Row className="show-grid">
+//       <Col xs={12} md={12}>
+//         <Tabs>
+//           <Tab label="插件介绍" >
+//             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
+//           </Tab>
+//           <Tab label="安装指南" >
+//             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
+//           </Tab>
+//           <Tab label="编译指南" >
+//             <TextField style={styles.textArea} multiLine={true} fullWidth={true} underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
+//           </Tab>
+//         </Tabs>
+//       </Col>
+//     </Row>
 
-      //     <Row className="show-grid">
-      //       <Col xs={12} md={12}>
-      //         <Tabs>
-      //           <Tab
-      //             icon={<FontIcon className="material-icons">phone</FontIcon>}
-      //             label="RECENTS"
-      //             />
-      //           <Tab
-      //             icon={<FontIcon className="material-icons">favorite</FontIcon>}
-      //             label="FAVORITES"
-      //             />
-      //           <Tab
-      //             icon={<MapsPersonPin />}
-      //             label="NEARBY"
-      //             />
-      //         </Tabs>
-      //       </Col>
-      //     </Row>
+//     <Row className="show-grid">
+//       <Col xs={12} md={12}>
+//         <Tabs>
+//           <Tab
+//             icon={<FontIcon className="material-icons">phone</FontIcon>}
+//             label="RECENTS"
+//             />
+//           <Tab
+//             icon={<FontIcon className="material-icons">favorite</FontIcon>}
+//             label="FAVORITES"
+//             />
+//           <Tab
+//             icon={<MapsPersonPin />}
+//             label="NEARBY"
+//             />
+//         </Tabs>
+//       </Col>
+//     </Row>
 
-      //   </Modal.Body>
-      // </Modal>
+//   </Modal.Body>
+// </Modal>
+
+
+// <div className="panel panel-primary pricing-big">
+//   <img src="styles/img/ribbon.png" className="ribbon" alt=""/>
+//   <div className="panel-heading">
+//     <h3 className="panel-title"> { item.pluginname } </h3>
+//   </div>
+//   <div className="panel-body no-padding text-align-center" style={styles.itemList}>
+//     <div className="price-features">
+//       <ul className="list-unstyled text-left">
+//         <li><i className="fa fa-user"></i> <strong> 开发者： </strong> { item.author } </li>
+//         <li><i className="fa fa-file-excel-o"></i> <strong> 最新版本： </strong> { item.version } </li>
+//         <li><i className="fa fa-calendar"></i> <strong> 更新日期： </strong> { item.releasedate }  </li>
+//         <li><i className="fa fa-download"></i> <strong> 下载次数： </strong> 84 </li>
+//         <li><i className="fa fa-star-half-full"></i> <strong> 星级： </strong>
+//           <i className="fa fa-star text-primary"></i>
+//           <i className="fa fa-star text-primary"></i>
+//           <i className="fa fa-star text-primary"></i>
+//           <i className="fa fa-star text-primary"></i>
+//           <i className="fa fa-star text-muted"></i>
+//           <span className="fa font-sm"> (109) 评分 </span>
+//         </li>
+//       </ul>
+//     </div>
+//   </div>
+//   <div className="panel-footer text-align-center" >
+//     <a href-void="" className="btn btn-primary btn-block" role="button" href="#"> 下载 </a>
+//     <div> <a className="font-sm" onClick={this.onDetailDialogOpen} > 详情 </a>
+//       或 <a className="font-sm" href-void="" href="#"> 评分 </a>
+//     </div>
+//   </div>
+// </div>

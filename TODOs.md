@@ -19,22 +19,25 @@
 - Node项目如何与Git, SVN等代码管理工具结合，考虑主框架的维护是否需要使用Git/SVN
 - 6月底技术要求：
   1. 插件仓库完成，包括公有，私有，插件提交流程，上传/下载等；
-  2. 插件骨架代码生成，包括生成的代码外部运行CMAKE,并用QT Creator打开，并编译成功；
+  2. 插件骨架代码生成，~~包括生成的代码外部运行CMAKE,并用QT Creator打开(无法用前端打开本地文件夹和调用本地程序)~~，手动拷贝到目录下，并编译成功；
   3. 应用配置和生成功能完成，包括从最简化框架生成+编译（Hello World），相关示例代码生成，
      公有插件中选取插件生成项目级应用框架代码等；
   4. 插件远程升级和部署，需要在OSGi框架下用 C++ 开发相关界面，并可以通过配置文档显示远程插件仓库信息，
      并通过匹配加载对应插件（dll+资源加载），实现自动化升级和部署。
 - 重构应用程序，使用 Material-ui (react based) 作为UI主要构成，不使用 SmartAdmin 框架
-- 升级 Node.js 到 5.x ( Git 上很多示例项目已经开始使用 5.x )
+- ~~升级 Node.js 到 5.x ( Git 上很多示例项目已经开始使用 5.x )~~
+- 参考 Vscode 源码，摸摸 Atom,看是否可以创建一个 OSGi 集成开发环境（IDE）
 
 ## Recent TODOs
 - 当插件删除时，删除所有相关的 GridFS 中的文件数据，如源码包、库文件和文档等
+- 用户可以自行选择删除上传的文档，库等资源文件（详情->下载）
 - 发布插件时的批量长传进度条
 - 私有插件仓库只显示该登录用户提交的插件
 - 公共插件仓库 UI 改造
 - Check 插件发布流程的validation,出现了不上传附件无法发布插件的情况
-- 使用 React-Boostrap UI 库修改所有 Modal UI / Boostrap 布局相关的 UI 
-- 使用 Flex-Grid-React 组件替换 Bootsrap layout 组件，实现组件布局
+- ~~使用 React-Boostrap UI 库修改所有 Modal UI / Boostrap 布局相关的 UI~~
+- 使用 Flex-Grid-React 组件替换 Bootsrap layout 组件，实现组件布局 -> 动态添加，动态调整大小
+- 下载好看的中文字体
 
 
 ## Features
@@ -67,9 +70,8 @@
   ```
 - 创建类 Profile 和 Projects 主界面结构 from App-Views
 - ~~参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构~~
-- 修改action, reducer名称，带上action, reducer前缀or后缀
-- 生成插件框架代码或在已有项目中添加新的插件后，通过 Web端 / Nodejs 直接调用Cmake并配置
-  参数生成QT项目树，并打开QT->加载该项目
+- ~~修改action, reducer名称，带上action, reducer前缀or后缀~~
+- ~~生成插件框架代码或在已有项目中添加新的插件后，通过 Web端 / Nodejs 直接调用Cmake并配置(前端无法调用本地机器程序)~~
 - 主页添加新闻和推送等功能
 - 测试应用程序在各个浏览器和平台的效果
 - PluginRepository 组件和数据库实现部分添加异常处理机制

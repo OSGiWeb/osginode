@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
 import UiDatepicker from '../components/smartAdmin/forms/inputs/UiDatepicker.jsx'
 import Tagsinput from '../components/smartAdmin/forms/inputs/Tagsinput.jsx'
-import SubHeader from './layout/SubHeader.jsx'
+import SubHeader from '../layout/SubHeader.jsx'
 import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
 import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'

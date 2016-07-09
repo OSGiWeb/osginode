@@ -89,10 +89,22 @@ function onUpdate() {
   
 }
 
+// This replaces the textColor value on the palette
+// and then update the keys for each component that depends on it.
+// More on Colors: http://www.material-ui.com/#/customization/colors
+const muiTheme = getMuiTheme({
+  // palette: {
+  //   textColor: cyan500,
+  // },
+  appBar: {
+    height: 40,
+  },
+});
+
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 var rootInstance = render(
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
+  <MuiThemeProvider muiTheme={muiTheme}>
   <Provider store={store}>
     <Router history={history} onUpdate={onUpdate} >
       {routes}
