@@ -54,7 +54,7 @@ class Container extends Component {
 
     return (
       <Paper style={styles.root}>
-        <Block title={this.props.title}>
+        <Block title={this.props.title} menu={this.props.menu}>
           {/*code*/}
         </Block>
         <ClearFix style={Object.assign(styles.exampleBlock, exampleBlockStyle)}>{children}</ClearFix>

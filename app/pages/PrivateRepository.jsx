@@ -17,6 +17,19 @@ import { Dropdown, MenuItem, Button, Modal } from 'react-bootstrap'
 
 import RepositoryChangeWizard from './RepositoryChangeWizard.jsx'
 
+import { RaisedButton, FloatingActionButton } from 'material-ui';
+import Title from 'react-title-component';
+import Container from '../components/materialDesign/Container';
+import IconButton from 'material-ui/IconButton';
+import CodeIcon from 'material-ui/svg-icons/action/code';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import {Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator } from 'material-ui/Toolbar';
+import IconMenu from 'material-ui/IconMenu';
+import FontIcon from 'material-ui/FontIcon';
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+// import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+
 import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
   resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithSourcecode, deletePlguin } from '../actions/plugins';
 import { setRepoWizardExpand } from '../actions/processes'
@@ -836,19 +849,47 @@ class PrivateRepository extends Component {
    */
   render() {
 
+    const toolBarMenu = (<ToolbarGroup>
+      <ToolbarTitle text="操作" />
+      <FontIcon className="muidocs-icon-custom-sort" />
+      <ToolbarSeparator />
+      <RaisedButton
+        label="添加插件"
+        href="https://github.com/callemall/material-ui"
+        primary={true}
+        icon={<ContentAdd />}
+        />
+
+      <IconMenu
+        iconButtonElement={
+          <IconButton touch={true}>
+            <NavigationExpandMoreIcon />
+          </IconButton>
+        }
+        >
+        {/*<MenuItem primaryText="Download" />
+        <MenuItem primaryText="More Info" />*/}
+      </IconMenu>
+    </ToolbarGroup>);
+
     return (
       <div id="content">
 
-        {/*<SubHeader />*/}
+        <div>
+          <Title render={'私有插件仓库'} />
 
-        <WidgetGrid>
-          <RepositoryChangeWizard />
-          { this.renderPrivateRepository() }
-        </WidgetGrid>
+          <Container title="私有仓库" menu={toolBarMenu} >
 
-        { this.renderAddPluginModal() }
-        { this.renderEditPluginModal() }
-        { this.showSmartNotification() }
+            <WidgetGrid>
+              <RepositoryChangeWizard />
+              { this.renderPrivateRepository() }
+            </WidgetGrid>
+
+            { this.renderAddPluginModal() }
+            { this.renderEditPluginModal() }
+            { this.showSmartNotification() }
+          </Container>
+        </div>
 
       </div>
     )

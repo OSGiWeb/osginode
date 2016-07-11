@@ -49,8 +49,11 @@ class Layout extends Component {
   }
 
   componentWillMount() {
+    // Set global font styles
     this.setState({
-      muiTheme: getMuiTheme(),
+      muiTheme: getMuiTheme({
+        fontFamily: 'Roboto, Microsoft YaHei',
+      }),
     });
   }
 
@@ -143,9 +146,9 @@ class Layout extends Component {
 
     const title =
       router.isActive('/home') ? 'Home' :
-      router.isActive('/privateRepository') ? 'privateRepository' :
-      router.isActive('/publicRepository') ? 'publicRepository' :
-      router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : '';
+        router.isActive('/privateRepository') ? 'privateRepository' :
+          router.isActive('/publicRepository') ? 'publicRepository' :
+            router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : '';
 
     if (this.props.width === LARGE && title !== '') {
       docked = true;
