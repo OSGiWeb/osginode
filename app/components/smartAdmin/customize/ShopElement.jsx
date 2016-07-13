@@ -46,19 +46,6 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
  * Styles for React component
  */
 var styles = {
-  itemList: {
-    // fontWeight: 'bold',
-    // fontSize: 15,
-    // paddingBottom:2,
-    // paddingTop: 4,
-    height: 180,
-  },
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
   textArea: {
     fontSize: 14,
     marginTop: 10,
@@ -77,15 +64,21 @@ var styles = {
     width: 25,
     height: 25,
   },
+  raiseButton: {
+    width: "30%"
+  },
   cardListIcon: {
     width: 20,
     height: 20,
     left: "35px",
   },
   cardListItem: {
-    fontSize: 14,
+    fontSize: 16,
     left: "-30px",
     marginBottom: "-20px"
+  }, 
+  tabLabel: {
+    fontSize: 16
   }
 
 }
@@ -241,19 +234,19 @@ class ShopElement extends Component {
           onRequestClose={this.onDetailDialogClose}
           contentStyle={styles.dialogStyle}>
           <Tabs>
-            <Tab label="插件介绍" >
+            <Tab style={styles.tabLabel} label="插件介绍" >
               <TextField id='pluginintrod' style={styles.textArea} multiLine={true} fullWidth={true}
                 underlineShow={false} rows={2} rowsMax={15} value={ item.pluginintrod }/>
             </Tab>
-            <Tab label="安装指南" >
+            <Tab style={styles.tabLabel} label="安装指南" >
               <TextField id='installmanual' style={styles.textArea} multiLine={true} fullWidth={true}
                 underlineShow={false} rows={2} rowsMax={15} value={ item.installmanual }/>
             </Tab>
-            <Tab label="编译指南" >
+            <Tab style={styles.tabLabel} label="编译指南" >
               <TextField id='compilemanual'style={styles.textArea} multiLine={true} fullWidth={true}
                 underlineShow={false} rows={2} rowsMax={15} value={ item.compilemanual }/>
             </Tab>
-            <Tab label="下载" >
+            <Tab style={styles.tabLabel} label="下载" >
               {this.renderDownloadTable(item) }
             </Tab>
           </Tabs>
@@ -268,6 +261,7 @@ class ShopElement extends Component {
       <Card>
         <CardHeader
           title={ item.symbolicname }
+          titleStyle={{ fontSize:18 }}
           subtitle={ item.author }
           avatar="./styles/img/nature+100.jpg"/>
         <CardTitle title={ item.pluginname } />
@@ -280,9 +274,9 @@ class ShopElement extends Component {
         </List>
         <Divider style={{ marginTop: "10px" }}/>
         <CardActions style={{ marginLeft: "5%" }}>
-          <RaisedButton style={{ width: "30%" }} label="15" labelPosition="after" primary={true} icon={<ActionGrade />} />
-          <RaisedButton style={{ width: "30%" }} label="详情" primary={true} onTouchTap={this.onDetailDialogOpen}/>
-          <RaisedButton style={{ width: "30%" }} label="35" labelPosition="after" primary={true} icon={<FileCloudDownload />} onTouchTap={this.onSoucecodeDownload} />
+          <RaisedButton style={styles.raiseButton} label="15" labelPosition="after" primary={true} icon={<ActionGrade />} />
+          <RaisedButton style={styles.raiseButton} label="详情" labelStyle={{ fontSize:16 }} primary={true} onTouchTap={this.onDetailDialogOpen}/>
+          <RaisedButton style={styles.raiseButton} label="35" labelPosition="after" primary={true} icon={<FileCloudDownload />} onTouchTap={this.onSoucecodeDownload} />
         </CardActions>
       </Card>
     )

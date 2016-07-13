@@ -91,7 +91,7 @@ export function manualLogin(data) {
         if (response.status === 200) {
           let userFullname = response.data.lastname + response.data.firstname;
           dispatch(loginSuccess(userFullname, response.data.message));
-          dispatch(push('/home')); // When login successfully, redirect to '/home' URL
+          dispatch(push('/privateRepository')); // When login successfully, redirect to '/home' URL
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
         }

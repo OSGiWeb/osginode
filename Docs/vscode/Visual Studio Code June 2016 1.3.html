@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://code.visualstudio.com/updates#vscode -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" async="" src="./Visual Studio Code June 2016 1.3_files/analytics.js"></script><script type="text/javascript" async="" src="./Visual Studio Code June 2016 1.3_files/linkid.js"></script><script id="twitter-wjs" src="./Visual Studio Code June 2016 1.3_files/widgets.js"></script><script async="" src="./Visual Studio Code June 2016 1.3_files/gtm.js"></script><script async="" src="./Visual Studio Code June 2016 1.3_files/analytics.js"></script><script>
+    var isProduction = window.location.hostname === 'code.visualstudio.com';
+    var isHomePage = window.location.pathname === '/';
+    var isDocsIndex = window.location.pathname.toLowerCase() === '/docs';
+    var isPythonDocsPage = window.location.pathname.toLowerCase() === '/docs/languages/python';
+    
+    function downloadExperiment(experimentId) {
+        
+        // Copied code from Google analytics
+        // except for experimentId variable
+        function utmx_section(){}function utmx(){}(function(){var
+        k=experimentId,d=document,l=d.location,c=d.cookie;
+        if(l.search.indexOf('utm_expid='+k)>0)return;
+        function f(n){if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.
+        indexOf(';',i);return escape(c.substring(i+n.length+1,j<0?c.
+        length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;d.write(
+        '<sc'+'ript src="'+'http'+(l.protocol=='https:'?'s://ssl':
+        '://www')+'.google-analytics.com/ga_exp.js?'+'utmxkey='+k+
+        '&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='+new Date().
+        valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
+        '" type="text/javascript" charset="utf-8"><\/sc'+'ript>')})();
+    
+    }
+    
+    // Remember to create if statements in lower script as well. 
+    if (isProduction) {
+        if (isHomePage) {
+            downloadExperiment('101350005-21');
+        }
+        if (isDocsIndex) {
+            downloadExperiment('101350005-20');
+        }
+        if (isPythonDocsPage) {
+            downloadExperiment('101350005-19');
+        }
+    }
+    </script>
+    <script>
+    // this second script tag matters! Do not remove.
+    if (isProduction) {
+        if (isHomePage) {
+            utmx('url','A/B');
+        }
+        if (isDocsIndex) {
+            utmx('url','A/B');
+        }
+        if (isPythonDocsPage) {
+            utmx('url','A/B');
+        }
+    }
+    
+    </script>    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="cn5-gurGUvjtlzniBhOIPjfKHzuAplh_R9Ju9tuL0DM">
+    <!-- Twitter and Facebook OpenGraph Metadata-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@code">
+        <meta name="description" content="See what is new in the Visual Studio Code June 2016 Release (1.3)">
+    <meta name="keywords" content="">
+    <!-- Twitter and Facebook OpenGraph Metadata-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:url" content="http://code.visualstudio.com/updates/June_2016">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Visual Studio Code June 2016 1.3">
+    <meta property="og:description" content="See what is new in the Visual Studio Code June 2016 Release (1.3)">
+    
+    <meta property="og:image" content="http://code.visualstudio.com/opengraphimg/opengraph-blog.png">
+    
+
+    <link rel="shortcut icon" href="https://code.visualstudio.com/images/favicon.ico">
+    <title>Visual Studio Code June 2016 1.3</title>
+
+    <!-- TOFIX Not sure why bower isn't pulling this in-->
+    <link rel="stylesheet" type="text/css" href="./Visual Studio Code June 2016 1.3_files/bootstrap.min.css">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="./Visual Studio Code June 2016 1.3_files/vendor.css">
+    <link rel="stylesheet" href="./Visual Studio Code June 2016 1.3_files/main.css">
+    <!-- endinject -->
+    <!--Google Analytics-->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
+    <!-- End Google Analytics -->
+    <script>
+    var appInsights=window.appInsights||function(config){
+        function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+    }({
+        instrumentationKey:"f18193ef-b93a-4f73-b640-e2ddd40507ae"
+    });
+    
+    window.appInsights=appInsights;
+    appInsights.trackPageView();
+    </script><script src="./Visual Studio Code June 2016 1.3_files/ai.0.js"></script>
+    <!-- SumoMe -->
+    <script src="./Visual Studio Code June 2016 1.3_files/saved_resource" data-sumo-site-id="2eb199c38f694af4bb6cd4d19fe884017f7c6441c871391ffaed1e79175493f4" async="async"></script>
+    <!-- End SumoMe -->
+    <!-- Google Tag Manager -->
+    <noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-NK783Z"
+    height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NK783Z');</script>
+    <!-- End Google Tag Manager -->
+    
+    
+    <link rel="alternate" type="application/atom+xml" title="RSS Feed for code.visualstudio.com" href="https://code.visualstudio.com/feed.xml">
+<script type="text/javascript" charset="utf-8" async="" src="./Visual Studio Code June 2016 1.3_files/button.dbb8c488aada3c882aad6ab622207237.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="2c40add5-3570-45d7-8212-8fc2942f7f74/service" src="./Visual Studio Code June 2016 1.3_files/service.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="a25489e9-848c-4356-97ff-161b0852c509/service" src="./Visual Studio Code June 2016 1.3_files/service(1).js"></script></head>
+<body class="win" style="">
+    <!-- WEDCS -->
+    <script type="text/javascript">
+        // Defaults for varAutoFirePV and varCustomerTracking seem to work. varClickTracking doesn't, so called explicitly.
+        var varClickTracking = 1;
+        var Route = "20052";
+        document.write("<script type='text/javascript' src='" + (window.location.protocol) + "//c.microsoft.com/ms.js'" + "'><\/script>");
+    </script><script type="text/javascript" src="./Visual Studio Code June 2016 1.3_files/ms.js" '=""></script>
+    <!-- End WEDCS -->
+    <div itemscope="" itemtype="http://schema.org/SoftwareApplication">
+        <a id="skip-to-content" class="link-button" href="https://code.visualstudio.com/updates#main-content">Skip to content<i>&nbsp;</i><span class="glyphicon glyphicon-menu-down"></span></a>
+        <div class="navbar navbar-inverse ">
+            <nav role="navigation">
+                <div class="container">
+                    <div class="nav navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        <a class="navbar-brand" href="https://code.visualstudio.com/"><span itemprop="name">Visual Studio Code</span></a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li><a id="nav-docs" href="https://code.visualstudio.com/Docs">Docs</a></li>
+                            <li class="active"><a id="nav-updates" href="https://code.visualstudio.com/Updates">Updates</a></li>
+                            <li><a id="nav-blogs" href="https://code.visualstudio.com/blogs">Blog</a></li>
+                            <li><a href="https://marketplace.visualstudio.com/VSCode" target="_blank" id="nav-extensions">Extensions</a></li>
+                            <li><a id="nav-faqs" href="https://code.visualstudio.com/Docs/FAQ">FAQ</a></li>
+                            <li class="visible-xs"><a href="https://www.github.com/Microsoft/vscode" target="_blank">GitHub Project</a></li>
+                            <li class="search visible-xs"><a href="https://code.visualstudio.com/Search">Search</a></li>
+                        </ul>
+        
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="https://code.visualstudio.com/Search" title="Search" class="btn search-btn" id="nav-search">
+                                    <img src="./Visual Studio Code June 2016 1.3_files/search.svg" width="16px" height="16px" alt="Search">
+                                </a>
+                            </li>
+                            <li class="search">
+                                <form class="nav-search search-form">
+                                    <div class="input-group">
+                                        <input type="text" name="q" class="search-box form-control" placeholder="Search Docs">
+                                        <span class="input-group-btn">
+                                            <button tabindex="-1" class="btn" type="submit">
+                                                <img src="./Visual Studio Code June 2016 1.3_files/search.svg" width="16px" height="16px" alt="Search">
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>                    </li>
+                            <!-- this was hiden in the home and download page, keeping it for now -->
+                            <li><a itemprop="downloadUrl" class="link-button" href="https://code.visualstudio.com/Download" id="nav-download"><img src="./Visual Studio Code June 2016 1.3_files/download.svg" width="16px" height="16px" alt="Download VS Code"><span class="hidden-sm">Download</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>        <div class="updates-banner  ">
+            <div class="container">
+                <p class="message"><a href="https://code.visualstudio.com/Updates" id="banner-link-updates">Version <span itemprop="softwareVersion">1.3</span></a> is now available! Read about the new features and fixes in June.</p>
+            </div>
+            <div role="button" title="Dismiss this update" class="dismiss-btn" id="banner-dismiss-btn"><span class="sr-only">Dismiss this update</span><span aria-hidden="true" class="glyph-icon"></span></div>
+        </div>        <div role="main" id="main-content">
+			
+
+<div class="container body-content docs releases">
+    <div class="row">
+        <div class="col-md-2">            
+			<nav id="docs-navbar" class="docs-nav updates-nav visible-md visible-lg affix-top">
+				<h4>Updates</h4>
+				<ul class="nav">
+					
+						<li class="active"><a href="https://code.visualstudio.com/updates/June_2016">June 2016</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/May_2016">May 2016</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/vApril">April 2016</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/vMarch">March 2016</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/vFebruary">February 2016</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/vJanuary">January 2016</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/vDecember">December 2015</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/vNovember">November 2015</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/v0_9_0">October 2015</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/v0_8_0">September 2015</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/v0_7_0">August 2015</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/v0_5_0">July 2015</a></li>
+					
+						<li><a href="https://code.visualstudio.com/updates/v0_3_0">June 2015</a></li>
+					
+				</ul>
+			</nav>
+			<nav id="small-nav" class="docs-nav updates-nav hidden-md hidden-lg">
+				<h4>Updates</h4>
+				<select id="small-nav-dropdown">
+					
+						<option value="/updates/June_2016" "selected"="">June 2016</option>
+					
+						<option value="/updates/May_2016">May 2016</option>
+					
+						<option value="/updates/vApril">April 2016</option>
+					
+						<option value="/updates/vMarch">March 2016</option>
+					
+						<option value="/updates/vFebruary">February 2016</option>
+					
+						<option value="/updates/vJanuary">January 2016</option>
+					
+						<option value="/updates/vDecember">December 2015</option>
+					
+						<option value="/updates/vNovember">November 2015</option>
+					
+						<option value="/updates/v0_9_0">October 2015</option>
+					
+						<option value="/updates/v0_8_0">September 2015</option>
+					
+						<option value="/updates/v0_7_0">August 2015</option>
+					
+						<option value="/updates/v0_5_0">July 2015</option>
+					
+						<option value="/updates/v0_3_0">June 2015</option>
+					
+				</select>
+			</nav>		</div>
+		<div class="col-sm-9 col-md-8 body">
+			<h1>June 2016 (version 1.3)</h1>
+<p>We're really excited about the June release of VS Code. We've made some big changes to Extension management (dedicated Extensions View) and added Tabs (tabbed editor panes). Other new features include global Search and Replace, improved Drag and Drop and optional indentation guides. All of this along with enhancements to existing features like the Integrated Terminal and delivering a set of important bug fixes.</p>
+<p>Here are the highlights:</p>
+<ul>
+<li><strong>Tabs</strong>: Tabbed editor panes allow you to quickly navigate to your files and organize your workbench.</li>
+<li><strong>Extensions</strong>: New in-product Extensions View to quickly find, install and manage your extensions.</li>
+<li><strong>Workbench</strong>: Enhanced Drag and Drop, Preview Editors to conserve your editor panes, and multiple Integrated Terminals.</li>
+<li><strong>Editor</strong>: Global Search and Replace, Indent Guides, Problems panel to view errors and warnings.</li>
+<li><strong>Languages</strong>: Better, more complete Emmet support, Atom JavaScript grammar extension.</li>
+<li><strong>Debugging</strong>: Lots of improvements including support for attaching to running Node.js processes and changing variable values during a debug session.</li>
+<li><strong>Extension Authoring</strong>: A new contribution point for menu bars and context menus. New APIs to open non-text resources and add editor decorator attachments.</li>
+</ul>
+<h2 id="_tabs" data-needslink="_tabs">Tabs<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_tabs">#</a></h2>
+<p>With this release, VS Code shows open files as Tabs in the title area above the editor. You can move Tabs around via Drag and Drop to organize your files or right-click on a Tab to perform useful file specific actions.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_tabs.png" alt="Tabs"></p>
+<p>If you prefer not to use Tabs, you can disable them through the <code>workbench.editor.showTabs</code> setting.</p>
+<p>When there is not enough available space to show all files, you will see Tabs overflowing to the left and right. You can always use the mouse to scroll left and right across all tabs. The little overflow icon (see image below) is enabled as soon as there are Tabs outside of the visible view. Clicking on the overflow icon shows a list of all Tabs opened in the group.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_overflow.png" alt="Tabs Overflow"></p>
+<p>You can use the new <code>workbench.editor.openPositioning</code> setting to control where new editors should open. By default they open to the right of the active Tab, but you can change this to open to the left, or to the beginning or end of all editors.</p>
+<h3>Open Editors View</h3>
+<p>The new <strong>OPEN EDITORS</strong> view in the Explorer is the replacement to the previous <strong>WORKING FILES</strong> view.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_open_editors.png" alt="Open editors view"></p>
+<p>The <strong>OPEN EDITORS</strong> view is a visual representation of the editor (open file) stacks:</p>
+<ul>
+<li>Each editor group with the editors that belong to it is shown.</li>
+<li>Clicking on an editor will make it active and open it in the corresponding group.</li>
+<li>Top level actions to close all or save all open editors.</li>
+<li>Editor level actions to close or save an editor.</li>
+<li>Context menu actions provide more refined actions.</li>
+<li>It is possible to drag and drop editors between editor groups or from the Explorer</li>
+</ul>
+<p>You can hide the <strong>OPEN EDITORS</strong> view by setting the number of visible items to 0, with <code>"explorer.openEditors.visible": 0</code>.</p>
+<p><strong>Note:</strong> Since the WORKING FILES view has been deleted, please refer to <a href="https://github.com/Microsoft/vscode/issues/6605">this issue</a> to get an overview of the new or changed command identifiers.</p>
+<h3>More on Editor Stacks</h3>
+<p>As a preparation for enabling Tabs in the workbench, we revisited how you can interact with editors in VS Code. Many users coming from other tools were confused by some of the editor (open file) behavior in VS Code.</p>
+<p>For example:</p>
+<ul>
+<li>Closing a dirty editor (an editor with an unsaved file) did not prompt for saving.</li>
+<li>Closing an editor, closed the entire group without revealing the previous editor.</li>
+<li>The editor history showed a list of all editors ever opened and not a list of editors you opened in a group.</li>
+<li><strong>WORKING FILES</strong> view in the Explorer was a confusing concept.</li>
+</ul>
+<p>With editor <strong>stacks</strong>, we've tried to address these issues:</p>
+<ul>
+<li>You can open up to 3 <strong>editor groups</strong> side by side and each group contains a <strong>stack of editors</strong>.</li>
+<li>Every time you open an editor, it is added to the top of the stack.</li>
+<li>Closing an editor from a group reveals the editor that was previously opened in that group until the last editor closes and the group hides.</li>
+<li>You get prompted to save for dirty editors.</li>
+</ul>
+<p>Use <span class="dynamic-keybinding keybinding win" data-osx="⌃⇧Tab" data-win="Ctrl+Shift+Tab" data-linux="Ctrl+Shift+Tab" title="OSX: ⌃⇧Tab, Linux: Ctrl+Shift+Tab">Ctrl+Shift+Tab</span> to bring up a list of most recently used editors of a group for navigation. Use the <strong>View: Show All Editors</strong> command to show a list of all open editors across all groups.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_stacks.png" alt="Editor Stacks"></p>
+<p>Note that the behavior of editor stacks is independent from having Tabs enabled or not. You will benefit from these changes even if you don't want to use Tabs.</p>
+<p><strong>Note:</strong> Due to the large conceptual impact of editor stacks, many command ids have been renamed and new commands introduced. Please refer to <a href="https://github.com/Microsoft/vscode/issues/6605">this issue</a> that documents the changes. It also provides guidance if you liked the previous behavior and explains how to change key bindings back to the old behavior.</p>
+<h2 id="_extension-management" data-needslink="_extension-management">Extension Management<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_extension-management">#</a></h2>
+<p>We have introduced a new Extensions View to improve finding, installing, and updating VS Code <a href="https://code.visualstudio.com/docs/editor/extension-gallery">extensions</a>.</p>
+<p>To display the Extensions View, click the Extensions View icon or press <span class="dynamic-keybinding keybinding win" data-osx="⇧⌘X" data-win="Ctrl+Shift+X" data-linux="Ctrl+Shift+X" title="OSX: ⇧⌘X, Linux: Ctrl+Shift+X">Ctrl+Shift+X</span>:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_extensions-view-icon.png" alt="extension view icon"></p>
+<p>By clicking on the <code>...</code> <strong>More</strong> button, it is possible to show:</p>
+<ul>
+<li>The list of currently installed extensions</li>
+<li>The list of outdated extensions that can be updated</li>
+<li>The list of recommended extensions based on your workspace</li>
+<li>The list of globally popular extensions</li>
+</ul>
+<p>Clearing the search box, shows the list of installed extensions.</p>
+<p>Browsing through a list of extensions, it is possible to install, uninstall or update them. Clicking on an extension will display the detailed description in the editor area.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_extensions_viewlet.png" alt="Extensions View"></p>
+<h2 id="_workbench" data-needslink="_workbench">Workbench<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_workbench">#</a></h2>
+<h3>Errors and Warning in the Problems panel</h3>
+<p>With the June release, we now offer a new <strong>Problems</strong> panel, docked at the bottom of VS Code, that shows errors, warnings and other information generated by different sources like language servers, linters and others. In previous releases, we showed the errors and warnings in the quick box at the top of the editor. We have received feedback from users that this made it difficult to review errors and warnings while editing files. The new panel makes it easy to navigate through your errors and warnings and fix them while the editor is still open.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_problems.png" alt="Problems"></p>
+<p>A filter box is provided to search and filter among the problems shown. You can either filter by type or by text.  For example, 'errors' will filter for all problems of type error. 'character' will filter for problems with messages containing the word 'character'.</p>
+<p>You can open the <strong>Problems</strong> panel by:</p>
+<ul>
+<li>Using <span class="dynamic-keybinding keybinding win" data-osx="⇧⌘M" data-win="Ctrl+Shift+M" data-linux="Ctrl+Shift+M" title="OSX: ⇧⌘M, Linux: Ctrl+Shift+M">Ctrl+Shift+M</span></li>
+<li>From the <strong>View</strong> | <strong>Problems</strong> menu</li>
+<li>From the <strong>View</strong> &gt; <strong>Show Problems</strong> command in the <strong>Command Palette</strong></li>
+</ul>
+<p>The key binding <span class="dynamic-keybinding keybinding win" data-osx="⇧⌘M" data-win="Ctrl+Shift+M" data-linux="Ctrl+Shift+M" title="OSX: ⇧⌘M, Linux: Ctrl+Shift+M">Ctrl+Shift+M</span> that was used to show errors and warnings in the quick open/quick box will now open the <strong>Problems</strong> panel.</p>
+<p>By default, the <strong>Problems</strong> panel scrolls and shows problems for your active file. If you don't want this automatic reveal behavior, you can disable it through a setting <code>problems.autoReveal</code>. Set <code>problems.autoReveal</code> to <code>false</code> to prevent your Problems view from changing as you switch between active files.</p>
+<blockquote>
+<p><strong>Note:</strong> This view is just a representation of markers generated by the language servers or linters or build tasks or any external builders configured in or outside your workspace. You have to configure or customize them appropriately in order to see the expected problems.</p>
+</blockquote>
+<h3>More powerful Drag and Drop</h3>
+<p>With all the work on Tabs, we also looked at improving the Drag &amp; Drop support in the editor. We always allowed you to drop files from outside VS Code into the editor to open the files and now there is a lot more that you can do:</p>
+<h4>Drop to Split</h4>
+<p>Drag some files to the left or right area of an editor to open it to the side of that editor. You can either drag from the Explorer or a Tab if Tabs are enabled.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_dnd_editor.gif" alt="Drop to split"></p>
+<h4>Drop Feedback</h4>
+<p>Whenever you are dragging files or a Tab over the editor area, you now get drop feedback to indicate the target position of the drop.</p>
+<h4>Drag from Explorer and Opened Editors view</h4>
+<p>You can now drag a file or editor from the Explorer and the <strong>OPEN EDITORS</strong> view to the editor space to open it at a specific location.</p>
+<h3>Preview Editors</h3>
+<p>Closely related to editor stacks and Tabs are <strong>preview editors</strong>. If you are browsing many files, you might not want to see a Tab opened for each file you open. Preview editors help reduce the number of opened editors (and Tabs) by reusing the current editor. A file will open in preview mode if you open it by single clicking in the Explorer. As long as the editor stays in preview mode, other files will open in the same location as the preview editor.</p>
+<p>Certain actions cause a preview editor to become a normal editor:</p>
+<ul>
+<li>When you modify the contents of a file, the editor will be kept open.</li>
+<li>The same is true for when you double-click on a file in the Explorer or inside a Tab or move a file to a specific editor group.</li>
+</ul>
+<p>Preview editors are indicated using an italic font style.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_preview_editor.png" alt="Preview Editor"></p>
+<p>We introduced new settings to control the behavior of preview editors:</p>
+<ul>
+<li><code>workbench.editor.enablePreview</code> to globally enable or disable preview editors.</li>
+<li><code>workbench.editor.enablePreviewFromQuickOpen</code> to enable or disable preview editors when opened from quick box/quick open.</li>
+</ul>
+<h3>Integrated Terminal</h3>
+<p>The integrated terminal that was introduced in VS Code 1.2.0 has seen many improvements this release, the primary one being the ability to launch and use multiple terminals at the same time. Terminal instances can be added by hitting the plus icon on the top-right of the <strong>TERMINAL</strong> panel or by triggering the <span class="dynamic-keybinding keybinding win" data-osx="⌃⇧`" data-win="Ctrl+Shift+`" data-linux="Ctrl+Shift+`" title="OSX: ⌃⇧`, Linux: Ctrl+Shift+`">Ctrl+Shift+`</span> command. This creates another entry in the dropdown list that can be used to switch between them.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_terminal_multiple_instances.png" alt="Multiple terminal instances"></p>
+<p>Several new commands were added to aid with management of the <strong>TERMINAL</strong> panel and its terminal instances.</p>
+<p>They are:</p>
+<ul>
+<li><code>workbench.action.terminal.focus</code>: Focus the terminal. This is like toggle but focuses the terminal instead of hides it if its visible.</li>
+<li><code>workbench.action.terminal.focusNext</code>: Focuses the next terminal instance.</li>
+<li><code>workbench.action.terminal.focusPrevious</code>: Focuses the previous terminal instance.</li>
+<li><code>workbench.action.terminal.kill</code>: Remove the current terminal instance.</li>
+</ul>
+<p>The ability to run selected text in the current terminal has been added through the <code>workbench.action.terminal.runSelectedText</code> command.</p>
+<p>To use this command, select text in an editor and run the command via the <strong>Command Palette</strong>:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_terminal_run_selected.png" alt="Run selected text"></p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_terminal_run_selected_result.png" alt="Run selected text result"></p>
+<p>The following improvements were also added:</p>
+<ul>
+<li>Copy and paste on Linux and Windows is now available using <span class="keybinding">Ctrl+Insert</span> and <span class="keybinding">Shift+Insert</span> respectively. This is temporarily non-configurable until we can <a href="https://github.com/sourcelair/xterm.js/issues/118">route custom copy/paste keybindings</a> to the xterm.js library.</li>
+<li>CJK characters should now use the correct width.  Credit for this goes to <a href="https://github.com/jerch">@jerch</a> in <a href="https://github.com/sourcelair/xterm.js/pull/144">this PR</a>.</li>
+<li>Performance of the terminal has improved significantly and should no longer perform poorly when running commands that produce large output.</li>
+<li><span class="keybinding">Ctrl+Left</span> and <span class="keybinding">Ctrl+Right</span> now tells the underlying shell to jump over words in the input.</li>
+<li>Terminal cursor blinking is now enabled by default. It shares the configuration value with the editor's <code>editor.cursorBlinking</code> setting.</li>
+<li>A hollow cursor is shown when the terminal is not focused.</li>
+<li>Terminal font size and line height can be customized via settings, thanks to a <a href="https://github.com/Microsoft/vscode/pull/6998">PR</a> from <a href="https://github.com/kisstkondoros">@kisstkondoros</a>.</li>
+<li>Selection has been improved to now select the full line, contain no margin and also invert the text colors.
+<img src="./Visual Studio Code June 2016 1.3_files/June_2016_terminal_selection.png" alt="Terminal selection has been improved"></li>
+<li>Arguments can be passed to the terminal shell on Linux and OS X using the <code>terminal.integrated.shellArgs.*</code> settings.</li>
+</ul>
+<h3>Command Palette: File: Open Recent in new Window</h3>
+<p>The command <strong>File: Open Recent</strong> from the <strong>Command Palette</strong> makes it very easy to quickly switch between previously opened folders or files. Usually the selected file or folder would open in the running instance. In this release, we added support to open into a new window if you select an entry while having the <span class="keybinding">Ctrl</span> (<span class="keybinding">'Cmd'</span> on Mac) key pressed.</p>
+<h3>Restore Full screen</h3>
+<p>A new setting <code>window.restoreFullscreen</code> has been added to open VS Code in full screen if it was previously closed in full screen mode.</p>
+<h2 id="_editor" data-needslink="_editor">Editor<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_editor">#</a></h2>
+<h3>Global Search and Replace</h3>
+<p><a href="https://github.com/Microsoft/vscode/issues/1690">Global Search and Replace</a> was one of the most requested features from our users. With this release, we enhanced our Search view to include Replace functionality so that you can replace text across multiple files. You can replace in all files or pick file by file or result by result. You can also exclude results or files and then perform replace on the rest. The Search view gives you a nice preview and clicking on a pending change will bring up the Diff editor view showing the file before and after replace.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_searchAndReplace.png" alt="Search and Replace"></p>
+<p>Replace functionality can be accessed:</p>
+<ul>
+<li>In the <strong>Search View</strong> by expanding the Search textbox</li>
+<li>Using <span class="dynamic-keybinding keybinding win" data-osx="⇧⌘H" data-win="Ctrl+Shift+H" data-linux="Ctrl+Shift+H" title="OSX: ⇧⌘H, Linux: Ctrl+Shift+H">Ctrl+Shift+H</span>, from the <strong>Edit</strong> | <strong>Replace in Files</strong> menu</li>
+<li>Using <strong>Replace in Files</strong> command in the <strong>Command Palette</strong></li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Since Search has a limitation of showing a maximum of 2048 results, Replace currently has the same limitation.</p>
+</blockquote>
+<h3>Indent Guides</h3>
+<p>VS Code can now show indent guides, enabled with the <code>editor.renderIndentGuides</code> setting.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_editor-indent-guides.jpg" alt="Editor Indent Guides"></p>
+<h3>Suggestions for command identifiers</h3>
+<p>When authoring the <code>keybindings.json</code> file, you now get completions for the available commands.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_commad_ids.png" alt="Command Completions"></p>
+<h3>Editor Font Zooming with mouse wheel</h3>
+<p>Thanks to <a href="https://github.com/kisstkondoros">@kisstkondoros</a>, with <a href="https://github.com/Microsoft/vscode/pull/6990">PR #6990</a>, after setting <code>editor.mouseWheelZoom: true</code>, it is possible to change the font size of the editors by pressing <span class="keybinding">Ctrl</span> (<span class="keybinding">'Cmd'</span> on Mac) and scrolling with the mouse wheel:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_editor-mouse-wheel-zoom.gif" alt="Mouse Wheel Zoom"></p>
+<h3>Multiline Find</h3>
+<p>We have added support for multiline Find and Replace:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_multiline-find.gif" alt="Editor Indent Guides"></p>
+<h3>Emmet</h3>
+<p>Thanks to some great support from Denis Malinochkin (<a href="https://github.com/mrmlnc">@mrmlnc</a>) through Pull Requests and testing help, we are now covering many more Emmet features (Wrap with Abbreviation, Remove Tag, Update Tag, Balance, Toggle Comment, ...).</p>
+<h2 id="_languages" data-needslink="_languages">Languages<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_languages">#</a></h2>
+<h3>Extract CSS/LESS/SCSS and JSON into extensions</h3>
+<p>The CSS, LESS, and SCSS language support has been refactored to be regular VS Code extensions. As all these languages are based on the same code base, they share the same language server. The language server runs in a separate node process, using the <a href="https://github.com/Microsoft/language-server-protocol">language server protocol</a> to communicate with VS Code.</p>
+<h3>Extract Markdown into an extension</h3>
+<p>The Markdown language support has been refactored to be a regular VS Code extension. It uses the Markdown TextMate grammar for syntax highlighting source and renders the Markdown as HTML using the <a href="https://github.com/markdown-it/markdown-it">markdown-it library</a> which implements the <a href="http://spec.commonmark.org/0.25/">CommonMark Spec</a>.</p>
+<h3>Atom JavaScript grammar</h3>
+<p>As an alternative to the built-in JavaScript grammar, you can now install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.js-atom-grammar">Atom JavaScript grammar</a>. It differs from the built-in grammar in that it creates tokens for variable and function references which, if supported by the theme, can be colorized differently.</p>
+<h2 id="_debugging" data-needslink="_debugging">Debugging<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_debugging">#</a></h2>
+<h3>Moveable Debug Toolbar</h3>
+<p>Initiated by this <a href="https://github.com/Microsoft/vscode/issues/4580">user request</a>, it is now possible to drag the debug toolbar horizontally:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_dnd_debug.gif" alt="Drag debug toolbar"></p>
+<h3>Changing Variable Value</h3>
+<p>We now support changing the value of simple variables if a debug extension supports this.</p>
+<p>Node Debug is the first extension to do so:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_set_variable_value.gif" alt="Drag debug toolbar"></p>
+<p>A simple variable is a leaf in the variables tree, e.g. a variable, an object property, or an array element.</p>
+<h3>Show Variable Type on Hover</h3>
+<p>If a debug extension supports variable types, we now show the type when hovering over the variable name.</p>
+<h3>Step Back</h3>
+<p>If a debug extension supports <em>step back</em> we now expose a step back action and button:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_step_back.png" alt="Step back"></p>
+<h3>OS specific launch configurations</h3>
+<p>Initiated by a <a href="https://github.com/Microsoft/vscode/issues/1873">user request</a>, it is now possible to specify OS specific configurations inside a <code>launch.json</code>:</p>
+<pre><code class="json">{
+   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"node"</span></span>,
+   "<span class="hljs-attribute">request</span>": <span class="hljs-value"><span class="hljs-string">"launch"</span></span>,
+   "<span class="hljs-attribute">runtimeExecutable</span>": <span class="hljs-value"><span class="hljs-string">"mynode"</span></span>,
+   "<span class="hljs-attribute">windows</span>": <span class="hljs-value">{
+     "<span class="hljs-attribute">runtimeExecutable</span>": <span class="hljs-value"><span class="hljs-string">"mynode.exe"</span>
+   </span>}
+</span>}
+</code></pre>
+<h2 id="_nodejs-debugging" data-needslink="_nodejs-debugging">Node.js Debugging<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_nodejs-debugging">#</a></h2>
+<h3>Attach to Process</h3>
+<p>Node.js debugging now supports attaching to a Node.js process that has not been started in debug mode. This can be useful if you need to debug a production server that cannot always run in debug mode for performance reasons.</p>
+<p>In order to attach to a Node.js process, you specify its <em>process id</em> via a <code>processId</code> attribute in an <code>attach</code> launch configuration.</p>
+<p>Since it is not very practical to always having to edit the launch configuration before starting a debug session, we've introduced a new type of variable that can bind to an interactive UI, e.g. to a process picker:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_attach_to_process.png" alt="Process Picker"></p>
+<p>Here is a launch configuration that uses the <code>${command.PickProcess}</code> variable to let the user select a Node.js process before starting the debug session:</p>
+<pre><code class="json">{
+   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"Attach to Process"</span></span>,
+   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"node"</span></span>,
+   "<span class="hljs-attribute">request</span>": <span class="hljs-value"><span class="hljs-string">"attach"</span></span>,
+   "<span class="hljs-attribute">processId</span>": <span class="hljs-value"><span class="hljs-string">"${command.PickProcess}"</span>
+</span>}
+</code></pre>
+<h2 id="_extension-authoring" data-needslink="_extension-authoring">Extension Authoring<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_extension-authoring">#</a></h2>
+<h3>Menu Items and Context Menu Entries</h3>
+<p>We now allow extension writers to contribute to the Explorer context menu, the editor context menus, and the editor title menu.</p>
+<p>It works in two steps:</p>
+<ol>
+<li>Assign a title and an icon to a command using the enhanced <code>commands</code> contribution point.</li>
+<li>Create menu items using the new <code>menus</code> contribution point.</li>
+</ol>
+<p>A menu item is defined for a menu location like <code>editor/context</code> and must at least specify the <code>command</code> to run. To avoid overly cluttered menus, a menu item should also specify a condition under which it shows. Last, an alternative command and a group into which the item is sorted can be defined. Groups are visually separated and there is a special group called <em>navigation</em> which is the most prominent.</p>
+<pre><code class="json"><span class="hljs-string">"commands"</span>: [{
+    "<span class="hljs-attribute">command</span>": <span class="hljs-value"><span class="hljs-string">"markdown.showPreview"</span></span>,
+    "<span class="hljs-attribute">title</span>": <span class="hljs-value"><span class="hljs-string">"Open Preview"</span></span>,
+    "<span class="hljs-attribute">icon</span>": <span class="hljs-value">{
+        "<span class="hljs-attribute">light</span>": <span class="hljs-value"><span class="hljs-string">"./media/Preview.svg"</span></span>,
+        "<span class="hljs-attribute">dark</span>": <span class="hljs-value"><span class="hljs-string">"./media/Preview_inverse.svg"</span>
+    </span>}
+</span>}],
+<span class="hljs-string">"menus"</span>: {
+    "<span class="hljs-attribute">explorer/context</span>": <span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">when</span>": <span class="hljs-value"><span class="hljs-string">"resourceLangId == markdown"</span></span>,
+            "<span class="hljs-attribute">command</span>": <span class="hljs-value"><span class="hljs-string">"markdown.showPreview"</span></span>,
+            "<span class="hljs-attribute">group</span>": <span class="hljs-value"><span class="hljs-string">"navigation"</span>
+        </span>}
+    ]
+</span>}
+</code></pre>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_menus-contributions.png" alt="Menu contribution"></p>
+<p>The snippet above adds an entry into the navigation group of the Explorer context menu <strong>when</strong> the resource is of the Markdown language. <em>Note</em> that the URI of the current resource is passed to the command when being executed from a menu item.</p>
+<h3>Add decorations before and after text</h3>
+<p>New capabilities have been added to the decoration APIs. You can now add 'attachments' before and after a decoration. Attachments can be icons as well as text content that sticks to the decorated text.</p>
+<p>An example are the CSS color decorators attached to color values in the text:</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_color_decorators.png" alt="Decorator attachment"></p>
+<p>Decoration attachments can be defined on decoration types (see the <code>before</code> and <code>after</code> properties on <code>ThemableDecorationInstanceRenderOptions</code>) and fine-tuned on individual decorations (see the <code>before</code> and <code>after</code> properties on <code>ThemableDecorationRenderOptions</code>). You can review these properties in the <code>vscode</code> namespace API <a href="https://code.visualstudio.com/docs/extensionAPI/vscode-api">reference</a>.</p>
+<h3>API tweaks</h3>
+<ul>
+<li>The Uri-class now allows you derive a Uri from an existing one: <code>someUri.with({scheme: 'newScheme', path: 'newPath'})</code></li>
+<li>The <code>previewHtml</code> command now allows you to provide a <code>title</code>.</li>
+<li>When previewing html, we expose the style of the current theme via class names of the body element. Those are <code>vscode-light</code>, <code>vscode-dark</code>, and <code>vscode-high-contrast</code>.</li>
+<li>Last, there is a new command <code>vscode.open</code> to open non-textual resources like images.</li>
+</ul>
+<h3>Debug Extension Authoring: Command Variables</h3>
+<p>VS Code has supported variable substitution in <code>launch.json</code> configurations for some time. This release introduces a new type of variable that is bound to a VS Code <em>command</em>. When a debug session is started, all command variables that occur in the underlying launch configuration are first collected and then executed. Multiple occurrences of a variable do not result in multiple execution. Before the launch configuration is passed to the debug adapter, all variables are substituted with the command results.</p>
+<p>A command is implemented and registered in an extension and its return value is used as the variable's value. The implementation of a command can range from a simple expression with no UI, to some sophisticated functionality based on the UI features available in the extension API.</p>
+<p>An example for this functionality can be found in <code>node-debug</code>. Here a variable <code>${command.PickProcess}</code> is bound to a process picker command. A new 'Attach to Process' launch configuration uses the variable to let the user pick a Node.js process when running the launch configuration.</p>
+<p>Introducing a new command variable is simple:</p>
+<ul>
+<li>
+<p>Implement and register the command in your extension (not in the debug adapter).</p>
+</li>
+<li>
+<p>Add a <code>variables</code> section to your <code>debuggers</code> contribution point.</p>
+</li>
+<li>
+<p>Add one name/command-binding per variable.</p>
+<p>For example:</p>
+<pre><code>  "debuggers": {
+    ...
+    "variables": {
+      "RemoteHost": "askUserForRemoteHostCommand"
+    },
+  ...
+  }
+</code></pre>
+</li>
+<li>
+<p>The variable can now be used in any string typed value of a launch configuration as <code>${command.RemoteHost}</code>.</p>
+</li>
+<li>
+<p>To make the <code>RemoteHost</code> variable discoverable for the user consider adding it to the <code>configurationAttributes</code> or <code>initialConfigurations</code> sections of the <code>debuggers</code> contribution point.</p>
+</li>
+</ul>
+<h3>Debug Extension Authoring: Additions to the Debug Protocol</h3>
+<p>The debug protocol has been extended in three areas (and VS Code already provides the corresponding UI):</p>
+<ul>
+<li><strong>Editing variables</strong>: If a debug adapter returns the <a href="https://github.com/Microsoft/vscode-debugadapter-node/blob/master/protocol/src/debugProtocol.ts#L594">capability <code>supportsSetVariable</code></a>, VS Code supports setting the value of unstructured (leaf) variables in the Variables view by calling the <a href="https://github.com/Microsoft/vscode-debugadapter-node/blob/master/protocol/src/debugProtocol.ts#L476"><code>setVariable</code> request</a>.</li>
+<li><strong>Stepping backward</strong>: If a debug adapter returns the <a href="https://github.com/Microsoft/vscode-debugadapter-node/blob/master/protocol/src/debugProtocol.ts#L592">capability <code>supportsStepBack</code></a>, VS Code enables the UI for stepping back and will call the <a href="https://github.com/Microsoft/vscode-debugadapter-node/blob/master/protocol/src/debugProtocol.ts#L476"><code>stepBack</code> request</a>.</li>
+<li><strong>Show variable type on hover</strong>: If a debug adapter returns the optional <code>type</code> attribute for the <a href="https://github.com/Microsoft/vscode-debugadapter-node/blob/master/protocol/src/debugProtocol.ts#L741"><code>variable</code> type</a>, VS Code will show  the value of this attribute when hovering over the variable's name.</li>
+</ul>
+<h3>Creating Errors/Warnings from an Extension (Diagnostics)</h3>
+<p>With the introduction of the new <strong>Problems</strong> panel, we started to work on support for project wide builders and linters. As a first step, we eliminated the automatic clearing of problems when an document is closed. Otherwise opening and closing a document would change the problem set generated by a project wide builder. Due to this change, extensions like linters generating diagnostics are responsible for clearing them when a document is closed. All extension providers generating diagnostics need to adopt to this change.</p>
+<p>In a linter that uses the <code>vscode-language-server</code> node module, this can be achieved as follows:</p>
+<pre><code class="typescript">documents.onDidClose((event) =&gt; {
+  connection.sendDiagnostics({ uri: event.document.uri, diagnostics: [] });
+});
+</code></pre>
+<h2 id="_monaco-editor" data-needslink="_monaco-editor">Monaco Editor<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_monaco-editor">#</a></h2>
+<p>The Monaco Editor is now on <a href="https://www.npmjs.com/package/monaco-editor-core">npm</a>! It is the VS Code source code editor extracted and packaged as a library that can be integrated in any web application to work in any modern browser. We have created a <a href="https://microsoft.github.io/monaco-editor/index.html">playground</a> showcasing some of the APIs. You can get it via <code>npm install monaco-editor</code>.</p>
+<p>All further Monaco Editor specific release notes will be available at its distribution <a href="https://github.com/Microsoft/monaco-editor/blob/master/CHANGELOG.md">repository</a>.</p>
+<p><img src="./Visual Studio Code June 2016 1.3_files/June_2016_monaco-editor-playground.png" alt="Monaco Editor Playground"></p>
+<h3>CSS/LESS/SCSS and JSON language services are now available</h3>
+<p>Additionally, the CSS/LESS/SASS parser and language intelligence source code has been extracted to a separate node module <a href="https://github.com/Microsoft/vscode-css-languageservice">vscode-css-languageservice</a> which is used by both the <a href="https://github.com/Microsoft/monaco-editor">Monaco editor</a> as well as VS Code, bringing the same CSS editing experience to the web browser.</p>
+<p>Same for JSON, where the language service, including the JSON schema validator, were extracted to <a href="https://github.com/Microsoft/vscode-json-languageservice">vscode-json-languageservice</a> which again is shared with the <a href="https://github.com/Microsoft/monaco-editor">Monaco editor</a>.</p>
+<h2 id="_notable-bug-fixes" data-needslink="_notable-bug-fixes">Notable Bug Fixes<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_notable-bug-fixes">#</a></h2>
+<p>The SASS mode language id has been renamed from 'sass' to 'scss'. If you have customized any linter settings for Sass, just rename the configuration keys from 'sass.' to 'scss.'.</p>
+<ul>
+<li><a href="https://github.com/Microsoft/vscode/issues/6316">6316</a>: Update should reopen all last opened folders</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/1210">1210</a>: Open file dialog should start in the directory for the current active file</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/7391">7391</a>: editor becomes unresponsive all the time since last update
+<ul>
+<li>This fix improves the memory footprint of all colorizers through the use of immutable linked lists for representing colorizer states in-between lines in <a href="https://github.com/Microsoft/vscode-textmate">vscode-textmate</a>.</li>
+</ul>
+</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/8173">8173</a>: Noticeable delay opening a Markdown file (source)
+<ul>
+<li>The implementation of a 10x faster hand-written plist parser for TextMate grammars improves the start-up time of all colorizers. We are looking into extracting this implementation to its own node module.</li>
+</ul>
+</li>
+</ul>
+<p>In addition, the following bugs were fixed with the Integrated Terminal:</p>
+<ul>
+<li><a href="https://github.com/Microsoft/vscode/issues/7911">#7911</a>: Terminal lines appears to have margin</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/7684">#7684</a>: Clicking into editor does not properly take focus from Terminal view</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/7458">#7458</a>: Runaway terminalProcess processes</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/6738">#6738</a>, <a href="https://github.com/Microsoft/vscode/issues/7442">#7442</a>, <a href="https://github.com/Microsoft/vscode/issues/7444">#7444</a>: Several issues related to resizing the terminal</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/6743">#6743</a>: Mouse wheel scrolling in integrated terminal only works on filled areas</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/7357">#7357</a>: Invoking the terminal sometimes yields an error "Cannot set property 'innerHTML' of undefined"</li>
+<li><a href="https://github.com/Microsoft/vscode/issues/6457">#6457</a>: vim overrides the terminal color scheme</li>
+</ul>
+<p>These are the <a href="https://github.com/Microsoft/vscode/issues?q=is%3Aissue+label%3Abug+milestone%3A%22June+2016%22+is%3Aclosed">closed bugs</a> and these are the <a href="https://github.com/Microsoft/vscode/issues?q=is%3Aissue+milestone%3A%22June+2016%22+is%3Aclosed+label%3Afeature-request">closed feature requests</a> for the 1.3 update.</p>
+<h2 id="_downloads" data-needslink="_downloads">Downloads<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_downloads">#</a></h2>
+<p>Downloads: <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/VSCodeSetup-stable.exe">Windows</a> |
+<a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/VSCode-darwin-stable.zip">OS X</a> | Linux 64-bit <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/VSCode-linux-x64-stable.zip">.zip</a> <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/code_1.3.0-1467909982_amd64.deb">.deb</a> <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/code-1.3.0-1467909982.el7.x86_64.rpm">.rpm</a> | Linux 32-bit <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/VSCode-linux-ia32-stable.zip">.zip</a> <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/code_1.3.0-1467910772_i386.deb">.deb</a> <a href="https://az764295.vo.msecnd.net/stable/e724f269ded347b49fcf1657fc576399354e6703/code-1.3.0-1467910772.el7.i386.rpm">.rpm</a></p>
+<h2 id="_thank-you" data-needslink="_thank-you">Thank You<a class="hash-link hidden" href="https://code.visualstudio.com/updates#_thank-you">#</a></h2>
+<p>Last but certainly not least, a big <em><strong>Thank You!</strong></em> to the following folks that helped to make VS Code even better:</p>
+<ul>
+<li><a href="https://github.com/mrmlnc">Denis Malinochkin (@mrmlnc)</a>: Emmet - support all the features <a href="https://github.com/Microsoft/vscode/pull/7926">PR #7926</a>, <a href="https://github.com/Microsoft/vscode/pull/8155">PR #8155</a>, <a href="https://github.com/Microsoft/vscode/pull/8489">PR #8489</a></li>
+<li><a href="https://github.com/roblourens">Rob Lourens (roblourens)</a>: UI support for TimeTravel Debugging <a href="https://github.com/Microsoft/vscode/pull/7734">PR #7734</a></li>
+<li><a href="https://github.com/f111fei">xzper (f111fei)</a>: Debug: Fix setConfiguration error when name is null or undefined  <a href="https://github.com/Microsoft/vscode/pull/7636">PR #7636</a></li>
+<li><a href="https://github.com/tstringer">Thomas Stringer (tstringer)</a>: Added remove and disable all breakpoints actions <a href="https://github.com/Microsoft/vscode/pull/7627">PR #7627</a></li>
+<li><a href="https://github.com/edumunoz">Ed Munoz (edumunoz)</a>:
+<ul>
+<li>Remove leaked breakpoint after stopping with run-to-cursor <a href="https://github.com/Microsoft/vscode/pull/7367">PR #7367</a></li>
+<li>report RunToCursorAction as not supported when session not stopped <a href="https://github.com/Microsoft/vscode/pull/7371">PR #7371</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/elemongw">Giorgos Retsinas (@elemongw)</a>: Open window on activate when all windows are closed <a href="https://github.com/Microsoft/vscode/pull/7547">PR #7547</a></li>
+<li><a href="https://github.com/AArnott">Andrew Arnott (@AArnott)</a>: LS Protocol-Clarifications regarding JSON-RPC header <a href="https://github.com/Microsoft/language-server-protocol/pull/15">PR #15</a></li>
+<li><a href="https://github.com/vpavlin">Vaclav Pavlin (@vpavlin)</a>: LS Protocol-Fix typos in protocol.md  <a href="https://github.com/Microsoft/language-server-protocol/pull/20">PR #20</a></li>
+<li><a href="https://github.com/kisstkondoros">Tamas Kiss (@kisstkondoros)</a>:
+<ul>
+<li>Gutter icon background size limited <a href="https://github.com/Microsoft/vscode/pull/6553">PR #6553</a></li>
+<li>Horizontal selection movement implemented <a href="https://github.com/Microsoft/vscode/pull/6887">PR #6887</a></li>
+<li>Option to hide the status bar implement <a href="https://github.com/Microsoft/vscode/pull/6942">PR #6942</a></li>
+<li>Allow zooming with ctrl+mousewheel combination <a href="https://github.com/Microsoft/vscode/pull/6990">PR #6990</a></li>
+<li>Add an option to display control characters <a href="https://github.com/Microsoft/vscode/pull/7578">PR #7578</a></li>
+<li>fix for "screen cheese with long error messages" <a href="https://github.com/Microsoft/vscode/pull/8432">PR #8432</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/basarat">Basarat Ali Syed (@basarat)</a>: fix : Standalone Monaco text edit validation <a href="https://github.com/Microsoft/vscode/pull/7864">PR #7864</a></li>
+<li><a href="https://github.com/csvn">Christian Svensson (@csvn)</a>: Added order to snippet tab stops <a href="https://github.com/Microsoft/vscode/pull/7925">PR #7925</a></li>
+<li><a href="https://github.com/ph1ll">Phill (@ph1ll)</a>: fix 'shaddow' typo <a href="https://github.com/Microsoft/vscode/pull/7981">PR #7981</a></li>
+<li><a href="https://github.com/Huachao">Huachao Mao (@Huachao)</a>: Add Productivity into extension categories  <a href="https://github.com/Microsoft/vscode/pull/7304">PR #7304</a></li>
+<li><a href="https://github.com/sijad">Sajjad Hashemian (@sijad)</a>:
+<ul>
+<li>Improve 'Open in Terminal' on OS X. <a href="https://github.com/Microsoft/vscode/pull/6136">PR #6136</a></li>
+<li>Show warning for a long commit message <a href="https://github.com/Microsoft/vscode/pull/7399">PR #7399</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/gontadu">Eshwar Andhavarapu (@gontadu)</a>:
+<ul>
+<li>Addition of USE EXEC OPENQUERY syntax <a href="https://github.com/Microsoft/vscode/pull/8046">PR #8046</a></li>
+<li>Added .dsql and .psql filetypes <a href="https://github.com/Microsoft/vscode/pull/7491">PR #7491</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/alrra">Cătălin Mariș (@alrra)</a>: Treat <code>.webmanifest</code> files as JSON <a href="https://github.com/Microsoft/vscode/pull/8019">PR #8019</a></li>
+<li><a href="https://github.com/gravejester">Øyvind Kallstad (@gravejester)</a>: Refactored PowerShell language definitions  <a href="https://github.com/Microsoft/vscode/pull/7522">PR #7522</a></li>
+<li><a href="https://github.com/jhasse">Jan Niklas Hasse (@jhasse)</a>: Highlight .mk files as a Makefile  <a href="https://github.com/Microsoft/vscode/pull/7328">PR #7328</a></li>
+<li><a href="https://github.com/codepo8">Christian Heilmann (@codepo8)</a>: Adding autocomplete values of to input/select/textarea  <a href="https://github.com/Microsoft/vscode/pull/7152">PR #7152</a></li>
+</ul>
+
+			<div class="feedback" style="display: none;"><div data-reactroot="" class="widget"><div><h3>Thank you!</h3><p>We appreciate your feedback.</p></div></div></div>
+		</div>
+        <div class="hidden-xs col-sm-3 col-md-2">
+            <nav id="docs-subnavbar" class="affix-top">
+				<h4>In this update</h4>
+                <ul class="nav">
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_tabs">Tabs</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_extension-management">Extension Management</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_workbench">Workbench</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_editor">Editor</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_languages">Languages</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_debugging">Debugging</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_nodejs-debugging">Node.js Debugging</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_extension-authoring">Extension Authoring</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_monaco-editor">Monaco Editor</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_notable-bug-fixes">Notable Bug Fixes</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_downloads">Downloads</a></li>
+                	
+                		<li class=""><a href="https://code.visualstudio.com/updates#_thank-you">Thank You</a></li>
+                	
+                </ul>
+				<iframe id="twitter-widget-1" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Visual Studio Code June 2016 1.3_files/tweet_button.49c786af4341a3b6f7902429d573d1b3.en.html" style="position: static; visibility: visible; width: 63px; height: 20px;"></iframe>
+                <div class="connect-widget"><ul data-reactroot="" class="connect-links"><li id="connect-rssfeed"><a href="https://code.visualstudio.com/feed.xml" target="_blank"><div class="image rssfeed"></div><!-- react-text: 5 -->Subscribe<!-- /react-text --></a></li><li id="connect-stack-overflow"><a href="https://stackoverflow.com/questions/tagged/vscode" target="_blank"><div class="image stackoverflow"></div><!-- react-text: 9 -->Ask questions<!-- /react-text --></a></li><li id="connect-twitter"><a href="https://go.microsoft.com/fwlink/?LinkID=533687" target="_blank"><div class="image twitterhandle"></div><!-- react-text: 13 -->Follow @code<!-- /react-text --></a></li><li id="connect-uservoice"><a href="http://go.microsoft.com/fwlink/?LinkID=533482" target="_blank"><div class="image uservoice"></div><!-- react-text: 17 -->Request features<!-- /react-text --></a></li><li id="connect-github"><a href="http://www.github.com/Microsoft/vscode/issues" target="_blank"><div class="image github"></div><!-- react-text: 21 -->Report issues<!-- /react-text --></a></li></ul></div>
+			</nav>
+        </div>
+	</div>
+</div>
+
+		</div>
+
+        <meta itemprop="applicationCategory" content="Text Editor">
+        <meta itemprop="screenshot" content="http://localhost:7000/home-screenshot-mac-lg.png">
+        <meta itemprop="datePublished" content="2016-04-14">
+        <meta itemprop="operatingSystem" content="Mac, Linux, Windows">
+    </div>
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="row">
+                <div class="left col-md-7">
+                    <span class="message">Hello from Seattle.</span>
+                    <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="./Visual Studio Code June 2016 1.3_files/follow_button.49c786af4341a3b6f7902429d573d1b3.en.html" style="position: static; visibility: visible; width: 210px; height: 20px;" data-screen-name="code"></iframe>
+                    <div class="github-star-button">
+                        <iframe title="GitHub star button" src="./Visual Studio Code June 2016 1.3_files/github-btn.html" frameborder="0" scrolling="0" width="130px" height="20px"></iframe>
+                    </div>
+    
+                    <script>window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));</script>
+                </div>
+                <div class="right col-md-5">
+                    <ul class="links">
+                        <li><a id="footer-support-link" href="https://support.microsoft.com/en-us/assistedsupportproducts" target="_blank">Support</a></li>
+                        <li><a id="footer-privacy-link" href="http://www.microsoft.com/privacystatement/en-us/core/default.aspx" target="_blank">Privacy</a></li>
+                        <li><a id="footer-terms-link" href="http://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+                        <li><a id="footer-license-link" href="https://code.visualstudio.com/License">License</a></li>
+                    </ul>
+                    <div class="copyright">
+                        <a id="footer-microsoft-link" class="logo" href="http://www.microsoft.com/"><img src="./Visual Studio Code June 2016 1.3_files/microsoft-logo.png" height="20" alt="Microsoft homepage"></a>
+                        <span>© 2016 <span itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span itemprop="name">Microsoft</span></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>    <!-- inject:js -->
+    <script src="./Visual Studio Code June 2016 1.3_files/vendor.js"></script>
+    <script src="./Visual Studio Code June 2016 1.3_files/main.js"></script><iframe id="sumome-jquery-iframe" style="display: none;" src="./Visual Studio Code June 2016 1.3_files/saved_resource.html"></iframe>
+    <!-- endinject -->
+    
+    <script type="application/ld+json">
+        {
+            "@context" : "http://schema.org",
+            "@type" : "Product",
+            "name" : "Visual Studio Code",
+            "logo": "https://code.visualstudio.com/Content/images/vscode.ico",
+            "url" : "https://code.visualstudio.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://code.visualstudio.com/Search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            },
+            "sameAs" : [
+            "https://en.wikipedia.org/wiki/Visual_Studio_Code",
+            "https://www.facebook.com/visualstudio",
+            "https://twitter.com/code",
+            "http://blogs.msdn.com/b/vscode"
+            ]
+        }
+    </script>
+
+
+<a href="javascript:void(0);" title="SumoMe" style="border-radius: 3px 0px 0px 3px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px; position: fixed; z-index: 2147483647; padding: 0px; width: 44px; height: 40px; text-indent: -10000px; opacity: 1; display: none !important; background-color: rgb(0, 115, 183);"><span style="display:block;width:40px;height:40px;background:white;margin-left:4px;-webkit-border-radius: 3px 0 0 3px;-moz-border-radius: 3px 0 0 3px;-ms-border-radius: 3px 0 0 3px;-o-border-radius: 3px 0 0 3px;border-radius: 3px 0 0 3px;background-repeat:no-repeat;background-position:8px 8px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAPBJREFUeNpi/P//PwMtAeOoBSPAAobi7fVAuomh15OwTcXbO4AkMxCXEam+mAlIaQLxNCCHkQjDy4G4hAT1liALDgBxBhDPAwoy41BcDzUcBjLwWoJwzAGYBSCQAMSLMCwp3l4BJBuwGIPdEoThIHCAESr4DEhKQgWXAXEiMIx/AcXLgOxOAiE9A4izwHGCavgbIBaDWbAESEYjadoMxHuAeCKRiQVkyUe0YFwLtDSEBeYVNAt8oZhYkIFFDBz0TMgcKgMkC3o97wDJp1Q0HBT+V5F9wAANc2qBg7CMyITuJWoGD10sGC2uRy2gHAAEGACB725KrIq6EgAAAABJRU5ErkJggg==);"></span></a><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" src="./Visual Studio Code June 2016 1.3_files/saved_resource(1).html"></iframe></body></html>

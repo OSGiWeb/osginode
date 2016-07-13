@@ -9,8 +9,9 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 const ApplicationBar = () => (
   <AppBar 
-    title="Title"
-    iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+    style={{ textAlign: 'left' }}
+    title="一体化插件平台"
+    titleStyle={{ fontFamily: 'Roboto, Microsoft YaHei' }}
     iconElementRight={
       <IconMenu
         iconButtonElement={
@@ -19,9 +20,9 @@ const ApplicationBar = () => (
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
-        <MenuItem primaryText="Refresh" />
+        <MenuItem primaryText="打开" />
         <MenuItem primaryText="Help" />
-        <MenuItem primaryText="Sign out" />
+        <MenuItem primaryText="登出" />
       </IconMenu>
     }
   />

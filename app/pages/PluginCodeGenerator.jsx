@@ -15,7 +15,7 @@ var WidthProvider = require('react-grid-layout').WidthProvider;
 var ReactGridLayout = require('react-grid-layout');
 ReactGridLayout = WidthProvider(ReactGridLayout);
 
-
+// Material-UI
 import RaisedButton from 'material-ui/RaisedButton';
 import Title from 'react-title-component';
 import Container from '../components/materialDesign/Container';
@@ -28,6 +28,7 @@ import FontIcon from 'material-ui/FontIcon';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 
 /**
@@ -150,13 +151,32 @@ class PluginCodeGenerator extends Component {
     ];
 
 
+		const toolBarMenu = (
+      <ToolbarGroup >
+        <ToolbarTitle text="操作" />
+        <FontIcon className="muidocs-icon-custom-sort" />
+        <ToolbarSeparator />
+
+        <IconMenu
+          iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+          onChange={this.handleChangeSingle}
+          value={this.state.valueSingle}
+          >
+          <MenuItem value="1" primaryText="Refresh" />
+          <MenuItem value="2" primaryText="Send feedback" />
+          <MenuItem value="3" primaryText="Settings" />
+          <MenuItem value="4" primaryText="Help" />
+          <MenuItem value="5" primaryText="Sign out" />
+        </IconMenu>
+
+      </ToolbarGroup>);
 
 		return (
 			<div id="content">
 				<div>
 					<Title render={'插件代码生成工具'} />
 
-					<Container title="插件代码生成流程" >
+					<Container title="插件代码生成流程" menu={toolBarMenu} >
 
 						<div>
 							{/* widget content */}
@@ -409,7 +429,7 @@ class PluginCodeGenerator extends Component {
 									</UiValidate>
 								</div>
 							</div>
-						</div>					
+						</div>
 					</Container>
 				</div>
 			</div>

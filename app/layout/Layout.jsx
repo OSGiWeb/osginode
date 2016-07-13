@@ -144,11 +144,10 @@ class Layout extends Component {
     let docked = false;
     let showMenuIconButton = true;
 
-    const title =
-      router.isActive('/home') ? 'Home' :
-        router.isActive('/privateRepository') ? 'privateRepository' :
-          router.isActive('/publicRepository') ? 'publicRepository' :
-            router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : '';
+    const title = router.isActive('/home') ? 'Home' :
+      router.isActive('/privateRepository') ? 'privateRepository' :
+        router.isActive('/publicRepository') ? 'publicRepository' :
+          router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : '';
 
     if (this.props.width === LARGE && title !== '') {
       docked = true;
@@ -157,6 +156,7 @@ class Layout extends Component {
 
       styles.navDrawer = {
         zIndex: styles.appBar.zIndex - 1,
+        // fontWeight:'bold'
       };
       styles.root.paddingLeft = 256;
       styles.footer.paddingLeft = 256;
@@ -164,6 +164,7 @@ class Layout extends Component {
 
     styles.navDrawer = {
       zIndex: styles.appBar.zIndex - 1,
+      // fontWeight:'bold'
     };
 
     const { naviContents } = this.props.navigation;
