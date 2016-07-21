@@ -27,9 +27,8 @@ class ProgressDialog extends Component {
       <Dialog
         title="正在处理"
         titleStyle={styles.dialogTitle}
-        modal={false}
+        modal={true}
         open={this.props.open}
-        onRequestClose={this.handleClose}
         >
         <CircularProgress style={styles.progress} size={1.0}/>
       </Dialog>

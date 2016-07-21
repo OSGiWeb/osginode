@@ -35,11 +35,8 @@ class Home extends Component {
 
   processItems(items) {
     // Initialize variables
-    // var plugin = {
-    //   id: '',
-    //   text: ''
-    // };
     var itemCollection = [];
+
 
     // Remove private plugins, only the public plugins can be selected as depended plugin
     _.remove(items, function (n) {
@@ -50,10 +47,9 @@ class Home extends Component {
     for (let i = 0; i < items.length; i++) {
 
       let isNewCategory = false;
-      // plugin = {
-      //   id: data[i].id,
-      //   text: data[i].symbolicname + ':' + data[i].version
-      // }
+
+      // Process date format
+      items[i].date = _.split(items[i].date, 'T')[0];
 
       // Initialize itemCollection 
       if (itemCollection.length === 0) {
@@ -91,7 +87,7 @@ class Home extends Component {
 
     return (
       <div id="content" className="ng-scope faster fadeInUp">
-        <ShopWindow itemCollection={this.processItems(plugins)} />
+        <ShopWindow itemCollection={this.processItems(plugins) } />
       </div>
     )
   }

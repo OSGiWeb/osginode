@@ -77,7 +77,7 @@ export default (store) => {
         {/*<IndexRoute component={PrivateRepository} />*/}
         <Route path="home" component={Home} onEnter={requireAuth} />
         <Route path="privateRepository" component={PrivateRepository} onEnter={requireAuth} />
-        <Route path="publicRepository" component={PublicRepository} onEnter={requireAuth} />
+        <Route path="publicRepository" component={Home} onEnter={requireAuth} />
         <Route path="pluginCodeGenerator" component={PluginCodeGenerator} onEnter={requireAuth} />
       </Route>
     </Route>

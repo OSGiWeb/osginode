@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import Title from 'react-title-component';
 import { connect } from 'react-redux';
 import Header from './Header.jsx'
 import Navigation from './Navigation.jsx'
@@ -67,10 +68,10 @@ class Layout extends Component {
   getStyles() {
     const styles = {
       appBar: {
-        position: 'fixed',
+        // position: 'fixed',
         // Needed to overlap the examples
         zIndex: this.state.muiTheme.zIndex.appBar + 1,
-        top: 0,
+        // top: 0,
       },
       root: {
         paddingTop: spacing.desktopKeylineIncrement,
@@ -122,14 +123,26 @@ class Layout extends Component {
 
   handleChangeRequestNavDrawer = (open) => {
     this.setState({
-      navDrawerOpen: open,
+      navDrawerOpen: open
+    });
+  };
+
+  handleTouchTapLeftIconButton = () => {
+    this.setState({
+      navDrawerOpen: !this.state.navDrawerOpen
     });
   };
 
   handleChangeList = (event, value) => {
     this.context.router.push(value);
     this.setState({
-      navDrawerOpen: false,
+      navDrawerOpen: false
+    });
+  };
+
+  handleChangeMuiTheme = (muiTheme) => {
+    this.setState({
+      muiTheme: muiTheme,
     });
   };
 
@@ -141,14 +154,13 @@ class Layout extends Component {
     const router = this.context.router;
     const styles = this.getStyles();
 
-    let docked = false;
-    let showMenuIconButton = true;
-
     const title = router.isActive('/home') ? 'Home' :
       router.isActive('/privateRepository') ? 'privateRepository' :
         router.isActive('/publicRepository') ? 'publicRepository' :
           router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : '';
 
+    let docked = false;
+    let showMenuIconButton = true;
     if (this.props.width === LARGE && title !== '') {
       docked = true;
       navDrawerOpen = true;
@@ -162,18 +174,38 @@ class Layout extends Component {
       styles.footer.paddingLeft = 256;
     }
 
-    styles.navDrawer = {
-      zIndex: styles.appBar.zIndex - 1,
-      // fontWeight:'bold'
-    };
 
     const { naviContents } = this.props.navigation;
 
     return (
       <div>
         {/*<Header />*/}
+        <Title render="一体化插件平台" />
 
-        <ApplicationBar />
+        <ApplicationBar
+          style={styles.appBar}
+          title="一体化插件平台"
+          onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
+          showMenuIconButton={showMenuIconButton}
+          />
+        
+        {/*
+        {title !== '' ?
+          <div style={prepareStyles(styles.root) }>
+            <div style={prepareStyles(styles.content) }>
+              {React.cloneElement(children, {
+                onChangeMuiTheme: this.handleChangeMuiTheme,
+              }) }
+            </div>
+          </div> :
+          children
+        }
+        */}
+
+        <div id="main">
+          {this.props.children}
+        </div>
+
         <NavigationBar
           style={styles.navDrawer}
           location={location}
@@ -185,10 +217,7 @@ class Layout extends Component {
 
         {/*<Navigation />*/}
 
-        <div id="main" role="main">
-          {/*<Ribbon naviContents={naviContents}/> */}
-          {this.props.children}
-        </div>
+        
 
       </div>
     )

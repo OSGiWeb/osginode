@@ -11,6 +11,22 @@ import Select2 from '../components/smartAdmin/forms/inputs/Select2.jsx'
 import { setRepoWizardExpand } from '../actions/processes'
 import { updatePlugin, createPluginAttachments } from '../actions/plugins'
 
+// Material-UI
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import ExpandTransition from 'material-ui/internal/ExpandTransition';
+import TextField from 'material-ui/TextField';
+
+// React-Grid-Layout
+import {Responsive, WidthProvider} from 'react-grid-layout';
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
+
 let validateOptions = {
   highlight: function (element) {
     $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -35,6 +51,13 @@ var styles = {
 
 // TODO: use store to make params transfer bw. PrivateRepository and RepositoryChangeWizard
 class RepositoryChangeWizard extends Component {
+
+  static propTypes = {
+    process: PropTypes.object,
+    plugin: PropTypes.object,
+    dispatch: PropTypes.func
+  };
+
   constructor(props) {
     super(props);
     // Function called from events (e.g. 'click', 'submit'...) must be bound to 'this' class,
@@ -61,7 +84,10 @@ class RepositoryChangeWizard extends Component {
       },
       pluginList: [],
       uploadLibsName: [],
-      uploadDocsName: []
+      uploadDocsName: [],
+      loading: false,
+      finished: false,
+      stepIndex: 0,
     };
 
     // Initialize variables used in class
@@ -119,7 +145,7 @@ class RepositoryChangeWizard extends Component {
     // // Do upload progress calculate
     // g_uploadPercent = 0;
     // this.state.uploadProgress = 0;
-    
+
     var config = { // Callback to send upload progress back from request
       // progress: function (progressEvent) {
       //   var percentCompleted = (progressEvent.loaded / progressEvent.total) * 100;
@@ -129,7 +155,7 @@ class RepositoryChangeWizard extends Component {
 
     // Update plugin with attachments
     dispatch(createPluginAttachments(selectedData, attachments, config));
-    
+
     // Clear buffer for this transfer
     this.dependencies = [];
     this.uploadFiles = {
@@ -226,10 +252,112 @@ class RepositoryChangeWizard extends Component {
     }
   }
 
+  /* Material-UI */
+  handleNext = () => {
+    const {stepIndex} = this.state;
+    if (!this.state.loading) {
+      this.dummyAsync(() => this.setState({
+        loading: false,
+        stepIndex: stepIndex + 1,
+        finished: stepIndex >= 2,
+      }));
+    }
+  };
+
+  handlePrev = () => {
+    const {stepIndex} = this.state;
+    if (!this.state.loading) {
+      this.dummyAsync(() => this.setState({
+        loading: false,
+        stepIndex: stepIndex - 1,
+      }));
+    }
+  };
+
+  getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        return (
+          <p>
+            Select campaign settings.Campaign settings can include your budget, network, bidding
+            options and adjustments, location targeting, campaign end date, and other settings that
+            affect an entire campaign.
+          </p>
+        );
+      case 1:
+        return (
+          <div>
+            <TextField style={{ marginTop: 0 }} floatingLabelText="Ad group name" />
+            <p>
+              Ad group status is different than the statuses for campaigns, ads, and keywords, though the
+              statuses can affect each other.Ad groups are contained within a campaign, and each campaign can
+              have one or more ad groups.Within each ad group are ads, keywords, and bids.
+            </p>
+            <p>Something something whatever cool</p>
+          </div>
+        );
+      case 2:
+        return (
+          <p>
+            Try out different ad text to see what brings in the most customers, and learn how to
+            enhance your ads using features like ad extensions.If you run into any problems with your
+            ads, find out how to tell if they're running and how to resolve approval issues.
+          </p>
+        );
+      default:
+        return 'You\'re a long way from home sonny jim!';
+    }
+  }
+
+  renderContent() {
+    const {finished, stepIndex} = this.state;
+    const contentStyle = { margin: '0 16px', overflow: 'hidden' };
+
+    if (finished) {
+      return (
+        <div style={contentStyle}>
+          <p>
+            <a
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                this.setState({ stepIndex: 0, finished: false });
+              } }
+              >
+              Click here
+            </a> to reset the example.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div style={contentStyle}>
+        <div>{this.getStepContent(stepIndex) }</div>
+        <div style={{ marginTop: 24, marginBottom: 12 }}>
+          <FlatButton
+            label="Back"
+            disabled={stepIndex === 0}
+            onTouchTap={this.handlePrev}
+            style={{ marginRight: 12 }}
+            />
+          <RaisedButton
+            label={stepIndex === 2 ? 'Finish' : 'Next'}
+            primary={true}
+            onTouchTap={this.handleNext}
+            />
+        </div>
+      </div>
+    );
+  }
+
   render() {
 
     const { isRepoWizardExpand } = this.props.process;
     const { selectedData } = this.props.plugin;
+
+    // Material-UI
+    const {loading, stepIndex} = this.state;
 
     // Select2 options to get data from database via ajax 
     var options = {
@@ -544,6 +672,7 @@ class RepositoryChangeWizard extends Component {
           </div>
           {/* end widget div */}
         </JarvisWidget>
+
       )
     }
 
@@ -555,11 +684,11 @@ class RepositoryChangeWizard extends Component {
   }
 }
 
-RepositoryChangeWizard.propTypes = {
-  process: PropTypes.object,
-  plugin: PropTypes.object,
-  dispatch: PropTypes.func
-};
+// RepositoryChangeWizard.propTypes = {
+//   process: PropTypes.object,
+//   plugin: PropTypes.object,
+//   dispatch: PropTypes.func
+// };
 
 // Function passed in to `connect` to subscribe to Redux store updates.
 // Any time it updates, mapStateToProps is called.
@@ -717,3 +846,39 @@ export default connect(mapStateToProps)(RepositoryChangeWizard);
   //     }
   //   })
   // }
+
+
+
+
+
+
+
+
+
+  // <div>
+  //       <ResponsiveReactGridLayout className="layout" isDraggable={false} isResizable={false}
+  //         rowHeight={60}
+  //         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+  //         cols={{ lg: 12, md: 9, sm: 6, xs: 3, xxs: 1 }}
+  //         >
+
+  //         <div key="1" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
+  //           <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+  //             <Stepper activeStep={stepIndex}>
+  //               <Step>
+  //                 <StepLabel>Select campaign settings</StepLabel>
+  //               </Step>
+  //               <Step>
+  //                 <StepLabel>Create an ad group</StepLabel>
+  //               </Step>
+  //               <Step>
+  //                 <StepLabel>Create an ad</StepLabel>
+  //               </Step>
+  //             </Stepper>
+  //             <ExpandTransition loading={loading} open={true}>
+  //               {this.renderContent()}
+  //             </ExpandTransition>
+  //           </div>
+  //         </div>
+  //       </ResponsiveReactGridLayout>
+  //     </div>

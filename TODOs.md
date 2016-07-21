@@ -9,7 +9,9 @@
 - 切换成中文后，在切入到别的主页，如‘私有仓库’，'Recent projects' 没有自动翻译。
 - 下载 jquery-maskedinput，打包到scripts.js中，并激活uivalidation功能。
 - 如果插件Uploading File上传/更新成功，但插件信息创建/更新不成功，需要删除该上传/更新的file信息。
-- res.setHeader 下载附件名中有中文出现无法下载问题/程序崩溃
+- ~~res.setHeader 下载附件名中有中文出现无法下载问题/程序崩溃~~
+- 在创建插件时，不输入插件名造成卡在创建Progress界面 => 创建异常处理机制（Snackbar）
+
 
 
 
@@ -37,7 +39,8 @@
 - Check 插件发布流程的validation,出现了不上传附件无法发布插件的情况
 - ~~使用 React-Boostrap UI 库修改所有 Modal UI / Boostrap 布局相关的 UI~~
 - 使用 Flex-Grid-React 组件替换 Bootsrap layout 组件，实现组件布局 -> 动态添加，动态调整大小
-- 下载好看的中文字体
+- ~~下载好看的中文字体(使用黑体)~~
+- 添加导航菜单隐藏/显示功能，并根据屏幕大小显示左上toggle按钮
 
 
 ## Features

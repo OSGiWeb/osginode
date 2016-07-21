@@ -176,7 +176,7 @@ class PublicRepository extends Component {
   //     category: ReactDOM.findDOMNode(this.refs.category).value,
   //     version: ReactDOM.findDOMNode(this.refs.version).value,
   //     author: userFullname,
-  //     releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
+  //     date: ReactDOM.findDOMNode(this.refs.date).value,
   //     description: ReactDOM.findDOMNode(this.refs.description).value,
   //     dependencies: dependencies,
   //     isprivate: true,
@@ -224,7 +224,7 @@ class PublicRepository extends Component {
   //   selectedData.category = ReactDOM.findDOMNode(this.refs.editcategory).value;
   //   selectedData.version = ReactDOM.findDOMNode(this.refs.editversion).value;
   //   selectedData.author = userFullname;
-  //   selectedData.releasedate = ReactDOM.findDOMNode(this.refs.editreleasedate).value;
+  //   selectedData.date = ReactDOM.findDOMNode(this.refs.editdate).value;
   //   selectedData.description = ReactDOM.findDOMNode(this.refs.editdescription).value;
   //
   //   dispatch(updatePlugin(selectedData));
@@ -295,7 +295,7 @@ class PublicRepository extends Component {
   //                       <div className="row">
   //                         <section className="col col-6">
   //                           <label className="input"> <i className="icon-append fa fa-calendar"/>
-  //                             <UiDatepicker type="text" name="releasedate" ref="releasedate" id="releasedate"
+  //                             <UiDatepicker type="text" name="date" ref="date" id="date"
   //                                           placeholder="发布时间"/>
   //                           </label>
   //                         </section>
@@ -401,8 +401,8 @@ class PublicRepository extends Component {
   //                         <div className="row">
   //                           <section className="col col-6">
   //                             <label className="input"> <i className="icon-append fa fa-calendar"/>
-  //                               <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
-  //                                             placeholder="发布时间" defaultValue={selectedData.releasedate}/>
+  //                               <UiDatepicker type="text" name="editdate" ref="editdate" id="editdate"
+  //                                             placeholder="发布时间" defaultValue={selectedData.date}/>
   //                             </label>
   //                           </section>
   //                         </div>
@@ -536,7 +536,7 @@ class PublicRepository extends Component {
       },
       columns: [
         {data: "index"}, {data: "pluginname"}, {data: "symbolicname"}, {data: "category"},
-        {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"},
+        {data: "version"}, {data: "author"}, {data: "date"}, {data: "description"},
         {data: "statusIcon"}]
     }
 

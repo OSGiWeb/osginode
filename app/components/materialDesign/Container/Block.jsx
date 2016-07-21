@@ -63,7 +63,7 @@ class Block extends Component {
 
     return (
       <div style={styles.root}>
-        <div onTouchTap={this.handleTouchTap} >
+        <div>
           <BlockTitle title={this.props.title} menu={this.props.menu} />
         </div>
 

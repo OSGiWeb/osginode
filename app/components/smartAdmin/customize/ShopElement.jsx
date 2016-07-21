@@ -35,12 +35,8 @@ import {green300, blue500, grey400, darkBlack, lightBlack} from 'material-ui/sty
 import {pinkA200, transparent} from 'material-ui/styles/colors';
 
 // React-Grid-Layout
-// var WidthProvider = require('react-grid-layout').WidthProvider;
-// var ReactGridLayout = require('react-grid-layout');
-// ReactGridLayout = WidthProvider(ReactGridLayout);
-
-import {Responsive, WidthProvider} from 'react-grid-layout';
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+// import {Responsive, WidthProvider} from 'react-grid-layout';
+// const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 /**
  * Styles for React component
@@ -270,7 +266,7 @@ class ShopElement extends Component {
         </CardText>
         <List>
           <ListItem style={styles.cardListItem} primaryText={"Stable (" + item.version + ")"} disabled={true} leftIcon={<ActionAssignment style={styles.cardListIcon} color={pinkA200}/>} />
-          <ListItem style={styles.cardListItem} primaryText={item.releasedate} disabled={true} leftIcon={<ContentDrafts style={styles.cardListIcon} />} />
+          <ListItem style={styles.cardListItem} primaryText={item.date} disabled={true} leftIcon={<ContentDrafts style={styles.cardListIcon} />} />
         </List>
         <Divider style={{ marginTop: "10px" }}/>
         <CardActions style={{ marginLeft: "5%" }}>
@@ -580,7 +576,7 @@ export default ShopElement;
 //       <ul className="list-unstyled text-left">
 //         <li><i className="fa fa-user"></i> <strong> 开发者： </strong> { item.author } </li>
 //         <li><i className="fa fa-file-excel-o"></i> <strong> 最新版本： </strong> { item.version } </li>
-//         <li><i className="fa fa-calendar"></i> <strong> 更新日期： </strong> { item.releasedate }  </li>
+//         <li><i className="fa fa-calendar"></i> <strong> 更新日期： </strong> { item.date }  </li>
 //         <li><i className="fa fa-download"></i> <strong> 下载次数： </strong> 84 </li>
 //         <li><i className="fa fa-star-half-full"></i> <strong> 星级： </strong>
 //           <i className="fa fa-star text-primary"></i>

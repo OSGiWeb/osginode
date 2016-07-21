@@ -93,12 +93,12 @@ class AppNavDrawer extends Component {
   //   }
   // }
 
-  handleRequestChangeLink = (event, value) => {
-    window.location = value;
-  };
+  // handleRequestChangeLink = (event, value) => {
+  //   window.location = value;
+  // };
 
   handleTouchTapHeader = () => {
-    this.context.router.push('/');
+    // this.context.router.push('/home');
     this.props.onRequestChangeNavDrawer(false);
   };
 
@@ -118,18 +118,15 @@ class AppNavDrawer extends Component {
         docked={docked}
         open={open}
         onRequestChange={onRequestChangeNavDrawer}
-        containerStyle={{ zIndex: zIndex.drawer - 100 }}
+        // containerStyle={{ zIndex: zIndex.drawer - 100 }}
         >
+        
         <div style={styles.logo} onTouchTap={this.handleTouchTapHeader}>
-          Material-UI
+          一体化插件平台
         </div>
 
-        <ListItem primaryText="主页" value="/home" href="/#/home" />
-
-        <SelectableList
-          value={location.pathname}
-          onChange={onChangeList}
-          >
+        <SelectableList value={location.pathname} onChange={onChangeList} >
+          <ListItem primaryText="主页" value="/home" href="/#/home" />
           <ListItem
             primaryText="插件开发"
             primaryTogglesNestedList={true}

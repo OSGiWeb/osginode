@@ -14,7 +14,7 @@ var PluginSchema = new mongoose.Schema({
   category: String,
   version: String,
   author: String,
-  releasedate: String,
+  date: { type: Date, default: Date.now },
   description: String,
   pluginintrod: String,
   installmanual: String,

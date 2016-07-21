@@ -43,8 +43,16 @@ import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import ContentLink from 'material-ui/svg-icons/content/link';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import Delete from 'material-ui/svg-icons/action/delete';
-import ProgressDialog from '../components/materialDesign/utility/ProgressDialog'
 
+// Import user defined modules
+import ProgressDialog from '../components/materialDesign/dialog/ProgressDialog'
+import BasicPluginInfo from '../components/materialDesign/dialog/BasicPluginInfo'
+import ReleasePluginDialog from '../components/materialDesign/dialog/ReleasePluginDialog'
+
+// Layout
+var WidthProvider = require('react-grid-layout').WidthProvider;
+var ReactGridLayout = require('react-grid-layout');
+ReactGridLayout = WidthProvider(ReactGridLayout);
 
 import {createPlugin, fetchPlugins, showNotificationDone, downloadPluginPkg,
   resetStoreStates, setDatatableSelectedData, updatePlugin, updatePluginWithSourcecode, deletePlguin } from '../actions/plugins';
@@ -126,6 +134,12 @@ var g_uploadPercent = 0;
 
 class PrivateRepository extends Component {
 
+  static propTypes = {
+    plugin: PropTypes.object,
+    user: PropTypes.object,
+    dispatch: PropTypes.func
+  };
+
   constructor(props) {
     super(props);
 
@@ -140,19 +154,20 @@ class PrivateRepository extends Component {
     this.onChangePluginUploadField = this.onChangePluginUploadField.bind(this);
     this.onChangeEditPluginUploadField = this.onChangeEditPluginUploadField.bind(this);
     this.onDownloadPluginPkg = this.onDownloadPluginPkg.bind(this);
-    this.onAddPluginModalClose = this.onAddPluginModalClose.bind(this);
-    this.onEditPluginModalClose = this.onEditPluginModalClose.bind(this);
-    this.onAddPluginModalOpen = this.onAddPluginModalOpen.bind(this);
-    this.onEditPluginModalOpen = this.onEditPluginModalOpen.bind(this);
+    // this.onAddPluginDialogClose = this.onAddPluginDialogClose.bind(this);
+    // this.onEditPluginDialogClose = this.onEditPluginDialogClose.bind(this);
+    // this.onAddPluginDialogOpen = this.onAddPluginDialogOpen.bind(this);
+    // this.onEditPluginDialogOpen = this.onEditPluginDialogOpen.bind(this);
 
     this.onIconMenuItemClick = this.onIconMenuItemClick.bind(this);
 
     // Initialize react state variables
     this.state = {
       uploadProgress: 0,
-      showAddPluginModal: false,
-      showEditPluginModal: false,
-      showProcessProgress: false
+      showAddPluginDialog: false,
+      showEditPluginDialog: false,
+      showProcessProgress: false,
+      showReleasePluginDialog: false,
     };
   }
 
@@ -322,7 +337,7 @@ class PrivateRepository extends Component {
       category: ReactDOM.findDOMNode(this.refs.category).value,
       version: ReactDOM.findDOMNode(this.refs.version).value,
       author: userFullname,
-      releasedate: ReactDOM.findDOMNode(this.refs.releasedate).value,
+      date: ReactDOM.findDOMNode(this.refs.date).value,
       description: ReactDOM.findDOMNode(this.refs.description).value,
       dependencies: [],
       isprivate: true,
@@ -333,7 +348,7 @@ class PrivateRepository extends Component {
     }, uploadFile, config)); // upload data info and upload config as parameter
 
     // Close Add plugin modal
-    this.setState({ showAddPluginModal: false });
+    this.setState({ showAddPluginDialog: false });
   }
 
   onChangePluginUploadField(event) {
@@ -403,7 +418,7 @@ class PrivateRepository extends Component {
     selectedData.category = ReactDOM.findDOMNode(this.refs.editcategory).value;
     selectedData.version = ReactDOM.findDOMNode(this.refs.editversion).value;
     selectedData.author = userFullname;
-    selectedData.releasedate = ReactDOM.findDOMNode(this.refs.editreleasedate).value;
+    selectedData.date = ReactDOM.findDOMNode(this.refs.editdate).value;
     selectedData.description = ReactDOM.findDOMNode(this.refs.editdescription).value;
 
 
@@ -437,7 +452,7 @@ class PrivateRepository extends Component {
     }
 
     // Close edit plugin modal 
-    this.setState({ showEditPluginModal: false });
+    this.setState({ showEditPluginDialog: false });
   }
 
   /**
@@ -476,34 +491,135 @@ class PrivateRepository extends Component {
     });
   }
 
-  /* Dialog Control Functions */
-  onAddPluginModalOpen() {
-    this.setState({ showAddPluginModal: true });
+  /* Dialog Open / Submit / Cancel Action Functions */
+  onAddPluginDialogOpen = () => {
+    this.setState({ showAddPluginDialog: true });
   }
 
-  onEditPluginModalOpen() {
-    this.setState({ showEditPluginModal: true });
+  onEditPluginDialogOpen = () => {
+    this.setState({ showEditPluginDialog: true });
   }
 
-  onAddPluginModalClose() {
-    this.setState({ showAddPluginModal: false });
+  onShowReleasePluginDialogOpen = () => {
+   this.setState({ showReleasePluginDialog: true });
   }
 
-  onEditPluginModalClose() {
-    this.setState({ showEditPluginModal: false });
+  // onAddPluginDialogClose() {
+  //   this.setState({ showAddPluginDialog: false });
+  // }
+
+  // onEditPluginDialogClose() {
+  //   this.setState({ showEditPluginDialog: false });
+  // }
+
+  // onShowReleasePluginDialogClose() {
+  //   this.setState({ showReleasePluginDialog: false });
+  // }
+
+  
+  onAddPluginDialogSubmit = (data) => {
+    const { userFullname } = this.props.user;
+
+    // Sending plugin data to node and saving to database
+    const { dispatch } = this.props;
+
+    // Show upload progress
+    this.setState({ showProcessProgress: true });
+
+    // Get uploaded file instance in create plugin form
+    let file = data.inputfile;
+    // Create form data to let server know the request source is from a form
+    let uploadFile = new FormData();
+    uploadFile.append('pluginfile', file);
+
+    // // Start upload progress control timer
+    // this.interval = setInterval(this.tick.bind(this), 500);
+    // // Do upload progress calculate
+    // g_uploadPercent = 0;
+    // this.state.uploadProgress = 0;
+    // var config = { // Callback to send upload progress back from request
+    //   progress: function (progressEvent) {
+    //     var percentCompleted = (progressEvent.loaded / progressEvent.total) * 100;
+    //     g_uploadPercent = parseFloat(percentCompleted.toFixed(2));
+    //   }
+    // }
+
+    // Dispath create plugin action
+    dispatch(createPlugin({
+      pluginname: data.pluginname,
+      symbolicname: data.symbolicname,
+      category: data.category,
+      version: data.version,
+      author: userFullname,
+      date: data.date,
+      description: data.description,
+      dependencies: [],
+      isprivate: true,
+      filemeta: {
+        sourcecode: { id: '', name: file.name }
+      },
+      statusIcon: "<span class='label label-danger'>私有</span>"
+    }, uploadFile, '')); // upload data info and upload config as parameter
+
+    // Close Add plugin modal
+    this.setState({ showAddPluginDialog: false });
+  }
+
+  onAddPluginDialogCancel = () => {
+    this.setState({ showAddPluginDialog: false });
+  }
+
+  onEditPluginDialogSubmit = (data) => {
+    const { dispatch } = this.props;
+    const { selectedData } = this.props.plugin;
+    const { userFullname } = this.props.user
+
+    selectedData.pluginname = data.pluginname;
+    selectedData.symbolicname = data.symbolicname;
+    selectedData.category = data.category;
+    selectedData.version = data.version;
+    selectedData.author = userFullname;
+    selectedData.date = data.date;
+    selectedData.description = data.description;
+
+    let file = data.inputfile;
+    // Update plugin with new uploading file
+    if (file !== undefined) {
+      // Create form data to let server know the request source is from a form
+      let uploadFile = new FormData();
+      uploadFile.append('editpluginfile', file);
+
+      // Dispatch update plugin with uploaded files
+      selectedData.filemeta.sourcecode.name = file.name;
+      dispatch(updatePluginWithSourcecode(selectedData, uploadFile, ''));
+    } else { // If no upload file selected, update only plugin info in database
+      dispatch(updatePlugin(selectedData));
+    }
+
+    // Close edit plugin modal 
+    this.setState({ showEditPluginDialog: false });
+  }
+
+  onEditPluginDialogCancel = () => {
+    this.setState({ showEditPluginDialog: false });
+  }
+
+  onReleasePluginDialogSubmit = () => {
+
+  }
+  onReleasePluginDialogCancel = () => {
+    this.setState({ showReleasePluginDialog: false });
   }
 
   /* Plugin opertation icon menu control */
   onIconMenuItemClick(event, child) {
-
-
     switch (child.ref) {
-
       case 'edit':
-        this.onEditPluginModalOpen();
+        this.onEditPluginDialogOpen();
         break;
       case 'release':
-        this.onToggleStatus()
+        // this.onToggleStatus();
+        this.onShowReleasePluginDialogOpen();
         break;
       case 'download':
         this.onDownloadPluginPkg();
@@ -511,249 +627,15 @@ class PrivateRepository extends Component {
       case 'delete':
         this.onDeletePlugin();
         break;
-
       default:
         break;
-    }
-
-
-  }
-
-  /**
-   * renderAddPluginModal
-   * @returns {XML}
-   */
-  renderAddPluginModal() {
-
-    return (
-      <Modal show={this.state.showAddPluginModal} onHide={this.onAddPluginModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title style={{ fontWeight: 'bold' }} >
-            <h2>
-              <i className="fa fa-reorder"/> 添加插件
-            </h2>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            <div className="widget-body no-padding">
-              <UiValidate options={validationOptions}>
-                <form id="addplugin-form" className="smart-form" noValidate="novalidate">
-                  <fieldset>
-                    <div className="row">
-                      <section className="col col-6">
-                        <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-                          <input type="text" name="pluginname" ref="pluginname" placeholder="名称"/>
-                        </label>
-                      </section>
-                      <section className="col col-6">
-                        <label className="input"> <i className="icon-append fa fa-user"/>
-                          <input type="text" name="symbolicname" ref="symbolicname" placeholder="标识" defaultValue="com.plugins."/>
-                        </label>
-                      </section>
-                    </div>
-
-                    <div className="row">
-                      <section className="col col-6">
-                        <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                          <input type="text" name="version" ref="version" placeholder="版本号" defaultValue="0.0.1" />
-                        </label>
-                      </section>
-                      <section className="col col-6">
-                        <label className="select">
-                          <select name="category" ref="category" defaultValue={"显示插件"}>
-                            <option value="类别" disabled={true}>类别</option>
-                            <option value="核心插件">核心插件</option>
-                            <option value="显示插件">显示插件</option>
-                            <option value="通信插件">通信插件</option>
-                            <option value="辅助插件">辅助插件</option>
-                          </select> <i/> </label>
-                      </section>
-                    </div>
-
-                    <div className="row">
-                      <section className="col col-6">
-                        <label className="input"> <i className="icon-append fa fa-calendar"/>
-                          <UiDatepicker type="text" name="releasedate" ref="releasedate" id="releasedate"
-                            placeholder="发布时间"/>
-                        </label>
-                      </section>
-                    </div>
-                  </fieldset>
-
-                  <fieldset>
-                    <section>
-                      <div className="input input-file">
-                        <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onChangePluginUploadField}/>
-                          上传</span>
-                        <input name="fileinputname" ref="fileinputname" type="text" placeholder="上传插件源码包" readOnly={true}/>
-                      </div>
-                    </section>
-
-                    <section>
-                      <label className="textarea"> <i className="icon-append fa fa-comment"/>
-                        <textarea rows="5" disabled="disabled" name="description" ref="description" placeholder="插件描述" value="测试插件，部分域不可被输入信息。"/>
-                      </label>
-                    </section>
-                  </fieldset>
-                </form>
-              </UiValidate>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.onAddPluginModalClose}> 取消 </Button>
-          <Button className="btn btn-primary" onClick={this.onCreatePluginSubmit}> 添加插件 </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-
-  /**
-   * renderEditPluginModal
-   * @returns {XML}
-   */
-  renderEditPluginModal() {
-
-    const { isSelected, selectedData } = this.props.plugin;
-
-    if (isSelected) {
-
-      return (
-        <Modal show={this.state.showEditPluginModal} onHide={this.onEditPluginModalClose}>
-          <Modal.Header closeButton>
-            <Modal.Title style={{ fontWeight: 'bold' }} >
-              <h2>
-                <i className="fa fa-reorder"/> 编辑插件
-              </h2>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <div className="widget-body no-padding">
-                <UiValidate options={validationOptions}>
-                  <form id="editplugin-form" className="smart-form" noValidate="novalidate">
-                    <fieldset>
-                      <div className="row">
-                        <section className="col col-6">
-                          <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
-                            <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={selectedData.pluginname}/>
-                          </label>
-                        </section>
-                        <section className="col col-6">
-                          <label className="input"> <i className="icon-append fa fa-user"/>
-                            <input type="text" name="editsymbolicname" ref="editsymbolicname" placeholder="标识" defaultValue={selectedData.symbolicname}/>
-                          </label>
-                        </section>
-                      </div>
-
-                      <div className="row">
-                        <section className="col col-6">
-                          <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
-                            <input type="text" name="editversion" ref="editversion" placeholder="版本号" defaultValue={selectedData.version}/>
-                          </label>
-                        </section>
-                        <section className="col col-6">
-                          <label className="select">
-                            <select name="editcategory" ref="editcategory" defaultValue={selectedData.category}>
-                              <option value="类别" disabled={true}>类别</option>
-                              <option value="核心插件">核心插件</option>
-                              <option value="显示插件">显示插件</option>
-                              <option value="通信插件">通信插件</option>
-                              <option value="辅助插件">辅助插件</option>
-                            </select> <i/> </label>
-                        </section>
-                      </div>
-
-                      <div className="row">
-                        <section className="col col-6">
-                          <label className="input"> <i className="icon-append fa fa-calendar"/>
-                            <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
-                              placeholder="发布时间" defaultValue={selectedData.releasedate}/>
-                          </label>
-                        </section>
-                      </div>
-                    </fieldset>
-
-                    <fieldset>
-                      <section>
-                        <div className="input input-file">
-                          <span className="button"><input id="editfile" type="file" name="editpluginfile" ref="editpluginfile"
-                            onChange={this.onChangeEditPluginUploadField}/> 更新 </span>
-                          <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件源码包即保留已上传的文件" readOnly={true}/>
-                        </div>
-                      </section>
-                      <section>
-                        <label className="textarea"> <i className="icon-append fa fa-comment"/>
-                          <textarea rows="5" name="editdescription" ref="editdescription" placeholder="插件描述" defaultValue={selectedData.description}/>
-                        </label>
-                      </section>
-                    </fieldset>
-                  </form>
-                </UiValidate>
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.onEditPluginModalClose}> 取消 </Button>
-            <Button className="btn btn-primary" onClick={this.onEditPluginSubmit}> 更新插件 </Button>
-          </Modal.Footer>
-        </Modal>
-      );
     }
   }
 
   renderPrivateRepository() {
-    // Check if row in datatable is selected
-    const { isSelected, selectedData } = this.props.plugin;
-
     return (
-      <div className="row">
-        <article className="col-sm-12">
-          <JarvisWidget sortable={false} colorbutton={false} togglebutton={false} editbutton={false}
-            fullscreenbutton={false} deletebutton={false} color="blueDark">
-            <header>
-              <span className="widget-icon"> <i className="fa fa-table"/> </span>
-              <h2>私有插件仓库</h2>
-              <div className="widget-toolbar">
-                <button className={classnames(["btn btn-xs btn-primary"]) } onClick={this.onAddPluginModalOpen}>
-                  <i className="fa fa-plus-square"/>
-                  &nbsp; &nbsp; 添加新插件
-                </button>
-                &nbsp; &nbsp;
-                <Dropdown className="btn-group" id="widget-demo-dropdown" >
-                  <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary" disabled={ !isSelected }>
-                    <i className="fa fa-wrench"/>&nbsp; &nbsp; 插件操作
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu pull-right">
-                    <bsMenuItem onClick={this.onEditPluginModalOpen}>
-                      <i className="fa fa-edit"/>&nbsp; 编辑
-                    </bsMenuItem>
-                    <bsMenuItem disabled={ !selectedData.isprivate } onClick={this.onToggleStatus} >
-                      <i className="fa fa-cloud-upload"/>&nbsp; 发布
-                    </bsMenuItem>
-                    <bsMenuItem onClick={this.onDownloadPluginPkg} >
-                      <i className="fa fa-cloud-download"/>&nbsp; 下载
-                    </bsMenuItem>
-                    <bsMenuItem onClick={this.onDeletePlugin}>
-                      <i className="fa fa-minus-square"/>&nbsp; 删除
-                    </bsMenuItem>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-
-              <div className="widget-toolbar">
-                <div className="progress progress-striped active" data-tooltip="55%"
-                  data-tooltip-placement="bottom">
-                  <div className="progress-bar progress-bar-success" ref="uploadprogress" role="progressbar"
-                    style={{ width: this.state.uploadProgress + '%' }}>{this.state.uploadProgress + '%'}
-                  </div>
-                </div>
-              </div>
-            </header>
-            { this.renderPrivateDataTable() }
-          </JarvisWidget>
-        </article>
+      <div>
+        { this.renderPrivateDataTable() }
       </div>
     )
   }
@@ -776,10 +658,16 @@ class PrivateRepository extends Component {
             formatData[i] = _.omit(json[i], '_id', '__v'); // Delete unused plugin info
             formatData[i].index = i + 1; // Add plugin numeric index
 
+            // Format date string 
+            formatData[i].date = _.split(formatData[i].date, 'T')[0];
+
             // Set status icon based on plugin status (private / public)
             formatData[i].statusIcon = formatData[i].isprivate ? "<span class='label label-danger'>私有</span>" :
               "<span class='label label-success'>公共</span>";
           }
+
+
+
           return formatData;
         }
       },
@@ -790,9 +678,12 @@ class PrivateRepository extends Component {
       stateSave: true,
       columns: [
         { data: "index" }, { data: "pluginname" }, { data: "symbolicname" }, { data: "category" },
-        { data: "version" }, { data: "author" }, { data: "releasedate" }, { data: "description" },
+        { data: "version" }, { data: "author" }, { data: "date" }, { data: "description" },
         { data: "statusIcon" }]
     }
+
+    // Format date string for table display
+    newPlugin.date = _.split(newPlugin.date, 'T')[0];
 
     return (
       <div>
@@ -845,7 +736,7 @@ class PrivateRepository extends Component {
           label="添加插件"
           primary={true}
           icon={<ContentAdd />}
-          onTouchTap={this.onAddPluginModalOpen}
+          onTouchTap={this.onAddPluginDialogOpen}
           />
 
         <IconMenu
@@ -868,23 +759,72 @@ class PrivateRepository extends Component {
     );
 
 
+
     return (
       <div id="content">
         <div>
           <Title render={'私有插件仓库'} />
 
           <Container title="私有仓库" menu={toolBarMenu} >
-
             <WidgetGrid>
               <RepositoryChangeWizard />
               { this.renderPrivateRepository() }
             </WidgetGrid>
-
-            { this.renderAddPluginModal() }
-            { this.renderEditPluginModal() }
-            { this.showSmartNotification() }
-            <ProgressDialog open={this.state.showProcessProgress}/>
           </Container>
+
+          {/* this.renderAddPluginModal() */}
+          {/* { this.renderEditPluginModal() }*/}
+          { this.showSmartNotification() }
+
+          <ProgressDialog open={this.state.showProcessProgress}/>
+
+          <ReleasePluginDialog
+            title="添加插件"
+            open={this.state.showReleasePluginDialog}
+            onSubmit={this.onReleasePluginDialogSubmit}
+            onCancel={this.onReleasePluginDialogCancel}
+            defaultInfo={{
+              pluginname: '',
+              symbolicname: 'com.plugins.',
+              category: '',
+              version: '',
+              date: new Date(),
+              description: '',
+              sourcecodeName: ''
+            }}
+            />
+          <BasicPluginInfo
+            title="添加插件"
+            open={this.state.showAddPluginDialog}
+            onSubmit={this.onAddPluginDialogSubmit}
+            onCancel={this.onAddPluginDialogCancel}
+            defaultInfo={{
+              pluginname: '',
+              symbolicname: 'com.plugins.',
+              category: '',
+              version: '',
+              date: new Date(),
+              description: '',
+              sourcecodeName: ''
+            }}
+            />
+          { isSelected === true ?
+            <BasicPluginInfo
+              title="编辑插件"
+              open={this.state.showEditPluginDialog}
+              onSubmit={this.onEditPluginDialogSubmit}
+              onCancel={this.onEditPluginDialogCancel}
+              defaultInfo={{
+                pluginname: selectedData.pluginname,
+                symbolicname: selectedData.symbolicname,
+                category: selectedData.category,
+                version: selectedData.version,
+                date: selectedData.date,
+                description: selectedData.description,
+                sourcecodeName: selectedData.filemeta.sourcecode.name
+              }}
+              /> : <div></div>
+          }
         </div>
 
       </div>
@@ -892,11 +832,11 @@ class PrivateRepository extends Component {
   }
 }
 
-PrivateRepository.propTypes = {
-  plugin: PropTypes.object,
-  user: PropTypes.object,
-  dispatch: PropTypes.func
-};
+// PrivateRepository.propTypes = {
+//   plugin: PropTypes.object,
+//   user: PropTypes.object,
+//   dispatch: PropTypes.func
+// };
 
 // Function passed in to `connect` to subscribe to Redux store updates.
 // Any time it updates, mapStateToProps is called.
@@ -982,7 +922,7 @@ export default connect(mapStateToProps)(PrivateRepository);
 //         },
 //         columns: [
 //           {data: "index"}, {data: "pluginname"}, {data: "category"},
-//           {data: "version"}, {data: "author"}, {data: "releasedate"}, {data: "description"}]
+//           {data: "version"}, {data: "author"}, {data: "date"}, {data: "description"}]
 //       }
 //
 //       return (
@@ -1094,7 +1034,7 @@ export default connect(mapStateToProps)(PrivateRepository);
 //             </tr>
 //             <tr>
 //                 <td>发布时间：</td>
-//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.releasedate}"></td>
+//                 <td><input type="text" id="row-43-age" name="row-43-age" value="${d.date}"></td>
 //             </tr>
 //             <tr>
 //                 <td>描述：</td>
@@ -1171,8 +1111,8 @@ export default connect(mapStateToProps)(PrivateRepository);
       //                     <div className="row">
       //                       <section className="col col-6">
       //                         <label className="input"> <i className="icon-append fa fa-calendar"/>
-      //                           <UiDatepicker type="text" name="editreleasedate" ref="editreleasedate" id="editreleasedate"
-      //                             placeholder="发布时间" defaultValue={selectedData.releasedate}/>
+      //                           <UiDatepicker type="text" name="editdate" ref="editdate" id="editdate"
+      //                             placeholder="发布时间" defaultValue={selectedData.date}/>
       //                         </label>
       //                       </section>
       //                     </div>
@@ -1211,3 +1151,249 @@ export default connect(mapStateToProps)(PrivateRepository);
       //     </div>
       //   </div>
       // )
+
+
+  //      renderPrivateRepository() {
+  //   // Check if row in datatable is selected
+  //   // const { isSelected, selectedData } = this.props.plugin;
+  //   return (
+  //     <div>
+  //       {/*
+  //       <article className="col-sm-12">
+  //         <JarvisWidget sortable={false} colorbutton={false} togglebutton={false} editbutton={false}
+  //           fullscreenbutton={false} deletebutton={false} color="blueDark">
+  //           <header>
+  //             <span className="widget-icon"> <i className="fa fa-table"/> </span>
+  //             <h2>私有插件仓库</h2>
+  //             <div className="widget-toolbar">
+  //               <button className={classnames(["btn btn-xs btn-primary"]) } onClick={this.onAddPluginDialogOpen}>
+  //                 <i className="fa fa-plus-square"/>
+  //                 &nbsp; &nbsp; 添加新插件
+  //               </button>
+  //               &nbsp; &nbsp;
+  //               <Dropdown className="btn-group" id="widget-demo-dropdown" >
+  //                 <Dropdown.Toggle className="btn btn-xs dropdown-toggle btn-primary" disabled={ !isSelected }>
+  //                   <i className="fa fa-wrench"/>&nbsp; &nbsp; 插件操作
+  //                 </Dropdown.Toggle>
+  //                 <Dropdown.Menu className="dropdown-menu pull-right">
+  //                   <bsMenuItem onClick={this.onEditPluginDialogOpen}>
+  //                     <i className="fa fa-edit"/>&nbsp; 编辑
+  //                   </bsMenuItem>
+  //                   <bsMenuItem disabled={ !selectedData.isprivate } onClick={this.onToggleStatus} >
+  //                     <i className="fa fa-cloud-upload"/>&nbsp; 发布
+  //                   </bsMenuItem>
+  //                   <bsMenuItem onClick={this.onDownloadPluginPkg} >
+  //                     <i className="fa fa-cloud-download"/>&nbsp; 下载
+  //                   </bsMenuItem>
+  //                   <bsMenuItem onClick={this.onDeletePlugin}>
+  //                     <i className="fa fa-minus-square"/>&nbsp; 删除
+  //                   </bsMenuItem>
+  //                 </Dropdown.Menu>
+  //               </Dropdown>
+  //             </div>
+
+  //             <div className="widget-toolbar">
+  //               <div className="progress progress-striped active" data-tooltip="55%"
+  //                 data-tooltip-placement="bottom">
+  //                 <div className="progress-bar progress-bar-success" ref="uploadprogress" role="progressbar"
+  //                   style={{ width: this.state.uploadProgress + '%' }}>{this.state.uploadProgress + '%'}
+  //                 </div>
+  //               </div>
+  //             </div>
+  //           </header>
+  //           */}
+
+  //       { this.renderPrivateDataTable() }
+
+  //       {/*
+  //         </JarvisWidget>
+  //       </article>
+  //       */}
+  //     </div>
+  //   )
+  // }
+
+
+  /**
+   * renderAddPluginModal
+   * @returns {XML}
+   */
+// renderAddPluginModal() {
+
+//   return (
+//     <Modal show={this.state.showAddPluginDialog} onHide={this.onAddPluginDialogClose}>
+//       <Modal.Header closeButton>
+//         <Modal.Title style={{ fontWeight: 'bold' }} >
+//           <h2>
+//             <i className="fa fa-reorder"/> 添加插件
+//           </h2>
+//         </Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>
+//         <div>
+//           <div className="widget-body no-padding">
+//             <UiValidate options={validationOptions}>
+//               <form id="addplugin-form" className="smart-form" noValidate="novalidate">
+//                 <fieldset>
+//                   <div className="row">
+//                     <section className="col col-6">
+//                       <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
+//                         <input type="text" name="pluginname" ref="pluginname" placeholder="名称"/>
+//                       </label>
+//                     </section>
+//                     <section className="col col-6">
+//                       <label className="input"> <i className="icon-append fa fa-user"/>
+//                         <input type="text" name="symbolicname" ref="symbolicname" placeholder="标识" defaultValue="com.plugins."/>
+//                       </label>
+//                     </section>
+//                   </div>
+
+//                   <div className="row">
+//                     <section className="col col-6">
+//                       <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
+//                         <input type="text" name="version" ref="version" placeholder="版本号" defaultValue="0.0.1" />
+//                       </label>
+//                     </section>
+//                     <section className="col col-6">
+//                       <label className="select">
+//                         <select name="category" ref="category" defaultValue={"显示插件"}>
+//                           <option value="类别" disabled={true}>类别</option>
+//                           <option value="核心插件">核心插件</option>
+//                           <option value="显示插件">显示插件</option>
+//                           <option value="通信插件">通信插件</option>
+//                           <option value="辅助插件">辅助插件</option>
+//                         </select> <i/> </label>
+//                     </section>
+//                   </div>
+
+//                   <div className="row">
+//                     <section className="col col-6">
+//                       <label className="input"> <i className="icon-append fa fa-calendar"/>
+//                         <UiDatepicker type="text" name="date" ref="date" id="date"
+//                           placeholder="发布时间"/>
+//                       </label>
+//                     </section>
+//                   </div>
+//                 </fieldset>
+
+//                 <fieldset>
+//                   <section>
+//                     <div className="input input-file">
+//                       <span className="button"><input id="file" type="file" name="pluginfile" ref="pluginfile" onChange={this.onChangePluginUploadField}/>
+//                         上传</span>
+//                       <input name="fileinputname" ref="fileinputname" type="text" placeholder="上传插件源码包" readOnly={true}/>
+//                     </div>
+//                   </section>
+
+//                   <section>
+//                     <label className="textarea"> <i className="icon-append fa fa-comment"/>
+//                       <textarea rows="5" disabled="disabled" name="description" ref="description" placeholder="插件描述" value="测试插件，部分域不可被输入信息。"/>
+//                     </label>
+//                   </section>
+//                 </fieldset>
+//               </form>
+//             </UiValidate>
+//           </div>
+//         </div>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <Button onClick={this.onAddPluginDialogClose}> 取消 </Button>
+//         <Button className="btn btn-primary" onClick={this.onCreatePluginSubmit}> 添加插件 </Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
+
+// /**
+//  * renderEditPluginModal
+//  * @returns {XML}
+//  */
+// renderEditPluginModal() {
+
+//   const { isSelected, selectedData } = this.props.plugin;
+
+//   if (isSelected) {
+
+//     return (
+//       <Modal show={this.state.showEditPluginDialog} onHide={this.onEditPluginDialogClose}>
+//         <Modal.Header closeButton>
+//           <Modal.Title style={{ fontWeight: 'bold' }} >
+//             <h2>
+//               <i className="fa fa-reorder"/> 编辑插件
+//             </h2>
+//           </Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>
+//           <div>
+//             <div className="widget-body no-padding">
+//               <UiValidate options={validationOptions}>
+//                 <form id="editplugin-form" className="smart-form" noValidate="novalidate">
+//                   <fieldset>
+//                     <div className="row">
+//                       <section className="col col-6">
+//                         <label className="input"> <i className="icon-append fa fa-puzzle-piece"/>
+//                           <input type="text" name="editpluginname" ref="editpluginname" placeholder="名称" defaultValue={selectedData.pluginname}/>
+//                         </label>
+//                       </section>
+//                       <section className="col col-6">
+//                         <label className="input"> <i className="icon-append fa fa-user"/>
+//                           <input type="text" name="editsymbolicname" ref="editsymbolicname" placeholder="标识" defaultValue={selectedData.symbolicname}/>
+//                         </label>
+//                       </section>
+//                     </div>
+
+//                     <div className="row">
+//                       <section className="col col-6">
+//                         <label className="input"> <i className="icon-append fa fa-file-excel-o"/>
+//                           <input type="text" name="editversion" ref="editversion" placeholder="版本号" defaultValue={selectedData.version}/>
+//                         </label>
+//                       </section>
+//                       <section className="col col-6">
+//                         <label className="select">
+//                           <select name="editcategory" ref="editcategory" defaultValue={selectedData.category}>
+//                             <option value="类别" disabled={true}>类别</option>
+//                             <option value="核心插件">核心插件</option>
+//                             <option value="显示插件">显示插件</option>
+//                             <option value="通信插件">通信插件</option>
+//                             <option value="辅助插件">辅助插件</option>
+//                           </select> <i/> </label>
+//                       </section>
+//                     </div>
+
+//                     <div className="row">
+//                       <section className="col col-6">
+//                         <label className="input"> <i className="icon-append fa fa-calendar"/>
+//                           <UiDatepicker type="text" name="editdate" ref="editdate" id="editdate"
+//                             placeholder="发布时间" defaultValue={selectedData.date}/>
+//                         </label>
+//                       </section>
+//                     </div>
+//                   </fieldset>
+
+//                   <fieldset>
+//                     <section>
+//                       <div className="input input-file">
+//                         <span className="button"><input id="editfile" type="file" name="editpluginfile" ref="editpluginfile"
+//                           onChange={this.onChangeEditPluginUploadField}/> 更新 </span>
+//                         <input name="editfileinputname" ref="editfileinputname" type="text" placeholder="不上传新插件源码包即保留已上传的文件" readOnly={true}/>
+//                       </div>
+//                     </section>
+//                     <section>
+//                       <label className="textarea"> <i className="icon-append fa fa-comment"/>
+//                         <textarea rows="5" name="editdescription" ref="editdescription" placeholder="插件描述" defaultValue={selectedData.description}/>
+//                       </label>
+//                     </section>
+//                   </fieldset>
+//                 </form>
+//               </UiValidate>
+//             </div>
+//           </div>
+//         </Modal.Body>
+//         <Modal.Footer>
+//           <Button onClick={this.onEditPluginDialogClose}> 取消 </Button>
+//           <Button className="btn btn-primary" onClick={this.onEditPluginSubmit}> 更新插件 </Button>
+//         </Modal.Footer>
+//       </Modal>
+//     );
+//   }
+// }
