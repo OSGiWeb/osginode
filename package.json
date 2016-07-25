@@ -122,6 +122,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
     "react-router-redux": "^4.0.4",
+    "react-select": "^1.0.0-beta14",
     "react-tap-event-plugin": "^1.0.0",
     "react-title-component": "^1.0.1",
     "react-transform-catch-errors": "^1.0.2",

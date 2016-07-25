@@ -93,7 +93,6 @@ class BasicPluginInfo extends Component {
 
   openFileDialog = () => {
     let fileUploadDom = ReactDOM.findDOMNode(this.refs.fileUpload);
-    let pluginname = this.refs.pluginName.getValue();
     fileUploadDom.click();
   };
 

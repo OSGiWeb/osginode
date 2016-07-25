@@ -501,7 +501,7 @@ class PrivateRepository extends Component {
   }
 
   onShowReleasePluginDialogOpen = () => {
-   this.setState({ showReleasePluginDialog: true });
+    this.setState({ showReleasePluginDialog: true });
   }
 
   // onAddPluginDialogClose() {
@@ -516,7 +516,7 @@ class PrivateRepository extends Component {
   //   this.setState({ showReleasePluginDialog: false });
   // }
 
-  
+
   onAddPluginDialogSubmit = (data) => {
     const { userFullname } = this.props.user;
 
@@ -627,6 +627,8 @@ class PrivateRepository extends Component {
       case 'delete':
         this.onDeletePlugin();
         break;
+      case 'test':
+        this.onToggleStatus();
       default:
         break;
     }
@@ -754,6 +756,8 @@ class PrivateRepository extends Component {
             leftIcon={ <ContentLink style={styles.opMenuicon} /> }/>
           <MenuItem disabled={ !isSelected } ref="delete" style={styles.opMenuStyle} primaryText="删除"
             leftIcon={ <Delete style={styles.opMenuicon} /> }/>
+          <MenuItem disabled={ !isSelected } ref="test" style={styles.opMenuStyle} primaryText="测试"
+            leftIcon={ <Delete style={styles.opMenuicon} /> }/>
         </IconMenu>
       </ToolbarGroup>
     );
@@ -778,21 +782,6 @@ class PrivateRepository extends Component {
 
           <ProgressDialog open={this.state.showProcessProgress}/>
 
-          <ReleasePluginDialog
-            title="添加插件"
-            open={this.state.showReleasePluginDialog}
-            onSubmit={this.onReleasePluginDialogSubmit}
-            onCancel={this.onReleasePluginDialogCancel}
-            defaultInfo={{
-              pluginname: '',
-              symbolicname: 'com.plugins.',
-              category: '',
-              version: '',
-              date: new Date(),
-              description: '',
-              sourcecodeName: ''
-            }}
-            />
           <BasicPluginInfo
             title="添加插件"
             open={this.state.showAddPluginDialog}
@@ -808,6 +797,23 @@ class PrivateRepository extends Component {
               sourcecodeName: ''
             }}
             />
+          { isSelected === true ?
+            <ReleasePluginDialog
+              title="发布插件"
+              open={this.state.showReleasePluginDialog}
+              onSubmit={this.onReleasePluginDialogSubmit}
+              onCancel={this.onReleasePluginDialogCancel}
+              defaultInfo={{
+                pluginname: selectedData.pluginname,
+                symbolicname: selectedData.symbolicname,
+                category: selectedData.category,
+                version: selectedData.version,
+                date: selectedData.date,
+                description: selectedData.description,
+                sourcecodeName: selectedData.filemeta.sourcecode.name
+              }}
+              /> : <div></div>
+          }
           { isSelected === true ?
             <BasicPluginInfo
               title="编辑插件"
