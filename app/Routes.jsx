@@ -9,7 +9,6 @@ import Layout from './layout/Layout.jsx'
 import Home from './pages/Home.jsx'
 import LoginOrRegister from './pages/LoginOrRegister.jsx'
 import PrivateRepository from './pages/PrivateRepository.jsx'
-import PublicRepository from './pages/PublicRepository.jsx'
 import PluginCodeGenerator from './pages/PluginCodeGenerator.jsx'
 
 import preRenderMiddleware from './middlewares/preRenderMiddleware';

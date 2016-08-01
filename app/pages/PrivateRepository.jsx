@@ -1,51 +1,32 @@
 import React, { Component, PropTypes } from 'react'
 import _ from 'lodash'
-import classnames from 'classnames'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-import UiValidate from '../components/smartAdmin/forms/validation/UiValidate.jsx'
-import UiDatepicker from '../components/smartAdmin/forms/inputs/UiDatepicker.jsx'
-import Tagsinput from '../components/smartAdmin/forms/inputs/Tagsinput.jsx'
-import SubHeader from '../layout/SubHeader.jsx'
-import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
-import WidgetGrid from '../components/smartAdmin/layout/widgets/WidgetGrid.jsx'
-import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
+// Datatable 
 import Datatable from '../components/smartAdmin/tables/Datatable.jsx'
-import Select2 from '../components/smartAdmin/forms/inputs/Select2.jsx'
-import { Dropdown, MenuItem as bsMenuItem, Button, Modal } from 'react-bootstrap'
-
-import RepositoryChangeWizard from './RepositoryChangeWizard.jsx'
 
 // Material-UI
-import Paper from 'material-ui/Paper';
-import { RaisedButton, FloatingActionButton } from 'material-ui';
 import Title from 'react-title-component';
-import Container from '../components/materialDesign/Container';
-import IconButton from 'material-ui/IconButton';
-import CodeIcon from 'material-ui/svg-icons/action/code';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import { RaisedButton, IconButton } from 'material-ui';
 import {Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator } from 'material-ui/Toolbar';
-import IconMenu from 'material-ui/IconMenu';
-import FontIcon from 'material-ui/FontIcon';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import Divider from 'material-ui/Divider';
-import Download from 'material-ui/svg-icons/file/file-download';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {blue500, red500, greenA200} from 'material-ui/styles/colors';
+import { IconMenu, MenuItem } from 'material-ui';
 import Snackbar from 'material-ui/Snackbar';
-
 import Menu from 'material-ui/Menu';
+
+// Material-UI Icons
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import ContentLink from 'material-ui/svg-icons/content/link';
-import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import Delete from 'material-ui/svg-icons/action/delete';
 
+// Material-UI Colors
+import {blue500, red500, greenA200} from 'material-ui/styles/colors';
+
 // Import user defined modules
+import Container from '../components/materialDesign/Container';
 import ProgressDialog from '../components/materialDesign/dialog/ProgressDialog'
 import BasicPluginInfo from '../components/materialDesign/dialog/BasicPluginInfo'
 import ReleasePluginDialog from '../components/materialDesign/dialog/ReleasePluginDialog'
@@ -109,10 +90,6 @@ class PrivateRepository extends Component {
       showDeletePluginDialog: false,
       showSnackbar: false,
     };
-  }
-
-  componentDidMount() {
-
   }
 
   // Deconstructor
@@ -321,14 +298,6 @@ class PrivateRepository extends Component {
     }
   }
 
-  renderPrivateRepository() {
-    return (
-      <div>
-        { this.renderPrivateDataTable() }
-      </div>
-    )
-  }
-
   renderPrivateDataTable() {
     // TODO: Only render the plugin datatable when the data is arrived in store (temp. solution for debugging this page)
     // if (_isFetched) {
@@ -476,14 +445,9 @@ class PrivateRepository extends Component {
           <Title render={'私有插件仓库'} />
 
           <Container title="私有仓库" menu={toolBarMenu} >
-            <WidgetGrid>
-              <RepositoryChangeWizard />
-              { this.renderPrivateRepository() }
-            </WidgetGrid>
+            { this.renderPrivateDataTable() }
           </Container>
 
-          {/* this.renderAddPluginModal() */}
-          {/* { this.renderEditPluginModal() }*/}
           { this.renderSnackbar() }
 
           <ProgressDialog open={isProcessing}/>
@@ -554,12 +518,6 @@ class PrivateRepository extends Component {
     )
   }
 }
-
-// PrivateRepository.propTypes = {
-//   plugin: PropTypes.object,
-//   user: PropTypes.object,
-//   dispatch: PropTypes.func
-// };
 
 // Function passed in to `connect` to subscribe to Redux store updates.
 // Any time it updates, mapStateToProps is called.
