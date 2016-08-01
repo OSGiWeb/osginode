@@ -63,10 +63,12 @@ var styles = {
 	},
 	stepperLabel: {
 		fontSize: 16,
+		fontWeight: 'bold',
 	},
 	subhead: {
 		fontSize: 16,
-		marginLeft: -10
+		marginLeft: -10,
+		fontWeight: 'bold'
 	},
 	checkbox: {
 		fontSize: 15,

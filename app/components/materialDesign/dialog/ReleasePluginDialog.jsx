@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import _ from "lodash"
 import Select2 from '../../smartAdmin/forms/inputs/Select2.jsx'
+import Select from 'react-select';
+import fetch from 'isomorphic-fetch';
 
 // Material-UI component
 import { Dialog, FlatButton, TextField, DatePicker } from 'material-ui';
@@ -37,11 +39,12 @@ var styles = {
   },
   stepperLabel: {
     fontSize: 16,
+    fontWeight: 'bold',
   },
   subhead: {
     fontSize: 16,
-    marginLeft: -10,
-    marginBottom: -10
+    marginLeft: -15,
+    fontWeight: 'bold'
   },
   checkbox: {
     fontSize: 15,
@@ -93,8 +96,8 @@ class ReleasePluginDialog extends Component {
       loading: false,
       finished: false,
       stepIndex: 0,
-      inputFileName: '',
       filesTable: [],
+      selectValue: [],
     };
 
     // Initialize variables used in class
@@ -102,44 +105,53 @@ class ReleasePluginDialog extends Component {
     this.uploadFiles = {
       libs: [],
       docs: []
-    }
+    };
     this.selectedRows = [];
+    this.dataToServer = {
+      pluginintrod: '',
+      installmanual: '',
+      compilemanual: '',
+    };
   }
 
+  // Process submit data to callback impl. class
   processSubmitData = () => {
     const { onSubmit } = this.props;
+    const { selectValue } = this.state;
 
-    // Set submit data to callback function
-    // onSubmit({
-    //   pluginname: this.refs.pluginName.getValue(),
-    //   symbolicname: this.refs.pluginSymblicName.getValue(),
-    //   category: this.state.pluginType,
-    //   version: this.refs.pluginVersion.getValue(),
-    //   date: this.state.date,
-    //   inputfile: this.refs.fileUpload.files[0],
-    //   description: this.refs.pluginDescription.getValue()
-    // });
+    // Use 'callbackFunc.bind(this)' to use 'this' in forEach callback
+    _(selectValue).forEach((function (value) {
+      let plugin = {
+        id: value.id,
+        name: _.split(value.label, ':')[0],
+        version: _.split(value.label, ':')[1]
+      }
+      this.dependencies.push(plugin);
+    }).bind(this));
+
+    // Set submit data to callback function to send to server
+    onSubmit({
+      pluginintrod: this.dataToServer.pluginintrod,
+      installmanual: this.dataToServer.installmanual,
+      compilemanual: this.dataToServer.compilemanual,
+      dependencies: this.dependencies,
+      uploadFiles: this.uploadFiles,
+    });
+
+    // Set step index to start index
+    this.setState({ stepIndex: 0 });
   }
 
   stepperDataProcess(stepIndex) {
-    const { dispatch } = this.props;
 
     switch (stepIndex) {
+      // Store text field data to object according to stepper render() impl.
       case 0:
-        // this.dataToServer = {
-        //   pluginauthor: this.refs.pluginAuthor.getValue(),
-        //   pluginintrod: this.refs.pluginDescription.getValue(),
-        //   pluginname: this.refs.pluginName.getValue(),
-        //   pluginsymblicname: this.refs.pluginSymblicName.getValue(),
-        //   plugintype: this.state.pluginType,
-        //   pluginversion: this.refs.pluginVersion.getValue(),
-        //   pluginwebsite: this.refs.pluginWebsite.getValue(),
-        // }
-        break;
-
-      // Send plugin info to server in 2nd. step to prepare download file 
-      case 1:
-        // dispatch(generatePluginWithTemplate(this.dataToServer));
+        this.dataToServer = {
+          pluginintrod: this.refs.introduction.getValue(),
+          installmanual: this.refs.installManual.getValue(),
+          compilemanual: this.refs.compileManual.getValue(),
+        }
         break;
 
       default:
@@ -185,12 +197,6 @@ class ReleasePluginDialog extends Component {
     this.setState({ fileType: value });
   }
 
-  // handleFileChange = (event) => {
-  //   let file = event.target.files[0];
-  //   if (file !== undefined)
-  //     this.setState({ inputFileName: file.name });
-  // };
-
   openFileDialog = () => {
     let filesUploadDom = ReactDOM.findDOMNode(this.refs.filesUpload);
     filesUploadDom.click();
@@ -205,62 +211,38 @@ class ReleasePluginDialog extends Component {
 
     // Store uploaded files name in array based on file type 
     for (let i = 0; i < len; i++) {
-      let fileName = ReactDOM.findDOMNode(this.refs.filesUpload).files[i].name;
+
+      let file = ReactDOM.findDOMNode(this.refs.filesUpload).files[i];
 
       // Adding files only when not be added to table yet
-      if (_.some(tableContent, { 'name': fileName}))
+      if (_.some(tableContent, { 'name': file.name }))
         continue;
-
 
       // Push files name in array to display on UI 
       if (fileType === '库文件') { // Plugin libraries
-        this.uploadFiles.libs.push(ReactDOM.findDOMNode(this.refs.filesUpload).files[i]);
+        this.uploadFiles.libs.push(file);
       } else if (fileType === '文档文件') { // Plugin documents
-        this.uploadFiles.docs.push(ReactDOM.findDOMNode(this.refs.filesUpload).files[i]);
+        this.uploadFiles.docs.push(file);
       }
 
       // Push file type and name to file table content
       tableContent.push({
         type: fileType,
-        name: fileName
+        name: file.name
       });
     }
 
     // Set files table state to display uploading files in table
     this.setState({ filesTable: tableContent });
-
-    // Update react state and files array
-    // TODO: DELETE->Do sorting work at last step before sending to server, data sourced from 'this.state.filesTable'
-    // Only store all uploading files here and will be processed later 
-
-
-    // if (fileType === '库文件') { // Plugin libraries
-    //   this.uploadFiles.libs.push(files);
-    // } else if (fileType === '文档文件') { // Plugin documents
-    //   this.uploadFiles.docs.push(files);
-    // }
   }
 
   /* Triggered when dependencies select changed (incl. selected / unselected) */
-  handleDependenciesSelect = (event) => {
-    let data = event.params.data;
-    let name = _.split(data.text, ':')[0];
-    let version = _.split(data.text, ':')[1];
-
-    let plugin = {
-      id: data.id,
-      name: name,
-      version: version
-    }
-    this.dependencies.push(plugin);
+  handleSelectChange = (value) => {
+    // console.log('You\'ve selected:', value);
+    this.setState({ selectValue: value });
   }
 
-  handleDependenciesUnselect = (event) => {
-    _.remove(this.dependencies, function (n) {
-      return n.id === event.params.data.id;
-    });
-  }
-
+  /* Handle functions for table item selection and delete */
   // SelectAll->'all', SelectNone->'none', Select->{row index}  
   handleRowSelection = (rows) => {
     this.selectedRows = rows;
@@ -269,47 +251,76 @@ class ReleasePluginDialog extends Component {
   handleRowsDelete = (event) => {
     const { filesTable } = this.state;
 
-    // Find and store deleting file name according to row index
     let rows = this.selectedRows;
-    let deleteNames = [];
-    _(rows).forEach(function (row) {
-      deleteNames.push(filesTable[row].name);
-    });
 
-    // Delete files in table based on deleting file name
-    // TODO: handle "all" selected
-    let tableTemp = filesTable;
-    _(deleteNames).forEach(function (name) {
-      // console.log("delete name:", name);
-      _.remove(tableTemp, function (n) {
-        return n.name === name;
+    // If selected "delete all files", remove all element in array 
+    if (rows === 'all') {
+      this.setState({ filesTable: [] });
+      this.uploadFiles = {
+        libs: [],
+        docs: []
+      }
+    } else {
+      // Find and store deleting file name according to row index
+      let deleteNames = [];
+      _(rows).forEach(function (row) {
+        deleteNames.push(filesTable[row].name);
       });
-    });
-    this.setState({ filesTable: tableTemp });
 
-    // Delete files in upload array
-    let files = this.uploadFiles;
-    _(deleteNames).forEach(function (name) {
-      _.forEach(files, function (value, key) {
-        // _.forEach(value, function (file) {
+      // Delete files in table based on deleting file name
+      // TODO: handle "all" selected
+      let tableTemp = filesTable;
+      _(deleteNames).forEach(function (name) {
         // console.log("delete name:", name);
-        if (value.length > 0) {
-          _.remove(value, function (file) {
-            return file.name === name;
-          });
-        }
-        // });
+        _.remove(tableTemp, function (n) {
+          return n.name === name;
+        });
       });
-    });
-    this.uploadFiles = files;
+      this.setState({ filesTable: tableTemp });
 
-
-
-    // TODO: DELETE->Do sorting work at last step before sending to server, data sourced from 'this.state.filesTable'
-
+      // Delete files in upload array
+      let files = this.uploadFiles;
+      _(deleteNames).forEach(function (name) {
+        _.forEach(files, function (value, key) {
+          if (value.length > 0) {
+            _.remove(value, function (file) {
+              return file.name === name;
+            });
+          }
+        });
+      });
+      this.uploadFiles = files;
+    }
   }
 
-  getStepContent(stepIndex, data, select2Options) {
+  getSelectContent = () => {
+    return fetch('/pluginRepository')
+      .then((response) => response.json())
+      .then((json) => {
+
+        // Process plugin data from server and adapt to react-select UI
+        let data = [];
+
+        // Remove private plugins, only the public plugins can be selected as depended plugin
+        _.remove(json, function (n) {
+          return n.isprivate === true;
+        });
+
+        // Store data in "label-value" format according to "labelKey-valueKey" for react-select UI
+        _(json).forEach(function (plugin) {
+          data.push({
+            id: plugin.id,
+            label: plugin.symbolicname + ':' + plugin.version,
+            value: plugin.symbolicname
+          })
+        });
+
+        return { options: data };
+      });
+  }
+
+
+  getStepContent(stepIndex, data) {
     const { filesTable } = this.state;
 
     switch (stepIndex) {
@@ -324,6 +335,7 @@ class ReleasePluginDialog extends Component {
             <div key="rpd-1" _grid={{ x: 0, y: 0, w: 2, h: 1 }}>
               <TextField
                 ref="introduction"
+                defaultValue={this.dataToServer.pluginintrod}
                 fullWidth={true}
                 floatingLabelText="插件介绍"
                 multiLine={true}
@@ -332,25 +344,27 @@ class ReleasePluginDialog extends Component {
                 />
             </div>
 
-            <div key="rpd-2" _grid={{ x: 0, y: 1, w: 1, h: 2 }}>
+            <div key="rpd-2" _grid={{ x: 0, y: 1, w: 1, h: 4 }}>
               <TextField
                 ref="installManual"
+                defaultValue={this.dataToServer.installmanual}
                 fullWidth={true}
                 floatingLabelText="安装指南"
                 multiLine={true}
-                rows={4}
-                rowsMax={4}
+                rows={8}
+                rowsMax={10}
                 />
             </div>
 
-            <div key="rpd-3" _grid={{ x: 1, y: 1, w: 1, h: 2 }}>
+            <div key="rpd-3" _grid={{ x: 1, y: 1, w: 1, h: 4 }}>
               <TextField
                 ref="compileManual"
+                defaultValue={this.dataToServer.compilemanual}
                 fullWidth={true}
                 floatingLabelText="编译指南"
                 multiLine={true}
-                rows={4}
-                rowsMax={4}
+                rows={8}
+                rowsMax={10}
                 />
             </div>
 
@@ -359,14 +373,21 @@ class ReleasePluginDialog extends Component {
         );
       case 1:
         return (
-          <ResponsiveReactGridLayout className="layout_rpd" isDraggable={false} isResizable={false}
+          <ResponsiveReactGridLayout className="layout_rpd"
+            isDraggable={false} isResizable={false}
             rowHeight={70}
             breakpoints={{ lg: 996, md: 768, sm: 480, xs: 240, xxs: 0 }}
             cols={{ lg: 6, md: 3, sm: 2, xs: 1, xxs: 1 }}
             >
 
-            <div key="rpd-4" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
+            <div key="rpd-4" _grid={{ x: 0, y: 0, w: 3, h: 1 }}>
+              <Subheader style={styles.subhead}>插件信息</Subheader>
+              <Divider />
+            </div>
+
+            <div key="rpd-5" _grid={{ x: 0, y: 1, w: 1, h: 1 }}>
               <TextField
+                style={{ marginTop: -30 }}
                 ref="pluginName"
                 disabled={true}
                 defaultValue={data.symbolicname}
@@ -374,8 +395,9 @@ class ReleasePluginDialog extends Component {
                 />
             </div>
 
-            <div key="rpd-5" _grid={{ x: 1, y: 0, w: 1, h: 1 }}>
+            <div key="rpd-6" _grid={{ x: 1, y: 1, w: 1, h: 1 }}>
               <TextField
+                style={{ marginTop: -30 }}
                 ref="pluginVersion"
                 disabled={true}
                 value={data.version}
@@ -383,11 +405,24 @@ class ReleasePluginDialog extends Component {
                 />
             </div>
 
-            <div key="rpd-6" _grid={{ x: 0, y: 1, w: 3, h: 1 }}>
-              <Select2 multiple="multiple" style={{ width: '100%' }} options={ select2Options }
-                className="select2" ref="dependenciesSelect"
-                onDependenciesSelect={this.handleDependenciesSelect} onDependenciesUnselect={this.handleDependenciesUnselect}>
-              </Select2>
+            <div key="rpd-7" _grid={{ x: 0, y: 2, w: 3, h: 1 }}>
+              <Subheader style={styles.subhead}>插件依赖配置</Subheader>
+              <Divider />
+            </div>
+
+            <div key="rpd-8" _grid={{ x: 0, y: 3, w: 3, h: 3 }}>
+              <Select.Async
+                multi
+                value={this.state.selectValue}
+                onChange={this.handleSelectChange}
+                // onValueClick={this.gotoUser}
+                labelKey="label"
+                valueKey="value"
+                loadOptions={this.getSelectContent}
+                // minimumInput={1}
+                backspaceRemoves={true}
+                placeholder="请选择依赖的插件"
+                />
             </div>
           </ResponsiveReactGridLayout>
         );
@@ -399,7 +434,7 @@ class ReleasePluginDialog extends Component {
             cols={{ lg: 6, md: 3, sm: 2, xs: 1, xxs: 1 }}
             >
 
-            <div key="rpd-7" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
+            <div key="rpd-9" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
               <SelectField
                 ref="fileType"
                 value={this.state.fileType}
@@ -411,16 +446,15 @@ class ReleasePluginDialog extends Component {
               </SelectField>
             </div>
 
-            <div key="rpd-8" _grid={{ x: 1, y: 0, w: 1, h: 1 }}>
+            <div key="rpd-10" _grid={{ x: 1, y: 0, w: 1, h: 1 }}>
               <TextField
                 floatingLabelText="选择文件"
-                value={this.state.inputFileName}
                 onTouchTap={this.openFileDialog}
                 />
               <input ref="filesUpload" type="file" multiple="multiple" style={{ display: "none" }} onChange={this.handleSelectUploadFiles}/>
             </div>
 
-            <div key="rpd-9" _grid={{ x: 0, y: 0, w: 3, h: 5 }}>
+            <div key="rpd-11" _grid={{ x: 0, y: 0, w: 3, h: 5 }}>
               <Table height='300px' multiSelectable={true} onRowSelection={this.handleRowSelection} >
                 <TableHeader displaySelectAll={true} enableSelectAll={true}>
                   <TableRow>
@@ -432,11 +466,9 @@ class ReleasePluginDialog extends Component {
                     <TableHeaderColumn style={{ width: 50 }}>ID</TableHeaderColumn>
                     <TableHeaderColumn style={{ width: 300 }}>文件名称</TableHeaderColumn>
                     <TableHeaderColumn style={{ width: 100 }}>类型</TableHeaderColumn>
-
                   </TableRow>
                 </TableHeader>
                 <TableBody displayRowCheckbox={true} showRowHover={true}>
-
                   { filesTable.map(function (row, index) {
                     if (filesTable.length > 0)
                       return (
@@ -447,7 +479,6 @@ class ReleasePluginDialog extends Component {
                         </TableRow>
                       )
                   }) }
-
                 </TableBody>
               </Table>
             </div>
@@ -458,7 +489,7 @@ class ReleasePluginDialog extends Component {
       case 3:
         return (
           <p style={{ fontSize: 16 }}>
-            完成插件代码生成，请点击下载按钮下载插件。
+            完成插件发布，请点击保存按钮保存插件发布信息。
           </p>
         );
       default:
@@ -466,7 +497,7 @@ class ReleasePluginDialog extends Component {
     }
   }
 
-  renderContent(data, select2Options) {
+  renderContent(data) {
     const {finished, stepIndex} = this.state;
     const stepperStyle = { margin: '0 16px', overflow: 'hidden' };
 
@@ -478,26 +509,26 @@ class ReleasePluginDialog extends Component {
       // window.location = url;
       // window.open(url, '_self');
 
-      return (
-        <div style={stepperStyle}>
-          <p>
-            <a
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-                this.setState({ stepIndex: 0, finished: false });
-              } }
-              >
-              点击这里
-            </a> 重置插件发布向导。
-          </p>
-        </div>
-      );
+      // return (
+      //   <div style={stepperStyle}>
+      //     <p>
+      //       <a
+      //         href="#"
+      //         onClick={(event) => {
+      //           event.preventDefault();
+      //           this.setState({ stepIndex: 0, finished: false });
+      //         } }
+      //         >
+      //         点击这里
+      //       </a> 重置插件发布向导。
+      //     </p>
+      //   </div>
+      // );
     }
 
     return (
       <div style={stepperStyle}>
-        <div>{ this.getStepContent(stepIndex, data, select2Options) }</div>
+        <div>{ this.getStepContent(stepIndex, data) }</div>
       </div>
     );
   }
@@ -513,69 +544,6 @@ class ReleasePluginDialog extends Component {
 
     const { loading, stepIndex } = this.state;
 
-    // Select2 options to get data from database via ajax 
-    var options = {
-      ajax: {
-        url: '/pluginRepository',
-        dataType: 'json',
-        delay: 0,
-
-        processResults: function (data, params) {
-          // Initialize variables
-          let plugin = {
-            id: '',
-            text: ''
-          };
-          let pluginList = [];
-
-          // Remove private plugins, only the public plugins can be selected as depended plugin
-          _.remove(data, function (n) {
-            return n.isprivate === true;
-          });
-
-          // Reformat data from server to fill dependencies select box
-          for (let i = 0; i < data.length; i++) {
-
-            let isNewCategory = false;
-            plugin = {
-              id: data[i].id,
-              text: data[i].symbolicname + ':' + data[i].version
-            }
-
-            // Initialize pluginlist 
-            if (pluginList.length === 0) {
-              pluginList.push({
-                text: data[i].category,
-                children: [plugin]
-              });
-            } else {
-              // Check if the plugin is in same category 
-              for (let j = 0; j < pluginList.length; j++) {
-                if (pluginList[j].text === data[i].category) {
-                  pluginList[j].children.push(plugin);
-                  isNewCategory = false;
-                  break;
-                } else {
-                  isNewCategory = true;
-                }
-              }
-
-              // When the plugin is belong to new category, add it after check all element in pluginlist
-              if (isNewCategory === true) {
-                pluginList.push({
-                  text: data[i].category,
-                  children: [plugin]
-                });
-              }
-            }
-          }
-
-          return { results: pluginList };
-        },
-        cache: true
-      }
-    }
-
     const actions = [
       <FlatButton
         label="取消"
@@ -589,9 +557,9 @@ class ReleasePluginDialog extends Component {
         style={{ marginRight: 12 }}
         />,
       <RaisedButton
-        label={stepIndex === 3 ? '下载' : '下一步'}
+        label={stepIndex === 3 ? '保存' : '下一步'}
         primary={true}
-        onTouchTap={this.handleNext}
+        onTouchTap={stepIndex === 3 ? this.processSubmitData : this.handleNext }
         />
     ];
 
@@ -625,7 +593,7 @@ class ReleasePluginDialog extends Component {
             </Step>
           </Stepper>
           <ExpandTransition loading={loading} open={true}>
-            {this.renderContent(defaultInfo, options) }
+            {this.renderContent(defaultInfo) }
           </ExpandTransition>
         </div>
 
@@ -635,20 +603,3 @@ class ReleasePluginDialog extends Component {
 }
 
 export default ReleasePluginDialog;
-
-
-{/*
-        <div style={{ marginTop: 70, marginBottom: 12 }}>
-          <FlatButton
-            label="上一步"
-            disabled={stepIndex === 0}
-            onTouchTap={this.handlePrev}
-            style={{ marginRight: 12 }}
-            />
-          <RaisedButton
-            label={stepIndex === 2 ? '下载' : '下一步'}
-            primary={true}
-            onTouchTap={this.handleNext}
-            />
-        </div>
-        */}

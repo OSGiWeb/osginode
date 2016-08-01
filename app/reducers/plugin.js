@@ -24,18 +24,19 @@ import {
 
 // TODO: try to use redux middleware to make the action logic simple!
 export default function plugin(
-  state={
+  state = {
     // isPrivate: true, // Is private plugin
     isFetched: false,
     isSelected: false, // Is row in Datatable selected
-    isCreated: undefined,
-    isUpdated: undefined,
-    isDeleted: undefined,
+    isProcessing: false,
+    isCreated: false,
+    isUpdated: false,
+    isDeleted: false,
     plugins: [],
     newPlugin: [],
     selectedData: [],
-    updatedPlugin:[]
-  }, action={}) {
+    updatedPlugin: []
+  }, action = {}) {
   switch (action.type) {
     // case TOGGLE_PLUGIN_STATUS:
     //   return Object.assign({}, state, {
@@ -50,18 +51,25 @@ export default function plugin(
     //   });
 
     /* Create plugin functions */
+    case CREATE_PLUGIN_REQUEST:
+      return Object.assign({}, state, {
+        isCreated: false,
+        isProcessing: true
+      });
     case CREATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
         // plugins: [...state.plugins, action.data],
         newPlugin: action.data,
         isFetched: true,
-        isCreated: true
+        isCreated: true,
+        isProcessing: false
       });
     case CREATE_PLUGIN_FAILURE:
       return Object.assign({}, state, {
         newPlugin: [],
         isFetched: true,
-        isCreated: false
+        isCreated: false,
+        isProcessing: false
       });
     /*
      YunXu: comment out because we have already save the data in CREATE_PLUGIN_SUCCESS
@@ -80,19 +88,27 @@ export default function plugin(
     /* Get plugins functions */
     case GET_PLUGINS_REQUEST:
       return Object.assign({}, state, {
-        isFetched: true
+        isFetched: true,
+        isProcessing: true
       });
     case GET_PLUGINS_SUCCESS:
       return Object.assign({}, state, {
         plugins: action.res.data,
-        isFetched: false
+        isFetched: false,
+        isProcessing: false
       });
     case GET_PLUGINS_FAILURE:
       return Object.assign({}, state, {
-        isFetched: false
+        isFetched: false,
+        isProcessing: false
       });
 
     /* Update plugin functions */
+    case UPDATE_PLUGIN_REQUEST:
+      return Object.assign({}, state, {
+        isUpdated: false,
+        isProcessing: true
+      });
     case UPDATE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
         // plugins: [
@@ -101,25 +117,34 @@ export default function plugin(
         //   ...state.plugins.slice(action.index + 1)
         // ],
         updatedPlugin: action.data,
-        isUpdated: true
+        isUpdated: true,
+        isProcessing: false
       });
     case UPDATE_PLUGIN_FAILURE:
       return Object.assign({}, state, {
         updatedPlugin: [],
-        isUpdated: false
+        isUpdated: false,
+        isProcessing: false
       });
 
     /* Delete plugin functions */
+    case DELETE_PLUGIN_REQUEST:
+      return Object.assign({}, state, {
+        isDeleted: false,
+        isProcessing: true
+      });
     case DELETE_PLUGIN_SUCCESS:
       return Object.assign({}, state, {
         // plugins: [...state.plugins.filter((tp, i) => i !== action.index)],
         isDeleted: true,
-        isSelected: false // must set 'isSelected' to false to avoid reading false data on edit plugin modal
+        isSelected: false,
+        isProcessing: false
       });
     case DELETE_PLUGIN_FAILURE:
       return Object.assign({}, state, {
         isDeleted: false,
-        isSelected: false
+        isSelected: false,
+        isProcessing: false
       });
 
     /* Plugin datatable operation functions */
@@ -128,9 +153,9 @@ export default function plugin(
       return Object.assign({}, state, {
         newPlugin: [],
         updatedPlugin: [],
-        isCreated: undefined,
-        isUpdated: undefined,
-        isDeleted: undefined
+        isCreated: false,
+        isUpdated: false,
+        isDeleted: false
       });
     case RESET_STORE_STATES: // CANNOT reset all fields in store, otherwise some backend process would return false results
       return Object.assign({}, state, {

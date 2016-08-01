@@ -76,7 +76,7 @@ module.exports = function (app, conn) {
      * Format: Return to client as { libs: [{id:'', name:''}...], docs: [{id:'', name:''}...] } when all file stored in Gridfs successful
      */
     // 
-    var attechments = upload.fields([{ name: 'libs', maxCount: 12 }, { name: 'docs', maxCount: 12 }]); // As 'file.fieldname': 'docs'
+    var attechments = upload.fields([{ name: 'libs', maxCount: 100 }, { name: 'docs', maxCount: 100 }]); // As 'file.fieldname': 'docs'
     app.post("/pluginRepository/uploads/:pluginid", attechments, function (req, res, next) { // upload.array('libs', 12)
       // req.files is an object (String -> Array) where fieldname is the key, and the value is array of files
       //
@@ -91,52 +91,59 @@ module.exports = function (app, conn) {
       // DONOT use '.length' otherwise when field not exists, returned 'undefined' as exception
       var filesTotal = _.size(req.files['libs']) + _.size(req.files['docs']);
 
-      // Upload ALL atteched files to GridFS
-      _.forEach(req.files, function (value, key) {
-        _.forEach(value, function (file) {
+      if (filesTotal > 0) {
+        // Upload ALL atteched files to GridFS
+        _.forEach(req.files, function (value, key) {
+          _.forEach(value, function (file) {
 
-          // Assign GridFS mongo id
-          var ObjectId = mongoose.Types.ObjectId;
-          var mongoId = new ObjectId();
+            // Assign GridFS mongo id
+            var ObjectId = mongoose.Types.ObjectId;
+            var mongoId = new ObjectId();
 
-          // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
-          var writestream = gfs.createWriteStream({
-            _id: mongoId, // Create link between plugin and uploaded plugin code files
-            filename: file.originalname,
-            root: 'plugins',
-            metadata: {
-              pluginid: pluginId
-            }
-          });
+            // Create a gridfs-stream into which we pipe multer's temporary file saved in uploads. After which we delete multer's temp file.
+            var writestream = gfs.createWriteStream({
+              _id: mongoId, // Create link between plugin and uploaded plugin code files
+              filename: file.originalname,
+              root: 'plugins',
+              metadata: {
+                pluginid: pluginId
+              }
+            });
 
-          // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
-          fs.createReadStream("./uploads/" + file.filename)
-            .on("end", function () {
-              fs.unlink("./uploads/" + file.filename, function (err) {
-                if (err) {
-                  console.log(err);
-                  return res.status(400).send("Error occured on creating upload file");
-                }
-                // Store response results in json format
-                bufferControl.add(file, mongoId);
+            // Pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
+            fs.createReadStream("./uploads/" + file.filename)
+              .on("end", function () {
+                fs.unlink("./uploads/" + file.filename, function (err) {
+                  if (err) {
+                    console.log(err);
+                    return res.status(400).send("Error occured on creating upload file");
+                  }
+                  // Store response results in json format
+                  bufferControl.add(file, mongoId);
 
-                // If all files stored in Mongo GridFS, send result to client
-                if (filesTotal === bufferControl.getCounter()) {
-                  // Send response to client
-                  console.log(bufferControl.getFiles());
-                  res.status(200).json({ filesResJson: bufferControl.getFiles() });
+                  // If all files stored in Mongo GridFS, send result to client
+                  if (filesTotal === bufferControl.getCounter()) {
+                    // Send response to client
+                    console.log(bufferControl.getFiles());
+                    res.status(200).json({ filesResJson: bufferControl.getFiles() });
 
-                  // Clear buffers after transfer
-                  bufferControl.reset();
-                }
+                    // Clear buffers after transfer
+                    bufferControl.reset();
+                  }
+                })
               })
-            })
-            .on("err", function () {
-              res.status(400).send("Error on uploading file");
-            })
-            .pipe(writestream);
-        });
-      });
+              .on("err", function () {
+                res.status(400).send("Error on uploading file");
+              })
+              .pipe(writestream);
+          });
+        }); // End of _.forEach
+      } else { // No attechments to upload
+        // Return empty array to client
+        bufferControl.reset();
+        res.status(200).json({ filesResJson: bufferControl.getFiles() });
+      }
+
     });
 
     /**

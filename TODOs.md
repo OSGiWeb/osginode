@@ -41,6 +41,7 @@
 - 使用 Flex-Grid-React 组件替换 Bootsrap layout 组件，实现组件布局 -> 动态添加，动态调整大小
 - ~~下载好看的中文字体(使用黑体)~~
 - 添加导航菜单隐藏/显示功能，并根据屏幕大小显示左上toggle按钮
+- 使用 Formy 验证 React Material-UI 文本输入框中的信息
 
 
 ## Features
