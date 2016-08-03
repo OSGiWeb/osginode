@@ -1,6 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
+import InputValidation from '../utility/InputValidation'
 
+// Material-UI formsy
+import Formsy from 'formsy-react';
+import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup,
+  FormsySelect, FormsyText, FormsyTime, FormsyToggle } from 'formsy-material-ui/lib';
 
 // Material-UI component
 import { Dialog, FlatButton, TextField, DatePicker }from 'material-ui';
@@ -66,7 +71,13 @@ class BasicPluginInfo extends Component {
       pluginType: null,
       date: new Date(),
       inputFileName: '',
+      canSubmit: false,
     };
+
+    // Create input field validation instance
+    this.vChnChar = new InputValidation("chineseChr");
+    this.vVersion = new InputValidation("version");
+    this.vPluginSymbName = new InputValidation("pluginSymbName");
   }
 
   componentWillReceiveProps() {
@@ -83,18 +94,18 @@ class BasicPluginInfo extends Component {
     let file = event.target.files[0];
     if (file !== undefined)
       this.setState({ inputFileName: file.name });
-  };
+  }
 
   handleDateChange = (event, date) => {
     this.setState({
       date: date,
     });
-  };
+  }
 
   openFileDialog = () => {
     let fileUploadDom = ReactDOM.findDOMNode(this.refs.fileUpload);
     fileUploadDom.click();
-  };
+  }
 
   processSubmitData = () => {
     const { onSubmit } = this.props;
@@ -111,6 +122,26 @@ class BasicPluginInfo extends Component {
     });
   }
 
+  enableButton = () => {
+    this.setState({
+      canSubmit: true,
+    });
+  }
+
+  disableButton = () => {
+    this.setState({
+      canSubmit: false,
+    });
+  }
+
+  submitForm = (data) => {
+    alert(JSON.stringify(data, null, 4));
+  }
+
+  notifyFormError = (data) => {
+    console.error('Form error:', data);
+  }
+
   render() {
 
     const {
@@ -119,6 +150,12 @@ class BasicPluginInfo extends Component {
       onCancel,
       defaultInfo
     } = this.props;
+
+    const errMsg = {
+      wordsError: "请用中文填写",
+      numericError: "请用数字填写",
+      urlError: "Please provide a valid URL",
+    }
 
     const actions = [
       <FlatButton
@@ -129,116 +166,133 @@ class BasicPluginInfo extends Component {
       <FlatButton
         label="提交"
         primary={true}
+        tooltip="SVG Icon"
         // disabled={true}
+        // type="submit"
+        disabled={!this.state.canSubmit}
         onTouchTap={this.processSubmitData}
         />
     ];
 
     return (
-      <Dialog
-        title={title}
-        titleStyle={styles.dialogTitle}
-        actions={actions}
-        modal={true}
-        open={open}
-        onRequestClose={this.handleClose}
+      <Formsy.Form
+        onValid={this.enableButton}
+        onInvalid={this.disableButton}
+        onValidSubmit={this.submitForm}
+        onInvalidSubmit={this.notifyFormError}
         >
 
-        <ResponsiveReactGridLayout className="layout" isDraggable={false} isResizable={false}
-          rowHeight={60}
-          breakpoints={{ lg: 400, md: 332, sm: 256, xs: 160, xxs: 0 }}
-          cols={{ lg: 2, md: 1, sm: 1, xs: 1, xxs: 1 }}
+        <Dialog
+          title={title}
+          titleStyle={styles.dialogTitle}
+          actions={actions}
+          modal={true}
+          open={open}
+          onRequestClose={this.handleClose}
           >
+          <ResponsiveReactGridLayout className="layout" isDraggable={false} isResizable={false}
+            rowHeight={60}
+            breakpoints={{ lg: 400, md: 332, sm: 256, xs: 160, xxs: 0 }}
+            cols={{ lg: 2, md: 1, sm: 1, xs: 1, xxs: 1 }}
+            >
 
-          <div key="1" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
-            <TextField
-              ref="pluginName"
-              defaultValue={defaultInfo.pluginname}
-              hintText="三维显示"
-              floatingLabelText="名称"
-              />
-          </div>
+            <div key="1" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
 
-          <div key="2" _grid={{ x: 1, y: 0, w: 1, h: 1 }}>
-            <TextField
-              ref="pluginSymblicName"
-              defaultValue={defaultInfo.symbolicname}
-              hintText="com.plugins.Radar3D"
-              floatingLabelText="标识"
-              />
-          </div>
+              <FormsyText
+                ref="pluginName"
+                name="pluginName"
+                defaultValue={defaultInfo.pluginname}
+                hintText="三维显示"
+                floatingLabelText="名称"
+                validations="chineseChr"
+                validationError={this.vChnChar.getMsg()}
+                required
+                />
+            </div>
 
-          <div key="3" _grid={{ x: 0, y: 1, w: 1, h: 1 }}>
-            <TextField
-              ref="pluginVersion"
-              defaultValue={defaultInfo.version}
-              hintText="1.0.0"
-              floatingLabelText="版本号"
-              />
-          </div>
+            <div key="2" _grid={{ x: 1, y: 0, w: 1, h: 1 }}>
+              <FormsyText
+                ref="pluginSymblicName"
+                name="pluginSymblicName"
+                defaultValue={defaultInfo.symbolicname}
+                hintText="com.plugins.Radar3D"
+                floatingLabelText="标识"
+                validations="pluginSymbName"
+                validationError={this.vPluginSymbName.getMsg()}
+                required
+                />
+            </div>
 
-          <div key="4" _grid={{ x: 1, y: 1, w: 1, h: 1 }}>
-            <SelectField
-              ref="pluginType"
-              value={this.state.pluginType}
-              onChange={this.handlePluginTypeChange}
-              floatingLabelText="类型"
-              floatingLabelFixed={true}
-              >
-              {pluginTypes}
-            </SelectField>
-          </div>
+            <div key="3" _grid={{ x: 0, y: 1, w: 1, h: 1 }}>
+              <FormsyText
+                ref="pluginVersion"
+                name="pluginVersion"
+                defaultValue={defaultInfo.version}
+                hintText="1.0.0"
+                floatingLabelText="版本号"
+                validations="version"
+                validationError={this.vVersion.getMsg()}
+                required
+                />
+            </div>
 
-          <div key="5" _grid={{ x: 0, y: 2, w: 1, h: 1 }}>
-            <DatePicker
-              ref="date"
-              defaultDate={new Date(defaultInfo.date) }
-              floatingLabelText="创建日期"
-              autoOk={true}
-              DateTimeFormat={DateTimeFormat}
-              locale="zh"
-              okLabel="确定"
-              cancelLabel="取消"
-              onChange={this.handleDateChange}
-              />
-          </div>
+            <div key="4" _grid={{ x: 1, y: 1, w: 1, h: 1 }}>
+              <SelectField
+                ref="pluginType"
+                value={this.state.pluginType}
+                onChange={this.handlePluginTypeChange}
+                floatingLabelText="类型"
+                floatingLabelFixed={true}
+                >
+                {pluginTypes}
+              </SelectField>
+            </div>
 
-          <div key="6" _grid={{ x: 2, y: 2, w: 1, h: 1 }}>
-            <TextField
-              floatingLabelText="选择文件"
-              value={this.state.inputFileName}
-              onTouchTap={this.openFileDialog}
-              />
-            <input ref="fileUpload" type="file" style={{ display: "none" }} onChange={this.handleFileChange}/>
-          </div>
+            <div key="5" _grid={{ x: 0, y: 2, w: 1, h: 1 }}>
+              <FormsyDate
+                name="date"
+                ref="date"
+                defaultDate={new Date(defaultInfo.date) }
+                floatingLabelText="创建日期"
+                autoOk={true}
+                DateTimeFormat={DateTimeFormat}
+                locale="zh"
+                okLabel="确定"
+                cancelLabel="取消"
+                onChange={this.handleDateChange}
+                required
+                />
+            </div>
 
-          <div key="7" _grid={{ x: 0, y: 3, w: 2, h: 2 }}>
-            <TextField
-              ref="pluginDescription"
-              defaultValue={defaultInfo.description}
-              fullWidth={true}
-              floatingLabelText="简介"
-              multiLine={true}
-              rows={2}
-              rowsMax={4}
-              />
-          </div>
+            <div key="6" _grid={{ x: 2, y: 2, w: 1, h: 1 }}>
+              <FormsyText
+                name="uploadFiled"
+                floatingLabelText="选择文件"
+                value={this.state.inputFileName}
+                onTouchTap={this.openFileDialog}
+                required
+                />
+              <input ref="fileUpload" type="file" style={{ display: "none" }} onChange={this.handleFileChange}/>
+            </div>
 
-        </ResponsiveReactGridLayout>
+            <div key="7" _grid={{ x: 0, y: 3, w: 2, h: 2 }}>
+              <TextField
+                ref="pluginDescription"
+                defaultValue={defaultInfo.description}
+                fullWidth={true}
+                floatingLabelText="简介"
+                multiLine={true}
+                rows={2}
+                rowsMax={4}
+                />
+            </div>
 
-      </Dialog>
+          </ResponsiveReactGridLayout>
+
+        </Dialog>
+      </Formsy.Form>
     );
   }
 }
 
 export default BasicPluginInfo;
-
-// <TextField
-//   hintText="Hint Text"
-//   floatingLabelText="Fixed Floating Label Text"
-//   floatingLabelFixed={true}
-//   />
-//   <TextField
-//     hintText="Hint Text"
-//     floatingLabelText="Floating Label Text"
-//   />

@@ -29,9 +29,11 @@ import IconButton from 'material-ui/IconButton';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-// Icons
+// Icons and Color
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import ActionDeleteForever from 'material-ui/svg-icons/action/delete-forever';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import {fullWhite} from 'material-ui/styles/colors';
 
 var styles = {
   stepper: {
@@ -66,8 +68,22 @@ var styles = {
     maxHeight: 'none',
     maxWidth: 996,
     // marginTop: '-10%',
-
-  }
+  },
+  fileUploadBtn: {
+    marginTop: 30,
+    marginLeft: -40,
+    // // width: '5%',
+  },
+  fileUpload: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%',
+    opacity: 0,
+  },
 }
 
 // Plugin types to select field
@@ -196,11 +212,6 @@ class ReleasePluginDialog extends Component {
   handleFileTypeChange = (event, index, value) => {
     this.setState({ fileType: value });
   }
-
-  openFileDialog = () => {
-    let filesUploadDom = ReactDOM.findDOMNode(this.refs.filesUpload);
-    filesUploadDom.click();
-  };
 
   handleSelectUploadFiles = (event) => {
     let filesName = [];
@@ -447,11 +458,9 @@ class ReleasePluginDialog extends Component {
             </div>
 
             <div key="rpd-10" _grid={{ x: 1, y: 0, w: 1, h: 1 }}>
-              <TextField
-                floatingLabelText="选择文件"
-                onTouchTap={this.openFileDialog}
-                />
-              <input ref="filesUpload" type="file" multiple="multiple" style={{ display: "none" }} onChange={this.handleSelectUploadFiles}/>
+              <RaisedButton style={styles.fileUploadBtn} primary={true} label="添加文件" labelPosition="before">
+                <input ref="filesUpload" type="file" multiple="multiple" style={styles.fileUpload} onChange={this.handleSelectUploadFiles} />
+              </RaisedButton>
             </div>
 
             <div key="rpd-11" _grid={{ x: 0, y: 0, w: 3, h: 5 }}>
@@ -603,3 +612,9 @@ class ReleasePluginDialog extends Component {
 }
 
 export default ReleasePluginDialog;
+
+// <TextField
+//   floatingLabelText="选择文件"
+//   onTouchTap={this.openFileDialog}
+// />
+// <input ref="filesUpload" type="file" multiple="multiple" style={{ display: "none" }} onChange={this.handleSelectUploadFiles}/>

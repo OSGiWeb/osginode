@@ -333,12 +333,14 @@ class PrivateRepository extends Component {
       stateSave: true,
       columns: [
         { data: "index" }, { data: "pluginname" }, { data: "symbolicname" }, { data: "category" },
-        { data: "version" }, { data: "author" }, { data: "date" }, { data: "description" },
-        { data: "statusIcon" }]
+        { data: "version" }, { data: "author" }, 
+        { data: "date", render: function (data) {
+          let date = new Date(data);
+          let month = date.getMonth() + 1;
+          return (month.length>1?month:"0"+month)+"/"+date.getDate()+"/"+date.getFullYear();
+        }}, 
+        { data: "description" }, { data: "statusIcon" }]
     }
-
-    // Format date string for table display
-    newPlugin.date = _.split(newPlugin.date, 'T')[0];
 
     return (
       <div>
@@ -459,8 +461,8 @@ class PrivateRepository extends Component {
             onCancel={this.handleAddPluginDialogCancel}
             defaultInfo={{
               pluginname: '',
-              symbolicname: 'com.plugins.',
-              category: '',
+              symbolicname: '',
+              category: '显示插件',
               version: '',
               date: new Date(),
               description: '',

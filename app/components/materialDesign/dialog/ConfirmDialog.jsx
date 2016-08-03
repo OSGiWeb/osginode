@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom';
 import { Dialog, FlatButton, TextField, DatePicker }from 'material-ui';
 import { SelectField, MenuItem }from 'material-ui';
 
-// Icons
-
 var styles = {
   dialogTitle: {
     fontSize: 20,
@@ -21,7 +19,7 @@ var styles = {
 }
 
 /**
- * Inform data/action process progress situation.
+ * Confirm Dialog Class
  */
 class ConfirmDialog extends Component {
 
@@ -41,23 +39,6 @@ class ConfirmDialog extends Component {
   componentWillReceiveProps() {
 
   }
-
-
-
-  // processSubmitData = () => {
-  //   const { onSubmit } = this.props;
-
-  //   // Set submit data to callback function
-  //   onSubmit({
-  //     pluginname: this.refs.pluginName.getValue(),
-  //     symbolicname: this.refs.pluginSymblicName.getValue(),
-  //     category: this.state.pluginType,
-  //     version: this.refs.pluginVersion.getValue(),
-  //     date: this.state.date,
-  //     inputfile: this.refs.fileUpload.files[0],
-  //     description: this.refs.pluginDescription.getValue()
-  //   });
-  // }
 
   render() {
 
@@ -92,9 +73,7 @@ class ConfirmDialog extends Component {
         open={open}
         onRequestClose={this.handleClose}
         >
-
         { defaultInfo.text } 
-
       </Dialog>
     );
   }
