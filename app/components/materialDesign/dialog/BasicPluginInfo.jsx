@@ -8,15 +8,21 @@ import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup,
   FormsySelect, FormsyText, FormsyTime, FormsyToggle } from 'formsy-material-ui/lib';
 
 // Material-UI component
-import { Dialog, FlatButton, TextField, DatePicker }from 'material-ui';
+import { Avatar, Dialog, FlatButton, TextField, DatePicker }from 'material-ui';
 import { SelectField, MenuItem }from 'material-ui';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 // React-grid-layout for layout
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-// Icons
+// Icons and color
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+import { blue400 } from 'material-ui/styles/colors';
+
+// Customized module
+import DialogCard from '../Container/DialogCard'
 
 // Localise date time
 let DateTimeFormat;
@@ -94,6 +100,9 @@ class BasicPluginInfo extends Component {
     let file = event.target.files[0];
     if (file !== undefined)
       this.setState({ inputFileName: file.name });
+    else {
+      this.setState({ inputFileName: "" });
+    }
   }
 
   handleDateChange = (event, date) => {
@@ -167,37 +176,36 @@ class BasicPluginInfo extends Component {
         label="提交"
         primary={true}
         tooltip="SVG Icon"
-        // disabled={true}
-        // type="submit"
         disabled={!this.state.canSubmit}
         onTouchTap={this.processSubmitData}
         />
     ];
 
     return (
-      <Formsy.Form
-        onValid={this.enableButton}
-        onInvalid={this.disableButton}
-        onValidSubmit={this.submitForm}
-        onInvalidSubmit={this.notifyFormError}
-        >
 
-        <Dialog
-          title={title}
-          titleStyle={styles.dialogTitle}
-          actions={actions}
-          modal={true}
-          open={open}
-          onRequestClose={this.handleClose}
+
+      <DialogCard
+        title={title}
+        titleStyle={{ fontSize: 20, color: blue400 }}
+        avatar={ <Avatar icon={<FileFolder />}/> }
+        subtitle="请填写插件信息"
+        actions={actions}
+        isModal={true}
+        open={open}
+        >
+        <Formsy.Form
+          onValid={this.enableButton}
+          onInvalid={this.disableButton}
+          onValidSubmit={this.submitForm}
+          onInvalidSubmit={this.notifyFormError}
           >
+
           <ResponsiveReactGridLayout className="layout" isDraggable={false} isResizable={false}
             rowHeight={60}
             breakpoints={{ lg: 400, md: 332, sm: 256, xs: 160, xxs: 0 }}
             cols={{ lg: 2, md: 1, sm: 1, xs: 1, xxs: 1 }}
             >
-
             <div key="1" _grid={{ x: 0, y: 0, w: 1, h: 1 }}>
-
               <FormsyText
                 ref="pluginName"
                 name="pluginName"
@@ -205,7 +213,7 @@ class BasicPluginInfo extends Component {
                 hintText="三维显示"
                 floatingLabelText="名称"
                 validations="chineseChr"
-                validationError={this.vChnChar.getMsg()}
+                validationError={this.vChnChar.getMsg() }
                 required
                 />
             </div>
@@ -218,7 +226,7 @@ class BasicPluginInfo extends Component {
                 hintText="com.plugins.Radar3D"
                 floatingLabelText="标识"
                 validations="pluginSymbName"
-                validationError={this.vPluginSymbName.getMsg()}
+                validationError={this.vPluginSymbName.getMsg() }
                 required
                 />
             </div>
@@ -231,7 +239,7 @@ class BasicPluginInfo extends Component {
                 hintText="1.0.0"
                 floatingLabelText="版本号"
                 validations="version"
-                validationError={this.vVersion.getMsg()}
+                validationError={this.vVersion.getMsg() }
                 required
                 />
             </div>
@@ -286,13 +294,37 @@ class BasicPluginInfo extends Component {
                 rowsMax={4}
                 />
             </div>
-
           </ResponsiveReactGridLayout>
-
-        </Dialog>
-      </Formsy.Form>
+        </Formsy.Form>
+      </DialogCard>
     );
   }
 }
 
 export default BasicPluginInfo;
+
+
+
+
+
+
+// <Dialog
+//   // title={title}
+//   // titleStyle={styles.dialogTitle}
+//   actions={actions}
+//   modal={true}
+//   open={open}
+//   onRequestClose={this.handleClose}
+//   >
+//   <Card>
+//     <CardHeader
+//       title={title}
+//       titleStyle={{ fontSize: 20, color: blue400 }}
+//       avatar={ <Avatar icon={<FileFolder />}/> }
+//       subtitle="请填写插件信息"
+//       />
+//     <CardText>
+
+//     </CardText>
+// </Card>/
+// </Dialog >

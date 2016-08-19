@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import BigBreadcrumbs from '../components/smartAdmin/layout/navigation/components/BigBreadcrumbs.jsx'
 import JarvisWidget from '../components/smartAdmin/layout/widgets/JarvisWidget.jsx'
 
-import ShopWindow from '../components/smartAdmin/customize/ShopWindow'
+import ShopWindow from '../components/materialDesign/shop/ShopWindow'
 import { fetchPlugins } from '../actions/plugins';
 
 class Home extends Component {

@@ -25,6 +25,8 @@ class ConfirmDialog extends Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
+    submitLabel: PropTypes.string.isRequired,
+    cancelLabel: PropTypes.string.isRequired,
     defaultInfo: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -45,6 +47,8 @@ class ConfirmDialog extends Component {
     const {
       title,
       open,
+      submitLabel,
+      cancelLabel,
       onSubmit,
       onCancel,
       defaultInfo
@@ -52,12 +56,12 @@ class ConfirmDialog extends Component {
 
     const actions = [
       <FlatButton
-        label="取消"
+        label={cancelLabel}
         primary={true}
         onTouchTap={onCancel}
         />,
       <FlatButton
-        label="确定"
+        label={submitLabel}
         primary={true}
         onTouchTap={onSubmit}
         />

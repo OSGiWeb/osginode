@@ -26,7 +26,7 @@ import Delete from 'material-ui/svg-icons/action/delete';
 import {blue500, red500, greenA200} from 'material-ui/styles/colors';
 
 // Import user defined modules
-import Container from '../components/materialDesign/Container';
+import BlockContainer from '../components/materialDesign/Container/BlockContainer';
 import ProgressDialog from '../components/materialDesign/dialog/ProgressDialog'
 import BasicPluginInfo from '../components/materialDesign/dialog/BasicPluginInfo'
 import ReleasePluginDialog from '../components/materialDesign/dialog/ReleasePluginDialog'
@@ -331,14 +331,22 @@ class PrivateRepository extends Component {
         info: false
       },
       stateSave: true,
+      // columnDefs: [
+      //   {
+      //     targets: [0, 1, 2],
+      //     className: 'mdl-data-table__cell--non-numeric'
+      //   }
+      // ],
       columns: [
         { data: "index" }, { data: "pluginname" }, { data: "symbolicname" }, { data: "category" },
-        { data: "version" }, { data: "author" }, 
-        { data: "date", render: function (data) {
-          let date = new Date(data);
-          let month = date.getMonth() + 1;
-          return (month.length>1?month:"0"+month)+"/"+date.getDate()+"/"+date.getFullYear();
-        }}, 
+        { data: "version" }, { data: "author" },
+        {
+          data: "date", render: function (data) {
+            let date = new Date(data);
+            let month = date.getMonth() + 1;
+            return (month.length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+          }
+        },
         { data: "description" }, { data: "statusIcon" }]
     }
 
@@ -446,9 +454,9 @@ class PrivateRepository extends Component {
         <div>
           <Title render={'私有插件仓库'} />
 
-          <Container title="私有仓库" menu={toolBarMenu} >
+          <BlockContainer title="私有仓库" menu={toolBarMenu} >
             { this.renderPrivateDataTable() }
-          </Container>
+          </BlockContainer>
 
           { this.renderSnackbar() }
 
@@ -469,10 +477,12 @@ class PrivateRepository extends Component {
               sourcecodeName: ''
             }}
             />
-
+          
           <ConfirmDialog
             title=""
             open={this.state.showDeletePluginDialog}
+            submitLabel="删除"
+            cancelLabel="取消"
             onSubmit={this.handleDeletePluginDialogSubmit}
             onCancel={this.handleDeletePluginDialogCancel}
             defaultInfo={{

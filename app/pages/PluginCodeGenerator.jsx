@@ -17,7 +17,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 // Material-UI
 import RaisedButton from 'material-ui/RaisedButton';
 import Title from 'react-title-component';
-import Container from '../components/materialDesign/Container';
+import BlockContainer from '../components/materialDesign/Container/BlockContainer';
 import IconButton from 'material-ui/IconButton';
 import CodeIcon from 'material-ui/svg-icons/action/code';
 import {Toolbar, ToolbarGroup, ToolbarTitle, ToolbarSeparator } from 'material-ui/Toolbar';
@@ -462,7 +462,7 @@ class PluginCodeGenerator extends Component {
 				<div>
 					<Title render={'插件代码生成工具'} />
 
-					<Container
+					<BlockContainer
 						title="插件代码生成流程"
 						// menu={toolBarMenu}
 						>
@@ -482,7 +482,7 @@ class PluginCodeGenerator extends Component {
 								{this.renderContent() }
 							</ExpandTransition>
 						</div>
-					</Container>
+					</BlockContainer>
 
 				</div>
 			</div>

@@ -11,6 +11,7 @@ var _ = require('lodash');
 
 var mongoose = require("mongoose");
 var Grid = require("gridfs-stream");
+var Plugin = mongoose.model('Plugin');
 var gfs;
 Grid.mongo = mongoose.mongo;
 
@@ -305,25 +306,93 @@ module.exports = function (app, conn) {
      * Handle 'delete' request for files
      * Delete file in MongoDB GridFS
      */
-    app.delete("/pluginRepository/delete/:fileid", function (req, res) {
+    app.delete("/pluginRepository/delete/:pluginid", function (req, res) {
 
-      var options = {
-        _id: req.params.fileid,
-        root: 'plugins'
-      };
+      var pluginId = req.params.pluginid;
+      
 
-      gfs.exist(options, function (err, found) {
-        if (err) return res.send("Error occured");
-        if (found) {
-          gfs.remove(options, function (err) {
-            if (err) return res.status(400).send("Error occured");
-            console.log('File deleted!');
-            res.status(200).send("File deleted");
+
+      // TODO: delete all related plugin files in GridFS based on pluginid
+      // Plugin.findById().exec(function (err, plugin) {
+      //   if (!err) {
+      //     // res.json(plugins);
+
+      //   } else {
+      //     console.log('Error in first query');
+      //   }
+      // });
+
+
+      Plugin.findOne({ id: pluginId }, function (err, plugin) {
+        if (!err) {
+          // Counter to delete files which will send success response to client when all related files are deleted
+          var deleteCnt = 0; 
+          var deleteFiles = [];
+
+          // Transfer to JSON object
+          var pluginJson = plugin.toJSON();
+
+          // Add delete files to array
+          var relatedFiles = pluginJson.filemeta;
+          _.forEach(relatedFiles, function (files, key) {
+            if ('sourcecode' === key) { // Souce code is only one object/copy for every plugin
+              deleteFiles.push(relatedFiles.sourcecode);
+            } else { // Docs and libs can have more copy for one plugin
+              _.forEach(files, function (file) {
+                deleteFiles.push(file);
+              });
+            }
           });
+
+          // Delete files of plugin with pluginId
+          _.forEach(deleteFiles, function (file) {
+            var options = {
+              _id: file.id,
+              root: 'plugins'
+            };    
+
+            // Check and delete file in GridFS
+            gfs.exist(options, function (err, found) {
+              if (err) return res.send("Error occured");
+              if (found) {
+                gfs.remove(options, function (err) {
+                  if (err) return res.status(400).send("Error occured");
+                  console.log('File deleted with id: ' + file.id);
+
+                  // File deleting logic control
+                  deleteCnt++;
+                  if (deleteCnt === deleteFiles.length) {
+                    res.status(200).send("All related files deleted.");
+                  }
+                });
+              } else {
+                return res.status(400).send("No file found with id: "+ file.id);
+              }
+            });
+          });
+
+          // console.log('Related deleting files found in plugin: \n', deleteFiles);
         } else {
-          res.status(400).send("No file found with that id");
+          console.log('Error in find plugin based on pluginId');
         }
       });
+
+
+
+      // END TODO 
+
+      // gfs.exist(options, function (err, found) {
+      //   if (err) return res.send("Error occured");
+      //   if (found) {
+      //     gfs.remove(options, function (err) {
+      //       if (err) return res.status(400).send("Error occured");
+      //       console.log('File deleted!');
+      //       res.status(200).send("File deleted");
+      //     });
+      //   } else {
+      //     res.status(400).send("No file found with that id");
+      //   }
+      // });
 
       // gfs.remove({
       //   _id: req.params.fileid,

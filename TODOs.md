@@ -43,6 +43,8 @@
 - ~~下载好看的中文字体(使用黑体)~~
 - 添加导航菜单隐藏/显示功能，并根据屏幕大小显示左上toggle按钮
 - 使用 Formy 验证 React Material-UI 文本输入框中的信息(Bugs: 在创建插件时不输入插件名或不提供上传文件，会出现异常)
+- 更新 Datatables 到最新版，并使用 Material Design 风格UI
+- 添加 Auto-Complete 功能
 
 
 

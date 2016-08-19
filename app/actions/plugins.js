@@ -311,7 +311,7 @@ export function updatePluginWithSourcecode(updatePlugin, uploadData, uploadConfi
             }
           }).catch(ex => { return dispatch(updatePluginFailure()); });
         }
-      }).catch(ex => { return dispatch(deletePluginFailure()); });
+      }).catch(ex => { return dispatch(updatePluginFailure()); });
 
   };
 }
@@ -349,7 +349,7 @@ export function createPluginAttachments(updatePlugin, attechments, uploadConfig)
             }
           }).catch(ex => { return dispatch(updatePluginFailure()); });
         }
-      }).catch(ex => { return dispatch(deletePluginFailure()); });
+      }).catch(ex => { return dispatch(updatePluginFailure()); });
   };
 }
 
@@ -358,12 +358,12 @@ export function createPluginAttachments(updatePlugin, attechments, uploadConfig)
  * @param id: used to update plugin data in database
  * @returns {function()}
  */
-export function deletePlguin(pluginid, fileid) {
+export function deletePlguin(pluginid, fileid) { // TODO: delete fileid and only use pluginid to delete all related files
   return dispatch => {
     dispatch(deletePluginRequest());
 
-    // Delete file in mongoDB GridFS
-    axios.delete('/pluginRepository/delete/' + fileid)
+    // Delete all pluginid related files in mongoDB GridFS first
+    axios.delete('/pluginRepository/delete/' + pluginid)
       .then(res => {
         if (res.status === 200) { // When upload file is deleted, then delete plugin info
           return makePluginRequest('delete', pluginid)

@@ -17,12 +17,13 @@ module.exports = new LocalStrategy({
   User.findOne({ username: username}, function(err, user) {
     if(!user)
       return done(null, false, { message: '用户名不存在 ' + username + '.'});
-    user.comparePassword(password, function(err, isMatch) {
-      if(isMatch) {
-        return done(null, user);
-      } else {
-        return done(null, false, { message: '用户名或密码不正确'});
-      }
-    });
+      
+      user.comparePassword(password, function(err, isMatch) {
+        if(isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: '用户名或密码不正确'});
+        }
+      });
   });
 });

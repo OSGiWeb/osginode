@@ -5,16 +5,15 @@ import Select2 from '../../smartAdmin/forms/inputs/Select2.jsx'
 import Select from 'react-select';
 import fetch from 'isomorphic-fetch';
 
-// Material-UI component
-import { Dialog, FlatButton, TextField, DatePicker } from 'material-ui';
-import { SelectField, MenuItem }from 'material-ui';
+// React-Grid-Layout
+import {Responsive, WidthProvider} from 'react-grid-layout';
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-// Material-UI
-import {
-  Step,
-  Stepper,
-  StepLabel,
-} from 'material-ui/Stepper';
+// Material-UI component
+import { Avatar, Dialog, FlatButton, TextField, DatePicker } from 'material-ui';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import { SelectField, MenuItem }from 'material-ui';
+import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
@@ -24,16 +23,16 @@ import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 
-
-// React-Grid-Layout
-import {Responsive, WidthProvider} from 'react-grid-layout';
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
-
 // Icons and Color
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import ActionDeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {fullWhite} from 'material-ui/styles/colors';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+import { blue400 } from 'material-ui/styles/colors';
+
+// Customized module
+import DialogCard from '../Container/DialogCard'
 
 var styles = {
   stepper: {
@@ -71,8 +70,7 @@ var styles = {
   },
   fileUploadBtn: {
     marginTop: 30,
-    marginLeft: -40,
-    // // width: '5%',
+    marginLeft: -30,
   },
   fileUpload: {
     cursor: 'pointer',
@@ -421,7 +419,7 @@ class ReleasePluginDialog extends Component {
               <Divider />
             </div>
 
-            <div key="rpd-8" _grid={{ x: 0, y: 3, w: 3, h: 3 }}>
+            <div key="rpd-8" _grid={{ x: 0, y: 3, w: 3, h: 3.5 }}>
               <Select.Async
                 multi
                 value={this.state.selectValue}
@@ -468,7 +466,7 @@ class ReleasePluginDialog extends Component {
                 <TableHeader displaySelectAll={true} enableSelectAll={true}>
                   <TableRow>
                     <TableHeaderColumn style={{ width: 50 }}>
-                      <IconButton style={{ marginLeft: -10 }} tooltip="删除" onTouchTap={this.handleRowsDelete}>
+                      <IconButton style={{ marginLeft: -50 }} tooltip="删除" onTouchTap={this.handleRowsDelete}>
                         <ActionDeleteForever />
                       </IconButton>
                     </TableHeaderColumn>
@@ -482,6 +480,7 @@ class ReleasePluginDialog extends Component {
                     if (filesTable.length > 0)
                       return (
                         <TableRow key={index}>
+                          <TableRowColumn style={{ width: 50 }}></TableRowColumn>
                           <TableRowColumn style={{ width: 50 }}>{ index + 1 }</TableRowColumn>
                           <TableRowColumn style={{ width: 300 }}>{ row.name }</TableRowColumn>
                           <TableRowColumn style={{ width: 100 }}>{ row.type }</TableRowColumn>
@@ -509,31 +508,6 @@ class ReleasePluginDialog extends Component {
   renderContent(data) {
     const {finished, stepIndex} = this.state;
     const stepperStyle = { margin: '0 16px', overflow: 'hidden' };
-
-    // Process data to download when finished
-    if (finished) {
-
-      // let pluginsymblicname = this.dataToServer.pluginsymblicname;
-      // let url = '/pluginCodeGenerator/download/' + pluginsymblicname;
-      // window.location = url;
-      // window.open(url, '_self');
-
-      // return (
-      //   <div style={stepperStyle}>
-      //     <p>
-      //       <a
-      //         href="#"
-      //         onClick={(event) => {
-      //           event.preventDefault();
-      //           this.setState({ stepIndex: 0, finished: false });
-      //         } }
-      //         >
-      //         点击这里
-      //       </a> 重置插件发布向导。
-      //     </p>
-      //   </div>
-      // );
-    }
 
     return (
       <div style={stepperStyle}>
@@ -566,26 +540,25 @@ class ReleasePluginDialog extends Component {
         style={{ marginRight: 12 }}
         />,
       <RaisedButton
-        label={stepIndex === 3 ? '保存' : '下一步'}
+        label={stepIndex === 3 ? '发布' : '下一步'}
         primary={true}
         onTouchTap={stepIndex === 3 ? this.processSubmitData : this.handleNext }
         />
     ];
 
     return (
-      <Dialog
-        title={title}
-        style={styles.dialogStyle}
-        titleStyle={styles.dialogTitle}
-        contentStyle={styles.contentStyle}
-        actions={actions}
-        modal={true}
-        open={open}
-        onRequestClose={this.handleClose}
-        // autoScrollBodyContent={true}
-        // autoDetectWindowHeightt={false}
-        >
 
+
+      <DialogCard
+        title={title}
+        titleStyle={{ fontSize: 20, color: blue400 }}
+        dialogContentStyle={styles.contentStyle}
+        avatar={ <Avatar icon={<FileFolder />}/> }
+        subtitle="请填写插件生成信息"
+        actions={actions}
+        isModal={true}
+        open={open}
+        >
         <div style={{ width: '100%', height: '100%', maxWidth: 996, margin: 'auto' }}>
           <Stepper style={styles.stepper} activeStep={stepIndex} >
             <Step>
@@ -602,19 +575,53 @@ class ReleasePluginDialog extends Component {
             </Step>
           </Stepper>
           <ExpandTransition loading={loading} open={true}>
-            {this.renderContent(defaultInfo) }
+            { this.renderContent(defaultInfo) }
           </ExpandTransition>
         </div>
 
-      </Dialog>
+      </DialogCard>
+
     );
   }
 }
 
 export default ReleasePluginDialog;
 
+
+
+// openFileDialog = () => {
+//   let filesUploadDom = ReactDOM.findDOMNode(this.refs.filesUpload);
+//   filesUploadDom.click();
+// };
+
 // <TextField
 //   floatingLabelText="选择文件"
 //   onTouchTap={this.openFileDialog}
 // />
 // <input ref="filesUpload" type="file" multiple="multiple" style={{ display: "none" }} onChange={this.handleSelectUploadFiles}/>
+  //  <Dialog
+  //       // title={title}
+  //       // style={styles.dialogStyle}
+  //       titleStyle={styles.dialogTitle}
+  //       contentStyle={styles.contentStyle}
+  //       actions={actions}
+  //       modal={true}
+  //       open={open}
+  //       onRequestClose={this.handleClose}
+  //       // autoScrollBodyContent={true}
+  //       // autoDetectWindowHeightt={false}
+  //       >
+  //       <Card>
+  //         <CardHeader
+  //           title={title}
+  //           titleStyle={{ fontSize: 20, color: blue400 }}
+  //           dialogTitleStyle={styles.dialogTitle}
+  //           dialogContentStyle={styles.contentStyle}
+  //           avatar={ <Avatar icon={<FileFolder />}/> }
+  //           subtitle="请填写插件信息"
+  //           />
+  //         <CardText>
+
+  //                   </CardText>
+  //       </Card>
+  //     </Dialog>
