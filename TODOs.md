@@ -10,7 +10,7 @@
 - 下载 jquery-maskedinput，打包到scripts.js中，并激活uivalidation功能。
 - 如果插件Uploading File上传/更新成功，但插件信息创建/更新不成功，需要删除该上传/更新的file信息。
 - ~~res.setHeader 下载附件名中有中文出现无法下载问题/程序崩溃~~
-- 在创建插件时，不输入插件名造成卡在创建Progress界面 => 创建异常处理机制（Snackbar）
+- ~~在创建插件时，不输入插件名造成卡在创建Progress界面 => 创建异常处理机制/validation机制(solved: 通过validation限制如果没有插件名就无法提交)~~
 
 
 
@@ -29,10 +29,12 @@
 - 重构应用程序，使用 Material-ui (react based) 作为UI主要构成，不使用 SmartAdmin 框架
 - ~~升级 Node.js 到 5.x ( Git 上很多示例项目已经开始使用 5.x )~~
 - 参考 Vscode 源码，摸摸 Atom,看是否可以创建一个 OSGi 集成开发环境（IDE）
-- 加入 TODO / Bug report 功能， 类似于 Mantis(适合自用)
+- 加入 TODOs / Bug Report 功能， 类似于 Mantis(适合自用)
 
 ## Recent TODOs
-- 当插件删除时，删除所有相关的 GridFS 中的文件数据，如源码包、库文件和文档等
+- 每次大改动之后，执行一遍 npm run build，生成 production 环境下的代码并运行，观察是否有错误
+- 删除所有reflux相关components
+- ~~当插件删除时，删除所有相关的 GridFS 中的文件数据，如源码包、库文件和文档等(solved)~~
 - ~~用户可以自行选择删除上传的文档，库等资源文件（详情->下载）~~
 - ~~发布插件时的批量长传进度条(Solved: 使用旋转进度条的方式)~~
 - 私有插件仓库只显示该登录用户提交的插件
@@ -41,29 +43,49 @@
 - ~~使用 React-Boostrap UI 库修改所有 Modal UI / Boostrap 布局相关的 UI~~
 - ~~使用 Flex-Grid-React 组件替换 Bootsrap layout 组件，实现组件布局 -> 动态添加，动态调整大小~~
 - ~~下载好看的中文字体(使用黑体)~~
-- 添加导航菜单隐藏/显示功能，并根据屏幕大小显示左上toggle按钮
-- 使用 Formy 验证 React Material-UI 文本输入框中的信息(Bugs: 在创建插件时不输入插件名或不提供上传文件，会出现异常)
-- 更新 Datatables 到最新版，并使用 Material Design 风格UI
+- ~~添加导航菜单隐藏/显示功能，并根据屏幕大小显示左上toggle按钮(solved)~~
+- ~~使用 Formy 验证 React Material-UI 文本输入框中的信息(Bugs: 在创建插件时不输入插件名或不提供上传文件，会出现异常)(Sovled: 正则表达式判定)~~
+- 更新 Datatables 到最新版，并使用 Material Design 风格UI(Material Design风格测试中)
 - 添加 Auto-Complete 功能
+- 更换首页图片，改为插件平台相关
+
 
 
 
 ## Migration to Material-UI 
 - 修改主界面右上角按键功能和实现，修改登录/注册界面为 Material Design 风格
 - 重新封装 Datatable 组件，最好能支持相应式界面
-- ShopXXX 组件换文件夹
+- ~~ShopXXX 组件换文件夹(solved)~~
 
 
 
 ## Features
-- 每次大改动之后，执行一遍 npm run build，生成 production 环境下的代码并运行，观察是否有错误
-- 更换首页图片，改为插件平台相关
-- 参考 SmartAdmin Theme 中如何将所有需要的js库文件打包到一起，并统一定义reference的文件名
+- ~~参考 SmartAdmin Theme 中如何将所有需要的js库文件打包到一起，并统一定义reference的文件名(solved)~~
   s.a.:'/webpack/scripts'，打包后即可使用 ScriptLoader.jsx 中的 'loadScript()' 函数
-- 下载 google 字体： import url(https://fonts.googleapis.com/css?family=Montserrat:400,700)
-- UI 选型和适配
-- ~~登陆的不同用户在 home 页面对应的用户名 / 中文用户名（添加中文姓名validation check on sign up）~~
-- 使用高级的互动的 form validation check 方式/控件，e.g. SmartAdmin - Form Validation
+- ~~下载 google 字体： import url(https://fonts.googleapis.com/css?family=Montserrat:400,700)(solved)~~
+- ~~UI 选型和适配(solved: 使用material-ui)~~
+- 登陆的不同用户在 home 页面对应的用户名 / 中文用户名（添加中文姓名validation check on sign up）(reopen)
+- ~~使用高级的互动的 form validation check 方式/控件，e.g. SmartAdmin - Form Validation()(discard)~~
+
+- 创建类 Profile 和 Projects 主界面结构 from App-Views
+- ~~参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构~~
+- ~~修改action, reducer名称，带上action, reducer前缀or后缀~~
+- ~~生成插件框架代码或在已有项目中添加新的插件后，通过 Web端 / Nodejs 直接调用Cmake并配置(前端无法调用本地机器程序)~~
+- 主页添加新闻和推送等功能
+- 测试应用程序在各个浏览器和平台的效果(longterm test)
+- ~~PluginRepository 组件和数据库实现部分添加异常处理机制(closed)~~
+- ~~所有Form控件添加 validation(sovled)~~
+- ~~Datatables 的中文化问题(solved)~~
+- ~~在新添加插件时加入依赖填写栏，可以用<select2>控件+版本号输入的方式(sovled)~~
+- ~~在提升插件私有->公有时，需要上传插件的dll格式文件和资源包~~
+- 创建开发者工具页面，开发和测试界面用
+- 创建 Node.js & MongoDB 数据库操作Log机制
+
+
+## Code Generator
+- ~~加入插件：修改主cmakelist.txt和数据库相关配置代码~~
+
+## Discarded issue
 - 创建导航栏树结构： Smart Menu from 'menu-items.json' / Six level menu from UI elements,
   使用 Redux + Fetch 换掉 SmartMenu 组建中的 reflux store + jquery，实际就是改写整个'/layout/navigation'
   component 集合
@@ -83,18 +105,3 @@
     -> trigger data reload in render() function in 'Navigation' component
     -> render 'Navigation' container component and subcomponents, i.e.: 'SmartMenu', 'SmartMenuList', 'SmartMenuItem'
   ```
-- 创建类 Profile 和 Projects 主界面结构 from App-Views
-- ~~参考 Forms->Wizards 创建流程结构；参考 Tables->Data Tables 可查找和过滤的数据表结构~~
-- ~~修改action, reducer名称，带上action, reducer前缀or后缀~~
-- ~~生成插件框架代码或在已有项目中添加新的插件后，通过 Web端 / Nodejs 直接调用Cmake并配置(前端无法调用本地机器程序)~~
-- 主页添加新闻和推送等功能
-- 测试应用程序在各个浏览器和平台的效果
-- PluginRepository 组件和数据库实现部分添加异常处理机制
-- 所有Form控件添加 validation
-- ~~Datatables 的中文化问题~~
-- ~~在新添加插件时加入依赖填写栏，可以用<select2>控件+版本号输入的方式~~
-- ~~在提升插件私有->公有时，需要上传插件的dll格式文件和资源包~~
-- 删除所有reflux相关components
-
-## Code Generator
-- ~~加入插件：修改主cmakelist.txt和数据库相关配置代码~~

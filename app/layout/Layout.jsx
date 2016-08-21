@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import Title from 'react-title-component';
 import { connect } from 'react-redux';
 import Header from './Header.jsx'
-import Navigation from './Navigation.jsx'
 import Ribbon from './Ribbon.jsx'
 
 // import UserActions from '../components/smartAdmin/user/actions/UserActions.js'
@@ -156,8 +155,11 @@ class Layout extends Component {
 
     const title = router.isActive('/home') ? 'Home' :
       router.isActive('/privateRepository') ? 'privateRepository' :
-        router.isActive('/publicRepository') ? 'publicRepository' :
-          router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : '';
+      router.isActive('/publicRepository') ? 'publicRepository' :
+      router.isActive('/pluginCodeGenerator') ? 'pluginCodeGenerator' : 
+      router.isActive('/testPage') ? 'testPage'  : 
+      router.isActive('/testComponents') ? 'testComponents'  : 
+      '';
 
     let docked = false;
     let showMenuIconButton = true;
@@ -214,11 +216,6 @@ class Layout extends Component {
           onChangeList={this.handleChangeList}
           open={navDrawerOpen}
           />
-
-        {/*<Navigation />*/}
-
-        
-
       </div>
     )
   }

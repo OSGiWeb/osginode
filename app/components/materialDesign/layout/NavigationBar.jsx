@@ -120,7 +120,7 @@ class AppNavDrawer extends Component {
         onRequestChange={onRequestChangeNavDrawer}
         // containerStyle={{ zIndex: zIndex.drawer - 100 }}
         >
-        
+
         <div style={styles.logo} onTouchTap={this.handleTouchTapHeader}>
           一体化插件平台
         </div>
@@ -138,7 +138,7 @@ class AppNavDrawer extends Component {
                   <ListItem primaryText="私有仓库" value="/privateRepository" href="/#/privateRepository"/>,
                   <ListItem primaryText="公共仓库" value="/publicRepository" href="/#/publicRepository"/>,
                 ]}
-              />,
+                />,
               <ListItem primaryText="应用配置向导" value="/home" href="/#/home" />,
               <ListItem
                 primaryText="开发文档"
@@ -148,7 +148,7 @@ class AppNavDrawer extends Component {
                   <ListItem primaryText="代码规范" value="/home" href="/#/home"/>,
                   <ListItem primaryText="开发流程" value="/home" href="/#/home"/>,
                 ]}
-              />,
+                />,
               <ListItem primaryText="插件代码生成工具" value="/pluginCodeGenerator" href="/#/pluginCodeGenerator" />,
               <ListItem primaryText="Examples" value="/examples" />,
             ]}
@@ -167,7 +167,16 @@ class AppNavDrawer extends Component {
                   <ListItem primaryText="基本配置" value="/home" href="/#/home"/>,
                   <ListItem primaryText="插件配置" value="/home" href="/#/home"/>,
                 ]}
-              />,
+                />,
+            ]}
+            />
+          <ListItem
+            primaryText="开发者工具"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="测试页面" value="/testPage" href="/#/testPage" />,
+              <ListItem primaryText="测试组件" value="/testComponents" href="/#/testComponents" />,
+              <ListItem primaryText="测试用例" value="/home" href="/#/home" />,
             ]}
             />
         </SelectableList>

@@ -11,6 +11,11 @@ import LoginOrRegister from './pages/LoginOrRegister.jsx'
 import PrivateRepository from './pages/PrivateRepository.jsx'
 import PluginCodeGenerator from './pages/PluginCodeGenerator.jsx'
 
+// Test pages for components test and page test
+import TestComponents from './pages/TestComponents.jsx' 
+import TestPage from './pages/TestPage.jsx' 
+
+// For server-side rendering
 import preRenderMiddleware from './middlewares/preRenderMiddleware';
 
 // import Register from './pages/Register.jsx'
@@ -78,6 +83,8 @@ export default (store) => {
         <Route path="privateRepository" component={PrivateRepository} onEnter={requireAuth} />
         <Route path="publicRepository" component={Home} onEnter={requireAuth} />
         <Route path="pluginCodeGenerator" component={PluginCodeGenerator} onEnter={requireAuth} />
+        <Route path="TestComponents" component={TestComponents} onEnter={requireAuth} />
+        <Route path="TestPage" component={TestPage} onEnter={requireAuth} />
       </Route>
     </Route>
   );
